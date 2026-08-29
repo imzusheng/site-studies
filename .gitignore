@@ -1,0 +1,9 @@
+# 原站分析产物（原站 HTML/CSS/录屏/抽帧，含原站版权内容，仅本地参考，不入库）
+dottxt/analysis/
+
+# 分析时抓取的原站构建 chunk
+dottxt/[0-9]*-*.js
+
+# 系统杂项
+Thumbs.db
+.DS_Store
