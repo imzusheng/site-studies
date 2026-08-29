@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Subscrr — 站点研究复刻（学习用途）</title>
+    <meta name="description" content="Subscrr.app 落地页的前端动效研究复刻：玻璃导航、粒子标题、滚动叙事与磁性按钮。仅供学习交流。" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- 噪点颗粒层 -->
+    <div class="grain" aria-hidden="true"></div>
+    <!-- Widgets 区块滚动时全屏暖色 tint -->
+    <div id="bgTint" aria-hidden="true"></div>
+
+    <!-- 预加载器：字标逐字弹出（对应原站 App 启动画） -->
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader__word" id="loaderWord" aria-label="Subscrr">
+        <span class="loader__mark"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#DCE4FB"/><path d="M43.5 21.5c-1.6-3.4-5.6-5.4-11-5.4-6.6 0-11 3.3-11 8.4 0 4.7 3.6 6.8 10.8 8.5 7.4 1.8 11.4 4 11.4 9.5 0 5.6-4.8 9-11.9 9-6.2 0-10.6-2.4-12.3-6.6" fill="none" stroke="#FF2500" stroke-width="7.5" stroke-linecap="round"/></svg></span><span class="loader__ch">S</span><span class="loader__ch">u</span><span class="loader__ch">b</span><span class="loader__ch">s</span><span class="loader__ch">c</span><span class="loader__ch">r</span><span class="loader__ch">r</span>
+      </div>
+    </div>
+
+    <!-- 自定义光标 -->
+    <div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+
+    <!-- NAV：胶囊玻璃 -->
+    <header class="nav" id="nav">
+      <span class="nav__glass" aria-hidden="true"><i></i></span>
+      <a class="brand" href="#top" data-cursor="hover" aria-label="Subscrr home">
+        <img src="assets/icon.svg" alt="" />
+        <span>Subscrr</span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#work" data-cursor="hover">Overview</a>
+        <a href="#ai" data-cursor="hover">AI Spend</a>
+        <a href="#privacy" data-cursor="hover">Privacy</a>
+        <a href="#pricing" data-cursor="hover">Pricing</a>
+        <a href="https://subscrr.app/blog" target="_blank" rel="noopener" data-cursor="hover">Blog</a>
+      </nav>
+      <a class="btn btn--solid btn--sm magnetic" href="https://apps.apple.com/app/id6757530448" target="_blank" rel="noopener" data-cursor="hover"><span>Get the app</span></a>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <div class="hero__inner">
+          <h1 class="hero__title">
+            <span class="line"><span>All your subscriptions. <em>And what they really cost.</em></span></span>
+          </h1>
+          <p class="hero__lead" id="heroLead">
+            Every charge in one calm list, the honest total per day, month and year,
+            and a quiet heads-up the day before each renewal lands.
+          </p>
+          <div class="hero__cta" id="heroCta">
+            <a class="btn btn--solid btn--lg magnetic" href="https://apps.apple.com/app/id6757530448" target="_blank" rel="noopener" data-cursor="hover"><span>Download on the App Store</span></a>
+            <a class="btn btn--ghost btn--lg magnetic" href="#work" data-cursor="hover"><span>See it in motion</span></a>
+          </div>
+        </div>
+
+        <div class="hero__stage">
+          <div class="hero__device">
+            <div class="phone hero__phone">
+              <div class="phone__screen">
+                <div class="app">
+                  <div class="app__status"><b>9:41</b><span class="app__island"></span><span class="app__sigs"><i></i><i></i><i></i></span></div>
+                  <div class="app__navrow">
+                    <span class="app__sort"><i></i><i></i></span>
+                    <span class="app__plus">+</span>
+                  </div>
+                  <div class="app__h">My Subscriptions</div>
+                  <div class="app__listwrap">
+                    <div class="app__list">
+                      <!-- 行由 JS 复制一份实现无缝循环滚动 -->
+                      <div class="app__row"><i style="--mc:#1d1d1f">C</i><div><b>CloudBox 2TB</b><small>Renews 9/15/26</small></div><div class="app__price"><b>19.95 $</b><small>Month</small></div></div>
+                      <div class="app__row"><i style="--mc:#e5732f">N</i><div><b>Neura AI Pro</b><small>Renews 8/22/26</small></div><div class="app__price"><b>20.00 $</b><small>Month</small></div></div>
+                      <div class="app__row"><i style="--mc:#2f6fe5">F</i><div><b>FileHive Plus</b><small>Renews 8/25/26</small></div><div class="app__price"><b>11.99 $</b><small>Month</small></div></div>
+                      <div class="app__row"><i style="--mc:#d64980">P</i><div><b>Pixelate Studio</b><small>Renews 8/29/26</small></div><div class="app__price"><b>15.00 $</b><small>Month</small></div></div>
+                      <div class="app__row"><i style="--mc:#3fa14c">G</i><div><b>GlobeOne 2TB</b><small>Renews 8/24/26</small></div><div class="app__price"><b>9.99 $</b><small>Month</small></div></div>
+                      <div class="app__row"><i style="--mc:#e02020">C</i><div><b>CinePrime 4K</b><small>Renews 9/12/26</small></div><div class="app__price"><b>22.99 $</b><small>Month</small></div></div>
+                      <div class="app__row"><i style="--mc:#111111">W</i><div><b>NoteLab AI</b><small>Renews 9/2/26</small></div><div class="app__price"><b>10.00 $</b><small>Month</small></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a class="hero__qr magnetic" href="https://apps.apple.com/app/id6757530448" target="_blank" rel="noopener" data-cursor="hover" aria-label="Scan to open Subscrr on the App Store (study link)">
+            <span class="hero__qr-glass"><i></i></span>
+            <img src="assets/qr.svg" alt="Decorative QR pattern (study replica)" width="150" height="150" loading="lazy" decoding="async" />
+          </a>
+
+          <div class="glass glass--a" aria-hidden="true">
+            <span class="glass__k">This month</span>
+            <span class="glass__v">$172.42</span>
+          </div>
+          <div class="glass glass--b" aria-hidden="true">
+            <span class="glass__bell">🔔</span>
+            <span><span class="glass__t">Renewal ahead</span><span class="glass__s">Fitness App · tomorrow</span></span>
+          </div>
+          <div class="glass glass--c" aria-hidden="true">
+            <span class="glass__k">Per day</span>
+            <span class="glass__v glass__v--ink">$5.71</span>
+          </div>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+      </section>
+
+      <!-- ============ PROMO FILM（自绘动画场景，滚动放大） ============ -->
+      <section class="promo">
+        <figure class="promo__media" id="promoMedia">
+          <div class="promo__scene" aria-label="Animated promo scene (self-drawn)">
+            <div class="promo__wash"></div>
+            <span class="promo__slog">t r a c k&nbsp;&nbsp;e v e r y&nbsp;&nbsp;¢ e n t</span>
+            <div class="promo__card promo__card--1"><i style="--mc:#e5732f">N</i><div><b>Neura AI Pro</b><small>in 2 days · 20 $</small></div></div>
+            <div class="promo__card promo__card--2"><i style="--mc:#e02020">C</i><div><b>CinePrime 4K</b><small>in 9 days · 22.99 $</small></div></div>
+            <div class="promo__card promo__card--3"><i style="--mc:#2f6fe5">F</i><div><b>FileHive Plus</b><small>in 5 days · 11.99 $</small></div></div>
+            <div class="promo__big">$172.42<span>/mo</span></div>
+          </div>
+          <button class="promo__sound" id="promoSound" type="button" data-cursor="hover" aria-label="Turn sound on">
+            <svg class="promo__ico promo__ico--off" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="m16 9 5 6m0-6-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+            <svg class="promo__ico promo__ico--on" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+          </button>
+        </figure>
+      </section>
+
+      <!-- ============ OVERVIEW ============ -->
+      <section class="work" id="work">
+        <div class="work__head">
+          <span class="eyebrow" data-reveal>Overview</span>
+          <h2 data-reveal>See how much you <br />really spend.</h2>
+        </div>
+        <div class="lede">
+          <figure class="lede__media" data-parallax>
+            <div class="art art--ember" aria-hidden="true">
+              <div class="art__blob art__blob--1"></div>
+              <div class="art__blob art__blob--2"></div>
+              <div class="mini-phone">
+                <div class="mini-phone__screen">
+                  <div class="mini-app">
+                    <div class="mini-app__hi">Hey!</div>
+                    <div class="mini-app__sub">You spent <b>$73.52</b> this month</div>
+                    <div class="mini-app__totals"><span><small>Monthly</small><b>172.42 $</b></span><span><small>Yearly</small><b>2 106.25 $</b></span></div>
+                    <div class="mini-app__next"><b>Next up</b><span>CloudBox 2TB · 19.95 $</span></div>
+                    <div class="mini-app__row"><i style="--mc:#e02020">C</i><span>CinePrime 4K</span><b>22.99 $</b></div>
+                    <div class="mini-app__row"><i style="--mc:#3fa14c">G</i><span>GlobeOne 2TB</span><b>9.99 $</b></div>
+                    <div class="mini-app__row"><i style="--mc:#d64980">P</i><span>Pixelate Studio</span><b>15.00 $</b></div>
+                    <div class="mini-app__row"><i style="--mc:#111111">W</i><span>NoteLab AI</span><b>10.00 $</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </figure>
+          <div class="lede__text">
+            <p data-reveal>
+              Open it and the math is already done: how many services you carry,
+              what they cost a month and a year. Upcoming charges queue up underneath,
+              closest first, so nothing arrives unannounced.
+            </p>
+            <ul class="ticks" data-reveal>
+              <li>Live monthly &amp; yearly totals</li>
+              <li>A countdown to every charge</li>
+              <li>Any currency, converted at daily rates</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ BREAKDOWN ============ -->
+      <section class="split">
+        <div class="split__text">
+          <span class="eyebrow" data-reveal>Breakdown</span>
+          <h2 data-reveal>Per year. <br />Per month. <br /><em>Per day.</em></h2>
+          <p data-reveal>
+            A "cheap" yearly plan spread over 365 days is still a small daily habit.
+            Seeing the amount that actually leaves per day turns each renewal
+            into a decision, not a reflex.
+          </p>
+        </div>
+        <figure class="split__media" data-parallax>
+          <div class="art art--bloom" aria-hidden="true">
+            <div class="art__blob art__blob--3"></div>
+            <div class="art__blob art__blob--4"></div>
+            <div class="art__chip"><small>that "cheap" plan is</small><b>$5.71<small>/day</small></b></div>
+          </div>
+        </figure>
+      </section>
+
+      <!-- ============ REMINDERS ============ -->
+      <section class="reminder">
+        <span class="eyebrow" data-reveal>Reminders</span>
+        <h2 data-reveal>Never get <br />surprise-charged again.</h2>
+        <p data-reveal>
+          The day before money leaves, you get a gentle tap on the shoulder —
+          so a renewal happens because you chose it, not because it slipped past.
+        </p>
+        <figure class="reminder__card" id="reminderCard">
+          <div class="art art--sunrise" aria-hidden="true">
+            <div class="art__blob art__blob--5"></div>
+            <div class="art__blob art__blob--6"></div>
+          </div>
+          <div class="push push--1">
+            <i class="push__app">S</i>
+            <div class="push__body"><b>Subscription Reminder <small>9:41 AM</small></b><span>Tomorrow is your Fitness App renewal.</span></div>
+          </div>
+          <div class="push push--2">
+            <i class="push__app">S</i>
+            <div class="push__body"><b>Subscription Reminder <small>9:41 AM</small></b><span>CloudBox 2TB renews in 3 days.</span></div>
+          </div>
+          <div class="push push--3">
+            <i class="push__app">S</i>
+            <div class="push__body"><b>Subscription Reminder <small>9:41 AM</small></b><span>CinePrime 4K renews on Sep 12.</span></div>
+          </div>
+        </figure>
+      </section>
+
+      <!-- ============ IMPORT ============ -->
+      <section class="import" id="import">
+        <div class="import__text">
+          <span class="eyebrow" data-reveal>Setup · One screenshot</span>
+          <h2 data-reveal>Import the list your <br />Apple ID already has.</h2>
+          <p data-reveal>
+            Everything your Apple ID pays for sits on a single system screen.
+            Screenshot it, drop it in — names, prices and dates are read for you.
+          </p>
+          <ol class="import__steps">
+            <li><span>1</span>Open Subscriptions</li>
+            <li><span>2</span>Take a screenshot</li>
+            <li><span>3</span>Drop it in here</li>
+          </ol>
+        </div>
+        <figure class="import__media" data-reveal>
+          <div class="art art--poppy" aria-hidden="true">
+            <div class="phone phone--candy">
+              <div class="phone__screen">
+                <div class="import-ui">
+                  <div class="import-ui__status"><b>4:59</b><span class="app__island"></span><span class="app__sigs"><i></i><i></i><i></i></span></div>
+                  <div class="import-ui__row"><span>Import from App Store</span><i>×</i></div>
+                  <div class="import-ui__glyph">⌘</div>
+                  <div class="import-ui__h">Import your<br />store subscriptions</div>
+                  <div class="import-ui__steps">
+                    <span><i>1</i>Open Subscriptions in the store</span>
+                    <span><i>2</i>Screenshot that screen</span>
+                    <span><i>3</i>Upload here — we'll read it</span>
+                  </div>
+                  <div class="import-ui__cta">Open App Store</div>
+                  <div class="import-ui__ghost">Upload screenshots</div>
+                  <div class="import-ui__manual">Add manually</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <!-- ============ AI SPEND ============ -->
+      <section class="ai" id="ai">
+        <div class="ai__card">
+          <div class="ai__grid">
+            <div class="ai__text">
+              <span class="eyebrow eyebrow--c" data-reveal>Premium · AI Spend</span>
+              <div class="ai__title-wrap" id="particleWrap">
+                <h2 class="ai__title" id="particleTitle" data-lines="Snap a receipt.|Let AI do the math.">Snap a receipt.<br />Let AI do the math.</h2>
+              </div>
+              <p data-reveal>
+                Typing receipts is a chore; snapping one is a tap. The AI lifts the
+                numbers out, files them under categories, then throws the photo away.
+                Tap the headline to scatter it.
+              </p>
+            </div>
+            <figure class="ai__media">
+              <div class="ai__phone">
+                <div class="phone phone--dark">
+                  <div class="phone__screen">
+                    <div class="ai-ui">
+                      <div class="ai-ui__status"><b>10:38</b><span class="app__island"></span><span class="app__sigs"><i></i><i></i><i></i></span></div>
+                      <div class="ai-ui__seg"><span>Calculator</span><span class="is-on">AI Spend</span></div>
+                      <div class="ai-ui__h">AI Spend</div>
+                      <div class="ai-ui__row"><span>Image uploaded</span><i>Reanalyze</i></div>
+                      <div class="ai-ui__card">
+                        <span class="ai-ui__ok">✓ Receipt analyzed <small>grocery run</small></span>
+                        <small class="ai-ui__cap">Total spent</small>
+                        <b class="ai-ui__amt" id="aiAmt">340.00 $</b>
+                        <div class="ai-ui__meta"><span><b id="aiItems">5</b><small>items found</small></span><span><b>USD</b><small>detected currency</small></span></div>
+                      </div>
+                      <div class="ai-ui__card ai-ui__card--cats">
+                        <small>Category breakdown</small>
+                        <div class="ai-ui__bars"><i style="--w:55%;--bc:#FF2500"></i><i style="--w:18%;--bc:#FF7A45"></i><i style="--w:12%;--bc:#FFB489"></i><i style="--w:9%;--bc:#C9D6F9"></i><i style="--w:6%;--bc:#666"></i></div>
+                        <div class="ai-ui__cat"><span>🍩 Groceries</span><b>186.50 $ <small>55%</small></b></div>
+                        <div class="ai-ui__cat"><span>💊 Health</span><b>62.00 $ <small>18%</small></b></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WIDGETS ============ -->
+      <section class="widgets" id="widgetsAnchor">
+        <span class="eyebrow" data-reveal>Premium · Widgets</span>
+        <h2 data-reveal>Your next payment, <br />right on the Home Screen.</h2>
+        <p data-reveal>
+          What's due next lives on the Home and Lock Screen — you know without
+          opening the app, which is the nicest thing an app can say about itself.
+          Part of Premium.
+        </p>
+        <figure class="widgets__media" data-reveal>
+          <div class="art art--brand" aria-hidden="true">
+            <div class="phone phone--float">
+              <div class="phone__screen">
+                <div class="home-ui">
+                  <div class="home-ui__status"><b>9:41</b><span class="app__island"></span><span class="app__sigs"><i></i><i></i><i></i></span></div>
+                  <div class="home-ui__grid">
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                  <div class="home-ui__widget">
+                    <div class="home-ui__whead"><i>S</i><span>Subscrr</span></div>
+                    <small>Next charge</small>
+                    <b>Neura AI Pro</b>
+                    <span class="home-ui__due">20.00 $ · in 2 days</span>
+                  </div>
+                  <div class="home-ui__dock"><span></span><span></span><span></span><span></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="home-ui__menu">
+              <span class="home-ui__apps"><i></i><i></i><i></i><i></i></span>
+              <span>Edit Home Screen</span>
+              <span>Require Face ID</span>
+              <span class="home-ui__danger">Remove App</span>
+              <span>Ask Siri</span>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <!-- ============ APPLE WATCH ============ -->
+      <section class="watch" id="watch">
+        <span class="eyebrow" data-reveal>Apple Watch</span>
+        <h2 data-reveal>The next charge, <br />on your wrist.</h2>
+        <p data-reveal>
+          A watch-face complication shows what's due next and what it costs,
+          in a colour you pick on the watch itself. The daily affirmation lives there too.
+        </p>
+        <div class="watch__pair">
+          <figure class="watch__shot" data-reveal>
+            <div class="art art--dusk" aria-hidden="true">
+              <div class="art__blob art__blob--7"></div>
+              <div class="watch-chip"><small>next charge</small><b>Neura AI · 20 $</b><small>Friday</small></div>
+            </div>
+          </figure>
+          <figure class="watch__shot" data-reveal>
+            <div class="art art--lagoon" aria-hidden="true">
+              <div class="art__blob art__blob--8"></div>
+              <div class="watchdev">
+                <span class="watchdev__band watchdev__band--t"></span>
+                <div class="watchdev__body">
+                  <div class="watchdev__face">
+                    <span class="watchdev__time">5:58</span>
+                    <div class="watchdev__comp"><b>CinePrime 4K</b><span>22.99 $ · Aug 11</span></div>
+                    <div class="watchdev__wx"><span>☀ Dubai</span><b>41°</b></div>
+                  </div>
+                </div>
+                <span class="watchdev__band watchdev__band--b"></span>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ MANIFESTO ============ -->
+      <section class="manifesto">
+        <p class="manifesto__text" data-words>
+          You can guess what you pay every month. The <em>guessing</em> is the
+          problem. We listed ours, counted the leaks, and cancelled three that
+          same evening. Subscrr turns that quiet drip into
+          <em>one honest number</em> you can act on.
+        </p>
+      </section>
+
+      <!-- ============ PRIVACY ============ -->
+      <section class="privacy" id="privacy">
+        <h1 class="privacy__title" data-reveal>Private by Design.</h1>
+        <h2 class="privacy__h" data-words>
+          What you pay for lives in your own iCloud, not on our servers. We can't
+          see it and we don't sell it, and the app carries no ads. Anonymous tap
+          counts tell us which screen to fix next. That's the whole list.
+        </h2>
+        <div class="privacy__badges" data-reveal>
+          <span>iCloud private sync</span>
+          <span>No ads in the app</span>
+          <span>No data sold</span>
+          <span>Anonymous stats only</span>
+        </div>
+      </section>
+
+      <!-- ============ PRICING ============ -->
+      <section class="pricing" id="pricing">
+        <div class="pricing__head">
+          <span class="eyebrow" data-reveal>Pricing</span>
+          <h2 data-reveal>Free to start. <br />Premium when you grow.</h2>
+          <div class="toggle" id="toggle" role="tablist" aria-label="Billing period">
+            <button class="toggle__opt is-active" data-plan="monthly" role="tab" aria-selected="true">Monthly</button>
+            <button class="toggle__opt" data-plan="yearly" role="tab" aria-selected="false">Yearly <i>−69%</i></button>
+            <span class="toggle__thumb" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="plans">
+          <article class="plan card-hover" data-reveal>
+            <header><h3>Free</h3><div class="plan__price">$0</div></header>
+            <p>Plenty to see the whole picture.</p>
+            <ul>
+              <li>Up to 6 subscriptions</li>
+              <li>Per day / month / year breakdowns</li>
+              <li>Renewal reminders</li>
+              <li>Custom icons &amp; colours</li>
+              <li>iCloud sync &amp; privacy</li>
+            </ul>
+            <a class="btn btn--ghost btn--block magnetic" href="https://apps.apple.com/app/id6757530448" target="_blank" rel="noopener" data-cursor="hover"><span>Start free</span></a>
+          </article>
+          <article class="plan plan--pro card-hover" data-reveal>
+            <div class="plan__flag">Most popular</div>
+            <header>
+              <h3>Premium</h3>
+              <div class="plan__price">
+                <span class="plan__amt" id="planAmt">$7.99</span>
+                <small class="plan__per" id="planPer">/mo</small>
+              </div>
+            </header>
+            <p id="planNote">Billed monthly. Cancel anytime.</p>
+            <ul>
+              <li><b>Unlimited</b> subscriptions</li>
+              <li><b>AI Spend</b>: scan receipts &amp; statements</li>
+              <li><b>Widgets</b> for Home and Lock Screen</li>
+              <li>Personal calculation categories</li>
+              <li>Everything in Free</li>
+              <li>Support an app with zero ads</li>
+            </ul>
+            <a class="btn btn--solid btn--block magnetic" href="https://apps.apple.com/app/id6757530448" target="_blank" rel="noopener" data-cursor="hover"><span>Go Premium</span></a>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ FAQ ============ -->
+      <section class="faq">
+        <div class="faq__head">
+          <span class="eyebrow" data-reveal>FAQ</span>
+          <h2 data-reveal>Good questions.</h2>
+        </div>
+        <div class="faq__list" data-reveal>
+          <details class="qa"><summary data-cursor="hover">Do I have to connect my bank?<i></i></summary><p>No — and it never will. You add subscriptions yourself in about a minute, so nothing about your finances ever leaves your hands.</p></details>
+          <details class="qa"><summary data-cursor="hover">Where is my data stored?<i></i></summary><p>In your own private iCloud, tied to your Apple ID and synced across your devices. Our servers never receive the list, so we couldn't read it even if we tried.</p></details>
+          <details class="qa"><summary data-cursor="hover">Do you track me?<i></i></summary><p>Not your money. Anonymous counters record things like "opened the app" or "added a subscription" so we know which screen to improve. No names, no amounts, no subscription list. Details live in the <a href="https://subscrr.app/privacy" target="_blank" rel="noopener">privacy policy</a>.</p></details>
+          <details class="qa"><summary data-cursor="hover">What do I get for free?<i></i></summary><p>Six subscription slots with full breakdowns, reminders, custom icons and iCloud sync. When six stops being enough, Premium lifts the limit and unlocks the receipt scanner.</p></details>
+          <details class="qa"><summary data-cursor="hover">How does AI Spend handle my receipts?<i></i></summary><p>The AI reads the numbers and forgets the picture: values are extracted, the photo is discarded, and only hashes stay behind — never the images.</p></details>
+          <details class="qa"><summary data-cursor="hover">Can I cancel Premium anytime?<i></i></summary><p>Yes, two taps — it's a standard store subscription. Your free plan keeps working afterwards. No hard feelings.</p></details>
+        </div>
+      </section>
+
+      <!-- ============ THREADS ============ -->
+      <section class="threads">
+        <a class="threads__card" href="https://threads.net/@subscrr" data-cursor="hover" target="_blank" rel="noopener" aria-label="Subscrr on Threads (study link)">
+          <div class="art art--coral threads__art" aria-hidden="true">
+            <div class="art__blob art__blob--9"></div>
+            <div class="art__blob art__blob--10"></div>
+            <div class="phone phone--mini threads__phone">
+              <div class="phone__screen">
+                <div class="social-ui">
+                  <div class="social-ui__head"><b>subscrr</b><span>See where your money goes</span><span class="social-ui__link">subscrr.app</span></div>
+                  <div class="social-ui__tabs"><span class="is-on">Posts</span><span>Replies</span><span>Media</span></div>
+                  <div class="social-ui__post"><i>S</i><div><b>subscrr <small>· 2h</small></b><span>Site got a fresh coat of paint today 👀</span></div></div>
+                  <div class="social-ui__post"><i>S</i><div><b>subscrr <small>· 1d</small></b><span>Building in public, week 12.</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="threads__cap" aria-hidden="true">
+            <span class="threads__line">
+              <span class="threads__glyph">@</span>
+              <span class="threads__word" data-chars>Threads</span>
+            </span>
+            <span class="threads__line">
+              <span class="threads__word" data-chars>@subscrr</span>
+            </span>
+          </span>
+        </a>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <a class="footer__cta" href="https://apps.apple.com/app/id6757530448" target="_blank" rel="noopener" data-cursor="hover">
+        <span class="footer__cta-line"><span class="footer__cta-w">Download</span> <span class="footer__cta-s"><img src="assets/icon.svg" alt="S" /><span class="footer__cta-w">ubscrr</span></span></span>
+        <span class="footer__cta-line">to get Started</span>
+      </a>
+      <div class="footer__store">
+        <a class="footer__badge magnetic" href="https://apps.apple.com/app/id6757530448" target="_blank" rel="noopener" data-cursor="hover" aria-label="Download on the App Store (study link)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 12.9c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.8-3.2.8-.7 0-1.7-.8-2.8-.8-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.7 2.2 1.1 0 1.5-.7 2.8-.7 1.3 0 1.7.7 2.8.7 1.2 0 1.9-1.1 2.6-2.1.8-1.2 1.2-2.4 1.2-2.4s-2.4-.9-2.5-3.6ZM14.5 6.7c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 2-.5 2.5-1.2Z"/></svg>
+          <span><small>Download on the</small><b>App Store</b></span>
+        </a>
+        <span class="footer__fine">iPhone · iOS 17+ · Free to start</span>
+      </div>
+      <div class="footer__row">
+        <a class="footer__brand" href="#top" data-cursor="hover" aria-label="Back to top"><img src="assets/icon.svg" alt="" /><span>Subscrr</span></a>
+        <div class="footer__social">
+          <a href="https://threads.net/@subscrr" aria-label="Threads" data-cursor="hover" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.3c-5.2 0-8.6 3.6-8.6 9.7s3.4 9.7 8.6 9.7 8.6-3.6 8.6-9.7c0-2.4-.5-4.5-1.5-6.1" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M9.8 10.4c.5-.7 1.3-1.1 2.3-1.1 1.7 0 2.9 1 2.9 2.6 0 0-1.1-.4-2.5-.3-1 .1-1.9.5-1.9 1.5 0 1 .9 1.5 2 1.5 1.5 0 2.4-1 2.4-3 0-2.4-1.4-3.9-3.3-3.9-1.3 0-2.4.6-3 1.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          <a href="https://instagram.com/subscrr" aria-label="Instagram" data-cursor="hover" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://t.me/subscrr_app" aria-label="Telegram" data-cursor="hover" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.5 3.4 2.9 10.6c-.9.4-.9 1.6 0 1.9l4.6 1.5 1.8 5.5c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.8l3-15.3c.2-1-.8-1.8-1.9-1.4ZM8.5 13.6l9.3-6.1c.3-.2.6.2.4.4l-7.5 7.2-.3 3-1.9-4.5Z"/></svg></a>
+          <a href="https://x.com/subscrr" aria-label="X" data-cursor="hover" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5h4.2l4 5.6 4.8-5.6h2.6l-6.2 7.2 6.6 9.8h-4.2l-4.4-6.2-5.3 6.2H3.5l6.7-7.8L4 3.5Z"/></svg></a>
+          <a href="https://www.tiktok.com/@subscrr" aria-label="TikTok" data-cursor="hover" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.5 3h2.6c.2 1.9 1.3 3.4 3.4 3.7v2.7c-1.3 0-2.5-.4-3.5-1.1v6.2c0 3.3-2.3 5.6-5.4 5.6-3 0-5.3-2.2-5.3-5.2 0-3.1 2.6-5.4 5.9-5.1v2.8c-1.7-.3-3.1.6-3.1 2.2 0 1.4 1.1 2.5 2.5 2.5 1.6 0 2.9-1.2 2.9-3.2V3Z"/></svg></a>
+          <a href="https://www.youtube.com/@subscrr_app" aria-label="YouTube" data-cursor="hover" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 8.2c-.2-1.7-1-2.7-2.8-2.9C16.8 5 12 5 12 5s-4.8 0-7.2.3C3 5.5 2.2 6.5 2 8.2 1.8 9.7 1.8 12 1.8 12s0 2.3.2 3.8c.2 1.7 1 2.7 2.8 2.9C7.2 19 12 19 12 19s4.8 0 7.2-.3c1.8-.2 2.6-1.2 2.8-2.9.2-1.5.2-3.8.2-3.8s0-2.3-.2-3.8ZM10 15.2V8.8l5.5 3.2-5.5 3.2Z"/></svg></a>
+        </div>
+        <nav class="footer__links">
+          <a href="https://help.subscrr.app" data-cursor="hover">Help Center</a>
+          <a href="https://subscrr.app" data-cursor="hover">Contact us</a>
+          <a href="https://subscrr.app/privacy" data-cursor="hover">Privacy Policy</a>
+          <a href="https://subscrr.app/terms" data-cursor="hover">Terms of Use</a>
+          <span>© 2026 Subscrr · study replica</span>
+        </nav>
+      </div>
+    </footer>
+
+    <button class="to-top" id="toTop" aria-label="Scroll to top"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7" /></svg></button>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
