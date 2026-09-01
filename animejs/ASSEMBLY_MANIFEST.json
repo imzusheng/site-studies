@@ -1,0 +1,895 @@
+{
+  "status": "A4_14_THIN_KEYCAP_BALANCED_KNOB_EXACT_HARDWARE_WEB",
+  "sceneKind": "product-assembly-preview",
+  "units": "mm",
+  "partCount": 25,
+  "warning": "A4.14 is TRIAL_PRINT_ASSET_READY, not FIRST_ARTICLE_PASS.",
+  "profile": {
+    "id": "industrial_a4_14_thin_keycap_balanced_knob",
+    "label": "A4.14 / THIN KEYCAP / BALANCED KNOB",
+    "summary": "Thin MakerWorld-inspired Choc keycaps, balanced Ø34 knob, corrected Type-C datum, recessed M3; exact ESP32/Choc/EC11 + Dupont keep-outs.",
+    "metrics": {
+      "revision": "A4.14_THIN_KEYCAP_BALANCED_KNOB",
+      "widthMm": 142.0,
+      "depthMm": 82.0,
+      "faceAngleDegrees": 8.325650330426836,
+      "print3mfSha256": "68eaf6365bb71167061cda01976db2e678411b504e03ac706e4d2bd4eb11a664",
+      "numericQaStatus": "NUMERIC_MECHANICAL_THIN_KEYCAP_BALANCED_KNOB_GATES_PASS",
+      "industrialDesignGapsMm": {
+        "keyIslandToLeftShellMm": 6.0,
+        "keyIslandToScreenMm": 6.600000000000001,
+        "screenToKnobWellMm": 7.600000000000001,
+        "knobWellToRightShellMm": 8.0
+      },
+      "minFastenerToSwitchClearanceMm": 4.7486415797190755,
+      "keyField": {
+        "pocketSpanYmm": 47.6,
+        "lcdBacklightHmm": 47.8,
+        "bezelHmm": 51.4,
+        "islandHmm": 51.4,
+        "seatRecessMm": 1.8499999999999999,
+        "keycapBottomNormalMm": 1.6500000000000001,
+        "undersideExtraMm": 0.7,
+        "effectiveMountPlateMm": 1.45
+      },
+      "keycap": {
+        "reference": "MakerWorld low-profile Kailh/Choc flat-top keycap design language",
+        "visibleFootprintMm": [
+          17.0,
+          16.0
+        ],
+        "topFootprintMm": [
+          16.2,
+          15.2
+        ],
+        "visibleHeightMm": 3.2,
+        "previousVisibleHeightMm": 5.0,
+        "heightReductionPercent": 36.0,
+        "flatTopForLabels": true,
+        "recommendedPrintOrientation": "TOP_FACE_DOWN",
+        "stemBossDiameterMm": 9.6,
+        "stemBossDropMm": 1.35,
+        "socketDiameterMm": 7.1,
+        "socketLeadDiameterMm": 7.45,
+        "topWallMm": 1.1500000000000004,
+        "bossRadialWallMm": 1.25
+      },
+      "knob": {
+        "diameterMm": 34.0,
+        "wellDiameterMm": 32.0,
+        "heightMm": 8.5,
+        "lcdBacklightHeightRatio": 0.7112970711297072,
+        "lcdActiveHeightRatio": 0.8333333333333334,
+        "designIntent": "prominent primary dial without competing with the LCD"
+      },
+      "typeC": {
+        "sourceRevision": "A3.29_TYPEC_FRICTION_FIT_ONLY",
+        "sourceScreenCenterYmm": 19.0,
+        "sourceTypecCenterlineYmm": 9.625,
+        "boardLocalTransverseOffsetMm": -9.375,
+        "a413ScreenRotationDeg": 180.0,
+        "a413PortCenterXmm": 13.375,
+        "normalCenterMm": -5.6,
+        "centerToleranceMm": 0.2,
+        "derivation": "A3.29 physically tuned Type-C centerline transformed into the A4.13 board/display frame"
+      },
+      "serviceScrewRecess": {
+        "counterboreDiameterMm": 6.8,
+        "counterboreDepthMm": 3.0,
+        "acceptedHeadEnvelopeDiameterMm": 6.6,
+        "acceptedHeadEnvelopeHeightMm": 2.8,
+        "headBelowDeskPlaneMarginMm": 0.20000000000000018,
+        "localPadDiameterMm": 10.5,
+        "localPadHeightMm": 3.5,
+        "upperBossAxialGapMm": 0.25
+      },
+      "closure": "DUAL_REAR_BAYONET_HOOKS_PLUS_SINGLE_RECESSED_M3"
+    }
+  },
+  "explosion": {
+    "enabled": true,
+    "progressRange": [
+      0.0,
+      1.0
+    ],
+    "description": "Existing 0–100% slider interpolates per-part explodeVectorMm without changing assembly master coordinates."
+  },
+  "selectionGroups": [
+    {
+      "id": "enclosure",
+      "label": "A4.14 外壳 / bezel / 底盖",
+      "memberIds": [
+        "cosmetic_upper_shell",
+        "bottom_service_cover",
+        "screen_bezel"
+      ],
+      "defaultExpanded": true
+    },
+    {
+      "id": "choc-v2-switches",
+      "label": "Choc V2 实际键轴（6）",
+      "memberIds": [
+        "choc_v2_1",
+        "choc_v2_2",
+        "choc_v2_3",
+        "choc_v2_4",
+        "choc_v2_5",
+        "choc_v2_6"
+      ],
+      "defaultExpanded": true
+    },
+    {
+      "id": "keycaps",
+      "label": "A4.14 薄键帽（6）",
+      "memberIds": [
+        "keycap_1",
+        "keycap_2",
+        "keycap_3",
+        "keycap_4",
+        "keycap_5",
+        "keycap_6"
+      ],
+      "defaultExpanded": true
+    },
+    {
+      "id": "esp32-stack",
+      "label": "ESP32 / retainer / Dupont keep-outs",
+      "memberIds": [
+        "waveshare_esp32_s3_lcd_2",
+        "esp32_m3_retainer",
+        "dupont_housing_keepout_1",
+        "dupont_housing_keepout_2",
+        "dupont_wire_bend_keepout_1",
+        "dupont_wire_bend_keepout_2"
+      ],
+      "defaultExpanded": true
+    },
+    {
+      "id": "ec11-stack",
+      "label": "EC11 安装栈",
+      "memberIds": [
+        "ec11_encoder_body_15mm_d_shaft",
+        "ec11_mounting_washer",
+        "ec11_mounting_nut",
+        "ec11_knob_34x8p5"
+      ],
+      "defaultExpanded": true
+    }
+  ],
+  "fitAnalysis": {
+    "status": "PARTIAL_VERIFICATION",
+    "scope": "A4.14 numeric gates + exact baseline hardware overlay",
+    "overview": "Numeric collision/motion gates pass before Web materialization; exact hardware is overlaid for placement review.",
+    "limitations": [
+      "Bambu Studio slicing and PLA first article remain physical gates.",
+      "Dupont keep-outs are engineering envelopes, not frozen SKU dimensions."
+    ]
+  },
+  "parts": [
+    {
+      "id": "cosmetic_upper_shell",
+      "label": "A4.14 soft-edge upper shell",
+      "group": "enclosure",
+      "filename": "cosmetic_upper_shell.stl",
+      "printable": true,
+      "selectionGroupId": "enclosure",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 assembly world coordinates",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 0.4,
+      "bboxMm": [
+        [
+          -70.057,
+          -39.414,
+          -6.2
+        ],
+        [
+          70.057,
+          40.217,
+          23.74
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -4.923172123984315,
+        33.641676180559486
+      ]
+    },
+    {
+      "id": "bottom_service_cover",
+      "label": "A4.14 bayonet cover / recessed M3",
+      "group": "enclosure",
+      "filename": "bottom_service_cover.stl",
+      "printable": true,
+      "selectionGroupId": "enclosure",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 assembly world coordinates",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 0.4,
+      "bboxMm": [
+        [
+          -65.25,
+          -37.25,
+          -6.0
+        ],
+        [
+          65.25,
+          34.8,
+          1.5
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -4.393614757890656,
+        -17.810299154413848
+      ]
+    },
+    {
+      "id": "screen_bezel",
+      "label": "A4.14 screen bezel",
+      "group": "enclosure",
+      "filename": "screen_bezel.stl",
+      "printable": true,
+      "selectionGroupId": "enclosure",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 assembly world coordinates",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 0.4,
+      "bboxMm": [
+        [
+          -15.4,
+          -23.436,
+          13.98
+        ],
+        [
+          23.4,
+          27.545,
+          22.263
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -7.239959005859287,
+        49.47305320670513
+      ]
+    },
+    {
+      "id": "esp32_m3_retainer",
+      "label": "A4.14 ESP32 M3 retainer",
+      "group": "internal",
+      "filename": "esp32_m3_retainer.stl",
+      "printable": true,
+      "selectionGroupId": "esp32-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 assembly world coordinates",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -23.5,
+          -21.769,
+          2.228
+        ],
+        [
+          39.75,
+          36.044,
+          12.915
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        4.3439754035155715,
+        -29.683831924023078
+      ]
+    },
+    {
+      "id": "ec11_knob_34x8p5",
+      "label": "EC11 Ø34 × 8.5 knob",
+      "group": "control",
+      "filename": "ec11_knob_34x8p5.stl",
+      "printable": true,
+      "selectionGroupId": "ec11-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 EC11 datum",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          30.0,
+          -16.81,
+          15.389
+        ],
+        [
+          64.0,
+          17.767,
+          28.427
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -4.3439754035155715,
+        29.683831924023078
+      ]
+    },
+    {
+      "id": "keycap_1",
+      "label": "A4.14 thin Choc keycap 1",
+      "group": "control",
+      "filename": "keycap_1.stl",
+      "printable": true,
+      "selectionGroupId": "keycaps",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 recessed key datum; thin cap slab underside is local Z=0",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -62.0,
+          7.786,
+          20.143
+        ],
+        [
+          -45.0,
+          23.677,
+          26.388
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -3.764778683046829,
+        25.725987667486667
+      ]
+    },
+    {
+      "id": "keycap_2",
+      "label": "A4.14 thin Choc keycap 2",
+      "group": "control",
+      "filename": "keycap_2.stl",
+      "printable": true,
+      "selectionGroupId": "keycaps",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 recessed key datum; thin cap slab underside is local Z=0",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -42.0,
+          7.786,
+          20.143
+        ],
+        [
+          -25.0,
+          23.677,
+          26.388
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -3.4751803228124576,
+        23.74706553921846
+      ]
+    },
+    {
+      "id": "keycap_3",
+      "label": "A4.14 thin Choc keycap 3",
+      "group": "control",
+      "filename": "keycap_3.stl",
+      "printable": true,
+      "selectionGroupId": "keycaps",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 recessed key datum; thin cap slab underside is local Z=0",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -62.0,
+          -8.214,
+          17.802
+        ],
+        [
+          -45.0,
+          7.677,
+          24.047
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -3.764778683046829,
+        25.725987667486667
+      ]
+    },
+    {
+      "id": "keycap_4",
+      "label": "A4.14 thin Choc keycap 4",
+      "group": "control",
+      "filename": "keycap_4.stl",
+      "printable": true,
+      "selectionGroupId": "keycaps",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 recessed key datum; thin cap slab underside is local Z=0",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -42.0,
+          -8.214,
+          17.802
+        ],
+        [
+          -25.0,
+          7.677,
+          24.047
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -3.4751803228124576,
+        23.74706553921846
+      ]
+    },
+    {
+      "id": "keycap_5",
+      "label": "A4.14 thin Choc keycap 5",
+      "group": "control",
+      "filename": "keycap_5.stl",
+      "printable": true,
+      "selectionGroupId": "keycaps",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 recessed key datum; thin cap slab underside is local Z=0",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -62.0,
+          -24.214,
+          15.46
+        ],
+        [
+          -45.0,
+          -8.323,
+          21.705
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -3.764778683046829,
+        25.725987667486667
+      ]
+    },
+    {
+      "id": "keycap_6",
+      "label": "A4.14 thin Choc keycap 6",
+      "group": "control",
+      "filename": "keycap_6.stl",
+      "printable": true,
+      "selectionGroupId": "keycaps",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 recessed key datum; thin cap slab underside is local Z=0",
+      "sourceKind": "A4.14 validated generated geometry",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -42.0,
+          -24.214,
+          15.46
+        ],
+        [
+          -25.0,
+          -8.323,
+          21.705
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -3.4751803228124576,
+        23.74706553921846
+      ]
+    },
+    {
+      "id": "waveshare_esp32_s3_lcd_2",
+      "label": "Waveshare ESP32-S3-LCD-2 / exact baseline vendor STL",
+      "group": "board",
+      "filename": "actual_waveshare_esp32_s3_lcd_2.stl",
+      "printable": false,
+      "selectionGroupId": "esp32-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "exact display datum -> A4.14 screen datum",
+      "sourceKind": "exact Waveshare vendor STEP tessellation",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -13.509,
+          -21.523,
+          0.767
+        ],
+        [
+          21.509,
+          28.434,
+          20.405
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        2.7511844222265287,
+        -18.79976021854795
+      ]
+    },
+    {
+      "id": "choc_v2_1",
+      "label": "Kailh Choc V2 1 / exact baseline STL",
+      "group": "switch",
+      "filename": "actual_choc_v2_1.stl",
+      "printable": false,
+      "selectionGroupId": "choc-v2-switches",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline flange -> A4.14 recessed seat (-0.70 mm)",
+      "sourceKind": "exact baseline Choc V2 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -61.0,
+          8.861,
+          11.734
+        ],
+        [
+          -46.0,
+          23.819,
+          22.15
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        1.592790981289043,
+        -10.88407170547513
+      ]
+    },
+    {
+      "id": "choc_v2_2",
+      "label": "Kailh Choc V2 2 / exact baseline STL",
+      "group": "switch",
+      "filename": "actual_choc_v2_2.stl",
+      "printable": false,
+      "selectionGroupId": "choc-v2-switches",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline flange -> A4.14 recessed seat (-0.70 mm)",
+      "sourceKind": "exact baseline Choc V2 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -41.0,
+          8.861,
+          11.734
+        ],
+        [
+          -26.0,
+          23.819,
+          22.15
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        1.592790981289043,
+        -10.88407170547513
+      ]
+    },
+    {
+      "id": "choc_v2_3",
+      "label": "Kailh Choc V2 3 / exact baseline STL",
+      "group": "switch",
+      "filename": "actual_choc_v2_3.stl",
+      "printable": false,
+      "selectionGroupId": "choc-v2-switches",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline flange -> A4.14 recessed seat (-0.70 mm)",
+      "sourceKind": "exact baseline Choc V2 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -61.0,
+          -7.139,
+          9.393
+        ],
+        [
+          -46.0,
+          7.819,
+          19.808
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        1.592790981289043,
+        -10.88407170547513
+      ]
+    },
+    {
+      "id": "choc_v2_4",
+      "label": "Kailh Choc V2 4 / exact baseline STL",
+      "group": "switch",
+      "filename": "actual_choc_v2_4.stl",
+      "printable": false,
+      "selectionGroupId": "choc-v2-switches",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline flange -> A4.14 recessed seat (-0.70 mm)",
+      "sourceKind": "exact baseline Choc V2 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -41.0,
+          -7.139,
+          9.393
+        ],
+        [
+          -26.0,
+          7.819,
+          19.808
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        1.592790981289043,
+        -10.88407170547513
+      ]
+    },
+    {
+      "id": "choc_v2_5",
+      "label": "Kailh Choc V2 5 / exact baseline STL",
+      "group": "switch",
+      "filename": "actual_choc_v2_5.stl",
+      "printable": false,
+      "selectionGroupId": "choc-v2-switches",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline flange -> A4.14 recessed seat (-0.70 mm)",
+      "sourceKind": "exact baseline Choc V2 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -61.0,
+          -23.139,
+          7.051
+        ],
+        [
+          -46.0,
+          -8.181,
+          17.467
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        1.592790981289043,
+        -10.88407170547513
+      ]
+    },
+    {
+      "id": "choc_v2_6",
+      "label": "Kailh Choc V2 6 / exact baseline STL",
+      "group": "switch",
+      "filename": "actual_choc_v2_6.stl",
+      "printable": false,
+      "selectionGroupId": "choc-v2-switches",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline flange -> A4.14 recessed seat (-0.70 mm)",
+      "sourceKind": "exact baseline Choc V2 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          -41.0,
+          -23.139,
+          7.051
+        ],
+        [
+          -26.0,
+          -8.181,
+          17.467
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        1.592790981289043,
+        -10.88407170547513
+      ]
+    },
+    {
+      "id": "ec11_encoder_body_15mm_d_shaft",
+      "label": "EC11 15 mm D-shaft",
+      "group": "control",
+      "filename": "actual_ec11_encoder_body_15mm_d_shaft.stl",
+      "printable": false,
+      "selectionGroupId": "ec11-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline local -> A4.14 EC11 stack",
+      "sourceKind": "exact baseline EC11 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          40.9,
+          -3.95,
+          0.57
+        ],
+        [
+          53.1,
+          9.992,
+          25.984
+        ]
+      ],
+      "explodeVectorMm": [
+        -0.0,
+        3.4751803228124576,
+        -23.74706553921846
+      ]
+    },
+    {
+      "id": "ec11_mounting_washer",
+      "label": "EC11 washer",
+      "group": "control",
+      "filename": "actual_ec11_mounting_washer.stl",
+      "printable": false,
+      "selectionGroupId": "ec11-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline local -> A4.14 EC11 stack",
+      "sourceKind": "exact baseline EC11 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          41.25,
+          -4.283,
+          14.249
+        ],
+        [
+          52.75,
+          7.166,
+          16.408
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -1.3031926210546716,
+        8.905149577206924
+      ]
+    },
+    {
+      "id": "ec11_mounting_nut",
+      "label": "EC11 nut",
+      "group": "control",
+      "filename": "actual_ec11_mounting_nut.stl",
+      "printable": false,
+      "selectionGroupId": "ec11-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "baseline local -> A4.14 EC11 stack",
+      "sourceKind": "exact baseline EC11 STL",
+      "defaultOpacity": 1.0,
+      "bboxMm": [
+        [
+          41.226,
+          -3.831,
+          14.852
+        ],
+        [
+          52.774,
+          6.353,
+          18.279
+        ]
+      ],
+      "explodeVectorMm": [
+        0.0,
+        -2.3167868818749717,
+        15.831377026145642
+      ]
+    },
+    {
+      "id": "dupont_housing_keepout_1",
+      "label": "Dupont housing keep-out 1",
+      "group": "keepout",
+      "filename": "dupont_housing_keepout_1.stl",
+      "printable": false,
+      "selectionGroupId": "esp32-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 populated-header keep-out",
+      "sourceKind": "engineering proxy; not frozen hardware",
+      "defaultOpacity": 0.18,
+      "bboxMm": [
+        [
+          -15.7,
+          -13.243,
+          -1.482
+        ],
+        [
+          -9.3,
+          21.384,
+          10.169
+        ]
+      ],
+      "explodeVectorMm": [
+        -9.0,
+        4.0543770432812005,
+        -27.704909795754872
+      ]
+    },
+    {
+      "id": "dupont_housing_keepout_2",
+      "label": "Dupont housing keep-out 2",
+      "group": "keepout",
+      "filename": "dupont_housing_keepout_2.stl",
+      "printable": false,
+      "selectionGroupId": "esp32-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 populated-header keep-out",
+      "sourceKind": "engineering proxy; not frozen hardware",
+      "defaultOpacity": 0.18,
+      "bboxMm": [
+        [
+          17.3,
+          -13.243,
+          -1.482
+        ],
+        [
+          23.7,
+          21.384,
+          10.169
+        ]
+      ],
+      "explodeVectorMm": [
+        9.0,
+        4.0543770432812005,
+        -27.704909795754872
+      ]
+    },
+    {
+      "id": "dupont_wire_bend_keepout_1",
+      "label": "Dupont bend keep-out 1",
+      "group": "keepout",
+      "filename": "dupont_wire_bend_keepout_1.stl",
+      "printable": false,
+      "selectionGroupId": "esp32-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 immediate-bend keep-out",
+      "sourceKind": "engineering proxy; not frozen hardware",
+      "defaultOpacity": 0.12,
+      "bboxMm": [
+        [
+          -17.0,
+          -14.773,
+          -4.542
+        ],
+        [
+          -8.0,
+          23.768,
+          7.391
+        ]
+      ],
+      "explodeVectorMm": [
+        -14.0,
+        5.212770484218686,
+        -35.620598308827695
+      ]
+    },
+    {
+      "id": "dupont_wire_bend_keepout_2",
+      "label": "Dupont bend keep-out 2",
+      "group": "keepout",
+      "filename": "dupont_wire_bend_keepout_2.stl",
+      "printable": false,
+      "selectionGroupId": "esp32-stack",
+      "placementStatus": "A4.14 validated placement; first article pending",
+      "placementBasis": "A4.14 immediate-bend keep-out",
+      "sourceKind": "engineering proxy; not frozen hardware",
+      "defaultOpacity": 0.12,
+      "bboxMm": [
+        [
+          16.0,
+          -14.773,
+          -4.542
+        ],
+        [
+          25.0,
+          23.768,
+          7.391
+        ]
+      ],
+      "explodeVectorMm": [
+        14.0,
+        5.212770484218686,
+        -35.620598308827695
+      ]
+    }
+  ]
+}
