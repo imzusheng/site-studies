@@ -250,7 +250,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
      ========================================================= */
   // 键帽幕主角：键帽稍微抬起（露出轴芯间隙即可），盒体仅微微下沉保持在画面内，
   // 键轴与盒体共同入镜构成堆叠特写
-  const HERO_STACK_LIFT = { keycap_2: 14 };
+  const HERO_STACK_LIFT = { keycap_2: 26 };
   const SHOTS = [
     {
       id: "hero", el: "#intro", theme: "pbr", sway: 2.5,
@@ -269,7 +269,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       scrub: { __default: [0, 0] },
       focus: { groups: ["enclosure"] },
       camFn: (prog) => {
-        const t = ctxSmooth(Math.min(Math.max(prog / 0.85, 0), 1));
+        const t = Math.min(Math.max(prog / 0.85, 0), 1);
         const th = DEG(-46 + 52 * t);
         const r = 215 - 35 * t;
         return {
@@ -288,21 +288,19 @@ import { STLLoader } from "/vendor/STLLoader.js";
       focus: { parts: ["keycap_2"] },
       rotFn: (prog) => {
         // 进镜顺时针偏航 60° 展示，离镜前转回正向 → 对称擦洗、换镜零残角无回弹
-        const tIn = Math.min(Math.max((prog - 0.05) / 0.5, 0), 1);
-        const eIn = tIn * tIn * (3 - 2 * tIn);
-        const tOut = Math.min(Math.max((prog - 0.74) / 0.24, 0), 1);
-        const eOut = tOut * tOut * (3 - 2 * tOut);
+        const eIn = Math.min(Math.max((prog - 0.05) / 0.5, 0), 1);
+        const eOut = Math.min(Math.max((prog - 0.74) / 0.24, 0), 1);
         return [0.08, -0.1, -1.05 * (eIn - eOut)];
       },
       camFn: (prog, ctx) => {
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
-        const e = ctx.smoother(Math.min(Math.max((prog - 0.04) / 0.6, 0), 1));
+        const e = Math.min(Math.max((prog - 0.04) / 0.6, 0), 1);
         // 尾段 dolly 与主弧线同向（继续靠近），无反向无停顿
-        const d = 1 - 0.06 * ctx.smoother(Math.min(Math.max((prog - 0.66) / 0.3, 0), 1));
+        const d = 1 - 0.06 * Math.min(Math.max((prog - 0.66) / 0.3, 0), 1);
         // 三段同向路径：入镜衔接人机工学幕末帧 → 侧上方驻留 → 离镜前撤回前上方，
         // 全程滚动可逆掌控；注视点先压到键帽与键轴之间，撤离时回到整机中心
         const ergoEnd = new THREE.Vector3(18.8, -179, 162);
-        const e2 = ctx.smoother(Math.min(Math.max((prog - 0.74) / 0.24, 0), 1));
+        const e2 = Math.min(Math.max((prog - 0.74) / 0.24, 0), 1);
         const off = ergoEnd.sub(a2)
           .lerp(new THREE.Vector3(58, -34, 36).multiplyScalar(d), e)
           .lerp(new THREE.Vector3(34, -122, 108), e2);
@@ -322,7 +320,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       screw: { ec11_knob_26x8p5: 0.5, actual_ec11_mounting_nut: 1.1, actual_ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
       camFn: (prog, ctx) => {
         const a = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
-        const t = ctxSmooth(Math.min(Math.max((prog - 0.05) / 0.85, 0), 1));
+        const t = Math.min(Math.max((prog - 0.05) / 0.85, 0), 1);
         const th = DEG(-28 + 46 * t);
         const r = 190 - 42 * t;
         return {
@@ -341,7 +339,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       focus: { parts: ["screen_bezel", "actual_waveshare_esp32_s3_lcd_2"] },
       camFn: (prog, ctx) => {
         const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
-        const t = ctxSmooth(Math.min(Math.max(prog / 0.9, 0), 1));
+        const t = Math.min(Math.max(prog / 0.9, 0), 1);
         const th = DEG(-26 + 22 * t);
         const r = 262 - 54 * t;
         return {
@@ -358,20 +356,19 @@ import { STLLoader } from "/vendor/STLLoader.js";
       focus: { parts: ["actual_waveshare_esp32_s3_lcd_2", "esp32_m3_retainer"] },
       camFn: (prog, ctx) => {
         const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 2]);
-        const t = ctx.smooth(Math.min(prog / 0.55, 1));
+        const t = Math.min(prog / 0.55, 1);
         const offA = new THREE.Vector3(16, -155, 220);   // 45° 入镜
         const offB = new THREE.Vector3(0, -8, 238);      // 正对 PCB（板面法线朝上）
         const off = offA.clone().lerp(offB, t);
         // 正对后缓推
-        const dolly = 1 - 0.3 * ctx.smooth(Math.min(Math.max((prog - 0.6) / 0.4, 0), 1));
+        const dolly = 1 - 0.3 * Math.min(Math.max((prog - 0.6) / 0.4, 0), 1);
         off.multiplyScalar(dolly);
         return { cam: a.clone().add(off), look: a };
       },
       rotFn: (prog) => {
         // 姿态同步回正：入镜 45° → 正视 0
         const t = Math.min(Math.max(prog / 0.55, 0), 1);
-        const e = 1 - Math.pow(1 - t, 3);
-        return [0.24 * (1 - e), -0.62 * (1 - e), 0];
+        return [0.24 * (1 - t), -0.62 * (1 - t), 0];
       },
     },
     {
@@ -587,7 +584,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
   }
 
   function updateScrollAnimation(time, dt) {
-    currentScrollY += (targetScrollY - currentScrollY) * 0.15;
+    currentScrollY += (targetScrollY - currentScrollY) * 0.18;
 
     const shotId = detectShot();
     const shotChanged = shotId !== state.shot;
@@ -604,7 +601,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     if (state.mode === "ink") {
       partsMap.forEach((p) => {
         if (!p.inkMat) return;
-        p.focusMix += ((p.focusTarget || 0) - p.focusMix) * 0.07;
+        p.focusMix += ((p.focusTarget || 0) - p.focusMix) * 0.12;
         const m = p.focusMix;
         p.inkMat.color.lerpColors(INK_SOLID_COLOR, PAPER_SOLID_COLOR, m);
         p.inkLineMat.color.lerpColors(INK_LINE_COLOR, PAPER_LINE_COLOR, m);
@@ -623,8 +620,8 @@ import { STLLoader } from "/vendor/STLLoader.js";
     for (const key of Object.keys(state.f)) {
       const t = targets[key];
       state.f[key] = t === undefined
-        ? state.f[key] + (0 - state.f[key]) * 0.09
-        : state.f[key] + (t - state.f[key]) * 0.22;
+        ? state.f[key] + (0 - state.f[key]) * 0.25
+        : state.f[key] + (t - state.f[key]) * 0.3;
     }
     for (const key of Object.keys(targets)) {
       if (state.f[key] === undefined) state.f[key] = targets[key];
@@ -641,7 +638,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     }
 
     // ---- 零件位移（scrub 点名零件 id 或组名，其余跟随 __default）----
-    const sinkE = shotId === "keycaps" ? ctxSmooth(Math.min(prog / 0.28, 1)) : 0;
+    const sinkE = shotId === "keycaps" ? Math.min(prog / 0.28, 1) : 0;
     const scrubKeyOf = (part) =>
       scrub[part.id] !== undefined ? part.id
       : scrub[part.group] !== undefined ? part.group
@@ -657,7 +654,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
         part.pivot.position.z += HERO_STACK_LIFT[part.id] * (state.f.keycaps ?? 0);
       } else if (part.fanDir && key !== "__default") {
         // 键帽扇形升起（自原位向外 + 上）
-        part.pivot.position.copy(part.home).addScaledVector(part.fanDir, (state.f[key] ?? 0) * 36);
+        part.pivot.position.copy(part.home).addScaledVector(part.fanDir, (state.f[key] ?? 0) * 26);
       } else if (key !== "__default") {
         part.pivot.position.copy(part.home).addScaledVector(part.explodeVec, (state.f[key] ?? 0) * state.spread);
       } else {
@@ -680,9 +677,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     if (lcdPlane) lcdPlane.visible = state.mode !== "light" &&
       partsMap.get("actual_waveshare_esp32_s3_lcd_2")?.pivot.visible;
 
-    // ---- 相机 / 注视点 / 摇摆运镜 ----
-    const mouseX = (window.__mouseX || 0) * 0.08;
-    const mouseY = (window.__mouseY || 0) * 0.08;
+    // ---- 相机 / 注视点 / 摇摆运镜（滚动为唯一驱动，鼠标不干涉模型姿态）----
 
     // 预测锚点：用本帧 scrub 目标值（而非缓动中的 state.f）求零件末态位置，
     // 机位路径只依赖平滑滚动进度，消除「锚点缓动 × 相机缓动」双层橡皮筋
@@ -696,7 +691,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       if (state.shot === "keycaps" && HERO_STACK_LIFT[partId] !== undefined) {
         local.z += HERO_STACK_LIFT[partId] * (targets.keycaps ?? 0);
       } else if (part.fanDir && key !== "__default") {
-        local.addScaledVector(part.fanDir, f * 36);
+        local.addScaledVector(part.fanDir, f * 26);
       } else {
         local.addScaledVector(part.explodeVec, f * state.spread);
       }
@@ -724,8 +719,8 @@ import { STLLoader } from "/vendor/STLLoader.js";
       lookTarget.set(...(shot.look || [0, 5, 10]));
     }
 
-    state.cam.lerp(camTarget, 0.16);
-    state.look.lerp(lookTarget, 0.16);
+    state.cam.lerp(camTarget, 0.25);
+    state.look.lerp(lookTarget, 0.25);
 
     // 弧形摇摆：相机偏移绕 Z 轴缓摆 → 模型似在缓缓旋转
     const swayRad = DEG(shot.sway ?? 0) * Math.sin(time * 0.24);
@@ -734,9 +729,9 @@ import { STLLoader } from "/vendor/STLLoader.js";
     camera.lookAt(state.look);
 
     const rotGoal = shot.rotFn ? shot.rotFn(prog) : shot.rot;
-    state.rot.x += (rotGoal[0] + mouseY - state.rot.x) * 0.14;
-    state.rot.y += (rotGoal[1] + mouseX - state.rot.y) * 0.14;
-    state.rot.z += (rotGoal[2] - state.rot.z) * 0.14;
+    state.rot.x += (rotGoal[0] - state.rot.x) * 0.2;
+    state.rot.y += (rotGoal[1] - state.rot.y) * 0.2;
+    state.rot.z += (rotGoal[2] - state.rot.z) * 0.2;
     rootGroup.rotation.copy(state.rot);
 
     // ---- Toolbox 引线 / Modules 漂浮标签 ----
@@ -836,11 +831,6 @@ import { STLLoader } from "/vendor/STLLoader.js";
   /* =========================================================
      10. 交互
      ========================================================= */
-  window.addEventListener("mousemove", (e) => {
-    window.__mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    window.__mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
   const bomWeights = { enclosure: 48.6, keycaps: 3.6, switches: 13.8, esp32: 27.4, ec11: 9.8 };
   const partCounts = { enclosure: 3, keycaps: 6, switches: 6, esp32: 2, ec11: 4 };
 
