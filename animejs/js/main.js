@@ -254,18 +254,18 @@ import { STLLoader } from "/vendor/STLLoader.js";
   const SHOTS = [
     {
       id: "hero", el: "#intro", theme: "pbr", sway: 2.5,
-      cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, 0.03],
+      cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, -0.03],
       scrub: { __default: [0, 0] },
     },
     {
       id: "toolbox", el: "#toolbox", theme: "light", sway: 4,
-      cam: [20, -330, 300], look: [0, 0, 0], rot: [0.22, -0.3, 0.42], spread: 1.15,
+      cam: [20, -330, 300], look: [0, 0, 0], rot: [0.22, -0.3, -0.42], spread: 1.15,
       scrub: { __default: [0, 1] },
     },
     {
       // 弧形环绕运镜：左前 3/4 → 右前 3/4 扫过 8.3° 低斜面
       id: "ergonomics", el: '[data-feature="ergonomics"]', theme: "ink", sway: 3,
-      cam: [170, -95, 150], look: [0, 2, 8], rot: [0.05, -0.28, 0],
+      cam: [170, -95, 150], look: [0, 2, 8], rot: [0.05, -0.28, -0.35],
       scrub: { __default: [0, 0] },
       focus: { groups: ["enclosure"] },
       camFn: (prog) => {
@@ -283,14 +283,14 @@ import { STLLoader } from "/vendor/STLLoader.js";
       // 相机弧线扫到键帽侧上方（+28° 俯角），键帽微抬、键轴与盒体入镜；
       // 入镜机位衔接人机工学幕末帧（换镜零跳变）
       id: "keycaps", el: '[data-feature="keycaps"]', theme: "ink", sway: 2,
-      cam: [19, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, 0],
+      cam: [19, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, -0.35],
       scrub: { keycaps: [0.05, 1] },
       focus: { parts: ["keycap_2"] },
       rotFn: (prog) => {
         // 进镜顺时针偏航 60° 展示，离镜前转回正向 → 对称擦洗、换镜零残角无回弹
         const eIn = Math.min(Math.max((prog - 0.05) / 0.5, 0), 1);
         const eOut = Math.min(Math.max((prog - 0.74) / 0.24, 0), 1);
-        return [0.08, -0.1, -1.05 * (eIn - eOut)];
+        return [0.08, -0.1, -0.35 - 0.7 * (eIn - eOut)];
       },
       camFn: (prog, ctx) => {
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
@@ -314,7 +314,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       id: "knob", el: '[data-feature="knob"]', theme: "ink", sway: 2,
       camAnchor: { partId: "ec11_knob_26x8p5", off: [26, -120, 165] },
       lookAnchor: { partId: "ec11_knob_26x8p5", off: [0, 0, 2] },
-      rot: [0.1, -0.15, 0],
+      rot: [0.1, -0.15, -0.35],
       scrub: { "ec11-stack": [0.08, 0.95] },
       focus: { groups: ["ec11-stack"] },
       screw: { ec11_knob_26x8p5: 0.5, actual_ec11_mounting_nut: 1.1, actual_ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
@@ -334,7 +334,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       id: "display", el: '[data-feature="display"]', theme: "ink", sway: 2,
       camAnchor: { partId: "actual_waveshare_esp32_s3_lcd_2", off: [0, -150, 240] },
       lookAnchor: { partId: "actual_waveshare_esp32_s3_lcd_2", off: [0, 0, 4] },
-      rot: [0, 0, 0],
+      rot: [0, 0, -0.3],
       scrub: { screen_bezel: [0, 1] },
       focus: { parts: ["screen_bezel", "actual_waveshare_esp32_s3_lcd_2"] },
       camFn: (prog, ctx) => {
@@ -367,18 +367,18 @@ import { STLLoader } from "/vendor/STLLoader.js";
       },
       rotFn: (prog) => {
         // 姿态同步回正：入镜 45° → 正视 0
-        const t = Math.min(Math.max(prog / 0.55, 0), 1);
-        return [0.24 * (1 - t), -0.62 * (1 - t), 0];
+const t = Math.min(Math.max(prog / 0.55, 0), 1);
+        return [0.24 * (1 - t), -0.62 * (1 - t), -0.3 * (1 - t)];
       },
     },
     {
       id: "modules", el: "#modules", theme: "light", sway: 3,
-      cam: [45, -400, 380], look: [0, 0, 0], rot: [0.22, -0.3, 0.42], spread: 1.9,
+      cam: [45, -400, 380], look: [0, 0, 0], rot: [0.22, -0.3, -0.42], spread: 1.9,
       scrub: { __default: [0.85, 1] },
     },
     {
       id: "specs", el: "#specs", theme: "pbr", sway: 2,
-      cam: [0, -352, 258], look: [0, 5, 11], rot: [0, 0, 0.03],
+      cam: [0, -352, 258], look: [0, 5, 11], rot: [0, 0, -0.03],
       scrub: { __default: [0, 0] },
     },
   ];
@@ -722,9 +722,8 @@ import { STLLoader } from "/vendor/STLLoader.js";
     state.cam.lerp(camTarget, 0.25);
     state.look.lerp(lookTarget, 0.25);
 
-    // 弧形摇摆：相机偏移绕 Z 轴缓摆 → 模型似在缓缓旋转
-    const swayRad = DEG(shot.sway ?? 0) * Math.sin(time * 0.24);
-    camOffset.copy(state.cam).sub(state.look).applyAxisAngle(Z_AXIS, swayRad);
+    // 无往复摆动：旋转只由滚动驱动，方向全片统一（顺时针）
+    camOffset.copy(state.cam).sub(state.look);
     camera.position.copy(state.look).add(camOffset);
     camera.lookAt(state.look);
 
