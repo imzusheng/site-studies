@@ -555,3 +555,24 @@ body.theme-light .feature-bullets { color: var(--text-muted-light); }
   .specs-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; gap: 8px; }
 }
+
+/* ============ 特写分镜参数标注 ============ */
+.callouts { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.callout-set { display: none; }
+body[data-shot="keycaps"] .callout-set[data-for="keycaps"],
+body[data-shot="firmware"] .callout-set[data-for="firmware"] { display: block; }
+.callout {
+  position: absolute; top: 0; left: 0;
+  display: inline-flex; align-items: center;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.06em; color: #f6f4f2;
+  background: rgba(20, 20, 24, 0.85); border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px; padding: 5px 10px;
+  opacity: 0; transform: translate(-300px, -300px);
+  transition: opacity 0.45s var(--ease-out-expo);
+  will-change: transform; white-space: nowrap;
+}
+.callout.is-on { opacity: 1; }
+.callout-set[data-for="keycaps"] .callout { color: #26231f; background: rgba(241, 237, 228, 0.94); border-color: rgba(30, 28, 24, 0.2); }
+.callout-line { stroke: rgba(246, 244, 242, 0.55); stroke-width: 1; fill: none; }
+.callout-set[data-for="keycaps"] ~ * .callout-line { stroke: rgba(30, 28, 24, 0.5); }
