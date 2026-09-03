@@ -289,68 +289,63 @@ import { STLLoader } from "/vendor/STLLoader.js";
     },
     {
       // 直线推近：入镜 = toolbox 末帧机位、出镜 = keycaps 衔接位，
-      // 方位角/距离/高度全程单调（单方向推近，无反打 = 无顺逆时针晃动）
+      // 纯径向 dolly（方位角 0，无相机旋转）+ 姿态恒定 → 幕内零旋转、速度恒定
       id: "ergonomics", el: '[data-feature="ergonomics"]', theme: "ink",
       cam: [0, -330, 300], look: [0, 0, 0], rot: [0.22, -0.3, -0.42], spread: 1.15,
       scrub: { __default: [1, 0] },
       focus: { groups: ["enclosure"] },
       camFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.65, 0), 1);
-        const th = DEG(6.1 * t);
+        const t = Math.min(Math.max(prog, 0), 1);
         const r = 330 - 151.1 * t;
         return {
-          cam: new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, 300 - 138 * t),
+          cam: new THREE.Vector3(0, -r, 300 - 138 * t),
           look: new THREE.Vector3(0, 0, 6 * t),
         };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.65, 0), 1);
-        return [0.22 - 0.14 * t, -0.3 + 0.2 * t, -0.42 + 0.07 * t];
+        const t = Math.min(Math.max(prog, 0), 1);
+        return [0.22 - 0.14 * t, -0.3 + 0.2 * t, -0.42];
       },
     },
     {
-      // 键帽幕：侧上方俯视特写 —— 模型整体顺时针偏航 ~60°（rotFn 驱动），
-      // 相机弧线扫到键帽侧上方（+28° 俯角），键帽微抬、键轴与盒体入镜；
-      // 入镜机位衔接人机工学幕末帧（换镜零跳变）
+      // 键帽幕：侧上方俯视特写 —— 模型整体顺时针偏航 60°（rotFn 驱动，只进不回），
+      // 相机方位角小幅平移（±13°），旋转由模型偏航主导 → 视观方向全程顺时针；
+      // 入镜机位/姿态 = ergo 末帧（换镜零跳变），尾段同向缓撤回正前上方
       id: "keycaps", el: '[data-feature="keycaps"]', theme: "ink",
-      cam: [19, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, -0.35],
+      cam: [0, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, -0.42],
       scrub: { keycaps: [0, 1] },
       focus: { parts: ["keycap_2"] },
       rotFn: (prog) => {
-        // 进镜顺时针偏航 60° 展示，离镜前转回正向 → 对称擦洗、换镜零残角无回弹
-        const eIn = Math.min(Math.max((prog - 0.05) / 0.5, 0), 1);
-        const eOut = Math.min(Math.max((prog - 0.74) / 0.24, 0), 1);
-        return [0.08, -0.1, -0.35 - 0.7 * (eIn - eOut)];
+        const eIn = Math.min(Math.max(prog / 0.5, 0), 1);
+        return [0.08, -0.1, -0.42 - 0.63 * eIn];
       },
       camFn: (prog, ctx) => {
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
-        const e = Math.min(Math.max((prog - 0.04) / 0.6, 0), 1);
-        // 尾段 dolly 与主弧线同向（继续靠近），无反向无停顿
-        const d = 1 - 0.06 * Math.min(Math.max((prog - 0.66) / 0.3, 0), 1);
-        // 三段同向路径：入镜衔接人机工学幕末帧 → 侧上方驻留 → 离镜前撤回前上方，
-        // 全程滚动可逆掌控；注视点先压到键帽与键轴之间，撤离时回到整机中心
-        const ergoEnd = new THREE.Vector3(18.8, -179, 162);
-        const e2 = Math.min(Math.max((prog - 0.74) / 0.24, 0), 1);
-        const off = ergoEnd.sub(a2)
-          .lerp(new THREE.Vector3(58, -34, 36).multiplyScalar(d), e)
-          .lerp(new THREE.Vector3(34, -122, 108), e2);
-        const lookEnd = a2.clone().add(new THREE.Vector3(0, 0, -9));
-        const look = new THREE.Vector3(0, 0, 6).lerp(lookEnd, e).lerp(new THREE.Vector3(0, 0, 6), e2);
+        const t = Math.min(Math.max(prog / 0.55, 0), 1);
+        const t2 = Math.min(Math.max((prog - 0.6) / 0.4, 0), 1);
+        // 入镜偏移 = ergo 末帧 (0,-179,162) 相对主角键帽的偏移 → 换镜零跳变
+        const off = new THREE.Vector3(-43, -194.7, 131.6)
+          .lerp(new THREE.Vector3(24, -100, 62), t)
+          .lerp(new THREE.Vector3(34, -122, 108), t2);
+        const look = new THREE.Vector3(0, 0, 6)
+          .lerp(a2.clone().add(new THREE.Vector3(0, 0, -6)), t)
+          .lerp(new THREE.Vector3(0, 0, 6), t2);
         return { cam: a2.clone().add(off), look };
       },
     },
     {
       // EC11 四件绕自身轴旋转着旋出；机位从键帽幕末帧直线拉回到旋钮特写，
+      // 姿态承接键帽幕的 -1.05 偏航（不回卷，方向统一）；
       // 键帽抬升/扇开随 keycaps 因子携带衰减（区间端点 1→0，边界连续）
       id: "knob", el: '[data-feature="knob"]', theme: "ink",
-      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -0.35],
+      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.05],
       scrub: { "ec11-stack": [0, 0.95], keycaps: [1, 0] },
       focus: { groups: ["ec11-stack"] },
       screw: { ec11_knob_26x8p5: 0.5, actual_ec11_mounting_nut: 1.1, actual_ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
       camFn: (prog, ctx) => {
         const aK = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
-        const t = Math.min(Math.max(prog / 0.65, 0), 1);
+        const t = Math.min(Math.max(prog / 0.7, 0), 1);
         const entryCam = a2.clone().add(new THREE.Vector3(34, -122, 108)); // = keycaps 末帧
         const endCam = aK.clone().add(new THREE.Vector3(Math.sin(DEG(18)) * 148, -Math.cos(DEG(18)) * 148, 148));
         return {
@@ -360,15 +355,16 @@ import { STLLoader } from "/vendor/STLLoader.js";
       },
     },
     {
-      // 屏幕幕：机位从旋钮幕末帧滑到 LCD 45° 斜角再缓推（斜/正对比的前半拍）
+      // 屏幕幕：机位从旋钮幕末帧滑到 LCD 斜角（斜/正对比的前半拍），
+      // 偏航继续顺时针加深（-1.05 → -1.5），方向不回卷
       id: "display", el: '[data-feature="display"]', theme: "ink",
-      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -0.35],
+      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.05],
       scrub: { screen_bezel: [0, 1] },
       focus: { parts: ["screen_bezel", "actual_waveshare_esp32_s3_lcd_2"] },
       camFn: (prog, ctx) => {
         const aL = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
         const aK = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
-        const t = Math.min(Math.max(prog / 0.65, 0), 1);
+        const t = Math.min(Math.max(prog / 0.7, 0), 1);
         const entryCam = aK.clone().add(new THREE.Vector3(Math.sin(DEG(18)) * 148, -Math.cos(DEG(18)) * 148, 148)); // = knob 末帧
         const endCam = aL.clone().add(new THREE.Vector3(Math.sin(DEG(-4)) * 208, -Math.cos(DEG(-4)) * 208, 186));
         return {
@@ -377,42 +373,40 @@ import { STLLoader } from "/vendor/STLLoader.js";
         };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.65, 0), 1);
-        return [0.08 * (1 - t), -0.1 * (1 - t), -0.35 + 0.05 * t];
+        const t = Math.min(Math.max(prog / 0.7, 0), 1);
+        return [0.08 * (1 - t), -0.1 * (1 - t), -1.05 - 0.45 * t];
       },
     },
     {
-      // PCB 正对缓推：入镜偏移 = display 末帧偏移（边界连续），
-      // 姿态从 display 末值线性回正 → 无旋转突跳
+      // 主板幕：模型顺时针偏航翻转 180°（-1.5 → -1.5-π，方向统一不回卷）到背面视角，
+      // PCB 板体随 scrub 提出机壳，相机随机体上升推近 —— 背面 + 爆炸展示核心电子
       id: "firmware", el: '[data-feature="firmware"]', theme: "ink",
-      rot: [0, 0, -0.3],
+      rot: [0, 0, -1.5],
       scrub: { actual_waveshare_esp32_s3_lcd_2: [0, 0.95], esp32_m3_retainer: [0, 0.7], screen_bezel: [1, 0] },
       focus: { parts: ["actual_waveshare_esp32_s3_lcd_2", "esp32_m3_retainer"] },
       camFn: (prog, ctx) => {
         const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
+        const t = Math.min(Math.max(prog / 0.55, 0), 1);
         const offA = new THREE.Vector3(Math.sin(DEG(-4)) * 208, -Math.cos(DEG(-4)) * 208, 186); // = display 末帧偏移
-        const offB = new THREE.Vector3(0, -8, 238);      // 正对 PCB（板面法线朝上）
+        const offB = new THREE.Vector3(10, -150, 190);   // 背面高角：越过侧壁俯视板体
         const off = offA.lerp(offB, t);
-        // 正对后缓推
-        const dolly = 1 - 0.3 * Math.min(Math.max((prog - 0.5) / 0.35, 0), 1);
-        off.multiplyScalar(dolly);
         return { cam: a.clone().add(off), look: a };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        return [0, 0, -0.3 * (1 - t)];
+        const t = Math.min(Math.max(prog / 0.6, 0), 1);
+        return [0, 0, -1.5 - Math.PI * t];
       },
     },
     {
-      // 总览幕：机位从 PCB 正视拉回全景，散点爆炸铺开（机位起步 = firmware 末帧）
+      // 总览幕：机位从 PCB 背面拉回全景，散点爆炸铺开；
+      // 偏航继续顺时针（-4.64 → -6.70 ≡ -0.42，视觉构图不变、方向不回卷）
       id: "modules", el: "#modules", theme: "light",
-      cam: [0, -6, 175], look: [0, 0, 8], rot: [0, 0, 0], spread: 1.9,
+      cam: [0, -6, 175], look: [0, 0, 8], rot: [0, 0, -4.64], spread: 1.9,
       scrub: { __default: [0, 1] },
       camFn: (prog, ctx) => {
         const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
         const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        const entryCam = a.clone().add(new THREE.Vector3(0, -8, 238).multiplyScalar(0.7)); // = firmware 末帧
+        const entryCam = a.clone().add(new THREE.Vector3(10, -150, 190)); // = firmware 末帧
         return {
           cam: entryCam.lerp(new THREE.Vector3(45, -400, 380), t),
           look: a.clone().lerp(new THREE.Vector3(0, 0, 0), t),
@@ -420,13 +414,14 @@ import { STLLoader } from "/vendor/STLLoader.js";
       },
       rotFn: (prog) => {
         const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        return [0.22 * t, -0.3 * t, -0.42 * t];
+        return [0.22 * t, -0.3 * t, -4.64 - 2.06 * t];
       },
     },
     {
-      // 规格幕：机位起步 = modules 末帧，爆炸因子携带衰减（1→0）边收拢边回到正面
+      // 规格幕：机位起步 = modules 末帧，爆炸因子携带衰减（1→0）边收拢边回到正面；
+      // 偏航 -6.70 → -6.31 ≡ -0.03（与 hero 同构，继续顺时针）
       id: "specs", el: "#specs", theme: "pbr",
-      cam: [45, -400, 380], look: [0, 0, 0], rot: [0.22, -0.3, -0.42], spread: 1.9,
+      cam: [45, -400, 380], look: [0, 0, 0], rot: [0.22, -0.3, -6.7], spread: 1.9,
       scrub: { __default: [1, 0] },
       camFn: (prog) => {
         const t = Math.min(Math.max(prog / 0.5, 0), 1);
@@ -437,7 +432,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       },
       rotFn: (prog) => {
         const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        return [0.22 * (1 - t), -0.3 * (1 - t), -0.42 + 0.39 * t];
+        return [0.22 * (1 - t), -0.3 * (1 - t), -6.7 + 0.39 * t];
       },
     },
   ];
@@ -474,7 +469,9 @@ import { STLLoader } from "/vendor/STLLoader.js";
     if (!el) return 0;
     const vh = window.innerHeight;
     const adjTop = sectionTop(el);
-    const span = Math.max(el.getBoundingClientRect().height - vh * 0.25, 1);
+    // 进度跨度 = 整段区块高度 → prog 恰好在下一幕换镜点到达 1：
+    // 动作无缝延续到换镜瞬间，幕尾没有冻结死区（速度全程一致）
+    const span = Math.max(el.getBoundingClientRect().height, 1);
     // 进度零点 = 换镜判定点（区块顶边过中线）→ 跨界瞬间 prog=0，
     // camFn(0) = 上一幕末帧 → 机位严格连续
     return Math.min(1, Math.max(0, (vh * 0.5 - adjTop) / span));
