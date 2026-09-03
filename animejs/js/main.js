@@ -390,17 +390,25 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
     return el.getBoundingClientRect().top + (currentScrollY - window.scrollY);
   }
 
-  // 滚动侦探（scrollspy）：按文档序取最后一个顶点越过视口中线的分镜。
-  // 相比「中点落在元素内」判定，相邻分镜间隙不会闪回 hero 造成运镜跳切
+  // 换镜滞回锁：前进即刻生效；回退必须真正滚回边界外一段余量才允许，
+  // 边界处的毫米级抖动（或浏览器滚动锚定回拨）不再造成「闪回上一分镜」
+  let shotIdx = 0;
   function detectShot() {
     const center = window.innerHeight * 0.5;
-    let best = SHOTS[0].id;
-    for (const shot of SHOTS) {
-      const el = document.querySelector(shot.el);
+    const margin = window.innerHeight * 0.12;
+    let last = 0;
+    for (let i = 0; i < SHOTS.length; i++) {
+      const el = document.querySelector(SHOTS[i].el);
       if (!el) continue;
-      if (smoothedRectTop(el) <= center) best = shot.id;
+      if (smoothedRectTop(el) <= center) last = i;
     }
-    return best;
+    if (last > shotIdx) {
+      shotIdx = last;
+    } else if (last < shotIdx) {
+      const el = document.querySelector(SHOTS[shotIdx].el);
+      if (el && smoothedRectTop(el) > center + margin) shotIdx = last;
+    }
+    return SHOTS[shotIdx].id;
   }
 
   function shotProgress(shot) {
@@ -566,6 +574,9 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
   /* =========================================================
      7. 每帧更新
      ========================================================= */
+  // 帧率无关阻尼：k 为每秒收敛率。掉帧时单帧补偿自动放大，
+  // 平滑滚动/相机/旋转不会因低帧率深度滞后（滞后正是「闪回上一分镜」的根源）
+  const damp = (k, dt) => 1 - Math.exp(-k * dt);
   let targetScrollY = window.scrollY;
   let currentScrollY = window.scrollY;
   window.addEventListener("scroll", () => { targetScrollY = window.scrollY; }, { passive: true });
@@ -584,7 +595,7 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
   }
 
   function updateScrollAnimation(time, dt) {
-    currentScrollY += (targetScrollY - currentScrollY) * 0.18;
+    currentScrollY += (targetScrollY - currentScrollY) * damp(11, dt);
 
     const shotId = detectShot();
     const shotChanged = shotId !== state.shot;
@@ -601,7 +612,7 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
     if (state.mode === "ink") {
       partsMap.forEach((p) => {
         if (!p.inkMat) return;
-        p.focusMix += ((p.focusTarget || 0) - p.focusMix) * 0.12;
+        p.focusMix += ((p.focusTarget || 0) - p.focusMix) * damp(8, dt);
         const m = p.focusMix;
         p.inkMat.color.lerpColors(INK_SOLID_COLOR, PAPER_SOLID_COLOR, m);
         p.inkLineMat.color.lerpColors(INK_LINE_COLOR, PAPER_LINE_COLOR, m);
@@ -620,8 +631,8 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
     for (const key of Object.keys(state.f)) {
       const t = targets[key];
       state.f[key] = t === undefined
-        ? state.f[key] + (0 - state.f[key]) * 0.25
-        : state.f[key] + (t - state.f[key]) * 0.3;
+        ? state.f[key] + (0 - state.f[key]) * damp(16, dt)
+        : state.f[key] + (t - state.f[key]) * damp(18, dt);
     }
     for (const key of Object.keys(targets)) {
       if (state.f[key] === undefined) state.f[key] = targets[key];
@@ -629,7 +640,7 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
 
     state.explosion = state.f.__default;
     const targetSpread = shot.spread ?? 1;
-    state.spread += (targetSpread - state.spread) * 0.08;
+    state.spread += (targetSpread - state.spread) * damp(10, dt);
 
     if (explosionFill && explosionPercent) {
       const pct = Math.round(state.explosion * 100);
@@ -719,8 +730,8 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
       lookTarget.set(...(shot.look || [0, 5, 10]));
     }
 
-    state.cam.lerp(camTarget, 0.25);
-    state.look.lerp(lookTarget, 0.25);
+    state.cam.lerp(camTarget, damp(15, dt));
+    state.look.lerp(lookTarget, damp(15, dt));
 
     // 无往复摆动：旋转只由滚动驱动，方向全片统一（顺时针）
     camOffset.copy(state.cam).sub(state.look);
@@ -728,9 +739,9 @@ const t = Math.min(Math.max(prog / 0.55, 0), 1);
     camera.lookAt(state.look);
 
     const rotGoal = shot.rotFn ? shot.rotFn(prog) : shot.rot;
-    state.rot.x += (rotGoal[0] - state.rot.x) * 0.2;
-    state.rot.y += (rotGoal[1] - state.rot.y) * 0.2;
-    state.rot.z += (rotGoal[2] - state.rot.z) * 0.2;
+    state.rot.x += (rotGoal[0] - state.rot.x) * damp(12, dt);
+    state.rot.y += (rotGoal[1] - state.rot.y) * damp(12, dt);
+    state.rot.z += (rotGoal[2] - state.rot.z) * damp(12, dt);
     rootGroup.rotation.copy(state.rot);
 
     // ---- Toolbox 引线 / Modules 漂浮标签 ----

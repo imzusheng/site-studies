@@ -60,6 +60,8 @@ html {
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* 禁用浏览器滚动锚定：布局微变时 Chrome 会自行回拨 scrollY，导致分镜状态闪回 */
+  overflow-anchor: none;
 }
 
 body {
