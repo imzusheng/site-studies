@@ -287,25 +287,28 @@ import { STLLoader } from "/vendor/STLLoader.js";
       scrub: { keycaps: [0.05, 1] },
       focus: { parts: ["keycap_2"] },
       rotFn: (prog) => {
-        // 模型顺时针转 60°：入镜后前 60% 滚动内完成偏航
-        const t = Math.min(Math.max((prog - 0.05) / 0.6, 0), 1);
-        const e = t * t * (3 - 2 * t);
-        return [0.08, -0.1, -1.05 * e];
+        // 进镜顺时针偏航 60° 展示，离镜前转回正向 → 对称擦洗、换镜零残角无回弹
+        const tIn = Math.min(Math.max((prog - 0.05) / 0.5, 0), 1);
+        const eIn = tIn * tIn * (3 - 2 * tIn);
+        const tOut = Math.min(Math.max((prog - 0.74) / 0.24, 0), 1);
+        const eOut = tOut * tOut * (3 - 2 * tOut);
+        return [0.08, -0.1, -1.05 * (eIn - eOut)];
       },
       camFn: (prog, ctx) => {
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
         const e = ctx.smoother(Math.min(Math.max((prog - 0.04) / 0.6, 0), 1));
         // 尾段 dolly 与主弧线同向（继续靠近），无反向无停顿
         const d = 1 - 0.06 * ctx.smoother(Math.min(Math.max((prog - 0.66) / 0.3, 0), 1));
-        // 入镜偏移 = 人机工学幕末帧机位相对主角键帽的偏移 → 换镜零跳变；
-        // 末帧侧上方俯视（+28°），注视点落在键帽与键轴之间 → 堆叠全部入镜
+        // 三段同向路径：入镜衔接人机工学幕末帧 → 侧上方驻留 → 离镜前撤回前上方，
+        // 全程滚动可逆掌控；注视点先压到键帽与键轴之间，撤离时回到整机中心
         const ergoEnd = new THREE.Vector3(18.8, -179, 162);
-        const off = ergoEnd.sub(a2).lerp(new THREE.Vector3(58, -34, 36).multiplyScalar(d), e);
+        const e2 = ctx.smoother(Math.min(Math.max((prog - 0.74) / 0.24, 0), 1));
+        const off = ergoEnd.sub(a2)
+          .lerp(new THREE.Vector3(58, -34, 36).multiplyScalar(d), e)
+          .lerp(new THREE.Vector3(34, -122, 108), e2);
         const lookEnd = a2.clone().add(new THREE.Vector3(0, 0, -9));
-        return {
-          cam: a2.clone().add(off),
-          look: new THREE.Vector3(0, 0, 6).lerp(lookEnd, e),
-        };
+        const look = new THREE.Vector3(0, 0, 6).lerp(lookEnd, e).lerp(new THREE.Vector3(0, 0, 6), e2);
+        return { cam: a2.clone().add(off), look };
       },
     },
     {
@@ -584,7 +587,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
   }
 
   function updateScrollAnimation(time, dt) {
-    currentScrollY += (targetScrollY - currentScrollY) * 0.1;
+    currentScrollY += (targetScrollY - currentScrollY) * 0.15;
 
     const shotId = detectShot();
     const shotChanged = shotId !== state.shot;
@@ -621,7 +624,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       const t = targets[key];
       state.f[key] = t === undefined
         ? state.f[key] + (0 - state.f[key]) * 0.09
-        : state.f[key] + (t - state.f[key]) * 0.1;
+        : state.f[key] + (t - state.f[key]) * 0.22;
     }
     for (const key of Object.keys(targets)) {
       if (state.f[key] === undefined) state.f[key] = targets[key];
@@ -721,8 +724,8 @@ import { STLLoader } from "/vendor/STLLoader.js";
       lookTarget.set(...(shot.look || [0, 5, 10]));
     }
 
-    state.cam.lerp(camTarget, 0.07);
-    state.look.lerp(lookTarget, 0.07);
+    state.cam.lerp(camTarget, 0.16);
+    state.look.lerp(lookTarget, 0.16);
 
     // 弧形摇摆：相机偏移绕 Z 轴缓摆 → 模型似在缓缓旋转
     const swayRad = DEG(shot.sway ?? 0) * Math.sin(time * 0.24);
@@ -731,9 +734,9 @@ import { STLLoader } from "/vendor/STLLoader.js";
     camera.lookAt(state.look);
 
     const rotGoal = shot.rotFn ? shot.rotFn(prog) : shot.rot;
-    state.rot.x += (rotGoal[0] + mouseY - state.rot.x) * 0.06;
-    state.rot.y += (rotGoal[1] + mouseX - state.rot.y) * 0.06;
-    state.rot.z += (rotGoal[2] - state.rot.z) * 0.06;
+    state.rot.x += (rotGoal[0] + mouseY - state.rot.x) * 0.14;
+    state.rot.y += (rotGoal[1] + mouseX - state.rot.y) * 0.14;
+    state.rot.z += (rotGoal[2] - state.rot.z) * 0.14;
     rootGroup.rotation.copy(state.rot);
 
     // ---- Toolbox 引线 / Modules 漂浮标签 ----
