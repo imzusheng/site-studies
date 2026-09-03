@@ -56,6 +56,7 @@
         <!-- 顶部遥测信息栏 -->
         <div class="hud-bar hud-bar-top">
           <span class="hud-item"><i class="hud-dot"></i>LUMA//A3.32-R2</span>
+          <span class="hud-item hud-accent" id="hud-shot">SHOT: HERO</span>
           <span class="hud-item">DATUM: [A][B][C]</span>
           <span class="hud-item">KEY PITCH: 19.5 mm</span>
           <span class="hud-item hud-accent">SYS_ARMED</span>
@@ -255,6 +256,11 @@
             <span class="eyebrow color-cyan">04 · DISPLAY CORE</span>
             <h3>2.0" IPS ST7789V Display</h3>
             <p>240×320 sharp RGB IPS matrix directly driven by ESP32-S3 SPI peripheral at 40MHz DMA for fluid LVGL UI rendering.</p>
+            <ul class="feature-bullets">
+              <li>ST7789V @ 40 MHZ SPI DMA</li>
+              <li>LVGL v9 DOUBLE BUFFER</li>
+              <li>ANTI-GLARE BEZEL SHIELD</li>
+            </ul>
           </div>
           <div class="feature-card">
             <div class="card-header"><span>display_driver.c</span><span class="card-badge">LVGL v9</span></div>
@@ -262,6 +268,27 @@
 esp_lcd_new_panel_st7789(io, &panel_config);
 lv_init();
 lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
+          </div>
+
+        <div class="feature-item" data-feature="firmware">
+          <div class="feature-text">
+            <span class="eyebrow color-purple">05 · COMPUTE CORE</span>
+            <h3>ESP32-S3, Up Close</h3>
+            <p>The board lifts out of the deck for service in two M3 turns. Dual-core LX7 at 240 MHz, 8MB PSRAM, Wi-Fi and BLE 5 — flashed over USB-C or OTA.</p>
+            <ul class="feature-bullets">
+              <li>DUAL-CORE LX7 @ 240 MHZ</li>
+              <li>8MB PSRAM / 16MB FLASH</li>
+              <li>WI-FI + BLE 5 / MQTT HA</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <div class="card-header"><span>firmware_main.c</span><span class="card-badge">ESP-IDF v5.5</span></div>
+            <pre><code>void app_main(void) {
+  luma_board_init();      // ST7789 + EC11 + keys
+  ha_mqtt_start();        // Home Assistant link
+  lv_ui_attach(disp);     // LVGL v9 shell
+  xTaskCreate(loop, "core", ...);
+}</code></pre>
           </div>
         </div>
       </section>

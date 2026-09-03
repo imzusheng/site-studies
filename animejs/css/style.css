@@ -404,6 +404,16 @@ body.theme-light .section-desc { color: var(--text-muted-light); }
 .feature-card pre { overflow-x: auto; margin: 0; color: #e2e2e4; line-height: 1.6; }
 .feature-card code { font-family: inherit; }
 
+.color-purple { color: #bf5af2 !important; }
+.feature-bullets {
+  list-style: none; margin: 18px 0 0; padding: 14px 0 0;
+  border-top: 1px solid rgba(128,124,116,0.3);
+  display: flex; flex-direction: column; gap: 8px;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; color: var(--text-muted-dark);
+}
+body.theme-light .feature-bullets { color: var(--text-muted-light); }
+.feature-bullets li::before { content: "→ "; color: var(--neon-red); }
 .color-orange { color: var(--neon-orange) !important; }
 .color-red { color: var(--neon-red) !important; }
 .color-green { color: var(--neon-green) !important; }
