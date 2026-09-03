@@ -1,10 +1,12 @@
 /* =========================================================
-   Luma Remote A3.32 — 分镜驱动 3D 引擎 v3
+   Luma Remote A3.32 — 分镜驱动 3D 引擎 v5
    · Shot State Machine：每分镜独立机位/注视点/局部爆炸组
-   · 滚动擦洗爆炸（scrub）：分镜内滚动推进拆解进度
+   · 滚动擦洗爆炸（scrub）：分镜内滚动推进拆解进度（零件 id / 组名双键解析）
+   · 运镜编排（camFn）：滚动进度驱动的推轨/环绕/旋转入场
    · 摇摆运镜（sway）：分镜内相机绕注视点缓慢弧形漂移
-   · 三态材质：PBR 赛博微光 / CAD 纸面墨线 / INK 暗面线稿（特写用，省性能）
-   · 动态 LCD 屏幕纹理按分镜切换界面
+   · 三态材质：PBR 赛博微光 / CAD 纸面墨线 / INK 暗面双层描线（特写用，省性能）
+   · 中心枢轴：几何平移至零件中心，自转绕自身轴
+   · 动态 LCD 屏幕纹理按分镜切换界面，跟随主板位移
    ========================================================= */
 
 import * as THREE from "/vendor/three.module.js";
@@ -26,8 +28,8 @@ import { STLLoader } from "/vendor/STLLoader.js";
     explosion: 0,
     spread: 1.0,
     f: { __default: 0 },
-    cam: new THREE.Vector3(0, -250, 195),
-    look: new THREE.Vector3(0, 5, 10),
+    cam: new THREE.Vector3(0, -332, 244),
+    look: new THREE.Vector3(0, 3, 11),
     rot: new THREE.Euler(0, 0, 0.03),
     activeSubsystems: { enclosure: true, keycaps: true, switches: true, esp32: true, ec11: true },
     loaded: false,
@@ -83,13 +85,20 @@ import { STLLoader } from "/vendor/STLLoader.js";
     // CAD 纸面墨线（toolbox / modules）
     lightSolid: new THREE.MeshStandardMaterial({ color: 0xf5f2e9, roughness: 0.95, metalness: 0.0, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 }),
     lightLine: new THREE.LineBasicMaterial({ color: 0x1c1a17, linewidth: 1.4, transparent: true, opacity: 0.95 }),
-    // INK 暗面线稿（feature 特写：暗底 + 白线，MeshBasic 零光照开销）
-    inkSolid: new THREE.MeshBasicMaterial({ color: 0x17171c, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 }),
-    inkLineDim: new THREE.LineBasicMaterial({ color: 0xf6f4f2, linewidth: 1, transparent: true, opacity: 0.16 }),
+    // INK 暗面线稿（feature 特写）：Standard 材质便于焦点混搭时与纸面色逐帧插值
+    inkSolid: new THREE.MeshStandardMaterial({ color: 0x17171c, roughness: 0.9, metalness: 0.0, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 }),
+    inkLineDim: new THREE.LineBasicMaterial({ color: 0xf6f4f2, linewidth: 1, transparent: true, opacity: 0.42 }),
+    inkLineMicro: new THREE.LineBasicMaterial({ color: 0xf6f4f2, linewidth: 1, transparent: true, opacity: 0.13 }),
     inkLineHot: new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 1.4, transparent: true, opacity: 0.9 }),
     // CAD 模式下的白轮廓（暗背景模式备用）
     darkLine: new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 1, transparent: true, opacity: 0.16 }),
   };
+
+  // 焦点混搭两端色：暗面配角 ↔ 纸面主角（每零件实例逐帧插值，换镜不再闪切）
+  const INK_SOLID_COLOR = new THREE.Color(0x17171c);
+  const PAPER_SOLID_COLOR = new THREE.Color(0xf5f2e9);
+  const INK_LINE_COLOR = new THREE.Color(0xf6f4f2);
+  const PAPER_LINE_COLOR = new THREE.Color(0x1c1a17);
 
   /* =========================================================
      3. LCD 动态屏幕纹理（按分镜切换界面）
@@ -104,16 +113,19 @@ import { STLLoader } from "/vendor/STLLoader.js";
 
   function lcdBase(title, accent) {
     const w = lcdCanvas.width, h = lcdCanvas.height;
-    lcdCtx.fillStyle = "#0c1018";
+    lcdCtx.fillStyle = "#080c12";
     lcdCtx.fillRect(0, 0, w, h);
-    lcdCtx.fillStyle = "rgba(255,255,255,0.12)";
+    lcdCtx.fillStyle = "rgba(255,255,255,0.16)";
     lcdCtx.fillRect(0, 0, w, 44);
     lcdCtx.fillStyle = "#64d2ff";
-    lcdCtx.font = "bold 20px IBMPlexMono, monospace";
-    lcdCtx.fillText("9:41", 24, 30);
+    lcdCtx.shadowColor = "#64d2ff"; lcdCtx.shadowBlur = 8;
+    lcdCtx.font = "bold 21px IBMPlexMono, monospace";
+    lcdCtx.fillText("9:41", 24, 31);
+    lcdCtx.shadowColor = accent || "#30d158"; lcdCtx.shadowBlur = 8;
     lcdCtx.fillStyle = accent || "#30d158";
-    lcdCtx.font = "15px IBMPlexMono, monospace";
-    lcdCtx.fillText(title, 190, 30);
+    lcdCtx.font = "bold 16px IBMPlexMono, monospace";
+    lcdCtx.fillText(title, 190, 31);
+    lcdCtx.shadowBlur = 0;
   }
 
   function updateLcdScreen(time) {
@@ -122,11 +134,11 @@ import { STLLoader } from "/vendor/STLLoader.js";
 
     if (shot === "display") {
       lcdBase("SCOPE", "#ff3b30");
-      lcdCtx.strokeStyle = "rgba(255,255,255,0.08)";
+      lcdCtx.strokeStyle = "rgba(255,255,255,0.13)";
       lcdCtx.lineWidth = 2;
       for (let gx = 0; gx <= w; gx += 48) { lcdCtx.beginPath(); lcdCtx.moveTo(gx, 60); lcdCtx.lineTo(gx, h - 20); lcdCtx.stroke(); }
       for (let gy = 60; gy <= h - 20; gy += 48) { lcdCtx.beginPath(); lcdCtx.moveTo(0, gy); lcdCtx.lineTo(w, gy); lcdCtx.stroke(); }
-      lcdCtx.strokeStyle = "#ff3b30"; lcdCtx.lineWidth = 5;
+      lcdCtx.strokeStyle = "#ff3b30"; lcdCtx.lineWidth = 6;
       lcdCtx.shadowColor = "#ff3b30"; lcdCtx.shadowBlur = 16;
       lcdCtx.beginPath();
       for (let x = 0; x < w; x += 5) {
@@ -236,10 +248,13 @@ import { STLLoader } from "/vendor/STLLoader.js";
      sway: 相机绕注视点的弧形漂移幅度（度）
      focus: INK 模式下白亮描线的焦点零件/组
      ========================================================= */
+  // 键帽幕主角：键帽稍微抬起（露出轴芯间隙即可），盒体仅微微下沉保持在画面内，
+  // 键轴与盒体共同入镜构成堆叠特写
+  const HERO_STACK_LIFT = { keycap_2: 14 };
   const SHOTS = [
     {
       id: "hero", el: "#intro", theme: "pbr", sway: 2.5,
-      cam: [0, -250, 195], look: [0, 5, 10], rot: [0, 0, 0.03],
+      cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, 0.03],
       scrub: { __default: [0, 0] },
     },
     {
@@ -248,48 +263,89 @@ import { STLLoader } from "/vendor/STLLoader.js";
       scrub: { __default: [0, 1] },
     },
     {
-      id: "ergonomics", el: '[data-feature="ergonomics"]', theme: "ink", sway: 5,
-      cam: [170, -95, 150], look: [0, 2, 8], rot: [0.05, -0.5, 0],
+      // 弧形环绕运镜：左前 3/4 → 右前 3/4 扫过 8.3° 低斜面
+      id: "ergonomics", el: '[data-feature="ergonomics"]', theme: "ink", sway: 3,
+      cam: [170, -95, 150], look: [0, 2, 8], rot: [0.05, -0.28, 0],
       scrub: { __default: [0, 0] },
       focus: { groups: ["enclosure"] },
-    },
-    {
-      // 三拍运镜：整机下沉 → 键帽扇形升起 → 推近单键慢自转（纸面主角）
-      id: "keycaps", el: '[data-feature="keycaps"]', theme: "ink", sway: 3,
-      rot: [0.08, -0.1, 0],
-      scrub: { keycaps: [0.05, 1] },
-      focus: { parts: ["keycap_2"] },
-      camFn: (prog, ctx) => {
-        const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
-        const t = ctx.smooth(Math.min(Math.max((prog - 0.3) / 0.32, 0), 1));
-        const wideCam = new THREE.Vector3(70, -280, 250);
-        const wideLook = new THREE.Vector3(0, 0, 6);
-        // 推近后带一点点 dolly-in
-        const dolly = 1 - 0.18 * ctx.smooth(Math.min(Math.max((prog - 0.68) / 0.32, 0), 1));
-        const off = new THREE.Vector3(-36, -110, 156).multiplyScalar(dolly);
-        const cam = wideCam.clone().lerp(a2.clone().add(off), t);
-        const look = wideLook.clone().lerp(a2, t);
-        return { cam, look };
+      camFn: (prog) => {
+        const t = ctxSmooth(Math.min(Math.max(prog / 0.85, 0), 1));
+        const th = DEG(-46 + 52 * t);
+        const r = 215 - 35 * t;
+        return {
+          cam: new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, 126 + 36 * t),
+          look: new THREE.Vector3(0, 0, 6),
+        };
       },
     },
     {
-      // EC11 四件绕轴旋转着旋出（螺母/垫片边转边退）
-      id: "knob", el: '[data-feature="knob"]', theme: "ink", sway: 5,
+      // 键帽幕：侧上方俯视特写 —— 模型整体顺时针偏航 ~60°（rotFn 驱动），
+      // 相机弧线扫到键帽侧上方（+28° 俯角），键帽微抬、键轴与盒体入镜；
+      // 入镜机位衔接人机工学幕末帧（换镜零跳变）
+      id: "keycaps", el: '[data-feature="keycaps"]', theme: "ink", sway: 2,
+      cam: [19, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, 0],
+      scrub: { keycaps: [0.05, 1] },
+      focus: { parts: ["keycap_2"] },
+      rotFn: (prog) => {
+        // 模型顺时针转 60°：入镜后前 60% 滚动内完成偏航
+        const t = Math.min(Math.max((prog - 0.05) / 0.6, 0), 1);
+        const e = t * t * (3 - 2 * t);
+        return [0.08, -0.1, -1.05 * e];
+      },
+      camFn: (prog, ctx) => {
+        const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
+        const e = ctx.smoother(Math.min(Math.max((prog - 0.04) / 0.6, 0), 1));
+        // 尾段 dolly 与主弧线同向（继续靠近），无反向无停顿
+        const d = 1 - 0.06 * ctx.smoother(Math.min(Math.max((prog - 0.66) / 0.3, 0), 1));
+        // 入镜偏移 = 人机工学幕末帧机位相对主角键帽的偏移 → 换镜零跳变；
+        // 末帧侧上方俯视（+28°），注视点落在键帽与键轴之间 → 堆叠全部入镜
+        const ergoEnd = new THREE.Vector3(18.8, -179, 162);
+        const off = ergoEnd.sub(a2).lerp(new THREE.Vector3(58, -34, 36).multiplyScalar(d), e);
+        const lookEnd = a2.clone().add(new THREE.Vector3(0, 0, -9));
+        return {
+          cam: a2.clone().add(off),
+          look: new THREE.Vector3(0, 0, 6).lerp(lookEnd, e),
+        };
+      },
+    },
+    {
+      // EC11 四件绕自身轴旋转着旋出 + 环绕旋钮弧形运镜
+      id: "knob", el: '[data-feature="knob"]', theme: "ink", sway: 2,
       camAnchor: { partId: "ec11_knob_26x8p5", off: [26, -120, 165] },
       lookAnchor: { partId: "ec11_knob_26x8p5", off: [0, 0, 2] },
-      rot: [0.12, -0.2, 0],
+      rot: [0.1, -0.15, 0],
       scrub: { "ec11-stack": [0.08, 0.95] },
       focus: { groups: ["ec11-stack"] },
       screw: { ec11_knob_26x8p5: 0.5, actual_ec11_mounting_nut: 1.1, actual_ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
+      camFn: (prog, ctx) => {
+        const a = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
+        const t = ctxSmooth(Math.min(Math.max((prog - 0.05) / 0.85, 0), 1));
+        const th = DEG(-28 + 46 * t);
+        const r = 190 - 42 * t;
+        return {
+          cam: a.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, 104 + 44 * t)),
+          look: a.clone().add(new THREE.Vector3(0, 0, 2)),
+        };
+      },
     },
     {
-      // 屏幕幕保持 45° 斜角（与芯片幕形成斜/正对比）
-      id: "display", el: '[data-feature="display"]', theme: "ink", sway: 5,
+      // 屏幕幕 45° 斜角环绕缓推（与芯片幕的正视形成斜/正对比）
+      id: "display", el: '[data-feature="display"]', theme: "ink", sway: 2,
       camAnchor: { partId: "actual_waveshare_esp32_s3_lcd_2", off: [0, -150, 240] },
       lookAnchor: { partId: "actual_waveshare_esp32_s3_lcd_2", off: [0, 0, 4] },
       rot: [0, 0, 0],
       scrub: { screen_bezel: [0, 1] },
       focus: { parts: ["screen_bezel", "actual_waveshare_esp32_s3_lcd_2"] },
+      camFn: (prog, ctx) => {
+        const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
+        const t = ctxSmooth(Math.min(Math.max(prog / 0.9, 0), 1));
+        const th = DEG(-26 + 22 * t);
+        const r = 262 - 54 * t;
+        return {
+          cam: a.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, 218 - 32 * t)),
+          look: a,
+        };
+      },
     },
     {
       // 旋转入场 → 正对 PCB 缓推（斜/正对比的后半拍）
@@ -301,7 +357,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
         const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 2]);
         const t = ctx.smooth(Math.min(prog / 0.55, 1));
         const offA = new THREE.Vector3(16, -155, 220);   // 45° 入镜
-        const offB = new THREE.Vector3(0, -10, 275);     // 正对 PCB（板面法线朝上）
+        const offB = new THREE.Vector3(0, -8, 238);      // 正对 PCB（板面法线朝上）
         const off = offA.clone().lerp(offB, t);
         // 正对后缓推
         const dolly = 1 - 0.3 * ctx.smooth(Math.min(Math.max((prog - 0.6) / 0.4, 0), 1));
@@ -322,20 +378,27 @@ import { STLLoader } from "/vendor/STLLoader.js";
     },
     {
       id: "specs", el: "#specs", theme: "pbr", sway: 2,
-      cam: [0, -270, 210], look: [0, 6, 10], rot: [0, 0, 0.03],
+      cam: [0, -352, 258], look: [0, 5, 11], rot: [0, 0, 0.03],
       scrub: { __default: [0, 0] },
     },
   ];
 
+  // 统一平滑滚动信号：换镜判定与进度擦洗必须消费同一份连续信号。
+  // 若判定用原始滚动而进度用平滑滚动，快速滚动时一过边界 prog 瞬间饱和，
+  // 模型瞬间爆炸/下沉而相机还在途中 —— 视觉上就是闪切 + 主体消失
+  function smoothedRectTop(el) {
+    return el.getBoundingClientRect().top + (currentScrollY - window.scrollY);
+  }
+
+  // 滚动侦探（scrollspy）：按文档序取最后一个顶点越过视口中线的分镜。
+  // 相比「中点落在元素内」判定，相邻分镜间隙不会闪回 hero 造成运镜跳切
   function detectShot() {
-    const vh = window.innerHeight;
-    const center = vh * 0.5;
-    let best = "hero";
+    const center = window.innerHeight * 0.5;
+    let best = SHOTS[0].id;
     for (const shot of SHOTS) {
       const el = document.querySelector(shot.el);
       if (!el) continue;
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= center && rect.bottom > center) best = shot.id;
+      if (smoothedRectTop(el) <= center) best = shot.id;
     }
     return best;
   }
@@ -344,9 +407,9 @@ import { STLLoader } from "/vendor/STLLoader.js";
     const el = document.querySelector(shot.el);
     if (!el) return 0;
     const vh = window.innerHeight;
-    const rect = el.getBoundingClientRect();
-    const span = Math.max(rect.height - vh * 0.25, 1);
-    return Math.min(1, Math.max(0, (vh * 0.62 - rect.top) / span));
+    const adjTop = smoothedRectTop(el);
+    const span = Math.max(el.getBoundingClientRect().height - vh * 0.25, 1);
+    return Math.min(1, Math.max(0, (vh * 0.62 - adjTop) / span));
   }
 
   const shotById = (id) => SHOTS.find((s) => s.id === id) || SHOTS[0];
@@ -375,6 +438,15 @@ import { STLLoader } from "/vendor/STLLoader.js";
         stlLoader.load(`stl/${p.filename}`, (geometry) => {
           geometry.computeVertexNormals();
 
+          const bb = p.bboxMm;
+          const center = new THREE.Vector3(
+            (bb[0][0] + bb[1][0]) / 2, (bb[0][1] + bb[1][1]) / 2, (bb[0][2] + bb[1][2]) / 2
+          );
+
+          // 中心枢轴：先平移几何 → 原点即零件中心，自转（键帽/EC11 旋出）绕自身轴；
+          // 描线几何必须在其后构建，否则顶点快照停留在绝对坐标产生偏移鬼影
+          geometry.translate(-center.x, -center.y, -center.z);
+
           // 高模厂商件用高阈值，打印件用细阈值让倒角/锥面出线
           const edgeAngle = p.id.includes("waveshare") ? 26 : 16;
           const mesh = new THREE.Mesh(geometry, pbrMaterialFor(p.id));
@@ -382,15 +454,20 @@ import { STLLoader } from "/vendor/STLLoader.js";
           const line = new THREE.LineSegments(edgesGeom, materials.darkLine);
           mesh.add(line);
 
-          const bb = p.bboxMm;
-          const center = new THREE.Vector3(
-            (bb[0][0] + bb[1][0]) / 2, (bb[0][1] + bb[1][1]) / 2, (bb[0][2] + bb[1][2]) / 2
+          // INK 分镜第二层微细节描线（低阈值），暗面零件细节密度翻倍；
+          // 每零件专属材质实例 → 焦点混搭可逐零件插值
+          const inkMat = materials.inkSolid.clone();
+          const inkLineMat = materials.inkLineDim.clone();
+          const microMat = materials.inkLineMicro.clone();
+          const microLine = new THREE.LineSegments(
+            new THREE.EdgesGeometry(geometry, p.id.includes("waveshare") ? 12 : 7),
+            microMat
           );
+          microLine.visible = false;
+          mesh.add(microLine);
 
-          // 中心枢轴：位移作用在 pivot 上，mesh 自转绕零件中心
           const pivot = new THREE.Group();
           pivot.position.copy(center);
-          mesh.position.copy(center).negate();
           pivot.add(mesh);
 
           const anchor = new THREE.Object3D();
@@ -409,11 +486,13 @@ import { STLLoader } from "/vendor/STLLoader.js";
           partsMap.set(p.id, {
             id: p.id,
             group: p.selectionGroupId || p.group,
-            pivot, mesh, line, anchor,
+            pivot, mesh, line, microLine, anchor,
             bbox: bb,
             home: center.clone(),
             explodeVec,
             fanDir,
+            inkMat, inkLineMat, microMat,
+            focusTarget: 0, focusMix: 0,
           });
           resolve();
         }, undefined, () => resolve());
@@ -425,22 +504,23 @@ import { STLLoader } from "/vendor/STLLoader.js";
       box.getCenter(c);
       rootGroup.position.sub(c);
 
-      // LCD 动态屏幕平面（主板横置：42.5 × 31.5，沿主板顶面下沉）
+      // LCD 动态屏幕平面（挂在主板 pivot 下，跟随主板 scrub 位移 / 下沉）
       const board = partsMap.get("actual_waveshare_esp32_s3_lcd_2");
       if (board) {
         const bb = board.bbox;
+        const center = board.home;
         const bw = bb[1][0] - bb[0][0], bd = bb[1][1] - bb[0][1];
         const landscape = bw > bd;
         const pw = landscape ? 42.5 : 31.5;
         const ph = landscape ? 31.5 : 42.5;
         lcdPlane = new THREE.Mesh(new THREE.PlaneGeometry(pw, ph), lcdMaterial);
         lcdPlane.position.set(
-          (bb[0][0] + bb[1][0]) / 2,
-          (bb[0][1] + bb[1][1]) / 2,
-          bb[1][2] + 0.12
+          (bb[0][0] + bb[1][0]) / 2 - center.x,
+          (bb[0][1] + bb[1][1]) / 2 - center.y,
+          bb[1][2] - center.z + 0.12
         );
         if (landscape) lcdPlane.rotation.z = Math.PI / 2;
-        rootGroup.add(lcdPlane);
+        board.pivot.add(lcdPlane);
       }
 
       state.loaded = true;
@@ -457,25 +537,26 @@ import { STLLoader } from "/vendor/STLLoader.js";
   function applyMode(mode, shot) {
     state.mode = mode;
     const focus = shot.focus || {};
+    // 组名前缀匹配（selectionGroupId 带后缀，如 enclosure-closure）
     const isFocus = (p) =>
-      (focus.groups && focus.groups.includes(p.group)) ||
+      (focus.groups && focus.groups.some((g) => (p.group || "").includes(g))) ||
       (focus.parts && focus.parts.includes(p.id));
     partsMap.forEach((p) => {
       if (mode === "light") {
         p.mesh.material = materials.lightSolid;
         p.line.material = materials.lightLine;
+        p.microLine.visible = false;
       } else if (mode === "ink") {
-        // 纸面主角混搭：焦点件米白 solid + 墨线，配角件暗面淡线
-        if (isFocus(p)) {
-          p.mesh.material = materials.lightSolid;
-          p.line.material = materials.lightLine;
-        } else {
-          p.mesh.material = materials.inkSolid;
-          p.line.material = materials.inkLineDim;
-        }
+        // 焦点混搭：材质指向每零件专属实例，焦点状态走 focusTarget 逐帧插值
+        p.mesh.material = p.inkMat;
+        p.line.material = p.inkLineMat;
+        p.microLine.material = p.microMat;
+        p.microLine.visible = true;
+        p.focusTarget = isFocus(p) ? 1 : 0;
       } else {
         p.mesh.material = pbrMaterialFor(p.id);
         p.line.material = materials.darkLine;
+        p.microLine.visible = false;
       }
     });
     document.body.classList.toggle("theme-light", mode === "light");
@@ -516,6 +597,19 @@ import { STLLoader } from "/vendor/STLLoader.js";
     }
     applyMode(shot.theme, shot); // 每帧幂等应用，覆盖异步加载的零件
 
+    // ---- 焦点混搭插值：主角纸面 ↔ 配角暗面 平滑过渡（消除换镜闪切）----
+    if (state.mode === "ink") {
+      partsMap.forEach((p) => {
+        if (!p.inkMat) return;
+        p.focusMix += ((p.focusTarget || 0) - p.focusMix) * 0.07;
+        const m = p.focusMix;
+        p.inkMat.color.lerpColors(INK_SOLID_COLOR, PAPER_SOLID_COLOR, m);
+        p.inkLineMat.color.lerpColors(INK_LINE_COLOR, PAPER_LINE_COLOR, m);
+        p.inkLineMat.opacity = 0.42 + 0.53 * m;
+        p.microMat.opacity = 0.13 * (1 - m);
+      });
+    }
+
     // ---- 滚动擦洗爆炸因子 ----
     const prog = shotProgress(shot);
     const targets = {};
@@ -543,43 +637,42 @@ import { STLLoader } from "/vendor/STLLoader.js";
       explosionPercent.textContent = `${pct}%`;
     }
 
-    // ---- 零件位移（scrub 点名的零件用独立系数，其余跟随 __default）----
-    const managed = new Set(Object.keys(scrub).filter((k) => k !== "__default"));
+    // ---- 零件位移（scrub 点名零件 id 或组名，其余跟随 __default）----
     const sinkE = shotId === "keycaps" ? ctxSmooth(Math.min(prog / 0.28, 1)) : 0;
+    const scrubKeyOf = (part) =>
+      scrub[part.id] !== undefined ? part.id
+      : scrub[part.group] !== undefined ? part.group
+      : "__default";
     partsMap.forEach((part) => {
       const visible = state.activeSubsystems[subsystemOf(part.group)];
       part.pivot.visible = visible;
       if (!visible) return;
-      if (part.fanDir && managed.has(part.group)) {
+      const key = scrubKeyOf(part);
+      if (shotId === "keycaps" && HERO_STACK_LIFT[part.id] !== undefined) {
+        // 主角堆叠：键帽垂直升起 / 配对轴体下拉（与扇形展开区分）
+        part.pivot.position.copy(part.home);
+        part.pivot.position.z += HERO_STACK_LIFT[part.id] * (state.f.keycaps ?? 0);
+      } else if (part.fanDir && key !== "__default") {
         // 键帽扇形升起（自原位向外 + 上）
-        part.pivot.position.copy(part.home).addScaledVector(part.fanDir, (state.f[part.id] ?? 0) * 46);
-      } else if (managed.has(part.id)) {
-        part.pivot.position.copy(part.home).addScaledVector(part.explodeVec, (state.f[part.id] ?? 0) * state.spread);
+        part.pivot.position.copy(part.home).addScaledVector(part.fanDir, (state.f[key] ?? 0) * 36);
+      } else if (key !== "__default") {
+        part.pivot.position.copy(part.home).addScaledVector(part.explodeVec, (state.f[key] ?? 0) * state.spread);
       } else {
         part.pivot.position.copy(part.home).addScaledVector(part.explodeVec, state.f.__default * state.spread);
-        if (sinkE > 0) part.pivot.position.z -= 150 * sinkE; // 整机下沉移出画面
+        if (sinkE > 0) part.pivot.position.z -= 12 * sinkE; // 盒体微微下沉，保持在画面内作背景
       }
     });
 
+    // ---- 自转复位（换镜瞬间），再按分镜施加 ----
+    if (shotChanged) {
+      for (const part of partsMap.values()) part.mesh.rotation.set(0, 0, 0);
+    }
     // ---- EC11 旋出：绕自身轴边转边退 ----
     if (shot.screw) {
       for (const [id, turns] of Object.entries(shot.screw)) {
         const part = partsMap.get(id);
-        if (part) part.mesh.rotation.z = turns * Math.PI * (state.f[id] ?? 0);
+        if (part) part.mesh.rotation.z = turns * Math.PI * (state.f[scrubKeyOf(part)] ?? 0);
       }
-    } else if (shotChanged || shotId !== "knob") {
-      // 离开旋出分镜后复位
-      for (const part of partsMap.values()) {
-        if (part.mesh.rotation.z !== 0 && !managed.has(part.id)) part.mesh.rotation.z = 0;
-      }
-    }
-
-    // ---- 键帽主角慢自转（仅 keycaps 分镜后半段）----
-    if (shotId === "keycaps") {
-      const spin = partsMap.get("keycap_2");
-      if (spin) spin.mesh.rotation.y += dt * 0.55 * ctxSmooth(Math.min(Math.max((prog - 0.45) / 0.3, 0), 1));
-    } else if (shotChanged) {
-      for (const part of partsMap.values()) part.mesh.rotation.set(0, 0, 0);
     }
     if (lcdPlane) lcdPlane.visible = state.mode !== "light" &&
       partsMap.get("actual_waveshare_esp32_s3_lcd_2")?.pivot.visible;
@@ -588,9 +681,30 @@ import { STLLoader } from "/vendor/STLLoader.js";
     const mouseX = (window.__mouseX || 0) * 0.08;
     const mouseY = (window.__mouseY || 0) * 0.08;
 
+    // 预测锚点：用本帧 scrub 目标值（而非缓动中的 state.f）求零件末态位置，
+    // 机位路径只依赖平滑滚动进度，消除「锚点缓动 × 相机缓动」双层橡皮筋
+    const rootM = rootGroup.matrixWorld;
+    const anchorPredicted = (partId, off) => {
+      const part = partsMap.get(partId);
+      if (!part) return null;
+      const key = scrubKeyOf(part);
+      const f = key === "__default" ? (targets.__default ?? 0) : (targets[key] ?? 0);
+      const local = part.home.clone();
+      if (state.shot === "keycaps" && HERO_STACK_LIFT[partId] !== undefined) {
+        local.z += HERO_STACK_LIFT[partId] * (targets.keycaps ?? 0);
+      } else if (part.fanDir && key !== "__default") {
+        local.addScaledVector(part.fanDir, f * 36);
+      } else {
+        local.addScaledVector(part.explodeVec, f * state.spread);
+      }
+      if (sinkE > 0 && key === "__default") local.z -= 12 * sinkE;
+      return local.applyMatrix4(rootM).add(new THREE.Vector3(...(off || [0, 0, 0])));
+    };
+
     const camCtx = {
-      anchor: (id, off) => anchorWorld(id, off) || new THREE.Vector3(),
+      anchor: (id, off) => anchorPredicted(id, off) || anchorWorld(id, off) || new THREE.Vector3(),
       smooth: ctxSmooth,
+      smoother: (t) => { const x = Math.min(Math.max(t, 0), 1); return x * x * (3 - 2 * x); },
     };
     if (shot.camFn && state.loaded) {
       // 分镜编排相机：滚动进度驱动机位路径（键帽三拍 / PCB 正视入场）
@@ -785,31 +899,54 @@ import { STLLoader } from "/vendor/STLLoader.js";
     shot: el.closest(".callout-set")?.dataset.for,
     partId: el.dataset.part,
     off: (el.dataset.off || "0,0,0").split(",").map(Number),
+    frac: el.hasAttribute("data-frac"), // 分数锚点：按零件包围盒比例定位
   }));
+
+  function calloutAnchor(c) {
+    const part = partsMap.get(c.partId);
+    if (!part) return null;
+    part.anchor.getWorldPosition(tmpV);
+    if (!c.frac) return tmpV.clone().add(new THREE.Vector3(...c.off));
+    // 分数模式：x/y 为包围盒半宽/半深比例，z 固定悬浮于板面之上
+    const bb = part.bbox, home = part.home;
+    const halfW = (bb[1][0] - bb[0][0]) / 2, halfD = (bb[1][1] - bb[0][1]) / 2;
+    return tmpV.clone().add(new THREE.Vector3(
+      c.off[0] * halfW, c.off[1] * halfD, (bb[1][2] - home.z) + 1.6
+    ));
+  }
 
   function updateCallouts(shotId) {
     const w = window.innerWidth, h = window.innerHeight;
-    let svgLines = "";
-    let idx = 0;
+    // 两段式：先收集全部锚点投影，再统一分槽排布，避免标签互相重叠
+    const visible = [];
     for (const c of calloutEls) {
       if (c.shot !== shotId) { c.el.classList.remove("is-on"); continue; }
       const part = partsMap.get(c.partId);
       if (!part || !part.pivot.visible) { c.el.classList.remove("is-on"); continue; }
-      const p = anchorWorld(c.partId, c.off);
+      const p = calloutAnchor(c);
+      if (!p) { c.el.classList.remove("is-on"); continue; }
       p.project(camera);
-      const sx = (p.x * 0.5 + 0.5) * w;
-      const sy = (-p.y * 0.5 + 0.5) * h;
-      const ly = sy - 30 - idx * 44; // 标签按索引上移错位
-      c.el.style.transform = `translate(${sx + 30}px, ${ly}px)`;
-      c.el.classList.add("is-on");
-      svgLines += `<path class="callout-line" d="M ${sx} ${sy} L ${sx + 28} ${ly + 16}" />`;
-      svgLines += `<circle class="leader-dot" cx="${sx}" cy="${sy}" r="2.5" />`;
-      idx++;
+      visible.push({
+        c,
+        sx: (p.x * 0.5 + 0.5) * w,
+        sy: (-p.y * 0.5 + 0.5) * h,
+      });
     }
-    if (svgLines && (shotId === "keycaps" || shotId === "firmware")) {
-      svgOverlay.style.opacity = "1";
-      svgOverlay.innerHTML = svgLines;
-    }
+    if (!visible.length) return;
+    visible.sort((a, b) => a.sy - b.sy);
+    // 标签列限制在画面左侧 58%，避免压到滚动内容卡片
+    const lx = Math.min(w * 0.58, Math.max(...visible.map((v) => v.sx)) + 46);
+    const baseLy = Math.max(70, visible[0].sy - 26);
+    let svgLines = "";
+    visible.forEach((v, i) => {
+      const ly = baseLy - i * 52;
+      v.c.el.style.transform = `translate(${lx}px, ${ly}px)`;
+      v.c.el.classList.add("is-on");
+      svgLines += `<path class="callout-line" d="M ${v.sx} ${v.sy} L ${lx - 5} ${ly + 15}" />`;
+      svgLines += `<circle class="leader-dot" cx="${v.sx}" cy="${v.sy}" r="2.5" />`;
+    });
+    svgOverlay.style.opacity = "1";
+    svgOverlay.innerHTML = svgLines;
   }
 
   function animate(time) {
