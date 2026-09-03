@@ -369,6 +369,7 @@ body.theme-light .section-desc { color: var(--text-muted-light); }
   background: rgba(240, 236, 226, 0.9); border: 1px solid rgba(30, 28, 24, 0.14);
   padding: 8px 16px; border-radius: 100px; font-family: var(--font-mono);
   font-size: 11px; font-weight: 600;
+  color: #1e1c18; /* 纸面底恒定 → 文字恒深色，不随分镜主题翻转变白 */
 }
 .bar-track { width: 140px; height: 6px; border-radius: 100px; background: rgba(0, 0, 0, 0.1); overflow: hidden; }
 .bar-track i { display: block; width: 0%; height: 100%; background: var(--neon-red); border-radius: 100px; transition: width 0.1s linear; }

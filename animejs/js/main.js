@@ -264,6 +264,18 @@ import { STLLoader } from "/vendor/STLLoader.js";
   // 键帽幕主角：键帽稍微抬起（露出轴芯间隙即可），盒体仅微微下沉保持在画面内，
   // 键轴与盒体共同入镜构成堆叠特写
   const HERO_STACK_LIFT = { keycap_2: 26 };
+  // toolbox/modules 爆炸层序（f=1、未乘 spread 前的 +Z 行程；上盖 explodeVec z=33.6）：
+  // 内部件沿用自身 explodeVec 会被上盖追越穿透——全部上浮且依次领先：
+  // 键轴(44) < 键帽(60)；EC11 栈自下而上 body(40)→washer(43)→nut(46)→knob(50)
+  const EXPLODE_LIFT = [
+    ["choc_v2", 44], ["keycap", 60],
+    ["ec11_encoder", 40], ["ec11_mounting_washer", 43],
+    ["ec11_mounting_nut", 46], ["ec11_knob", 50],
+  ];
+  const explodeLiftFor = (id) => {
+    for (const [prefix, lift] of EXPLODE_LIFT) if (id.startsWith(prefix)) return lift;
+    return null;
+  };
   const SHOTS = [
     {
       id: "hero", el: "#intro", theme: "pbr",
@@ -283,13 +295,14 @@ import { STLLoader } from "/vendor/STLLoader.js";
         };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
+        // 姿态全程漂移不驻留：旋转贯穿整幕（速度可慢但角速度不归零）
+        const t = Math.min(Math.max(prog, 0), 1);
         return [0.22 * t, -0.3 * t, -0.03 - 0.39 * t];
       },
     },
     {
       // 直线推近：入镜 = toolbox 末帧机位、出镜 = keycaps 衔接位，
-      // 纯径向 dolly（方位角 0，无相机旋转）+ 姿态恒定 → 幕内零旋转、速度恒定
+      // 纯径向 dolly（方位角 0，无相机旋转）+ 偏航缓漂 → 幕内速度恒定
       id: "ergonomics", el: '[data-feature="ergonomics"]', theme: "ink",
       cam: [0, -330, 300], look: [0, 0, 0], rot: [0.22, -0.3, -0.42], spread: 1.15,
       scrub: { __default: [1, 0] },
@@ -304,20 +317,20 @@ import { STLLoader } from "/vendor/STLLoader.js";
       },
       rotFn: (prog) => {
         const t = Math.min(Math.max(prog, 0), 1);
-        return [0.22 - 0.14 * t, -0.3 + 0.2 * t, -0.42];
+        return [0.22 - 0.14 * t, -0.3 + 0.2 * t, -0.42 - 0.1 * t];
       },
     },
     {
-      // 键帽幕：侧上方俯视特写 —— 模型整体顺时针偏航 60°（rotFn 驱动，只进不回），
+      // 键帽幕：侧上方俯视特写 —— 模型整体顺时针偏航 60°（rotFn 全程驱动，只进不回），
       // 相机方位角小幅平移（±13°），旋转由模型偏航主导 → 视观方向全程顺时针；
       // 入镜机位/姿态 = ergo 末帧（换镜零跳变），尾段同向缓撤回正前上方
       id: "keycaps", el: '[data-feature="keycaps"]', theme: "ink",
-      cam: [0, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, -0.42],
+      cam: [0, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, -0.52],
       scrub: { keycaps: [0, 1] },
       focus: { parts: ["keycap_2"] },
       rotFn: (prog) => {
-        const eIn = Math.min(Math.max(prog / 0.5, 0), 1);
-        return [0.08, -0.1, -0.42 - 0.63 * eIn];
+        const eIn = Math.min(Math.max(prog, 0), 1);
+        return [0.08, -0.1, -0.52 - 0.63 * eIn];
       },
       camFn: (prog, ctx) => {
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
@@ -335,13 +348,17 @@ import { STLLoader } from "/vendor/STLLoader.js";
     },
     {
       // EC11 四件绕自身轴旋转着旋出；机位从键帽幕末帧直线拉回到旋钮特写，
-      // 姿态承接键帽幕的 -1.05 偏航（不回卷，方向统一）；
+      // 姿态承接键帽幕的 -1.15 偏航（不回卷，方向统一），幕内继续缓漂不驻留；
       // 键帽抬升/扇开随 keycaps 因子携带衰减（区间端点 1→0，边界连续）
       id: "knob", el: '[data-feature="knob"]', theme: "ink",
-      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.05],
+      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.15],
       scrub: { "ec11-stack": [0, 0.95], keycaps: [1, 0] },
       focus: { groups: ["ec11-stack"] },
-      screw: { ec11_knob_26x8p5: 0.5, actual_ec11_mounting_nut: 1.1, actual_ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
+      screw: { ec11_knob_26x8p5: 0.5, ec11_mounting_nut: 1.1, ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
+      rotFn: (prog) => {
+        const t = Math.min(Math.max(prog, 0), 1);
+        return [0.08, -0.1, -1.15 - 0.15 * t];
+      },
       camFn: (prog, ctx) => {
         const aK = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
@@ -356,13 +373,13 @@ import { STLLoader } from "/vendor/STLLoader.js";
     },
     {
       // 屏幕幕：机位从旋钮幕末帧滑到 LCD 斜角（斜/正对比的前半拍），
-      // 偏航继续顺时针加深（-1.05 → -1.5），方向不回卷
+      // 偏航继续顺时针加深（-1.30 → -1.72），方向不回卷
       id: "display", el: '[data-feature="display"]', theme: "ink",
-      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.05],
+      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.3],
       scrub: { screen_bezel: [0, 1] },
-      focus: { parts: ["screen_bezel", "actual_waveshare_esp32_s3_lcd_2"] },
+      focus: { parts: ["screen_bezel", "waveshare_esp32_s3_lcd_2"] },
       camFn: (prog, ctx) => {
-        const aL = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
+        const aL = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
         const aK = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
         const t = Math.min(Math.max(prog / 0.7, 0), 1);
         const entryCam = aK.clone().add(new THREE.Vector3(Math.sin(DEG(18)) * 148, -Math.cos(DEG(18)) * 148, 148)); // = knob 末帧
@@ -373,19 +390,19 @@ import { STLLoader } from "/vendor/STLLoader.js";
         };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.7, 0), 1);
-        return [0.08 * (1 - t), -0.1 * (1 - t), -1.05 - 0.45 * t];
+        const t = Math.min(Math.max(prog, 0), 1);
+        return [0.08 * (1 - t), -0.1 * (1 - t), -1.3 - 0.42 * t];
       },
     },
     {
-      // 主板幕：模型顺时针偏航翻转 180°（-1.5 → -1.5-π，方向统一不回卷）到背面视角，
+      // 主板幕：模型顺时针偏航翻转 180°（-1.72 → -1.72-π，方向统一不回卷）到背面视角，
       // PCB 板体随 scrub 提出机壳，相机随机体上升推近 —— 背面 + 爆炸展示核心电子
       id: "firmware", el: '[data-feature="firmware"]', theme: "ink",
-      rot: [0, 0, -1.5],
-      scrub: { actual_waveshare_esp32_s3_lcd_2: [0, 0.95], esp32_m3_retainer: [0, 0.7], screen_bezel: [1, 0] },
-      focus: { parts: ["actual_waveshare_esp32_s3_lcd_2", "esp32_m3_retainer"] },
+      rot: [0, 0, -1.72],
+      scrub: { waveshare_esp32_s3_lcd_2: [0, 0.95], esp32_m3_retainer: [0, 0.7], screen_bezel: [1, 0] },
+      focus: { parts: ["waveshare_esp32_s3_lcd_2", "esp32_m3_retainer"] },
       camFn: (prog, ctx) => {
-        const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
+        const a = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
         const t = Math.min(Math.max(prog / 0.55, 0), 1);
         const offA = new THREE.Vector3(Math.sin(DEG(-4)) * 208, -Math.cos(DEG(-4)) * 208, 186); // = display 末帧偏移
         const offB = new THREE.Vector3(10, -150, 190);   // 背面高角：越过侧壁俯视板体
@@ -393,18 +410,18 @@ import { STLLoader } from "/vendor/STLLoader.js";
         return { cam: a.clone().add(off), look: a };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.6, 0), 1);
-        return [0, 0, -1.5 - Math.PI * t];
+        const t = Math.min(Math.max(prog, 0), 1);
+        return [0, 0, -1.72 - Math.PI * t];
       },
     },
     {
       // 总览幕：机位从 PCB 背面拉回全景，散点爆炸铺开；
-      // 偏航继续顺时针（-4.64 → -6.70 ≡ -0.42，视觉构图不变、方向不回卷）
+      // 偏航继续顺时针（-4.86 → -6.20 ≡ -0.08，视觉构图等价、方向不回卷）
       id: "modules", el: "#modules", theme: "light",
-      cam: [0, -6, 175], look: [0, 0, 8], rot: [0, 0, -4.64], spread: 1.9,
+      cam: [0, -6, 175], look: [0, 0, 8], rot: [0, 0, -4.86], spread: 1.9,
       scrub: { __default: [0, 1] },
       camFn: (prog, ctx) => {
-        const a = ctx.anchor("actual_waveshare_esp32_s3_lcd_2", [0, 0, 3]);
+        const a = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
         const t = Math.min(Math.max(prog / 0.5, 0), 1);
         const entryCam = a.clone().add(new THREE.Vector3(10, -150, 190)); // = firmware 末帧
         return {
@@ -413,15 +430,15 @@ import { STLLoader } from "/vendor/STLLoader.js";
         };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        return [0.22 * t, -0.3 * t, -4.64 - 2.06 * t];
+        const t = Math.min(Math.max(prog, 0), 1);
+        return [0.22 * t, -0.3 * t, -4.86 - 1.34 * t];
       },
     },
     {
       // 规格幕：机位起步 = modules 末帧，爆炸因子携带衰减（1→0）边收拢边回到正面；
-      // 偏航 -6.70 → -6.31 ≡ -0.03（与 hero 同构，继续顺时针）
+      // 偏航 -6.20 → -6.32 ≡ -0.04（与 hero 同构，继续顺时针）
       id: "specs", el: "#specs", theme: "pbr",
-      cam: [45, -400, 380], look: [0, 0, 0], rot: [0.22, -0.3, -6.7], spread: 1.9,
+      cam: [45, -400, 380], look: [0, 0, 0], rot: [0.22, -0.3, -6.2], spread: 1.9,
       scrub: { __default: [1, 0] },
       camFn: (prog) => {
         const t = Math.min(Math.max(prog / 0.5, 0), 1);
@@ -431,8 +448,8 @@ import { STLLoader } from "/vendor/STLLoader.js";
         };
       },
       rotFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        return [0.22 * (1 - t), -0.3 * (1 - t), -6.7 + 0.39 * t];
+        const t = Math.min(Math.max(prog, 0), 1);
+        return [0.22 * (1 - t), -0.3 * (1 - t), -6.2 - 0.12 * t];
       },
     },
   ];
@@ -570,7 +587,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       rootGroup.position.sub(c);
 
       // LCD 动态屏幕平面（挂在主板 pivot 下，跟随主板 scrub 位移 / 下沉）
-      const board = partsMap.get("actual_waveshare_esp32_s3_lcd_2");
+      const board = partsMap.get("waveshare_esp32_s3_lcd_2");
       if (board) {
         const bb = board.bbox;
         const center = board.home;
@@ -733,7 +750,11 @@ import { STLLoader } from "/vendor/STLLoader.js";
       } else if (key !== "__default") {
         part.pivot.position.copy(part.home).addScaledVector(part.explodeVec, (state.f[key] ?? 0) * state.spread);
       } else {
-        part.pivot.position.copy(part.home).addScaledVector(part.explodeVec, state.f.__default * state.spread);
+        // 层序保护：命中 EXPLODE_LIFT 的零件按 +Z 行程上浮（领先上盖），其余沿用 explodeVec
+        const lift = explodeLiftFor(part.id);
+        part.pivot.position.copy(part.home);
+        if (lift !== null) part.pivot.position.z += lift * state.f.__default * state.spread;
+        else part.pivot.position.addScaledVector(part.explodeVec, state.f.__default * state.spread);
         if (sinkE > 0) part.pivot.position.z -= 12 * sinkE; // 盒体微微下沉，保持在画面内作背景
       }
     });
@@ -750,7 +771,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       }
     }
     if (lcdPlane) lcdPlane.visible = state.mode !== "light" &&
-      partsMap.get("actual_waveshare_esp32_s3_lcd_2")?.pivot.visible;
+      partsMap.get("waveshare_esp32_s3_lcd_2")?.pivot.visible;
 
     // ---- 相机 / 注视点 / 摇摆运镜（滚动为唯一驱动，鼠标不干涉模型姿态）----
 
@@ -833,16 +854,16 @@ import { STLLoader } from "/vendor/STLLoader.js";
     { selector: ".tag-switches", partId: "choc_v2_1", side: "left" },
     { selector: ".tag-bottom-cover", partId: "bottom_service_cover", side: "left" },
     { selector: ".tag-screen-bezel", partId: "screen_bezel", side: "right" },
-    { selector: ".tag-esp32", partId: "actual_waveshare_esp32_s3_lcd_2", side: "right" },
+    { selector: ".tag-esp32", partId: "waveshare_esp32_s3_lcd_2", side: "right" },
     { selector: ".tag-retainer", partId: "esp32_m3_retainer", side: "right" },
     { selector: ".tag-ec11", partId: "ec11_knob_26x8p5", side: "right" },
   ];
 
   function updateLeaderLines() {
-    let html = "";
     const w = window.innerWidth, h = window.innerHeight;
-    const mx = w * 0.06, my = h * 0.08;
-
+    // 两遍路由：先按零件投影 y 重排两侧标签（同列互不交叉），再按重排后位置画线；
+    // 模型端点不做视口钳制 → 虚线端点始终锁住零件
+    const entries = [];
     tagPartMapping.forEach(({ selector, partId, side }) => {
       const el = document.querySelector(selector);
       const part = partsMap.get(partId);
@@ -850,16 +871,38 @@ import { STLLoader } from "/vendor/STLLoader.js";
 
       part.anchor.getWorldPosition(tmpV);
       tmpV.project(camera);
-      let sx = (tmpV.x * 0.5 + 0.5) * w;
-      let sy = (-tmpV.y * 0.5 + 0.5) * h;
-      sx = Math.min(w - mx, Math.max(mx, sx));
-      sy = Math.min(h - my, Math.max(my, sy));
+      const sx = (tmpV.x * 0.5 + 0.5) * w;
+      const sy = (-tmpV.y * 0.5 + 0.5) * h;
 
       const rect = el.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > h) return;
+      entries.push({ el, side, sx, sy, rect });
+    });
+
+    for (const side of ["left", "right"]) {
+      const col = entries.filter((e) => e.side === side);
+      if (col.length < 2) continue;
+      // 槽位取 offsetTop（布局位置，不受 transform/过渡中间态影响），
+      // 按零件投影 y 依序入座 → 同列虚线平行不交叉；transform 仅作视觉位移
+      const withBase = col.map((e) => ({ ...e, base: e.el.offsetTop }));
+      const slots = withBase.map((e) => e.base).sort((a, b) => a - b);
+      withBase
+        .slice()
+        .sort((a, b) => a.sy - b.sy)
+        .forEach((e, rank) => {
+          const ty = slots[rank] - e.base;
+          if (!e.el.style.transition) {
+            e.el.style.transition = "transform 0.45s cubic-bezier(.22,.61,.36,1)";
+          }
+          e.el.style.transform = `translateY(${ty}px)`;
+        });
+    }
+
+    let html = "";
+    entries.forEach(({ el, side, sx, sy }) => {
+      const rect = el.getBoundingClientRect(); // 含 translateY 后位置
       const tx = side === "left" ? rect.right + 4 : rect.left - 4;
       const ty = rect.top + rect.height / 2;
-
       const midX = side === "left" ? tx + (sx - tx) * 0.5 : tx - (tx - sx) * 0.5;
       html += `<path class="leader-path" d="M ${tx} ${ty} L ${midX} ${ty} L ${sx} ${sy}" />`;
       html += `<circle class="leader-dot" cx="${sx}" cy="${sy}" r="3" />`;
@@ -875,7 +918,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     { group: "enclosure", partId: "cosmetic_upper_shell" },
     { group: "keycaps", partId: "keycap_1" },
     { group: "switches", partId: "choc_v2_1" },
-    { group: "esp32", partId: "actual_waveshare_esp32_s3_lcd_2" },
+    { group: "esp32", partId: "waveshare_esp32_s3_lcd_2" },
     { group: "ec11", partId: "ec11_knob_26x8p5" },
   ];
 
