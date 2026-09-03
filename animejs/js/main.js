@@ -19,13 +19,13 @@ import { STLLoader } from "/vendor/STLLoader.js";
     scrollProgress: 0,
     currentTheme: "dark",
     explosion: 0, // 0.0 ~ 1.0
+    spread: 1.0,  // Modular 分镜专用的爆炸扩散放大系数
     activeSubsystems: {
       enclosure: true,
       keycaps: true,
       switches: true,
       esp32: true,
       ec11: true,
-      keepouts: true,
     },
     loaded: false,
   };
@@ -363,9 +363,11 @@ import { STLLoader } from "/vendor/STLLoader.js";
       const p = 1 - (toolboxRect.bottom - vh) / ((toolboxEl ? toolboxEl.offsetHeight : vh) - vh);
       targetExplosion = Math.max(0, Math.min(1, (p - 0.12) / 0.68));
     } else if (inModules) {
-      targetExplosion = 0.45;
+      targetExplosion = 1.0;
     }
     state.explosion += (targetExplosion - state.explosion) * 0.12;
+    const targetSpread = inModules ? 1.9 : 1.0;
+    state.spread += (targetSpread - state.spread) * 0.1;
 
     // 更新爆炸进度条
     if (explosionFill && explosionPercent) {
@@ -379,7 +381,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       const isVisible = state.activeSubsystems[getSubsystemKey(part.group)];
       part.mesh.visible = isVisible;
       if (isVisible) {
-        part.mesh.position.copy(part.explodeVec).multiplyScalar(state.explosion);
+        part.mesh.position.copy(part.explodeVec).multiplyScalar(state.explosion * state.spread);
       }
     });
 
@@ -388,11 +390,14 @@ import { STLLoader } from "/vendor/STLLoader.js";
     const mouseY = (window.__mouseY || 0) * 0.12;
 
     if (state.currentTheme === "light") {
-      // Toolbox / Modules 等轴测 CAD 线稿视角（相机后撤避免遮挡标题）
+      // Toolbox / Modules 等轴测 CAD 线稿视角（Modules 全爆炸时相机再后撤）
       rootGroup.rotation.x = THREE.MathUtils.lerp(rootGroup.rotation.x, 0.22 + mouseY, 0.08);
       rootGroup.rotation.y = THREE.MathUtils.lerp(rootGroup.rotation.y, -0.3 + mouseX, 0.08);
       rootGroup.rotation.z = THREE.MathUtils.lerp(rootGroup.rotation.z, 0.42, 0.08);
-      camera.position.set(20, -320, 290);
+      const modTarget = inModules ? [40, -390, 370] : [20, -320, 290];
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, modTarget[0], 0.08);
+      camera.position.y = THREE.MathUtils.lerp(camera.position.y, modTarget[1], 0.08);
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, modTarget[2], 0.08);
     } else {
       // Hero / Features 赛博控制台俯仰角
       rootGroup.rotation.x = THREE.MathUtils.lerp(rootGroup.rotation.x, mouseY, 0.08);
@@ -409,15 +414,21 @@ import { STLLoader } from "/vendor/STLLoader.js";
     } else {
       if (svgOverlay) svgOverlay.style.opacity = "0";
     }
+
+    // Modular 分镜：零件旁漂浮质量标签
+    if (inModules && state.explosion > 0.35) {
+      updatePartTags(true);
+    } else {
+      updatePartTags(false);
+    }
   }
 
   function getSubsystemKey(group) {
     if (group.includes("enclosure")) return "enclosure";
     if (group.includes("keycap")) return "keycaps";
     if (group.includes("switch") || group.includes("choc")) return "switches";
-    if (group.includes("esp32") || group.includes("board") || group.includes("internal")) return "esp32";
+    if (group.includes("esp32") || group.includes("retention") || group.includes("board") || group.includes("internal")) return "esp32";
     if (group.includes("ec11") || group.includes("control")) return "ec11";
-    if (group.includes("keepout")) return "keepouts";
     return "enclosure";
   }
 
@@ -444,7 +455,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     { selector: ".tag-screen-bezel", partId: "screen_bezel", side: "right" },
     { selector: ".tag-esp32", partId: "actual_waveshare_esp32_s3_lcd_2", side: "right" },
     { selector: ".tag-retainer", partId: "esp32_m3_retainer", side: "right" },
-    { selector: ".tag-ec11", partId: "ec11_knob_34x8p5", side: "right" },
+    { selector: ".tag-ec11", partId: "ec11_knob_26x8p5", side: "right" },
   ];
 
   function updateLeaderLines() {
@@ -481,6 +492,39 @@ import { STLLoader } from "/vendor/STLLoader.js";
     svgOverlay.innerHTML = svgHtml;
   }
 
+  /* ---- Modular 分镜：五大子系统锚点零件 → 屏幕漂浮标签 ---- */
+  const groupAnchors = [
+    { group: "enclosure", partId: "cosmetic_upper_shell" },
+    { group: "keycaps", partId: "keycap_1" },
+    { group: "switches", partId: "choc_v2_1" },
+    { group: "esp32", partId: "actual_waveshare_esp32_s3_lcd_2" },
+    { group: "ec11", partId: "ec11_knob_26x8p5" },
+  ];
+
+  function updatePartTags(show) {
+    const wrap = document.getElementById("part-tags");
+    if (!wrap) return;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    groupAnchors.forEach(({ group, partId }) => {
+      const el = wrap.querySelector(`.part-tag[data-group="${group}"]`);
+      const part = partsMap.get(partId);
+      if (!el) return;
+      if (!show || !part || !part.mesh.visible) {
+        el.classList.remove("is-on");
+        return;
+      }
+      const worldPos = new THREE.Vector3();
+      part.mesh.getWorldPosition(worldPos);
+      worldPos.project(camera);
+      const sx = Math.min(w - 120, Math.max(16, (worldPos.x * 0.5 + 0.5) * w + 22));
+      const sy = Math.min(h - 48, Math.max(16, (-worldPos.y * 0.5 + 0.5) * h - 16));
+      el.style.transform = `translate(${sx}px, ${sy}px)`;
+      el.classList.add("is-on");
+    });
+  }
+
   /* =========================================================
      7. 鼠标视差与模块 BOM 交互
      ========================================================= */
@@ -490,12 +534,11 @@ import { STLLoader } from "/vendor/STLLoader.js";
   });
 
   const bomWeights = {
-    enclosure: 58.4,
-    keycaps: 4.2,
+    enclosure: 48.6,
+    keycaps: 3.6,
     switches: 13.8,
-    esp32: 28.5,
-    ec11: 12.1,
-    keepouts: 0.0,
+    esp32: 27.4,
+    ec11: 9.8,
   };
 
   const partCounts = {
@@ -504,31 +547,48 @@ import { STLLoader } from "/vendor/STLLoader.js";
     switches: 6,
     esp32: 2,
     ec11: 4,
-    keepouts: 4,
   };
 
-  document.querySelectorAll(".subsys-toggle").forEach((toggle) => {
-    toggle.addEventListener("click", (e) => {
-      e.preventDefault();
-      const group = toggle.dataset.group;
-      state.activeSubsystems[group] = !state.activeSubsystems[group];
-      toggle.classList.toggle("is-active", state.activeSubsystems[group]);
+  function setGroupActive(group, active) {
+    state.activeSubsystems[group] = active;
+    document.querySelectorAll(`[data-group="${group}"]`).forEach((el) => {
+      if (el.classList.contains("subsys-toggle") || el.classList.contains("legend-chip")) {
+        el.classList.toggle("is-active", active);
+      }
+    });
 
-      let totalWeight = 0;
-      let totalParts = 0;
-      Object.keys(state.activeSubsystems).forEach((k) => {
-        if (state.activeSubsystems[k]) {
-          totalWeight += bomWeights[k] || 0;
-          totalParts += partCounts[k] || 0;
-        }
-      });
+    // 重算 Mass budget 面板
+    let totalWeight = 0, totalParts = 0;
+    Object.keys(state.activeSubsystems).forEach((k) => {
+      if (state.activeSubsystems[k]) {
+        totalWeight += bomWeights[k] || 0;
+        totalParts += partCounts[k] || 0;
+      }
+    });
+    const massTotal = document.getElementById("mass-total");
+    const massParts = document.getElementById("mass-parts");
+    if (massTotal) massTotal.textContent = `${totalWeight.toFixed(1)} g`;
+    if (massParts) massParts.textContent = `${totalParts} / 21`;
 
-      const bomWeightEl = document.getElementById("bom-weight");
-      const bomCountEl = document.getElementById("bom-parts-count");
-      if (bomWeightEl) bomWeightEl.textContent = `${totalWeight.toFixed(1)} g`;
-      if (bomCountEl) bomCountEl.textContent = `${totalParts} / 25`;
+    // 堆叠条宽度按质量占比
+    document.querySelectorAll(".mass-bar .seg").forEach((seg) => {
+      const g = seg.dataset.group;
+      const w = state.activeSubsystems[g] ? ((bomWeights[g] || 0) / 103.2) * 100 : 0;
+      seg.style.width = `${w}%`;
+    });
+  }
+
+  document.querySelectorAll(".subsys-toggle, .legend-chip").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      if (el.tagName === "LABEL") e.preventDefault();
+      const group = el.dataset.group;
+      setGroupActive(group, !state.activeSubsystems[group]);
     });
   });
+
+  // 初始化堆叠条
+  setGroupActive("enclosure", true);
+  ["keycaps", "switches", "esp32", "ec11"].forEach((g) => setGroupActive(g, true));
 
   const copyBtn = document.getElementById("copy-btn");
   if (copyBtn) {

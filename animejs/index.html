@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Luma Remote A4.14 | Precision Hardware Engine</title>
-    <meta name="description" content="Luma Remote A4.14 工业设计与机械装配全景展示，融合赛博控制台 HUD 与 CAD 工程线稿美学。" />
+    <title>Luma Remote A3.32 | Precision Hardware Engine</title>
+    <meta name="description" content="Luma Remote A3.32 工业设计与机械装配全景展示，融合赛博控制台 HUD 与 CAD 工程线稿美学。" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff3b30'%3E%3Crect width='24' height='24' rx='6'/%3E%3C/svg%3E" />
     <link rel="stylesheet" href="css/style.css" />
     <script>
@@ -26,7 +26,7 @@
         <a class="brand" href="#intro" aria-label="Luma Remote Home">
           <span class="brand-glyph"></span>
           <span class="brand-name">luma<b>/remote</b></span>
-          <span class="brand-tag">A4.14</span>
+          <span class="brand-tag">A3.32</span>
         </a>
         <nav class="nav-menu">
           <a href="#toolbox">BLUEPRINT</a>
@@ -55,9 +55,9 @@
 
         <!-- 顶部遥测信息栏 -->
         <div class="hud-bar hud-bar-top">
-          <span class="hud-item"><i class="hud-dot"></i>LUMA//A4.14-DEV</span>
+          <span class="hud-item"><i class="hud-dot"></i>LUMA//A3.32-R2</span>
           <span class="hud-item">DATUM: [A][B][C]</span>
-          <span class="hud-item">CHOC-V2: 6× RECESSED</span>
+          <span class="hud-item">KEY PITCH: 19.5 mm</span>
           <span class="hud-item hud-accent">SYS_ARMED</span>
         </div>
 
@@ -69,9 +69,9 @@
 
         <!-- 底部物理尺寸与重量遥测 -->
         <div class="hud-bar hud-bar-bottom">
-          <span class="hud-item">DIM: 142.0 × 82.0 × 24.2 mm</span>
-          <span class="hud-item">SLOPE: 8.325° LOW-DECK</span>
-          <span class="hud-item">MASS: 74.7 g</span>
+          <span class="hud-item">DIM: 120.0 × 81.0 mm</span>
+          <span class="hud-item">LAYOUT: Y-COMPACT / TRI3</span>
+          <span class="hud-item">MASS: 103.2 g</span>
           <span class="hud-item hud-accent">COLLISION: 0.00 mm³</span>
         </div>
 
@@ -84,6 +84,15 @@
 
       <!-- 3D 到 2D 空间投影动态引线 SVG 层 -->
       <svg id="leader-lines" class="leader-lines" aria-hidden="true"></svg>
+
+      <!-- Modular 分镜：零件旁漂浮的质量标签（坐标由 JS 逐帧投影） -->
+      <div id="part-tags" class="part-tags" aria-hidden="true">
+        <span class="part-tag" data-group="enclosure"><i style="background:#ff9500"></i>48.6 g</span>
+        <span class="part-tag" data-group="keycaps"><i style="background:#ff3b30"></i>3.6 g</span>
+        <span class="part-tag" data-group="switches"><i style="background:#30d158"></i>13.8 g</span>
+        <span class="part-tag" data-group="esp32"><i style="background:#64d2ff"></i>27.4 g</span>
+        <span class="part-tag" data-group="ec11"><i style="background:#0a84ff"></i>9.8 g</span>
+      </div>
     </div>
 
     <!-- 滚动内容层 -->
@@ -93,7 +102,7 @@
         <div class="hero-content">
           <div class="hero-badge">
             <span class="badge-dot"></span>
-            <span>A4.14 HARDWARE RELEASE</span>
+            <span>A3.32 R2 HARDWARE RELEASE</span>
           </div>
           <h1 class="hero-title">
             <span>All-in-one</span><br />
@@ -101,12 +110,12 @@
             <span>engine<em class="dot-accent">.</em></span>
           </h1>
           <p class="hero-sub">
-            A precision-crafted smart controller engineered with 25 discrete CNC/3D printed modules,
+            A precision-crafted smart controller engineered with 21 discrete CNC/3D printed modules,
             Choc V2 mechanical switches, and an ESP32-S3 IPS core.
           </p>
           <div class="hero-actions">
             <div class="code-pill">
-              <code>git clone luma-remote-a414</code>
+              <code>git clone luma-remote-a332</code>
               <button id="copy-btn" class="copy-btn" title="Copy command">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               </button>
@@ -116,9 +125,9 @@
         </div>
 
         <div class="hero-side-metrics">
-          <div class="metric-item"><small>ENVELOPE</small><b>142 × 82 × 24 mm</b></div>
-          <div class="metric-item"><small>FACE SLOPE</small><b>8.325° Ergonomic</b></div>
-          <div class="metric-item"><small>PARTS COUNT</small><b>25 Discrete Modules</b></div>
+          <div class="metric-item"><small>ENVELOPE</small><b>120 × 81 mm</b></div>
+          <div class="metric-item"><small>KEY PITCH</small><b>19.5 mm Compact</b></div>
+          <div class="metric-item"><small>PARTS COUNT</small><b>21 Discrete Modules</b></div>
         </div>
       </section>
 
@@ -129,7 +138,7 @@
             <span class="eyebrow">A4.14 MECHANICAL ANATOMY</span>
             <h2 class="section-title">The complete <br />hardware blueprint</h2>
             <p class="section-desc">
-              Break free from monolithic enclosures. 25 precision-interlocked components with 0 mm static collision and dual bayonet snap closure.
+              Break free from monolithic enclosures. 21 precision-interlocked components with 0 mm static collision and dual bayonet snap closure.
             </p>
           </div>
 
@@ -169,7 +178,7 @@
               </li>
               <li data-part="ec11" class="tag-ec11">
                 <span class="tag-title">EC11 Knob Stack</span>
-                <small>Ø34×8.5mm Balanced Dial</small>
+                <small>Ø26×8.5mm Balanced Dial</small>
               </li>
             </ul>
           </div>
@@ -226,7 +235,7 @@
         <div class="feature-item" data-feature="knob">
           <div class="feature-text">
             <span class="eyebrow color-green">03 · ROTARY ENCODER</span>
-            <h3>Balanced Ø34 × 8.5mm Dial</h3>
+            <h3>Balanced Ø26 × 8.5mm Dial</h3>
             <p>Precision knurled perimeter paired with EC11 D-shaft encoder for smooth stepped volume and parameter scrubbing.</p>
           </div>
           <div class="feature-card">
@@ -274,10 +283,10 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
                 <input type="checkbox" checked />
                 <span class="check-box"></span>
                 <div>
-                  <strong>01 · Enclosure &amp; Bezel</strong>
+                  <strong>01 · Enclosure &amp; Closure</strong>
                   <small>Upper Shell + Base Cover + Screen Bezel (3 parts)</small>
                 </div>
-                <span class="weight-tag">58.4g</span>
+                <span class="weight-tag">48.6g</span>
               </label>
 
               <label class="subsys-toggle is-active" data-group="keycaps">
@@ -287,7 +296,7 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
                   <strong>02 · Thin Choc Keycaps</strong>
                   <small>6× 3.2mm Flat-top Keycaps</small>
                 </div>
-                <span class="weight-tag">4.2g</span>
+                <span class="weight-tag">3.6g</span>
               </label>
 
               <label class="subsys-toggle is-active" data-group="switches">
@@ -307,7 +316,7 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
                   <strong>04 · ESP32-S3 Display Stack</strong>
                   <small>Waveshare Board + M3 Retainer Plate</small>
                 </div>
-                <span class="weight-tag">28.5g</span>
+                <span class="weight-tag">27.4g</span>
               </label>
 
               <label class="subsys-toggle is-active" data-group="ec11">
@@ -315,44 +324,34 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
                 <span class="check-box"></span>
                 <div>
                   <strong>05 · EC11 Rotary Assembly</strong>
-                  <small>Encoder + Nut + Washer + Ø34 Knob</small>
+                  <small>Encoder + Nut + Washer + Ø26 Knob</small>
                 </div>
-                <span class="weight-tag">12.1g</span>
-              </label>
-
-              <label class="subsys-toggle is-active" data-group="keepouts">
-                <input type="checkbox" checked />
-                <span class="check-box"></span>
-                <div>
-                  <strong>06 · Dupont Engineering Keep-outs</strong>
-                  <small>Cable Bend &amp; Housing Envelopes</small>
-                </div>
-                <span class="weight-tag">Volume proxy</span>
+                <span class="weight-tag">9.8g</span>
               </label>
             </div>
 
-            <div class="bom-summary-card">
-              <div class="bom-stat-row">
-                <span>Active Parts</span>
-                <strong id="bom-parts-count">25 / 25</strong>
+            <div class="mass-panel">
+              <div class="mass-head">
+                <span>Mass budget</span>
+                <strong id="mass-total">103.2 g</strong>
               </div>
-              <div class="bom-stat-row">
-                <span>Printable Weight</span>
-                <strong id="bom-weight">74.7 g</strong>
+              <div class="mass-bar">
+                <i class="seg" data-group="enclosure" style="background:#ff9500"></i>
+                <i class="seg" data-group="keycaps" style="background:#ff3b30"></i>
+                <i class="seg" data-group="switches" style="background:#30d158"></i>
+                <i class="seg" data-group="esp32" style="background:#64d2ff"></i>
+                <i class="seg" data-group="ec11" style="background:#0a84ff"></i>
               </div>
-              <div class="bom-stat-row">
-                <span>Hardware Components</span>
-                <strong>10 Hardware Units</strong>
+              <div class="mass-legend">
+                <button class="legend-chip is-active" data-group="enclosure" type="button"><i style="background:#ff9500"></i>Enclosure</button>
+                <button class="legend-chip is-active" data-group="keycaps" type="button"><i style="background:#ff3b30"></i>Keycaps</button>
+                <button class="legend-chip is-active" data-group="switches" type="button"><i style="background:#30d158"></i>Switches</button>
+                <button class="legend-chip is-active" data-group="esp32" type="button"><i style="background:#64d2ff"></i>ESP32</button>
+                <button class="legend-chip is-active" data-group="ec11" type="button"><i style="background:#0a84ff"></i>EC11</button>
               </div>
-              <div class="bom-stat-row">
-                <span>Fasteners Needed</span>
-                <strong>1× M3×10 Countersunk</strong>
-              </div>
-              <div class="bom-progress-bar">
-                <div class="seg-enclosure" style="width: 50%"></div>
-                <div class="seg-keycaps" style="width: 10%"></div>
-                <div class="seg-esp32" style="width: 25%"></div>
-                <div class="seg-ec11" style="width: 15%"></div>
+              <div class="mass-foot">
+                <span>Active parts <strong id="mass-parts">21 / 21</strong></span>
+                <span>Fasteners <strong>1× M3×10</strong></span>
               </div>
             </div>
           </div>
@@ -366,13 +365,13 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
             <span class="spec-num">01</span>
             <h4>Print-Ready 3MF</h4>
             <p>Bambu Studio / OrcaSlicer pre-oriented 3MF build package with optimized seam placement.</p>
-            <a class="btn-download" href="stl/Luma_A4_14_THIN_KEYCAP_BALANCED_KNOB_PRINT_READY.3mf" download><span>DOWNLOAD 3MF</span></a>
+            <a class="btn-download" href="stl/Luma_A3_32_COMPACT_INDUSTRIAL_PRINT_READY_HQ.3mf" download><span>DOWNLOAD 3MF</span></a>
           </div>
 
           <div class="spec-card">
             <span class="spec-num">02</span>
             <h4>Master Assembly STL</h4>
-            <p>Consolidated 25-part reference mesh in exact world coordinates for CAD validation.</p>
+            <p>Consolidated 21-part reference mesh in exact world coordinates for CAD validation.</p>
             <a class="btn-download" href="stl/Luma_ASSEMBLY_PREVIEW.stl" download><span>DOWNLOAD ALL STL</span></a>
           </div>
 
@@ -388,7 +387,7 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
           <div class="footer-top">
             <div class="footer-brand">
               <span class="brand-glyph"></span>
-              <span>Luma Remote A4.14</span>
+              <span>Luma Remote A3.32</span>
             </div>
             <div class="footer-links">
               <a href="#intro">Top</a>

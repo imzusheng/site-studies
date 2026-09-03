@@ -427,40 +427,65 @@ body.theme-light .section-desc { color: var(--text-muted-light); }
 .subsys-toggle strong { font-size: 13px; }
 .subsys-toggle small { font-size: 11px; }
 
-.bom-summary-card {
-  max-width: 360px; width: 100%;
-  background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(30, 28, 24, 0.12);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-radius: 18px; padding: 26px; box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.12);
-  display: flex; flex-direction: column; gap: 16px;
-}
-.subsys-toggle strong { display: block; font-family: var(--font-mono); font-size: 14px; color: #1c1a17; }
-.subsys-toggle small { color: #6a6760; font-size: 12px; }
 .weight-tag {
   margin-left: auto; font-family: var(--font-mono); font-size: 12px;
   font-weight: 600; color: var(--text-muted-light);
 }
 
-.bom-summary-card {
-  background: #ffffff; border: 1px solid rgba(30, 28, 24, 0.12);
-  border-radius: 20px; padding: 32px; box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.12);
-  display: flex; flex-direction: column; gap: 20px; height: fit-content;
+/* Modular 分镜：Mass budget 面板（对应原站 Bundle size 面板） */
+.mass-panel {
+  max-width: 330px; width: 100%;
+  background: rgba(23, 23, 26, 0.94); color: #e8e6e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px; padding: 18px 20px;
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.5);
+  position: relative; z-index: 5;
 }
-.bom-stat-row {
+.mass-head {
   display: flex; justify-content: space-between; align-items: baseline;
-  font-family: var(--font-mono); font-size: 13px; color: #6a6760;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06); padding-bottom: 12px;
+  font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 12px;
 }
-.bom-stat-row strong { font-size: 18px; color: #1c1a17; font-family: var(--font-display); }
-
-.bom-progress-bar {
+.mass-head strong { font-family: var(--font-mono); font-size: 15px; color: #fff; }
+.mass-bar {
   display: flex; height: 8px; border-radius: 100px; overflow: hidden;
-  background: rgba(0, 0, 0, 0.08); margin-top: 10px;
+  background: rgba(255, 255, 255, 0.08); margin-bottom: 12px;
 }
-.seg-enclosure { background: var(--neon-orange); }
-.seg-keycaps { background: var(--neon-red); }
-.seg-esp32 { background: var(--neon-cyan); }
-.seg-ec11 { background: var(--neon-green); }
+.mass-bar .seg { display: block; height: 100%; width: 0; transition: width 0.45s var(--ease-out-expo); }
+.mass-legend {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 10px; margin-bottom: 12px;
+}
+.legend-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 10.5px; color: #cfccc5;
+  background: transparent; border: 0; padding: 2px 0; cursor: pointer;
+  opacity: 1; transition: opacity 0.25s, color 0.25s; text-align: left;
+}
+.legend-chip i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.legend-chip:not(.is-active) { opacity: 0.32; text-decoration: line-through; }
+.legend-chip:hover { color: #fff; }
+.mass-foot {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 10.5px; color: #8c8983;
+}
+.mass-foot strong { color: #fff; font-weight: 600; }
+
+/* Modular 分镜：零件旁漂浮质量标签（对应原站每模块 KB 标签） */
+.part-tags { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.part-tag {
+  position: absolute; top: 0; left: 0;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: #26231f;
+  background: rgba(241, 237, 228, 0.92); border: 1px solid rgba(30, 28, 24, 0.18);
+  border-radius: 100px; padding: 4px 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  opacity: 0; transform: translate(-200px, -200px);
+  transition: opacity 0.4s var(--ease-out-expo);
+  will-change: transform;
+  white-space: nowrap;
+}
+.part-tag i { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.part-tag.is-on { opacity: 1; }
 
 /* ============ SPECS & FOOTER ============ */
 .section-specs { padding-top: 100px; }
