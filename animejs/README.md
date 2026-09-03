@@ -19,16 +19,17 @@
 
 | 系统 | 实现 |
 |---|---|
-| 平滑滚动 | rAF lerp 滚轮插值（`updateScrollAnimation` 每帧阻尼）；**换镜判定与进度擦洗消费同一份平滑滚动信号**，快速滚动不产生机位/爆炸的瞬态饱和 |
-| 分镜状态机 | 每分镜独立机位（静态 cam / 零件锚点 camAnchor / 进度路径 camFn）、擦洗爆炸组（零件 id / 组名双键解析）、摇摆运镜 sway |
-| 运镜编排 | camFn 输出滚动进度驱动的机位路径：弧形环绕（Ergonomics / Knob / Display）、推近 dolly（Keycaps / Compute Core）、旋转入场（rotFn 偏航 60°）；换镜机位与上一幕末帧衔接，配 swap-free 焦点过渡 |
-| 焦点混搭 | INK 分镜逐零件材质实例 + focusMix 逐帧插值（暗面线稿 ⇄ 纸面主角），换镜焦点交接为渐变而非闪切 |
+| 直接映射（v6） | **无时间平滑**：滚动位置、爆炸因子、机位、姿态、焦点混搭全部是滚动位置的纯函数——鼠标停即画面停、速度即滚动速度、掉帧不积累滞后；换镜判定与进度共用原始 `scrollY` 信号 + 滞回锁（回退需越过 12vh 余量） |
+| 分镜状态机 | 9 幕各自独立机位（camFn 路径 / 静态 cam）、擦洗爆炸组（零件 id / 组名双键解析）；**相邻分镜在边界处位姿严格连续**（前一幕 camFn/rotFn/scrub 终值 = 后一幕初值），scrub 区间以端点值携带衰减（如 Ergonomics `[1,0]` 收拢入镜时爆炸） |
+| 运镜编排 | camFn 输出滚动进度驱动的机位路径：直线推近（Ergonomics）、键帽三拍（Keycaps）、旋钮拉回（Knob）、斜角滑移（Display）、PCB 正推（Firmware）；机位路径单方向、无反打，进度零点对齐换镜判定点 |
+| 焦点混搭 | INK 分镜逐零件材质实例；焦点高亮 = 纯滚动 ramp（分镜中段亮、两端回暗），边界处 ramp=0 与相邻幕无缝衔接，无换镜跳色 |
 | 中心枢轴 | STL 几何平移至零件包围盒中心，pivot 位移 + mesh 自转（EC11 旋出）均绕自身轴；描线几何在平移后构建，杜绝偏移鬼影 |
 | 双主题变形 | Toolbox / Modules 区触发 `body.theme-light`，材质整体切换（赛博微光 ⇄ CAD 墨线），CSS 背景同步过渡 |
-| 爆炸驱动 | Toolbox 按滚动进度 0→100%；Modules 固定 100% 并叠加 1.9× `spread` 扩散系数 |
+| 爆炸驱动 | Toolbox 按滚动进度 0→100%；Modules 固定 100% 并叠加 1.9× `spread` 扩散系数；Specs 入镜携带 100% 随滚动收拢 |
 | 3D→2D 投影 | `vector.project(camera)` 逐帧投影：SVG 阶梯引线（Toolbox）、漂浮质量标签（Modules）、特写参数标注（统一分槽排布防重叠，标签列避让内容卡片） |
 | 动态屏幕 | 480×640 `CanvasTexture` 每帧重绘：波形 / 音量弧 / 按键矩阵，`toneMapped:false` 保持发光感；平面挂在主板 pivot 下，跟随主板位移 |
 | 模块拆装 | 图例与开关共用 `setGroupActive()`：部件显隐 + 质量重算 + 堆叠条联动 |
+| Dev HUD | 左下角验收辅助条（发布前移除）：`Y 滚动高度/上限 · F 帧号`、当前分镜与进度、`NEXT FLIP` 下一换镜点，方便反馈「Y=xxxx 处异常」精确定位 |
 
 ## 运行
 
@@ -53,9 +54,10 @@ animejs/
 
 数据来源：`luma-remote/hardware/mechanical/exports/assembly/profiles/industrial_a3_32_compact/`（commit `08795db`）。仅供学习交流，animejs.com 设计语言版权归 Julian Garnier 所有。
 
-## 已知问题（v5 收尾记录）
+## 已知问题（v6 收尾记录）
 
-v4 遗留四项已全部解决：Keycaps 构图重排（侧上俯视 + 60° 偏航 + 微抬堆叠）、PCB 标注改为包围盒比例锚点、LCD 纹理对比度增强、暗面零件追加 7° 低阈值第二层微描线。当前遗留：
+v5 收尾后针对「突然加速 / 顺逆时针晃动 / 回弹」做了 v6 直接映射重构：删除全部时间阻尼（6 处），位姿改为滚动纯函数，9 幕边界位姿与 scrub 区间端点全部衔接；2→3 边界由「跳变 200mm + 左右反打」改为直线推近。当前遗留：
 
-- Features 各幕换镜的焦点交接已平滑，但 PBR ⇄ INK 主题切换（Toolbox / Specs 边界）仍为整幕瞬切，属原站同款节奏，暂保留
+- PBR ⇄ INK 主题切换（Toolbox / Specs 边界）仍为整幕瞬切，属原站同款节奏，暂保留
 - 未做移动端窄视口适配与 prefers-reduced-motion 降级
+- 左下角 Dev HUD 为验收辅助，验收通过后移除
