@@ -8,7 +8,6 @@
      scrub 区间以端点值衔接（前一幕的终值 = 后一幕的初值）
    · 三态材质：PBR 赛博微光 / CAD 纸面墨线 / INK 暗面双层描线（特写用，省性能）
    · 中心枢轴：几何平移至零件中心，自转绕自身轴
-   · 动态 LCD 屏幕纹理按分镜切换界面，跟随主板位移
    ========================================================= */
 
 import * as THREE from "/vendor/three.module.js";
@@ -114,148 +113,6 @@ import { STLLoader } from "/vendor/STLLoader.js";
   const PAPER_LINE_COLOR = new THREE.Color(0x1c1a17);
 
   /* =========================================================
-     3. LCD 动态屏幕纹理（按分镜切换界面）
-     ========================================================= */
-  const lcdCanvas = document.createElement("canvas");
-  lcdCanvas.width = 480; lcdCanvas.height = 640;
-  const lcdCtx = lcdCanvas.getContext("2d");
-  const lcdTexture = new THREE.CanvasTexture(lcdCanvas);
-  lcdTexture.colorSpace = THREE.SRGBColorSpace;
-  const lcdMaterial = new THREE.MeshBasicMaterial({ map: lcdTexture, toneMapped: false });
-  let lcdPlane = null;
-
-  function lcdBase(title, accent) {
-    const w = lcdCanvas.width, h = lcdCanvas.height;
-    lcdCtx.fillStyle = "#080c12";
-    lcdCtx.fillRect(0, 0, w, h);
-    lcdCtx.fillStyle = "rgba(255,255,255,0.16)";
-    lcdCtx.fillRect(0, 0, w, 44);
-    lcdCtx.fillStyle = "#64d2ff";
-    lcdCtx.shadowColor = "#64d2ff"; lcdCtx.shadowBlur = 8;
-    lcdCtx.font = "bold 21px IBMPlexMono, monospace";
-    lcdCtx.fillText("9:41", 24, 31);
-    lcdCtx.shadowColor = accent || "#30d158"; lcdCtx.shadowBlur = 8;
-    lcdCtx.fillStyle = accent || "#30d158";
-    lcdCtx.font = "bold 16px IBMPlexMono, monospace";
-    lcdCtx.fillText(title, 190, 31);
-    lcdCtx.shadowBlur = 0;
-  }
-
-  function updateLcdScreen(time) {
-    const w = lcdCanvas.width, h = lcdCanvas.height;
-    const shot = state.shot;
-
-    if (shot === "display") {
-      lcdBase("SCOPE", "#ff3b30");
-      lcdCtx.strokeStyle = "rgba(255,255,255,0.13)";
-      lcdCtx.lineWidth = 2;
-      for (let gx = 0; gx <= w; gx += 48) { lcdCtx.beginPath(); lcdCtx.moveTo(gx, 60); lcdCtx.lineTo(gx, h - 20); lcdCtx.stroke(); }
-      for (let gy = 60; gy <= h - 20; gy += 48) { lcdCtx.beginPath(); lcdCtx.moveTo(0, gy); lcdCtx.lineTo(w, gy); lcdCtx.stroke(); }
-      lcdCtx.strokeStyle = "#ff3b30"; lcdCtx.lineWidth = 6;
-      lcdCtx.shadowColor = "#ff3b30"; lcdCtx.shadowBlur = 16;
-      lcdCtx.beginPath();
-      for (let x = 0; x < w; x += 5) {
-        const p = x / w;
-        const y = h / 2 + Math.sin(p * Math.PI * 6 + time * 4) * 110 * (0.6 + 0.4 * Math.sin(time * 0.8));
-        x === 0 ? lcdCtx.moveTo(x, y) : lcdCtx.lineTo(x, y);
-      }
-      lcdCtx.stroke(); lcdCtx.shadowBlur = 0;
-      lcdCtx.fillStyle = "#f6f4f2"; lcdCtx.font = "bold 18px IBMPlexMono, monospace";
-      lcdCtx.fillText("240x320 @ 40MHz DMA", 24, h - 34);
-    } else if (shot === "keycaps") {
-      lcdBase("KEY TEST", "#ff9500");
-      for (let i = 0; i < 6; i++) {
-        const bx = 40 + (i % 2) * 220, by = 90 + Math.floor(i / 2) * 160;
-        const active = Math.sin(time * 5 - i * 0.9) > 0.55;
-        lcdCtx.fillStyle = active ? "rgba(255,59,48,0.4)" : "rgba(255,255,255,0.06)";
-        lcdCtx.strokeStyle = active ? "#ff3b30" : "rgba(255,255,255,0.18)";
-        lcdCtx.lineWidth = 3;
-        lcdCtx.beginPath(); lcdCtx.roundRect(bx, by, 190, 110, 12); lcdCtx.fill(); lcdCtx.stroke();
-        lcdCtx.fillStyle = active ? "#ff3b30" : "#8a8f98";
-        lcdCtx.font = "bold 22px IBMPlexMono, monospace";
-        lcdCtx.fillText(`SW${i + 1}`, bx + 18, by + 44);
-        lcdCtx.fillStyle = active ? "#ffd60a" : "rgba(255,255,255,0.25)";
-        lcdCtx.font = "14px IBMPlexMono, monospace";
-        lcdCtx.fillText(active ? "3.0 mm PRESS" : "idle", bx + 18, by + 78);
-      }
-    } else if (shot === "knob") {
-      lcdBase("VOLUME", "#30d158");
-      const cx = w / 2, cy = 330, r = 130;
-      lcdCtx.strokeStyle = "rgba(255,255,255,0.14)"; lcdCtx.lineWidth = 14;
-      lcdCtx.beginPath(); lcdCtx.arc(cx, cy, r, Math.PI * 0.75, Math.PI * 2.25); lcdCtx.stroke();
-      const val = (Math.sin(time * 1.2) + 1) / 2;
-      lcdCtx.strokeStyle = "#30d158"; lcdCtx.lineWidth = 16;
-      lcdCtx.shadowColor = "#30d158"; lcdCtx.shadowBlur = 14;
-      lcdCtx.beginPath(); lcdCtx.arc(cx, cy, r, Math.PI * 0.75, Math.PI * 0.75 + val * Math.PI * 1.5);
-      lcdCtx.stroke(); lcdCtx.shadowBlur = 0;
-      lcdCtx.fillStyle = "#f6f4f2"; lcdCtx.font = "bold 52px IBMPlexMono, monospace"; lcdCtx.textAlign = "center";
-      lcdCtx.fillText(String(Math.round(val * 100)), cx, cy + 18);
-      lcdCtx.font = "16px IBMPlexMono, monospace"; lcdCtx.fillStyle = "#8a8f98";
-      lcdCtx.fillText("EC11 · 20 DETENTS", cx, cy + 250);
-      lcdCtx.textAlign = "left";
-    } else if (shot === "firmware") {
-      lcdBase("SYSTEM", "#bf5af2");
-      const rows = [["CORE", "LX7 x2 @240MHz"], ["PSRAM", "8 MB OK"], ["FLASH", "16 MB OK"], ["RADIO", "Wi-Fi + BLE5"], ["LINK", "HA · MQTT OK"], ["FW", "v0.9.3 (A3.32)"]];
-      rows.forEach((r, i) => {
-        const y = 110 + i * 66;
-        lcdCtx.fillStyle = "#8a8f98"; lcdCtx.font = "15px IBMPlexMono, monospace"; lcdCtx.fillText(r[0], 40, y);
-        lcdCtx.fillStyle = "#f6f4f2"; lcdCtx.font = "bold 19px IBMPlexMono, monospace"; lcdCtx.fillText(r[1], 170, y);
-        lcdCtx.strokeStyle = "rgba(255,255,255,0.08)"; lcdCtx.lineWidth = 2;
-        lcdCtx.beginPath(); lcdCtx.moveTo(40, y + 18); lcdCtx.lineTo(w - 40, y + 18); lcdCtx.stroke();
-      });
-      const boot = (Math.sin(time * 0.9) + 1) / 2;
-      lcdCtx.fillStyle = "rgba(255,255,255,0.1)"; lcdCtx.fillRect(40, h - 90, w - 80, 14);
-      lcdCtx.fillStyle = "#bf5af2"; lcdCtx.fillRect(40, h - 90, (w - 80) * boot, 14);
-    } else if (shot === "ergonomics") {
-      lcdBase("ATTITUDE", "#ff9500");
-      const cx = w / 2, cy = 340;
-      lcdCtx.save();
-      lcdCtx.translate(cx, cy);
-      lcdCtx.rotate(DEG(-8.325 + Math.sin(time * 0.7) * 0.6));
-      lcdCtx.fillStyle = "rgba(100,210,255,0.10)";
-      lcdCtx.fillRect(-240, -160, 480, 160);
-      lcdCtx.strokeStyle = "#64d2ff"; lcdCtx.lineWidth = 4;
-      lcdCtx.beginPath(); lcdCtx.moveTo(-220, 0); lcdCtx.lineTo(220, 0); lcdCtx.stroke();
-      for (let d = -3; d <= 3; d++) {
-        if (!d) continue;
-        lcdCtx.strokeStyle = "rgba(255,255,255,0.35)"; lcdCtx.lineWidth = 3;
-        lcdCtx.beginPath(); lcdCtx.moveTo(-60, d * 46); lcdCtx.lineTo(60, d * 46); lcdCtx.stroke();
-      }
-      lcdCtx.restore();
-      lcdCtx.strokeStyle = "#ff3b30"; lcdCtx.lineWidth = 5;
-      lcdCtx.beginPath(); lcdCtx.moveTo(cx - 40, cy); lcdCtx.lineTo(cx + 40, cy); lcdCtx.stroke();
-      lcdCtx.fillStyle = "#f6f4f2"; lcdCtx.font = "bold 40px IBMPlexMono, monospace"; lcdCtx.textAlign = "center";
-      lcdCtx.fillText("8.325°", cx, h - 130);
-      lcdCtx.font = "16px IBMPlexMono, monospace"; lcdCtx.fillStyle = "#8a8f98";
-      lcdCtx.fillText("LOW-DECK WRIST RELIEF", cx, h - 92);
-      lcdCtx.textAlign = "left";
-    } else {
-      lcdBase("HA · CONNECTED", "#30d158");
-      lcdCtx.strokeStyle = "#ff3b30"; lcdCtx.lineWidth = 4;
-      lcdCtx.shadowColor = "#ff3b30"; lcdCtx.shadowBlur = 10;
-      lcdCtx.beginPath();
-      for (let x = 0; x < w; x += 6) {
-        const p = x / w;
-        const y = 250 + Math.sin(p * Math.PI * 4 + time * 3) * 60 + Math.cos(p * 12 + time * 2) * 20;
-        x === 0 ? lcdCtx.moveTo(x, y) : lcdCtx.lineTo(x, y);
-      }
-      lcdCtx.stroke(); lcdCtx.shadowBlur = 0;
-      for (let i = 0; i < 6; i++) {
-        const bx = 30 + (i % 3) * 145, by = 400 + Math.floor(i / 3) * 80;
-        const active = (Math.floor(time * 2) % 6) === i;
-        lcdCtx.fillStyle = active ? "rgba(255,59,48,0.35)" : "rgba(255,255,255,0.06)";
-        lcdCtx.strokeStyle = active ? "#ff3b30" : "rgba(255,255,255,0.15)";
-        lcdCtx.lineWidth = 2;
-        lcdCtx.beginPath(); lcdCtx.roundRect(bx, by, 130, 60, 8); lcdCtx.fill(); lcdCtx.stroke();
-        lcdCtx.fillStyle = active ? "#ff3b30" : "#888";
-        lcdCtx.font = "bold 15px IBMPlexMono, monospace";
-        lcdCtx.fillText(`KEY ${i + 1}`, bx + 14, by + 36);
-      }
-    }
-    lcdTexture.needsUpdate = true;
-  }
-
-  /* =========================================================
      4. 分镜脚本（Shot State Machine）
      scrub: [起, 止] —— 分镜内滚动进度线性插值爆炸因子；
      相邻分镜区间以端点值衔接（前一幕终值 = 后一幕初值），跨界无跳变
@@ -333,25 +190,25 @@ import { STLLoader } from "/vendor/STLLoader.js";
         return [0.08, -0.1, -0.52 - 0.63 * eIn];
       },
       camFn: (prog, ctx) => {
+        // 环绕原则：主角恒居画面正中（注视点 = 主角锚点），
+        // 机位 = 主角 + 球坐标(θ,r,z)，θ 全片单调顺时针递减 → 围绕主角环绕
         const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
-        const t = Math.min(Math.max(prog / 0.55, 0), 1);
-        const t2 = Math.min(Math.max((prog - 0.6) / 0.4, 0), 1);
-        // 入镜偏移 = ergo 末帧 (0,-179,162) 相对主角键帽的偏移 → 换镜零跳变
-        const off = new THREE.Vector3(-43, -194.7, 131.6)
-          .lerp(new THREE.Vector3(24, -100, 62), t)
-          .lerp(new THREE.Vector3(34, -122, 108), t2);
-        const look = new THREE.Vector3(0, 0, 6)
-          .lerp(a2.clone().add(new THREE.Vector3(0, 0, -6)), t)
-          .lerp(new THREE.Vector3(0, 0, 6), t2);
-        return { cam: a2.clone().add(off), look };
+        const t = Math.min(Math.max(prog, 0), 1);
+        const th = DEG(-12.44 - 42 * t);
+        const r = 199.46 - 81.46 * t;
+        const z = 131.58 - 57.58 * t;
+        return {
+          cam: a2.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z)),
+          look: new THREE.Vector3(0, 0, 6).lerp(a2, Math.min(t / 0.15, 1)),
+        };
       },
     },
     {
-      // EC11 四件绕自身轴旋转着旋出；机位从键帽幕末帧直线拉回到旋钮特写，
-      // 姿态承接键帽幕的 -1.15 偏航（不回卷，方向统一），幕内继续缓漂不驻留；
+      // EC11 四件绕自身轴旋转着旋出；环绕链延续（θ -58.3°→-96.3°），旋钮居中；
+      // 姿态承接键帽幕 -1.15 偏航（不回卷），幕内继续缓漂不驻留；
       // 键帽抬升/扇开随 keycaps 因子携带衰减（区间端点 1→0，边界连续）
       id: "knob", el: '[data-feature="knob"]', theme: "ink",
-      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.15],
+      cam: [-53, -53, 130], look: [43, 16, 56], rot: [0.08, -0.1, -1.15],
       scrub: { "ec11-stack": [0, 0.95], keycaps: [1, 0] },
       focus: { groups: ["ec11-stack"] },
       screw: { ec11_knob_26x8p5: 0.5, ec11_mounting_nut: 1.1, ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
@@ -360,33 +217,34 @@ import { STLLoader } from "/vendor/STLLoader.js";
         return [0.08, -0.1, -1.15 - 0.15 * t];
       },
       camFn: (prog, ctx) => {
+        // 入镜机位 = keycaps 末帧（抬升键帽球坐标端点），随后绕旋钮环绕
         const aK = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
-        const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
-        const t = Math.min(Math.max(prog / 0.7, 0), 1);
-        const entryCam = a2.clone().add(new THREE.Vector3(34, -122, 108)); // = keycaps 末帧
-        const endCam = aK.clone().add(new THREE.Vector3(Math.sin(DEG(18)) * 148, -Math.cos(DEG(18)) * 148, 148));
+        const t = Math.min(Math.max(prog, 0), 1);
+        const th = DEG(-58.32 - 38 * t);
+        const r = 62.32 + 87.68 * t;
+        const z = 108.07 + 17.93 * t;
         return {
-          cam: entryCam.lerp(endCam, t),
-          look: new THREE.Vector3(0, 0, 6).lerp(aK.clone().add(new THREE.Vector3(0, 0, 2)), t),
+          cam: aK.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z)),
+          look: new THREE.Vector3(43, 15.77, 56.42).lerp(aK, Math.min(t / 0.18, 1)),
         };
       },
     },
     {
-      // 屏幕幕：机位从旋钮幕末帧滑到 LCD 斜角（斜/正对比的前半拍），
-      // 偏航继续顺时针加深（-1.30 → -1.72），方向不回卷
+      // 屏幕幕：环绕链延续（θ -83°→-117°），LCD 主板居中；
+      // ec11 因子携带衰减（[0.95,0]），旋钮栈在镜头拉远中自然归位（边界零跳变）
       id: "display", el: '[data-feature="display"]', theme: "ink",
-      cam: [77, -106, 164], look: [0, 0, 6], rot: [0.08, -0.1, -1.3],
-      scrub: { screen_bezel: [0, 1] },
+      cam: [-149, -4, 148], look: [0, -20, 22], rot: [0.08, -0.1, -1.3],
+      scrub: { screen_bezel: [0, 1], "ec11-stack": [0.95, 0] },
       focus: { parts: ["screen_bezel", "waveshare_esp32_s3_lcd_2"] },
       camFn: (prog, ctx) => {
         const aL = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
-        const aK = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
-        const t = Math.min(Math.max(prog / 0.7, 0), 1);
-        const entryCam = aK.clone().add(new THREE.Vector3(Math.sin(DEG(18)) * 148, -Math.cos(DEG(18)) * 148, 148)); // = knob 末帧
-        const endCam = aL.clone().add(new THREE.Vector3(Math.sin(DEG(-4)) * 208, -Math.cos(DEG(-4)) * 208, 186));
+        const t = Math.min(Math.max(prog, 0), 1);
+        const th = DEG(-83.03 - 34 * t);
+        const r = 150.73 + 57.27 * t;
+        const z = 129.41 + 30.59 * t;
         return {
-          cam: entryCam.lerp(endCam, t),
-          look: aK.clone().add(new THREE.Vector3(0, 0, 2)).lerp(aL, t),
+          cam: aL.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z)),
+          look: new THREE.Vector3(0, -20.06, 22.35).lerp(aL, Math.min(t / 0.18, 1)),
         };
       },
       rotFn: (prog) => {
@@ -395,19 +253,22 @@ import { STLLoader } from "/vendor/STLLoader.js";
       },
     },
     {
-      // 主板幕：模型顺时针偏航翻转 180°（-1.72 → -1.72-π，方向统一不回卷）到背面视角，
-      // PCB 板体随 scrub 提出机壳，相机随机体上升推近 —— 背面 + 爆炸展示核心电子
+      // 主板幕：环绕链延续（θ -117°→-161°），板体（随机体运动）恒居中；
+      // 模型顺时针偏航翻转 180°（-1.72 → -1.72-π）到背面视角
       id: "firmware", el: '[data-feature="firmware"]', theme: "ink",
       rot: [0, 0, -1.72],
       scrub: { waveshare_esp32_s3_lcd_2: [0, 0.95], esp32_m3_retainer: [0, 0.7], screen_bezel: [1, 0] },
       focus: { parts: ["waveshare_esp32_s3_lcd_2", "esp32_m3_retainer"] },
       camFn: (prog, ctx) => {
         const a = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
-        const t = Math.min(Math.max(prog / 0.55, 0), 1);
-        const offA = new THREE.Vector3(Math.sin(DEG(-4)) * 208, -Math.cos(DEG(-4)) * 208, 186); // = display 末帧偏移
-        const offB = new THREE.Vector3(10, -150, 190);   // 背面高角：越过侧壁俯视板体
-        const off = offA.lerp(offB, t);
-        return { cam: a.clone().add(off), look: a };
+        const t = Math.min(Math.max(prog, 0), 1);
+        const th = DEG(-117.03 - 44 * t);
+        const r = 208 - 58 * t;
+        const z = 160 + 30 * t;
+        return {
+          cam: a.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z)),
+          look: new THREE.Vector3(0.49, 14.79, 18.94).lerp(a, Math.min(t / 0.2, 1)),
+        };
       },
       rotFn: (prog) => {
         const t = Math.min(Math.max(prog, 0), 1);
@@ -415,15 +276,16 @@ import { STLLoader } from "/vendor/STLLoader.js";
       },
     },
     {
-      // 总览幕：机位从 PCB 背面拉回全景，散点爆炸铺开；
+      // 总览幕：环绕链收尾（θ -161° 起步），机位从板体拉回全景，散点爆炸铺开；
+      // 板体/固定座因子携带衰减（[0.95,0]/[0.7,0]）→ 主角归位无瞬跳；
       // 偏航继续顺时针（-4.86 → -6.20 ≡ -0.08，视觉构图等价、方向不回卷）
       id: "modules", el: "#modules", theme: "light",
       cam: [0, -6, 175], look: [0, 0, 8], rot: [0, 0, -4.86], spread: 1.9,
-      scrub: { __default: [0, 1] },
+      scrub: { __default: [0, 1], waveshare_esp32_s3_lcd_2: [0.95, 0], esp32_m3_retainer: [0.7, 0] },
       camFn: (prog, ctx) => {
         const a = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
         const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        const entryCam = a.clone().add(new THREE.Vector3(10, -150, 190)); // = firmware 末帧
+        const entryCam = a.clone().add(new THREE.Vector3(Math.sin(DEG(-161.03)) * 150, -Math.cos(DEG(-161.03)) * 150, 190)); // = firmware 末帧
         return {
           cam: entryCam.lerp(new THREE.Vector3(45, -400, 380), t),
           look: a.clone().lerp(new THREE.Vector3(0, 0, 0), t),
@@ -585,26 +447,6 @@ import { STLLoader } from "/vendor/STLLoader.js";
       const c = new THREE.Vector3();
       box.getCenter(c);
       rootGroup.position.sub(c);
-
-      // LCD 动态屏幕平面（挂在主板 pivot 下，跟随主板 scrub 位移 / 下沉）
-      const board = partsMap.get("waveshare_esp32_s3_lcd_2");
-      if (board) {
-        const bb = board.bbox;
-        const center = board.home;
-        const bw = bb[1][0] - bb[0][0], bd = bb[1][1] - bb[0][1];
-        const landscape = bw > bd;
-        const pw = landscape ? 42.5 : 31.5;
-        const ph = landscape ? 31.5 : 42.5;
-        lcdPlane = new THREE.Mesh(new THREE.PlaneGeometry(pw, ph), lcdMaterial);
-        lcdPlane.position.set(
-          (bb[0][0] + bb[1][0]) / 2 - center.x,
-          (bb[0][1] + bb[1][1]) / 2 - center.y,
-          bb[1][2] - center.z + 0.12
-        );
-        if (landscape) lcdPlane.rotation.z = Math.PI / 2;
-        board.pivot.add(lcdPlane);
-      }
-
       state.loaded = true;
       window.__partsCount = partsMap.size;
     } catch (err) {
@@ -642,7 +484,6 @@ import { STLLoader } from "/vendor/STLLoader.js";
       }
     });
     document.body.classList.toggle("theme-light", mode === "light");
-    if (lcdPlane) lcdPlane.visible = mode !== "light";
   }
 
   /* =========================================================
@@ -770,9 +611,6 @@ import { STLLoader } from "/vendor/STLLoader.js";
         if (part) part.mesh.rotation.z = turns * Math.PI * (state.f[scrubKeyOf(part)] ?? 0);
       }
     }
-    if (lcdPlane) lcdPlane.visible = state.mode !== "light" &&
-      partsMap.get("waveshare_esp32_s3_lcd_2")?.pivot.visible;
-
     // ---- 相机 / 注视点 / 摇摆运镜（滚动为唯一驱动，鼠标不干涉模型姿态）----
 
     // 预测锚点：用本帧 scrub 目标值（而非缓动中的 state.f）求零件末态位置，
@@ -827,7 +665,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     // ---- Toolbox 引线 / Modules 漂浮标签 ----
     const inToolbox = shotId === "toolbox" && state.explosion > 0.15;
     if (inToolbox) {
-      updateLeaderLines();
+      updateLeaderLines(shotId);
       svgOverlay.style.opacity = "1";
     } else {
       svgOverlay.style.opacity = "0";
@@ -859,9 +697,12 @@ import { STLLoader } from "/vendor/STLLoader.js";
     { selector: ".tag-ec11", partId: "ec11_knob_26x8p5", side: "right" },
   ];
 
-  function updateLeaderLines() {
+  let leaderRankShot = null;
+  let leaderRanks = null;
+  function updateLeaderLines(shotId) {
     const w = window.innerWidth, h = window.innerHeight;
-    // 两遍路由：先按零件投影 y 重排两侧标签（同列互不交叉），再按重排后位置画线；
+    // 两遍路由：先按零件投影 y 排定两侧标签槽位，再按槽位画线；
+    // 槽位次序只在入幕时定一次、幕内冻结——标签跟踪零件但不换位（无动态避让）；
     // 模型端点不做视口钳制 → 虚线端点始终锁住零件
     const entries = [];
     tagPartMapping.forEach(({ selector, partId, side }) => {
@@ -882,20 +723,22 @@ import { STLLoader } from "/vendor/STLLoader.js";
     for (const side of ["left", "right"]) {
       const col = entries.filter((e) => e.side === side);
       if (col.length < 2) continue;
-      // 槽位取 offsetTop（布局位置，不受 transform/过渡中间态影响），
-      // 按零件投影 y 依序入座 → 同列虚线平行不交叉；transform 仅作视觉位移
+      if (leaderRankShot !== shotId || !leaderRanks) {
+        leaderRankShot = shotId;
+        leaderRanks = new Map();
+        col.slice().sort((a, b) => a.sy - b.sy).forEach((e, i) => leaderRanks.set(e.el, i));
+      }
+      // 槽位取 offsetTop（布局位置，不受 transform/过渡中间态影响）
       const withBase = col.map((e) => ({ ...e, base: e.el.offsetTop }));
       const slots = withBase.map((e) => e.base).sort((a, b) => a - b);
-      withBase
-        .slice()
-        .sort((a, b) => a.sy - b.sy)
-        .forEach((e, rank) => {
-          const ty = slots[rank] - e.base;
-          if (!e.el.style.transition) {
-            e.el.style.transition = "transform 0.45s cubic-bezier(.22,.61,.36,1)";
-          }
-          e.el.style.transform = `translateY(${ty}px)`;
-        });
+      col.forEach((e) => {
+        const rank = Math.min(leaderRanks.get(e.el) ?? 0, slots.length - 1);
+        const ty = slots[rank] - e.base;
+        if (!e.el.style.transition) {
+          e.el.style.transition = "transform 0.45s cubic-bezier(.22,.61,.36,1)";
+        }
+        e.el.style.transform = `translateY(${ty}px)`;
+      });
     }
 
     let html = "";
@@ -1019,6 +862,10 @@ import { STLLoader } from "/vendor/STLLoader.js";
     ));
   }
 
+  // 槽位次序状态：入幕时定一次、幕内冻结（模块级，跨帧保持）
+  let calloutRankShot = null;
+  let calloutRank = null;
+
   function updateCallouts(shotId) {
     const w = window.innerWidth, h = window.innerHeight;
     // 两段式：先收集全部锚点投影，再统一分槽排布，避免标签互相重叠
@@ -1036,13 +883,19 @@ import { STLLoader } from "/vendor/STLLoader.js";
         sy: (-p.y * 0.5 + 0.5) * h,
       });
     }
-    if (!visible.length) return;
-    visible.sort((a, b) => a.sy - b.sy);
+    if (!visible.length) { calloutRankShot = null; calloutRank = null; return; }
+    // 槽位次序只在入幕时定一次、幕内冻结——标签跟踪零件但不换位（无动态避让）
+    if (calloutRankShot !== shotId || !calloutRank) {
+      calloutRankShot = shotId;
+      calloutRank = visible.slice().sort((a, b) => a.sy - b.sy).map((v) => v.c);
+    }
+    const posOf = new Map(visible.map((v) => [v.c, v]));
+    const ordered = calloutRank.map((c) => posOf.get(c)).filter(Boolean);
     // 标签列限制在画面左侧 58%，避免压到滚动内容卡片
-    const lx = Math.min(w * 0.58, Math.max(...visible.map((v) => v.sx)) + 46);
-    const baseLy = Math.max(70, visible[0].sy - 26);
+    const lx = Math.min(w * 0.58, Math.max(...ordered.map((v) => v.sx)) + 46);
+    const baseLy = Math.max(70, ordered[0].sy - 26);
     let svgLines = "";
-    visible.forEach((v, i) => {
+    ordered.forEach((v, i) => {
       const ly = baseLy - i * 52;
       v.c.el.style.transform = `translate(${lx}px, ${ly}px)`;
       v.c.el.classList.add("is-on");
@@ -1059,7 +912,6 @@ import { STLLoader } from "/vendor/STLLoader.js";
     if (!lastFrameT) lastFrameT = t;
     const dt = Math.min(t - lastFrameT, 0.05);
     lastFrameT = t;
-    updateLcdScreen(t);
     updateScrollAnimation(t, dt);
     updateCallouts(state.shot);
     renderer.render(scene, camera);
