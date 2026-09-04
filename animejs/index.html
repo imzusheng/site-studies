@@ -3,447 +3,182 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Luma Remote A3.32 | Precision Hardware Engine</title>
-    <meta name="description" content="Luma Remote A3.32 工业设计与机械装配全景展示，融合赛博控制台 HUD 与 CAD 工程线稿美学。" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff3b30'%3E%3Crect width='24' height='24' rx='6'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/style.css" />
-    <script>
-      window.addEventListener('error', (e) => {
-        window.__PAGE_ERROR = { message: e.message, filename: e.filename, lineno: e.lineno, error: e.error ? e.error.stack : null };
-      });
-      window.addEventListener('unhandledrejection', (e) => {
-        window.__UNHANDLED_REJECTION = e.reason ? (e.reason.stack || e.reason.message) : String(e.reason);
-      });
-    </script>
+    <meta name="theme-color" content="#0d0e12" />
+    <title>Luma Remote A3.40 — Product Film</title>
+    <meta name="description" content="Luma Remote A3.40 cinematic industrial product film — EC11 clearance, low-profile input, display and compute core." />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body data-theme="dark">
-    <!-- 全局点阵背景层 -->
+  <body data-beat="hero">
     <div class="dot-grid" aria-hidden="true"></div>
 
-    <!-- 顶部赛博极简导航 -->
-    <header id="site-header" class="site-header">
-      <div class="header-inner">
-        <a class="brand" href="#intro" aria-label="Luma Remote Home">
-          <span class="brand-glyph"></span>
-          <span class="brand-name">luma<b>/remote</b></span>
-          <span class="brand-tag">A3.32</span>
-        </a>
-        <nav class="nav-menu">
-          <a href="#toolbox">BLUEPRINT</a>
-          <a href="#features">FEATURES</a>
-          <a href="#modules">MODULAR BOM</a>
-          <a href="#specs">SPECS</a>
-        </nav>
-        <div class="header-actions">
-          <a class="btn-sponsor" href="#specs"><span>3MF PRINT</span></a>
-          <a class="nav-icon" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg>
-          </a>
-        </div>
-      </div>
+    <header class="site-header">
+      <a class="brand" href="#hero" aria-label="Luma Remote A3.40">
+        <span class="brand-mark"></span>
+        <span>luma<b>/remote</b></span>
+        <em>A3.40</em>
+      </a>
+      <nav>
+        <a href="#blueprint">BLUEPRINT</a>
+        <a href="#input">INPUT</a>
+        <a href="#control">CONTROL</a>
+        <a href="#compute">CORE</a>
+      </nav>
+      <a class="repo-link" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">SOURCE ↗</a>
     </header>
 
-    <!-- 固定居中的 3D 机械渲染与专属机甲 HUD 外框 -->
-    <div id="engine-stage" class="engine-stage">
-      <!-- 专属 Luma Cyber Command Deck HUD（矩形斜切、机甲角标、毫米刻度） -->
-      <div id="deck-hud" class="deck-hud" aria-hidden="true">
-        <!-- 四角机甲角标 -->
-        <span class="hud-corner corner-tl"></span>
-        <span class="hud-corner corner-tr"></span>
-        <span class="hud-corner corner-bl"></span>
-        <span class="hud-corner corner-br"></span>
-
-        <!-- 顶部遥测信息栏 -->
-        <div class="hud-bar hud-bar-top">
-          <span class="hud-item"><i class="hud-dot"></i>LUMA//A3.32-R2</span>
-          <span class="hud-item hud-accent" id="hud-shot">SHOT: HERO</span>
-          <span class="hud-item">DATUM: [A][B][C]</span>
-          <span class="hud-item">KEY PITCH: 19.5 mm</span>
-          <span class="hud-item hud-accent">SYS_ARMED</span>
-        </div>
-
-        <!-- X 轴与 Y 轴毫米刻度尺 -->
-        <div class="hud-ruler ruler-top"></div>
-        <div class="hud-ruler ruler-bottom"></div>
-        <div class="hud-ruler ruler-left"></div>
-        <div class="hud-ruler ruler-right"></div>
-
-        <!-- 底部物理尺寸与重量遥测 -->
-        <div class="hud-bar hud-bar-bottom">
-          <span class="hud-item">DIM: 120.0 × 81.0 mm</span>
-          <span class="hud-item">LAYOUT: Y-COMPACT / TRI3</span>
-          <span class="hud-item">MASS: 103.2 g</span>
-          <span class="hud-item hud-accent">COLLISION: 0.00 mm³</span>
-        </div>
-
-        <!-- 背景柔光核 -->
-        <div class="deck-ambient-glow"></div>
-      </div>
-
-      <!-- 3D WebGL Canvas -->
+    <div id="engine-stage" class="engine-stage" aria-label="Luma Remote A3.40 interactive model">
       <canvas id="webgl-canvas" class="webgl-canvas"></canvas>
 
-      <!-- 3D 到 2D 空间投影动态引线 SVG 层 -->
+      <svg id="stage-overlay" class="stage-overlay" aria-hidden="true">
+        <path id="lcd-stage-path" class="lcd-stage-path"></path>
+        <circle id="stage-origin-dot" class="stage-origin-dot" r="3"></circle>
+      </svg>
       <svg id="leader-lines" class="leader-lines" aria-hidden="true"></svg>
 
-      <!-- Modular 分镜：零件旁漂浮的质量标签（坐标由 JS 逐帧投影） -->
-      <div id="part-tags" class="part-tags" aria-hidden="true">
-        <span class="part-tag" data-group="enclosure"><i style="background:#ff9500"></i>48.6 g</span>
-        <span class="part-tag" data-group="keycaps"><i style="background:#ff3b30"></i>3.6 g</span>
-        <span class="part-tag" data-group="switches"><i style="background:#30d158"></i>13.8 g</span>
-        <span class="part-tag" data-group="esp32"><i style="background:#64d2ff"></i>27.4 g</span>
-        <span class="part-tag" data-group="ec11"><i style="background:#0a84ff"></i>9.8 g</span>
+      <div class="stage-meta" aria-hidden="true">
+        <span id="film-profile">A3.40 / EC11-CLEARANCE / TRI3</span>
+        <span id="film-shot">01 / 09 · HERO</span>
       </div>
 
-      <!-- 特写分镜参数标注（坐标由 JS 逐帧投影，按 body[data-shot] 显隐） -->
-      <div id="callouts" class="callouts" aria-hidden="true">
-        <div class="callout-set" data-for="input">
-          <span class="callout" data-part="keycap_2" data-off="0,0,4.2">FLAT-TOP · 16.2 × 15.2 mm</span>
-          <span class="callout" data-part="keycap_2" data-off="8.6,0,1.4">TAPER · 17 × 16 → 3.2 H</span>
-          <span class="callout" data-part="keycap_2" data-off="0,0,-4.8">STEM BOSS · Ø9.6 / DROP 1.35</span>
+      <div id="blueprint-labels" class="blueprint-labels" aria-hidden="true">
+        <div class="blueprint-label slot-left-1" data-role="upperShell" data-side="left">
+          <b>ENCLOSURE SYSTEM</b><span>120 × 81 mm · TRI3 service closure</span>
         </div>
-        <div class="callout-set" data-for="compute">
-          <span class="callout" data-part="waveshare_esp32_s3_lcd_2" data-off="-0.58,-0.62,1" data-frac>PCB ANTENNA · Wi-Fi + BLE 5</span>
-          <span class="callout" data-part="waveshare_esp32_s3_lcd_2" data-off="0.08,0.1,1" data-frac>ESP32-S3 · LX7 ×2 @240MHz</span>
-          <span class="callout" data-part="waveshare_esp32_s3_lcd_2" data-off="0.5,-0.42,1" data-frac>8MB PSRAM · 16MB FLASH</span>
+        <div class="blueprint-label slot-left-2" data-role="keycaps" data-side="left">
+          <b>LOW-PROFILE INPUT</b><span>6× PETG icon caps · 19.5 mm pitch</span>
         </div>
+        <div class="blueprint-label slot-left-3" data-role="switches" data-side="left">
+          <b>CHOC V2 LAYER</b><span>PG1353 low-profile switch matrix</span>
+        </div>
+        <div class="blueprint-label slot-right-1" data-role="screenBezel" data-side="right">
+          <b>DISPLAY / COMPUTE</b><span>2.0″ IPS · ESP32-S3 core</span>
+        </div>
+        <div class="blueprint-label slot-right-2" data-role="knob" data-side="right">
+          <b>ROTARY CONTROL</b><span>Ø24 knob · Ø26 cosmetic well</span>
+        </div>
+      </div>
+
+      <div class="feature-callouts" aria-hidden="true">
+        <div class="feature-callout callout-input-1" data-beat="input" data-role="keycapFocus" data-frac="0,0,1">
+          <b>5.0 MM PETG CAP</b><span>PR #30 icon keycap</span>
+        </div>
+        <div class="feature-callout callout-input-2" data-beat="input" data-role="keycapFocus" data-frac="0,-.25,-.7">
+          <b>CHOC V2 SOCKET</b><span>low-profile mechanical interface</span>
+        </div>
+        <div class="feature-callout callout-input-3" data-beat="input" data-role="keycapFocus" data-frac=".5,.35,.2">
+          <b>19.5 MM PITCH</b><span>compact six-key matrix</span>
+        </div>
+
+        <div class="feature-callout callout-core-1" data-beat="compute" data-role="mainboard" data-frac="-.35,-.2,.65">
+          <b>ESP32-S3</b><span>dual-core LX7 · 240 MHz</span>
+        </div>
+        <div class="feature-callout callout-core-2" data-beat="compute" data-role="mainboard" data-frac=".28,.08,.65">
+          <b>MEMORY STACK</b><span>PSRAM / flash</span>
+        </div>
+        <div class="feature-callout callout-core-3" data-beat="compute" data-role="mainboard" data-frac="-.45,.45,.65">
+          <b>RF ZONE</b><span>Wi-Fi + BLE antenna region</span>
+        </div>
+      </div>
+
+      <div class="film-progress" aria-hidden="true">
+        <span class="progress-track"><i id="film-progress-bar"></i></span>
+        <b id="film-progress-text">0%</b>
       </div>
     </div>
 
-    <!-- 滚动内容层 -->
-    <main class="content-scroll">
-      <!-- ============ SECTION 1: HERO ============ -->
-      <section id="intro" class="section section-intro">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>
-            <span>A3.32 R2 HARDWARE RELEASE</span>
+    <main>
+      <div id="film-sequence" class="film-sequence">
+        <section id="hero" class="film-beat beat-hero" data-beat="hero">
+          <div class="beat-panel" data-beat="hero">
+            <span class="eyebrow">LUMA REMOTE · A3.40</span>
+            <h1>Hardware,<br />directed.</h1>
+            <p>120 × 81 mm smart control surface. Six low-profile inputs, one rotary encoder, one 2.0″ display — composed as a single physical object.</p>
+            <div class="spec-row"><span>EC11 Ø24</span><span>19.5 MM PITCH</span><span>ESP32-S3</span></div>
           </div>
-          <h1 class="hero-title">
-            <span>All-in-one</span><br />
-            <span>hardware</span><br />
-            <span>engine<em class="dot-accent">.</em></span>
-          </h1>
-          <p class="hero-sub">
-            A precision-crafted smart controller engineered with 21 discrete CNC/3D printed modules,
-            Choc V2 mechanical switches, and an ESP32-S3 IPS core.
-          </p>
-          <div class="hero-actions">
-            <div class="code-pill">
-              <code>git clone luma-remote-a332</code>
-              <button id="copy-btn" class="copy-btn" title="Copy command">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              </button>
-            </div>
-            <a class="btn-ghost" href="#toolbox"><span>EXPLORE BLUEPRINT ↓</span></a>
+        </section>
+
+        <section id="stage" class="film-beat" data-beat="stage">
+          <div class="beat-panel beat-panel-right" data-beat="stage">
+            <span class="eyebrow">01 · DISPLAY AS DATUM</span>
+            <h2>The interface<br />becomes the stage.</h2>
+            <p>The presentation frame grows from the physical LCD plane instead of floating over the product as an unrelated HUD.</p>
           </div>
+        </section>
+
+        <section id="blueprint" class="film-beat" data-beat="blueprint">
+          <div class="beat-panel" data-beat="blueprint">
+            <span class="eyebrow">02 · ENGINEERING VIEW</span>
+            <h2>Structure,<br />not spectacle.</h2>
+            <p>A controlled system-level separation reveals enclosure, input, display and rotary architecture while the device remains spatially legible.</p>
+          </div>
+        </section>
+
+        <section id="form" class="film-beat" data-beat="form">
+          <div class="beat-panel beat-panel-right" data-beat="form">
+            <span class="eyebrow">03 · INDUSTRIAL FORM</span>
+            <h2>Low deck.<br />Clear control.</h2>
+            <p>A3.40 keeps the 120 × 81 envelope and frozen control layout while resolving the EC11 / bezel interference.</p>
+            <div class="metric-stack"><b>Ø30 → Ø26</b><span>cosmetic knob well</span><b>Ø26 → Ø24</b><span>knob outer diameter</span></div>
+          </div>
+        </section>
+
+        <section id="input" class="film-beat" data-beat="input">
+          <div class="beat-panel" data-beat="input">
+            <span class="eyebrow">04 · INPUT SYSTEM</span>
+            <h2>Open the<br />interaction layer.</h2>
+            <p>The camera enters the keyboard region first. Only then do the caps lift enough to expose the Choc V2 mechanism.</p>
+          </div>
+        </section>
+
+        <section id="control" class="film-beat" data-beat="control">
+          <div class="beat-panel beat-panel-right" data-beat="control">
+            <span class="eyebrow">05 · ROTARY CONTROL</span>
+            <h2>One turn.<br />Immediate response.</h2>
+            <p>The Ø24 dial stays attached to the product while the LCD reports the interaction. Hardware and interface read as one control system.</p>
+          </div>
+        </section>
+
+        <section id="display" class="film-beat" data-beat="display">
+          <div class="beat-panel" data-beat="display">
+            <span class="eyebrow">06 · DISPLAY SYSTEM</span>
+            <h2>The screen is<br />not decoration.</h2>
+            <p>Its real projected plane drives the presentation frame, camera composition and feedback state.</p>
+          </div>
+        </section>
+
+        <section id="compute" class="film-beat" data-beat="compute">
+          <div class="beat-panel beat-panel-right" data-beat="compute">
+            <span class="eyebrow">07 · COMPUTE CORE</span>
+            <h2>Serviceable<br />from the inside.</h2>
+            <p>The service cover opens, the board lifts in product context, then the local board plane turns toward the camera for inspection.</p>
+          </div>
+        </section>
+
+        <section id="final" class="film-beat" data-beat="final">
+          <div class="beat-panel" data-beat="final">
+            <span class="eyebrow">08 · RESOLVE</span>
+            <h2>Back to<br />the product.</h2>
+            <p>Engineering detail collapses back into a finished A3.40. The final memory is the object, not the exploded view.</p>
+            <a class="primary-link" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">VIEW A3.40 SOURCE ↗</a>
+          </div>
+        </section>
+      </div>
+
+      <section class="after-film" id="resources">
+        <div class="after-head">
+          <span class="eyebrow">A3.40 PRODUCT SOURCE</span>
+          <h2>From presentation<br />back to engineering.</h2>
+          <p>A3.40 is the EC11/bezel clearance revision on the frozen 120 × 81 envelope, with PR #30 PETG icon keycaps and the presentation digital-twin contract in luma-remote.</p>
         </div>
-
-        <div class="hero-side-metrics">
-          <div class="metric-item"><small>ENVELOPE</small><b>120 × 81 mm</b></div>
-          <div class="metric-item"><small>KEY PITCH</small><b>19.5 mm Compact</b></div>
-          <div class="metric-item"><small>PARTS COUNT</small><b>21 Discrete Modules</b></div>
+        <div class="resource-grid">
+          <article><span>01</span><h3>Mechanical source</h3><p>CadQuery/build123d A3.40 geometry and clearance proof.</p><a href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">OPEN REPOSITORY ↗</a></article>
+          <article><span>02</span><h3>Digital twin</h3><p>231-object presentation source contract; 11 objects remain manufacturing-printable truth.</p><a href="https://github.com/imzusheng/luma-remote/pull/31" target="_blank" rel="noopener">A3.40 PR #31 ↗</a></article>
+          <article><span>03</span><h3>Firmware</h3><p>ESP-IDF + LVGL runtime and Home Assistant integration.</p><a href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">VIEW FIRMWARE ↗</a></article>
         </div>
-      </section>
-
-      <!-- ============ SECTION 2: TOOLBOX (CAD LINE-DRAWING EXPLODED VIEW) ============ -->
-      <section id="toolbox" class="section-container section-light">
-        <div class="toolbox-sticky">
-          <div class="toolbox-header formatted-text">
-            <span class="eyebrow">A3.32 MECHANICAL ANATOMY</span>
-            <h2 class="section-title">The complete <br />hardware blueprint</h2>
-            <p class="section-desc">
-              Break free from monolithic enclosures. 21 precision-interlocked components with 0 mm static collision and dual bayonet snap closure.
-            </p>
-          </div>
-
-          <!-- 左右两侧引线连接的零件技术标签 -->
-          <div class="blueprint-labels">
-            <ul class="labels-col labels-left">
-              <li data-part="cosmetic_upper_shell" class="tag-upper-shell">
-                <span class="tag-title">Upper Shell</span>
-                <small>8.3° Low-Deck / Soft Chamfer</small>
-              </li>
-              <li data-part="keycaps" class="tag-keycaps">
-                <span class="tag-title">Choc Keycaps (×6)</span>
-                <small>3.2mm Flat-top / Stem Boss</small>
-              </li>
-              <li data-part="choc_switches" class="tag-switches">
-                <span class="tag-title">Kailh Choc V2 (×6)</span>
-                <small>-0.7mm Recessed Seat</small>
-              </li>
-            </ul>
-
-            <ul class="labels-col labels-right">
-              <li data-part="screen_bezel" class="tag-screen-bezel">
-                <span class="tag-title">Screen Bezel</span>
-                <small>2.0" IPS Anti-Glare Shield</small>
-              </li>
-              <li data-part="ec11" class="tag-ec11">
-                <span class="tag-title">EC11 Knob Stack</span>
-                <small>Ø26×8.5mm Balanced Dial</small>
-              </li>
-            </ul>
-          </div>
-
-          <div class="explosion-bar-wrap">
-            <div class="explosion-bar">
-              <span class="bar-label">EXPLODE PROGRESS</span>
-              <div class="bar-track"><i id="explosion-fill"></i></div>
-              <span id="explosion-percent" class="bar-num">0%</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ SECTION 3: FEATURES SHOWCASE ============ -->
-      <section id="features" class="section-container section-dark">
-        <div class="feature-item" data-feature="keycaps">
-          <div class="feature-text">
-            <span class="eyebrow color-orange">01 · INPUT SYSTEM</span>
-            <h3>8.325° Low-Deck Slope</h3>
-            <p>Front height reduced to 12.2mm. Hand rest comfort optimized for long desktop sessions without wrist fatigue.</p>
-          </div>
-          <div class="feature-card">
-            <div class="card-header"><span>mechanical_spec.ts</span><span class="card-badge">SLOPE</span></div>
-            <pre><code>const a332Enclosure = {
-  width: 120.0, // mm
-  depth: 81.0,  // mm
-  frontHeight: 12.2,
-  backHeight: 24.0,
-  faceAngleDeg: 8.325,
-  wristRelief: 'low-deck'
-};</code></pre>
-          </div>
-        </div>
-
-        <div class="feature-item" data-feature="keycaps">
-          <div class="feature-text">
-            <span class="eyebrow color-red">02 · TACTILE ARRAY</span>
-            <h3>3.2mm Flat-Top Keycaps</h3>
-            <p>36% height reduction compared to standard OEM caps. Custom underside stem boss maintains socket engagement.</p>
-          </div>
-          <div class="feature-card">
-            <div class="card-header"><span>keycap_geometry.ts</span><span class="card-badge">CHOC V2</span></div>
-            <pre><code>createKeycapArray({
-  switches: 'kailh_choc_v2',
-  visibleHeight: 3.2,
-  topFootprint: [16.2, 15.2],
-  stemBossDrop: 1.35,
-  travelDistance: 3.0
-});</code></pre>
-          </div>
-        </div>
-
-        <div class="feature-item" data-feature="knob">
-          <div class="feature-text">
-            <span class="eyebrow color-green">02 · CONTROL + DISPLAY</span>
-            <h3>Balanced Ø26 × 8.5mm Dial</h3>
-            <p>Precision knurled perimeter paired with EC11 D-shaft encoder for smooth stepped volume and parameter scrubbing.</p>
-          </div>
-          <div class="feature-card">
-            <div class="card-header"><span>encoder_binding.ts</span><span class="card-badge">EC11</span></div>
-            <pre><code>bindRotaryEncoder({
-  pinA: GPIO_14,
-  pinB: GPIO_15,
-  pulsesPerStep: 4,
-  hapticDetents: 20,
-  accelerationCurve: 'easeOutQuad'
-});</code></pre>
-          </div>
-        </div>
-
-        <div class="feature-item" data-feature="display">
-          <div class="feature-text">
-            <span class="eyebrow color-cyan">02 · CONTROL + DISPLAY</span>
-            <h3>2.0" IPS ST7789V Display</h3>
-            <p>240×320 sharp RGB IPS matrix directly driven by ESP32-S3 SPI peripheral at 40MHz DMA for fluid LVGL UI rendering.</p>
-            <ul class="feature-bullets">
-              <li>ST7789V @ 40 MHZ SPI DMA</li>
-              <li>LVGL v9 DOUBLE BUFFER</li>
-              <li>ANTI-GLARE BEZEL SHIELD</li>
-            </ul>
-          </div>
-          <div class="feature-card">
-            <div class="card-header"><span>display_driver.c</span><span class="card-badge">LVGL v9</span></div>
-            <pre><code>esp_lcd_panel_io_handle_t io;
-esp_lcd_new_panel_st7789(io, &panel_config);
-lv_init();
-lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
-          </div>
-        </div>
-
-        <div class="feature-item" data-feature="firmware">
-          <div class="feature-text">
-            <span class="eyebrow color-purple">03 · COMPUTE CORE</span>
-            <h3>ESP32-S3, Up Close</h3>
-            <p>The board lifts out of the deck for service in two M3 turns. Dual-core LX7 at 240 MHz, 8MB PSRAM, Wi-Fi and BLE 5 — flashed over USB-C or OTA.</p>
-            <ul class="feature-bullets">
-              <li>DUAL-CORE LX7 @ 240 MHZ</li>
-              <li>8MB PSRAM / 16MB FLASH</li>
-              <li>WI-FI + BLE 5 / MQTT HA</li>
-            </ul>
-          </div>
-          <div class="feature-card">
-            <div class="card-header"><span>firmware_main.c</span><span class="card-badge">ESP-IDF v5.5</span></div>
-            <pre><code>void app_main(void) {
-  luma_board_init();      // ST7789 + EC11 + keys
-  ha_mqtt_start();        // Home Assistant link
-  lv_ui_attach(disp);     // LVGL v9 shell
-  xTaskCreate(loop, "core", ...);
-}</code></pre>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ SECTION 4: MODULAR BOM CUSTOMIZER ============ -->
-      <section id="modules" class="section-container section-light">
-        <div class="modules-inner">
-          <div class="modules-header formatted-text">
-            <span class="eyebrow">MODULAR ASSEMBLY SYSTEM</span>
-            <h2 class="section-title">Interactive Subsystem BOM</h2>
-            <p class="section-desc">
-              Toggle discrete physical stacks to inspect clearance, weight, and fabrication pathways in real time.
-            </p>
-          </div>
-
-          <div class="modules-interactive-grid">
-            <div class="subsystem-selector">
-              <label class="subsys-toggle is-active" data-group="enclosure">
-                <input type="checkbox" checked />
-                <span class="check-box"></span>
-                <div>
-                  <strong>01 · Enclosure &amp; Closure</strong>
-                  <small>Upper Shell + Base Cover + Screen Bezel (3 parts)</small>
-                </div>
-                <span class="weight-tag">48.6g</span>
-              </label>
-
-              <label class="subsys-toggle is-active" data-group="keycaps">
-                <input type="checkbox" checked />
-                <span class="check-box"></span>
-                <div>
-                  <strong>02 · Thin Choc Keycaps</strong>
-                  <small>6× 3.2mm Flat-top Keycaps</small>
-                </div>
-                <span class="weight-tag">3.6g</span>
-              </label>
-
-              <label class="subsys-toggle is-active" data-group="switches">
-                <input type="checkbox" checked />
-                <span class="check-box"></span>
-                <div>
-                  <strong>03 · Kailh Choc V2 Switches</strong>
-                  <small>6× Low-Profile Mechanical Switches</small>
-                </div>
-                <span class="weight-tag">13.8g</span>
-              </label>
-
-              <label class="subsys-toggle is-active" data-group="esp32">
-                <input type="checkbox" checked />
-                <span class="check-box"></span>
-                <div>
-                  <strong>04 · ESP32-S3 Display Stack</strong>
-                  <small>Waveshare Board + M3 Retainer Plate</small>
-                </div>
-                <span class="weight-tag">27.4g</span>
-              </label>
-
-              <label class="subsys-toggle is-active" data-group="ec11">
-                <input type="checkbox" checked />
-                <span class="check-box"></span>
-                <div>
-                  <strong>05 · EC11 Rotary Assembly</strong>
-                  <small>Encoder + Nut + Washer + Ø26 Knob</small>
-                </div>
-                <span class="weight-tag">9.8g</span>
-              </label>
-            </div>
-
-            <div class="mass-panel">
-              <div class="mass-head">
-                <span>Mass budget</span>
-                <strong id="mass-total">103.2 g</strong>
-              </div>
-              <div class="mass-bar">
-                <i class="seg" data-group="enclosure" style="background:#ff9500"></i>
-                <i class="seg" data-group="keycaps" style="background:#ff3b30"></i>
-                <i class="seg" data-group="switches" style="background:#30d158"></i>
-                <i class="seg" data-group="esp32" style="background:#64d2ff"></i>
-                <i class="seg" data-group="ec11" style="background:#0a84ff"></i>
-              </div>
-              <div class="mass-legend">
-                <button class="legend-chip is-active" data-group="enclosure" type="button"><i style="background:#ff9500"></i>Enclosure</button>
-                <button class="legend-chip is-active" data-group="keycaps" type="button"><i style="background:#ff3b30"></i>Keycaps</button>
-                <button class="legend-chip is-active" data-group="switches" type="button"><i style="background:#30d158"></i>Switches</button>
-                <button class="legend-chip is-active" data-group="esp32" type="button"><i style="background:#64d2ff"></i>ESP32</button>
-                <button class="legend-chip is-active" data-group="ec11" type="button"><i style="background:#0a84ff"></i>EC11</button>
-              </div>
-              <div class="mass-foot">
-                <span>Active parts <strong id="mass-parts">21 / 21</strong></span>
-                <span>Fasteners <strong>1× M3×10</strong></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ SECTION 5: SPECS & FOOTER ============ -->
-      <section id="specs" class="section section-specs">
-        <div class="specs-grid">
-          <div class="spec-card">
-            <span class="spec-num">01</span>
-            <h4>Print-Ready 3MF</h4>
-            <p>Bambu Studio / OrcaSlicer pre-oriented 3MF build package with optimized seam placement.</p>
-            <a class="btn-download" href="stl/Luma_A3_32_COMPACT_INDUSTRIAL_PRINT_READY_HQ.3mf" download><span>DOWNLOAD 3MF</span></a>
-          </div>
-
-          <div class="spec-card">
-            <span class="spec-num">02</span>
-            <h4>Master Assembly STL</h4>
-            <p>Consolidated 21-part reference mesh in exact world coordinates for CAD validation.</p>
-            <a class="btn-download" href="stl/Luma_ASSEMBLY_PREVIEW.stl" download><span>DOWNLOAD ALL STL</span></a>
-          </div>
-
-          <div class="spec-card">
-            <span class="spec-num">03</span>
-            <h4>Firmware &amp; Pinout</h4>
-            <p>ESP-IDF v5.5 + LVGL v9 firmware repository with Home Assistant MQTT integration.</p>
-            <a class="btn-download" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener"><span>VIEW REPO →</span></a>
-          </div>
-        </div>
-
-        <footer class="site-footer">
-          <div class="footer-top">
-            <div class="footer-brand">
-              <span class="brand-glyph"></span>
-              <span>Luma Remote A3.32</span>
-            </div>
-            <div class="footer-links">
-              <a href="#intro">Top</a>
-              <a href="#toolbox">Blueprint</a>
-              <a href="#features">Features</a>
-              <a href="#modules">BOM</a>
-            </div>
-          </div>
-          <div class="footer-bottom">
-            <span>© 2026 Luma Project · Inspired by animejs.com design system · Site-Studies Study #3</span>
-            <span>Zero Dependencies Native WebGL &amp; CAD Line Engine</span>
-          </div>
-        </footer>
+        <footer><span>Luma Remote A3.40 · Site Study</span><span>Anime.js v4 + Three.js</span></footer>
       </section>
     </main>
 
-    <!-- 主入口脚本 -->
-    <script type="module">
-      import("./js/main.js?v=31").catch((err) => {
-        console.error("Module load failure:", err);
-        const div = document.createElement("div");
-        div.id = "debug-err";
-        div.style.cssText = "position:fixed;top:60px;left:20px;z-index:99999;background:rgba(0,0,0,0.9);color:#ff3b30;padding:20px;border:2px solid #ff3b30;border-radius:12px;font-family:monospace;font-size:14px;max-width:800px;white-space:pre-wrap;pointer-events:auto;";
-        div.textContent = "Script Error:\n" + (err.stack || err.message);
-        document.body.appendChild(div);
-      });
-    </script>
+    <script type="module" src="/js/main.js"></script>
   </body>
 </html>

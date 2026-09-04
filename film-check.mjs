@@ -1,57 +1,108 @@
-import assert from "node:assert/strict";
-import fs from "node:fs";
-import path from "node:path";
-import { computeAnchors } from "./animejs/js/film/anchors.js";
-import { TOTAL_TIME, SHOT_RANGES, evaluateMotion, shotAt, MOTION_TRACKS } from "./animejs/js/film.js";
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { A340_PROFILE } from './animejs/js/model-profile.js';
+import { BEAT_RANGES, MOTION_TRACKS, TOTAL_TIME, beatAt, evaluateMotion } from './animejs/js/film.js';
 
-const root = path.resolve(new URL(".", import.meta.url).pathname);
-const load = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
-const a3 = load(path.join(root, "animejs", "ASSEMBLY_MANIFEST.json"));
-const a4Path = "/Users/lizusheng/Desktop/luma-remote/hardware/mechanical/exports/assembly/profiles/industrial_a4_15_audit_hardening/web_runtime/ASSEMBLY_MANIFEST.json";
-const manifests = [["A3.32", a3]];
-if (fs.existsSync(a4Path)) manifests.push(["A4.15", load(a4Path)]);
-for (const [name, manifest] of manifests) {
-  const anchors = computeAnchors(manifest);
-  for (const key of ["display_center", "display_plane", "keyboard_region", "knob_axis", "mainboard_plane"]) {
-    assert.ok(anchors[key], `${name} missing ${key}`);
-    const value = anchors[key].center || anchors[key];
-    assert.ok(value.toArray().every(Number.isFinite), `${name} invalid ${key}`);
+const root = path.dirname(fileURLToPath(import.meta.url));
+const html = fs.readFileSync(path.join(root, 'animejs/index.html'), 'utf8');
+const main = fs.readFileSync(path.join(root, 'animejs/js/main.js'), 'utf8');
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'animejs/ASSEMBLY_MANIFEST.json'), 'utf8'));
+const pkg = JSON.parse(fs.readFileSync(path.join(root, 'animejs/package.json'), 'utf8'));
+
+assert.equal(pkg.dependencies?.animejs?.replace(/^\^/, ''), '4.5.0', 'animejs 4.5.0 must remain the runtime dependency');
+assert.equal(A340_PROFILE.revision, 'A3.40_EC11_BEZEL_CLEARANCE');
+assert.equal(A340_PROFILE.dimensions.knobWellDiameter, 26);
+assert.equal(A340_PROFILE.dimensions.knobOuterDiameter, 24);
+assert.deepEqual(A340_PROFILE.dimensions.screenCenter, [0, 14]);
+assert.equal(A340_PROFILE.dimensions.width, 120);
+assert.equal(A340_PROFILE.dimensions.depth, 81);
+
+const ids = new Set((manifest.parts || []).map((part) => part.id));
+for (const [role, value] of Object.entries(A340_PROFILE.roles)) {
+  for (const id of Array.isArray(value) ? value : [value]) {
+    assert.ok(ids.has(id), `A3.40 web adaptation role ${role} cannot resolve source part ${id}`);
   }
 }
-const html = fs.readFileSync(path.join(root, "animejs", "index.html"), "utf8");
-const blueprintLabels = (html.match(/class="tag-(?:upper-shell|keycaps|switches|screen-bezel|ec11)"/g) || []).length;
-const inputCallouts = (html.match(/data-for="input"/g) || []).length;
-const computeCallouts = (html.match(/data-for="compute"/g) || []).length;
-assert.ok(blueprintLabels <= 5, `blueprint callouts exceed five: ${blueprintLabels}`);
-assert.ok(inputCallouts <= 3, `input callouts exceed three: ${inputCallouts}`);
-assert.ok(computeCallouts <= 3, `compute callouts exceed three: ${computeCallouts}`);
 
-const sampleCount = 201;
-const times = Array.from({ length: sampleCount }, (_, i) => (TOTAL_TIME * i) / (sampleCount - 1));
+assert.equal(BEAT_RANGES.length, 9, 'product film must contain nine long-form beats');
+assert.deepEqual(BEAT_RANGES.map(([id]) => id), ['hero', 'stage', 'blueprint', 'form', 'input', 'control', 'display', 'compute', 'final']);
+assert.equal((html.match(/class="film-beat/g) || []).length, 9, 'DOM film beat count drifted');
+assert.equal((html.match(/class="blueprint-label /g) || []).length, 5, 'Blueprint must keep exactly five stable system labels');
+assert.equal((html.match(/data-beat="input" data-role=/g) || []).length, 3, 'Input macro callouts must stay at three');
+assert.equal((html.match(/data-beat="compute" data-role=/g) || []).length, 3, 'Compute macro callouts must stay at three');
+assert.ok(main.includes('createFilmTimeline'), 'runtime must use the Anime.js film timeline');
+assert.ok(!main.includes('detectShot('), 'legacy shot detector must not return');
+assert.ok(!main.includes('const SHOTS'), 'legacy SHOTS state machine must not return');
+assert.ok(!/requestAnimationFrame\(render\);\s*requestAnimationFrame\(render\);/.test(main), 'duplicate render-loop bootstrap detected');
+
+const sampleCount = 681;
+const times = Array.from({ length: sampleCount }, (_, index) => TOTAL_TIME * index / (sampleCount - 1));
 const samples = times.map(evaluateMotion);
-const finiteKeys = ["cameraAzimuth", "cameraElevation", "cameraRadiusScale", "cameraFov", "focusDisplay", "focusKeyboard", "focusKnob", "focusMainboard", "blueprintSeparation", "keycapLift", "knobRotation", "boardLift", "boardFlip", "cadMix", "inkMix", "stageExpand", "lcdIntensity"];
-for (const [i, state] of samples.entries()) {
-  for (const key of finiteKeys) assert.ok(Number.isFinite(state[key]), `sample ${i} ${key} is not finite`);
-  assert.ok(state.cameraRadiusScale > 0 && state.cameraFov > 10 && state.cameraFov < 100, `sample ${i} camera invalid`);
-  assert.ok(state.stageExpand >= 0 && state.stageExpand <= 1.01, `sample ${i} stage invalid`);
+assert.deepEqual(samples, times.map(evaluateMotion), 'film evaluation must be deterministic');
+
+const finiteKeys = [
+  'cameraAzimuth', 'cameraElevation', 'cameraRadiusScale', 'cameraFov',
+  'framingX', 'framingY', 'focusProduct', 'focusDisplay', 'focusKeyboard',
+  'focusKnob', 'focusMainboard', 'productYaw', 'productPitch',
+  'blueprintSeparation', 'keycapLift', 'knobRotation', 'serviceCoverOpen',
+  'boardLift', 'boardFlip', 'cadMix', 'inkMix', 'stageExpand',
+  'stageStrength', 'lcdIntensity', 'lcdInteraction',
+];
+
+for (const [index, sample] of samples.entries()) {
+  for (const key of finiteKeys) assert.ok(Number.isFinite(sample[key]), `sample ${index}: ${key} is not finite`);
+  assert.ok(sample.cameraRadiusScale > .35 && sample.cameraRadiusScale < 1.6, `sample ${index}: camera radius out of authored range`);
+  assert.ok(sample.cameraFov >= 26 && sample.cameraFov <= 38, `sample ${index}: FOV invalid`);
+  assert.ok(sample.stageExpand >= 0 && sample.stageExpand <= 1.001, `sample ${index}: stage expansion invalid`);
+  assert.ok(sample.cadMix >= 0 && sample.cadMix <= 1.001, `sample ${index}: CAD mix invalid`);
+  assert.ok(sample.inkMix >= 0 && sample.inkMix <= 1.001, `sample ${index}: INK mix invalid`);
+  const focusSum = sample.focusProduct + sample.focusDisplay + sample.focusKeyboard + sample.focusKnob + sample.focusMainboard;
+  assert.ok(focusSum > .2, `sample ${index}: semantic camera target lost all weight`);
 }
-const ids = new Set(times.map(shotAt).map((value) => value.id));
-assert.deepEqual([...ids], ["hero", "blueprint", "input", "control", "compute", "final"]);
-assert.deepEqual(samples, times.map(evaluateMotion), "timeline evaluation must be deterministic");
-for (let i = 1; i < samples.length - 1; i++) {
-  const a = samples[i - 1], b = samples[i], c = samples[i + 1];
-  const v0 = [b.cameraAzimuth - a.cameraAzimuth, b.cameraElevation - a.cameraElevation, b.cameraRadiusScale - a.cameraRadiusScale];
-  const v1 = [c.cameraAzimuth - b.cameraAzimuth, c.cameraElevation - b.cameraElevation, c.cameraRadiusScale - b.cameraRadiusScale];
-  const n0 = Math.hypot(...v0), n1 = Math.hypot(...v1);
-  if (n0 > 1e-5 && n1 > 1e-5) {
-    const dot = v0.reduce((sum, value, j) => sum + value * v1[j], 0);
-    const nearShotBoundary = [1000, 2000, 3000, 4000, 5200].some((boundary) => Math.abs(times[i] - boundary) < 80);
-    if (!nearShotBoundary) assert.ok(Math.acos(Math.max(-1, Math.min(1, dot / (n0 * n1)))) < Math.PI * 0.95, `camera reversal at sample ${i}`);
-  }
+
+const sphericalPosition = (sample) => {
+  const az = sample.cameraAzimuth * Math.PI / 180;
+  const el = sample.cameraElevation * Math.PI / 180;
+  const r = sample.cameraRadiusScale;
+  return [
+    Math.sin(az) * Math.cos(el) * r,
+    -Math.cos(az) * Math.cos(el) * r,
+    Math.sin(el) * r,
+  ];
+};
+const positions = samples.map(sphericalPosition);
+const speeds = [];
+const vectors = [];
+for (let i = 1; i < positions.length; i++) {
+  const v = positions[i].map((value, axis) => value - positions[i - 1][axis]);
+  vectors.push(v);
+  speeds.push(Math.hypot(...v));
 }
-assert.equal(SHOT_RANGES.length, 6);
-assert.ok(MOTION_TRACKS.length >= 20);
-console.log(`timeline samples: ${sampleCount}`);
-console.log(`tracks: ${MOTION_TRACKS.length}`);
-console.log(`shots: ${[...ids].join(" → ")}`);
-console.log("RESULT: PASS — deterministic six-shot motion/composition gates");
+const sorted = speeds.filter((value) => value > 1e-7).sort((a, b) => a - b);
+const median = sorted[Math.floor(sorted.length / 2)] || 1;
+const maxSpeed = Math.max(...speeds);
+assert.ok(maxSpeed < median * 8.5, `isolated camera speed spike detected: max/median=${(maxSpeed / median).toFixed(2)}`);
+
+let worstTangent = 0;
+for (let i = 1; i < vectors.length; i++) {
+  const a = vectors[i - 1], b = vectors[i];
+  const na = Math.hypot(...a), nb = Math.hypot(...b);
+  if (na < median * .12 || nb < median * .12) continue; // intentional near-stop / reversal gate
+  const dot = a.reduce((sum, value, axis) => sum + value * b[axis], 0) / (na * nb);
+  const angle = Math.acos(Math.max(-1, Math.min(1, dot)));
+  worstTangent = Math.max(worstTangent, angle);
+}
+assert.ok(worstTangent < Math.PI * .72, `camera changes direction while still moving too fast: ${(worstTangent * 180 / Math.PI).toFixed(1)}°`);
+
+const observedBeats = [...new Set(times.map((time) => beatAt(time).id))];
+assert.deepEqual(observedBeats, BEAT_RANGES.map(([id]) => id));
+assert.ok(MOTION_TRACKS.length >= 80, 'long-form choreography unexpectedly collapsed');
+
+console.log(`model: ${A340_PROFILE.label}`);
+console.log(`beats: ${observedBeats.join(' → ')}`);
+console.log(`timeline: ${TOTAL_TIME} units / ${MOTION_TRACKS.length} tracks / ${sampleCount} samples`);
+console.log(`camera speed max/median: ${(maxSpeed / median).toFixed(2)}`);
+console.log(`worst moving tangent: ${(worstTangent * 180 / Math.PI).toFixed(1)}°`);
+console.log('RESULT: PASS — A3.40 nine-beat deterministic product-film gates');

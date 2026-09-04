@@ -1,76 +1,84 @@
-# animejs.com 分镜叙事复刻：Luma Remote A3.32 机械展台
+# Luma Remote A3.40 — Anime.js Product Film
 
-一个基于 [animejs.com](https://animejs.com)（Anime.js v4 官网）**完整分镜叙事**的前端复刻练习。原站以一个圆形引擎贯穿全片六幕；本期以真实硬件 **Luma Remote A3.32**（120×81 mm Y-COMPACT 微控台、19.5 mm 键距、Ø26 EC11 旋钮、21 个独立零件）为载体，把圆形引擎重构为专属的「Cyber Command Deck HUD + ISO 128 工程图纸」双形态容器，逐幕还原其滚动叙事。
+A scroll-directed industrial product film built with **Anime.js v4 + Three.js**.
 
-> 21 个零部件 STL、装配坐标与爆炸向量全部来自 luma-remote 项目的 A3.32 R2 冻结基线；文案概括性改写；字体使用开源 Inter / IBM Plex Mono 本地打包；Three.js 离线自包含，零外部依赖。
+This branch is not a CAD-viewer clone of animejs.com. The film keeps Luma Remote spatially legible while moving between product form, engineering structure, interaction, display feedback and compute-core inspection.
 
-## 完整分镜脚本（原站六幕 → 本复刻落点）
+## Runtime
 
-| 幕 | 原站镜头 | 本复刻实现 |
-|---|---|---|
-| **① Hero** | 引擎合拢态示波器：外环彩色弧光 + 刻度盘 + 中心红色波形，标题逐词拆字入场 | Cyber Command Deck HUD：机甲四角角标、双轴毫米刻度、实时遥测栏（120×81 mm / 19.5 mm 键距 / 103.2 g / 0.00 mm³ 碰撞）；A3.32 合拢态悬浮，2.0" LCD 播放 CanvasTexture 动态界面（示波器 + 旋钮音量环 + 按键矩阵） |
-| **② Toolbox 爆炸** | 相机拉远，引擎沿轴炸开为 CAD 线稿；每个零件发射引线连到两侧模块标签 | 背景退为米色图纸（`#dfd9cd`）、HUD 变 ISO 图框；21 件沿冻结 `explodeVectorMm` 爆炸并切换 EdgesGeometry 墨线线稿；8 个 3D→2D 正交引线实时投影到两侧零件标签；底部 EXPLODE PROGRESS 进度条 |
-| **③ Features 系列** | 每个特性一幕：中央镜头实时演示 + 左文案（带 → 条目）+ 右代码卡 + 底部刻度擦洗条 | 5 幕特性，中央 3D 每幕独立编排（滚动进度驱动 camFn 相机路径）：**Ergonomics** 左前→右前弧形环绕扫过 8.3° 低斜面，enclosure 纸面主角；**Keycaps** 进出对称擦洗：入镜模型顺时针偏航 60°、相机扫至侧上方 28° 俯角，键帽微抬露出轴芯间隙、键轴与盒体入镜构成对角堆叠特写；离镜前模型回正、机位撤回前上方（换镜零残角无回弹）+ 三条参数标注引线；**Knob** EC11 四件绕自身轴旋转着旋出 + 环绕旋钮弧形运镜；**Display** 45° 斜角环绕缓推、面罩掀开；**Compute Core** 旋转入场 → 正对 PCB 缓推，包围盒比例锚点标注 ANTENNA / ESP32-S3 / PSRAM |
-| **④ Modular 拆装** | 线稿全爆炸 + 每个零件旁漂浮「体积标签」（彩点 + KB）+ 右下 Bundle size 面板：堆叠条 + 可点图例，点击实时拆装并重算总量 | 线稿 100% 全爆炸（1.9× 扩散放大）+ 相机后撤；五大子系统旁漂浮质量标签（彩点 + 克数，逐帧 3D→2D 投影 + 视口钳制）；右下 Mass budget 面板：总量 g、彩色堆叠条、可点图例（点击拆装 + 重算 + 划线态），与左侧子系统开关双向同步 |
-| **⑤ Sponsors** | 资助进度环 + 赞助者头像流 | 简化为 Specs 资源区（3MF / 整装 STL / 固件仓库入口） |
-| **⑥ Get Started / Footer** | 彩色圆点文档导航 + 订阅栏 | 彩点规格卡三联 + 页脚导航 |
-
-## 动效引擎要点
-
-| 系统 | 实现 |
-|---|---|
-| 直接映射（v6） | **无时间平滑**：滚动位置、爆炸因子、机位、姿态、焦点混搭全部是滚动位置的纯函数——鼠标停即画面停、速度即滚动速度、掉帧不积累滞后；换镜判定与进度共用原始 `scrollY` 信号 + 滞回锁（回退需越过 12vh 余量） |
-| 分镜状态机 | 9 幕各自独立机位（camFn 路径 / 静态 cam）、擦洗爆炸组（零件 id / 组名双键解析）；**相邻分镜在边界处位姿严格连续**（前一幕 camFn/rotFn/scrub 终值 = 后一幕初值），scrub 区间以端点值携带衰减（如 Ergonomics `[1,0]` 收拢入镜时爆炸） |
-| 运镜编排 | camFn 输出滚动进度驱动的机位路径：直线推近（Ergonomics）、键帽三拍（Keycaps）、旋钮拉回（Knob）、斜角滑移（Display）、主板背面翻转+板体提出（Firmware）；**偏航全片单调顺时针**（跨镜以 −2π 展开值衔接，构图等价、方向不回卷），进度跨度=整段区块高度（prog 恰在下一换镜点达 1，幕尾无冻结死区） |
-| 焦点混搭 | INK 分镜逐零件材质实例；焦点高亮 = 纯滚动 ramp（分镜中段亮、两端回暗），边界处 ramp=0 与相邻幕无缝衔接，无换镜跳色 |
-| 中心枢轴 | STL 几何平移至零件包围盒中心，pivot 位移 + mesh 自转（EC11 旋出）均绕自身轴；描线几何在平移后构建，杜绝偏移鬼影 |
-| 双主题变形 | Toolbox / Modules 区触发 `body.theme-light`，材质整体切换（赛博微光 ⇄ CAD 墨线），CSS 背景同步过渡 |
-| 爆炸驱动 | Toolbox 按滚动进度 0→100%；Modules 固定 100% 并叠加 1.9× `spread` 扩散系数；Specs 入镜携带 100% 随滚动收拢；**层序保护（EXPLODE_LIFT）**：键帽/键轴/EC11 栈的 +Z 行程依次领先上盖，杜绝上盖追越穿透 |
-| 3D→2D 投影 | `vector.project(camera)` 逐帧投影：SVG 阶梯引线（Toolbox，**两遍路由**——先按零件投影 y 重排两侧标签槽位（offsetTop 布局位，无反馈回路），同列虚线平行不交叉；模型端点不做视口钳制、始终锁住零件）、漂浮质量标签（Modules）、特写参数标注（统一分槽排布防重叠，标签列避让内容卡片） |
-| 动态屏幕 | 480×640 `CanvasTexture` 每帧重绘：波形 / 音量弧 / 按键矩阵，`toneMapped:false` 保持发光感；平面挂在主板 pivot 下，跟随主板位移 |
-| 模块拆装 | 图例与开关共用 `setGroupActive()`：部件显隐 + 质量重算 + 堆叠条联动 |
-| Dev HUD | 左下角验收辅助条（发布前移除）：`Y 滚动高度/上限 · F 帧号`、当前分镜与进度、`NEXT FLIP` 下一换镜点，方便反馈「Y=xxxx 处异常」精确定位 |
-
-## 运行
-
-Anime.js v4 使用 npm 裸模块导入，必须通过 Vite 运行：
-
-```bash
-cd site-studies/animejs
-npm install
-npm run dev
-# 打开 http://localhost:5173/
+```text
+DOM scroll
+→ Anime.js onScroll({ sync: true })
+→ one createTimeline() master film
+→ numeric motion state + staggered keycap proxy tracks
+→ Three.js scene / orbit camera / material blend
+→ LCD-plane projection + SVG callouts
+→ render
 ```
 
-生产构建与预览：
+There is no second scroll-to-camera state machine and no frame-to-frame damping.
+
+## Nine cinematic beats
+
+1. **Hero** — establish the complete product.
+2. **Stage** — the physical LCD projection grows into the presentation frame.
+3. **Blueprint** — restrained system-level separation, five fixed labels.
+4. **Form** — A3.40 exterior / EC11 clearance decision.
+5. **Input** — camera enters the key region, then caps reveal Choc V2.
+6. **Control** — Ø24 knob motion drives LCD feedback.
+7. **Display** — screen plane becomes the visual datum.
+8. **Compute** — service cover, board lift, local board flip, macro inspection.
+9. **Final** — mechanisms close and the film returns to the finished product.
+
+Each beat is long-form (`~165vh`) and the motion tracks begin/end across broad scroll spans rather than switching pose at section boundaries.
+
+## A3.40 model truth
+
+Source of truth: `luma-remote` PR #31 / merge `48bd3ea`.
+
+A3.40 is intentionally a small exact mechanical delta on top of the frozen A3.32 R2 envelope + PR #30 keycaps:
+
+- envelope remains `120 × 81 mm`;
+- screen / bezel position remains frozen;
+- EC11 center remains `(0, -19.5)`;
+- cosmetic knob well changes `Ø30 → Ø26 mm`;
+- knob OD changes `Ø26 → Ø24 mm`;
+- PR #30 PETG icon keycap proportions are inherited.
+
+PR #31 intentionally **does not commit 231 generated loose STL files**. This site therefore keeps the already-vendored frozen assembly meshes and applies the visible A3.40 exterior delta in the Web scene:
+
+- the rotary knob mesh is scaled to Ø24;
+- the Ø30→Ø26 recovered cosmetic-well annulus is materialized as an A3.40 shell patch in the sloped deck plane;
+- keycaps are adapted to the PR #30 `17 × 15 × 5 mm` presentation proportions and receive the six product glyphs;
+- unchanged screen, enclosure datums, Choc hardware and ESP32 reference geometry remain the frozen source assets.
+
+The 231-object electronics model in PR #31 is presentation/reference truth rather than manufacturing truth; this film keeps the existing high-detail ESP32 reference mesh for the Compute shot instead of copying 220 generated reference STL files into `site-studies`.
+
+Concrete source IDs are isolated to `js/model-profile.js`; choreography only works with semantic product roles.
+
+## Development
+
+```bash
+cd animejs
+npm install
+npm run dev
+```
+
+Validation:
 
 ```bash
 npm run build
-npm run preview
+npm run validate
 ```
 
-`python -m http.server` 仅适用于旧版未使用 npm 裸导入的静态版本；不要用它打开当前 v31，否则浏览器会报：`Failed to resolve module specifier "animejs"`。
+`npm run validate` checks the A3.40 contract, nine-beat film structure, deterministic timeline evaluation, camera motion spikes/direction changes, semantic role resolution, callout limits and the absence of the old shot-state driver.
 
+## Stack
 
-## 结构
-
-```
-animejs/
-├── index.html            # 六幕结构（HUD / Toolbox 线稿 / Features / Modular BOM / Specs / Footer）
-├── css/style.css         # 赛博微光暗色 + ISO 图纸浅色双主题
-├── js/main.js            # Three.js 场景 / LCD 纹理 / 滚动爆炸 / 投影标签引擎
-├── stl/                  # A3.32 全部 21 个零件 STL + 打印就绪 3MF + 整装预览 STL
-├── vendor/               # 离线 three.module.js / three.core.js / STLLoader.js
-├── fonts/                # Inter、Inter Tight、IBM Plex Mono（woff2 本地打包）
-└── ASSEMBLY_MANIFEST.json # A3.32 冻结基线：21 零件坐标、分组与 explodeVectorMm
-```
-
-数据来源：`luma-remote/hardware/mechanical/exports/assembly/profiles/industrial_a3_32_compact/`（commit `08795db`）。仅供学习交流，animejs.com 设计语言版权归 Julian Garnier 所有。
-
-## 已知问题（v6 收尾记录）
-
-v5 收尾后针对「突然加速 / 顺逆时针晃动 / 回弹」做了 v6 直接映射重构：删除全部时间阻尼（6 处），位姿改为滚动纯函数，9 幕边界位姿与 scrub 区间端点全部衔接；2→3 边界由「跳变 200mm + 左右反打」改为直线推近。当前遗留：
-
-- PBR ⇄ INK 主题切换（Toolbox / Specs 边界）仍为整幕瞬切，属原站同款节奏，暂保留
-- 未做移动端窄视口适配与 prefers-reduced-motion 降级
-- 左下角 Dev HUD 为验收辅助，验收通过后移除
+- Vanilla HTML / CSS / ESM
+- Anime.js `4.5.0`
+- Three.js (vendored existing runtime)
+- STLLoader
+- SVG 3D→2D overlays
+- CanvasTexture LCD UI
+- Vite
