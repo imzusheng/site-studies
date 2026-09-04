@@ -1,102 +1,40 @@
 import * as THREE from '/vendor/three.module.js';
-import { beatAt, keycapMotion, motion } from './film.js';
-import { A340_PROFILE, roleId } from './model-profile.js';
+import { beatAt, evaluateMotion, motion } from './film.js';
+import { A340_PROFILE, roleId, roleIds } from './model-profile.js';
 import { sizeOf } from './model-scene.js';
 
 const DEG = THREE.MathUtils.degToRad;
-const clamp = THREE.MathUtils.clamp;
 const FACE_ANGLE = DEG(A340_PROFILE.dimensions.faceAngleDeg);
 const FACE_NORMAL = new THREE.Vector3(0, -Math.sin(FACE_ANGLE), Math.cos(FACE_ANGLE)).normalize();
 const WORLD_UP = new THREE.Vector3(0, 0, 1);
+export const CONTROL_LIFT_MM = 8;
 
 export function createFilmEngine(model) {
-  const { camera, renderer, root, parts, roleMatch, baseRadius, lcd, lcdCanvas, lcdCtx, lcdTexture } = model;
+  const {
+    camera, renderer, root, parts, roleMatch, baseRadius, groupCenters,
+    lcd, lcdCanvas, lcdCtx, lcdTexture, lcdHomePosition,
+    lights, glowMaterial,
+  } = model;
   const tmp = new THREE.Vector3();
   const tmpColor = new THREE.Color();
-  const darkBg = new THREE.Color(0x0d0e12);
-  const paperBg = new THREE.Color(0xded8cc);
-  const darkFg = new THREE.Color(0xf2f0eb);
-  const paperFg = new THREE.Color(0x211e1a);
-  const cadSolid = new THREE.Color(0xf1ede4);
-  const inkSolid = new THREE.Color(0x16181d);
-  const focusSolid = new THREE.Color(0xf0ece2);
-  const cadLine = new THREE.Color(0x28241f);
-  const inkLine = new THREE.Color(0xf4f1eb);
+  const tmpLineColor = new THREE.Color();
+  const backgroundColor = new THREE.Color();
+  const backgroundTarget = new THREE.Color();
+  const inkColor = new THREE.Color();
+  const lineLight = new THREE.Color(0xe3ecec);
+  const lineDark = new THREE.Color(0x202628);
+  const inkLight = new THREE.Color(0xf2f4f3);
+  const inkDark = new THREE.Color(0x121719);
+  const keyWarm = new THREE.Color(0xffd7b7);
+  const keyNeutral = new THREE.Color(0xf4f2ed);
+  const rimWarm = new THREE.Color(0xffcfaa);
+  const rimCool = new THREE.Color(0x9dbed2);
+  const computeAxis = new THREE.Vector3(1, 0, 0);
+  const computeRotation = new THREE.Quaternion();
+  const focusColor = new THREE.Color(0xdce6e9);
+  const heroKeyColor = new THREE.Color(0x343638);
+  const controlLift = FACE_NORMAL.clone().multiplyScalar(CONTROL_LIFT_MM);
   let lcdSignature = '';
-
-  function partMotion() {
-    for (const part of parts.values()) {
-      part.pivot.position.copy(part.home);
-      part.pivot.quaternion.identity();
-      part.mesh.rotation.copy(part.baseRotation);
-
-      const weight = { enclosure: .82, input: .55, control: .70, compute: .42, display: .32 }[part.system] ?? .25;
-      part.pivot.position.addScaledVector(part.explode, motion.blueprintSeparation * weight);
-
-      if (part.keyIndex >= 0) {
-        const phase = keycapMotion[part.keyIndex]?.lift ?? 0;
-        part.pivot.position.addScaledVector(FACE_NORMAL, motion.keycapLift * phase);
-      }
-
-      if (roleMatch(part, 'knob')) {
-        part.pivot.quaternion.setFromAxisAngle(FACE_NORMAL, motion.knobRotation);
-        part.pivot.position.addScaledVector(FACE_NORMAL, motion.knobReveal * 4.5);
-      }
-
-      if (roleMatch(part, 'serviceCover')) {
-        part.pivot.position.z -= motion.serviceCoverOpen * 28;
-        part.pivot.position.y += motion.serviceCoverOpen * 10;
-        part.pivot.rotation.x += DEG(18) * motion.serviceCoverOpen;
-      }
-
-      if (roleMatch(part, 'retainer')) {
-        part.pivot.position.addScaledVector(FACE_NORMAL, motion.boardLift * 13);
-      }
-
-      if (roleMatch(part, 'mainboard')) {
-        part.pivot.position.addScaledVector(FACE_NORMAL, motion.boardLift * 30);
-        part.pivot.position.y += motion.boardLift * 4;
-        part.pivot.rotation.x += -Math.PI * .92 * motion.boardFlip;
-      }
-
-      if (motion.formReveal > 0 && part.system === 'enclosure' && !roleMatch(part, 'serviceCover')) {
-        part.pivot.position.addScaledVector(FACE_NORMAL, -motion.formReveal * 3.5);
-      }
-    }
-  }
-
-  function materialMotion() {
-    const cad = clamp(motion.cadMix, 0, 1);
-    const ink = clamp(motion.inkMix * (1 - cad * .55), 0, 1);
-
-    for (const part of parts.values()) {
-      const focus = ({
-        input: motion.focusKeyboard,
-        control: motion.focusKnob,
-        compute: motion.focusMainboard,
-        display: motion.focusDisplay,
-        enclosure: motion.focusProduct,
-      }[part.system] || 0) * ink;
-
-      tmpColor.copy(part.baseColor)
-        .lerp(cadSolid, cad)
-        .lerp(inkSolid, ink)
-        .lerp(focusSolid, Math.min(.82, focus * .74));
-      part.mesh.material.color.copy(tmpColor);
-      part.mesh.material.roughness = THREE.MathUtils.lerp(part.baseRoughness, .94, cad * .92 + ink * .55);
-      part.mesh.material.metalness = THREE.MathUtils.lerp(part.baseMetalness, 0, cad * .95 + ink * .8);
-      part.line.material.color.copy(inkLine).lerp(cadLine, cad);
-      part.line.material.opacity = THREE.MathUtils.lerp(.18, .9, Math.max(cad, ink * .68));
-      if (part.decal) part.decal.material.opacity = clamp(1 - cad * .55 - ink * .3, .18, 1);
-    }
-
-    const style = document.documentElement.style;
-    style.setProperty('--film-bg', darkBg.clone().lerp(paperBg, cad).getStyle());
-    style.setProperty('--film-fg', darkFg.clone().lerp(paperFg, cad).getStyle());
-    style.setProperty('--film-muted', cad > .45 ? 'rgba(34,31,27,.58)' : 'rgba(238,235,229,.55)');
-    style.setProperty('--film-grid', cad > .45 ? 'rgba(36,31,26,.09)' : 'rgba(255,255,255,.065)');
-    renderer.toneMappingExposure = THREE.MathUtils.lerp(1.22, .98, cad);
-  }
 
   const averageWorld = (ids) => {
     const result = new THREE.Vector3();
@@ -106,117 +44,304 @@ export function createFilmEngine(model) {
       if (!part) continue;
       part.pivot.getWorldPosition(tmp);
       result.add(tmp);
-      count++;
+      count += 1;
     }
-    return count ? result.multiplyScalar(1 / count) : result;
+    return count ? result.multiplyScalar(1 / count) : root.localToWorld(new THREE.Vector3());
   };
 
-  const point = (name) => {
+  const stableExplodedGroupWorld = (group) => {
+    const center = groupCenters.get(group)?.clone();
+    const member = [...parts.values()].find((part) => part.group === group);
+    if (!center || !member) return root.localToWorld(new THREE.Vector3());
+    return root.localToWorld(center.add(member.explode));
+  };
+
+  const roleWorld = (role) => {
+    const ids = roleIds(role);
+    if (!ids.length) return null;
+    return ids.length === 1
+      ? (parts.get(ids[0])?.pivot.getWorldPosition(new THREE.Vector3()) || null)
+      : averageWorld(ids);
+  };
+
+  const targetFor = (name) => {
     if (name === 'product') return root.localToWorld(new THREE.Vector3());
-    if (name === 'display') {
-      return lcd
-        ? lcd.getWorldPosition(new THREE.Vector3())
-        : (parts.get(roleId('screenBezel'))?.pivot.getWorldPosition(new THREE.Vector3()) || new THREE.Vector3());
-    }
-    if (name === 'keyboard') return averageWorld(A340_PROFILE.roles.keycaps);
-    const part = parts.get(roleId(name === 'knob' ? 'knob' : 'mainboard'));
-    return part ? part.pivot.getWorldPosition(new THREE.Vector3()) : new THREE.Vector3();
+    if (name === 'display') return lcd.getWorldPosition(new THREE.Vector3());
+    if (name === 'knob') return roleWorld('knob');
+    if (name === 'keys') return roleWorld('keycaps');
+    if (name === 'compute') return stableExplodedGroupWorld('compute');
+    if (name === 'mainboard') return roleWorld('mainboard');
+    if (name === 'cpu') return averageWorld([roleId('cpu'), roleId('flash')]);
+    if (name === 'imu') return roleWorld('imu');
+    if (name === 'io') return averageWorld([roleId('usb'), roleId('microsd')]);
+    if (name === 'headers') return averageWorld([roleId('cameraFpc'), roleId('batteryHeader')]);
+    if (name === 'power') return averageWorld([roleId('lipo'), roleId('powerBoard')]);
+    if (name === 'inputBoards') return roleWorld('inputBoards');
+    return root.localToWorld(new THREE.Vector3());
   };
 
-  function cameraMotion() {
-    const weights = [
-      ['product', motion.focusProduct],
-      ['display', motion.focusDisplay],
-      ['keyboard', motion.focusKeyboard],
-      ['knob', motion.focusKnob],
-      ['mainboard', motion.focusMainboard],
-    ];
-    const total = weights.reduce((sum, [, weight]) => sum + Math.max(0, weight), 0) || 1;
-    const target = new THREE.Vector3();
-    weights.forEach(([name, weight]) => target.addScaledVector(point(name), Math.max(0, weight) / total));
+  const explodeFactor = (part, state) => {
+    if (roleMatch(part, 'switches') || roleMatch(part, 'encoder')) return state.switchOpen;
+    if (roleMatch(part, 'upperShell') || roleMatch(part, 'screenBezel')) return state.shellOpen;
+    if (part.group === 'compute') return state.computeExplode;
+    if (part.group === 'power') return state.powerExplode;
+    if (part.group === 'input') return state.inputExplode;
+    return state.internalOpen;
+  };
 
-    const radius = baseRadius * motion.cameraRadiusScale;
-    const az = DEG(motion.cameraAzimuth);
-    const el = DEG(motion.cameraElevation);
+  const smooth01 = (a, b, value) => {
+    const t = THREE.MathUtils.clamp((value - a) / Math.max(.0001, b - a), 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+
+  function partMotion(state) {
+    for (const part of parts.values()) {
+      part.pivot.position.copy(part.home);
+      part.pivot.quaternion.identity();
+      part.pivot.scale.setScalar(1);
+      part.mesh.position.set(0, 0, 0);
+      part.mesh.rotation.copy(part.baseRotation);
+
+      if (roleMatch(part, 'keycaps') || roleMatch(part, 'knob')) {
+        const offset = controlLift.clone().multiplyScalar(state.controlLift);
+        if (state.controlFan > 0) offset.lerp(part.explode, state.controlFan);
+        part.pivot.position.add(offset);
+      } else {
+        part.pivot.position.addScaledVector(part.explode, explodeFactor(part, state));
+      }
+
+      if (part.detailExplode.lengthSq() > 0) {
+        const spread = smooth01(part.detailRank * .24, .68 + part.detailRank * .24, state.componentSpread);
+        part.pivot.position.addScaledVector(part.detailExplode, spread);
+      }
+
+      if (part.id === roleId('keycapFocus')) part.pivot.position.addScaledVector(FACE_NORMAL, state.keyPress);
+      if (roleMatch(part, 'knob')) part.pivot.quaternion.setFromAxisAngle(FACE_NORMAL, state.knobRotation);
+      if (part.id === roleId('activeGlass')) part.pivot.position.addScaledVector(FACE_NORMAL, 12 * state.displayLayer);
+      if (part.id === roleId('displayModule')) part.pivot.position.addScaledVector(FACE_NORMAL, -8 * state.displayLayer);
+    }
+
+    if (state.computeTurn > 0) {
+      const members = [...parts.values()].filter((part) => part.group === 'compute');
+      const center = new THREE.Vector3();
+      members.forEach((part) => center.add(part.pivot.position));
+      center.multiplyScalar(1 / members.length);
+      computeRotation.setFromAxisAngle(computeAxis, DEG(-180) * state.computeTurn);
+      for (const part of members) {
+        part.pivot.position.sub(center).applyQuaternion(computeRotation).add(center);
+        part.pivot.quaternion.premultiply(computeRotation);
+      }
+    }
+
+    if (state.printableLayout > 0) {
+      const layout = [
+        ['cosmetic_upper_shell', -44, 17, .42], ['bottom_service_cover', 35, 17, .46],
+        ['screen_bezel', -48, -19, .72], ['esp32_m3_retainer', -18, -19, .78], ['ec11_knob_24x8p5', 13, -19, .82],
+        ['keycap_1', -54, -46, .88], ['keycap_2', -32, -46, .88], ['keycap_3', -10, -46, .88],
+        ['keycap_4', 12, -46, .88], ['keycap_5', 34, -46, .88], ['keycap_6', 56, -46, .88],
+      ];
+      layout.forEach(([id, x, y, scale]) => {
+        const part = parts.get(id);
+        const target = new THREE.Vector3(x, y, 40);
+        part.pivot.position.lerp(target, state.printableLayout);
+        part.pivot.scale.setScalar(THREE.MathUtils.lerp(1, scale, state.printableLayout));
+        part.pivot.quaternion.slerp(new THREE.Quaternion(), state.printableLayout);
+      });
+    }
+
+    lcd.position.copy(lcdHomePosition);
+  }
+
+  const focusStrength = (part, focus) => {
+    if (focus === 'product') return 1;
+    if (focus === 'display') return ['lcd_active_glass', 'lcd_backlight_stack', 'screen_bezel'].includes(part.id) ? 1 : part.group === 'compute' ? .22 : .02;
+    if (focus === 'compute') return part.group === 'compute' ? 1 : 0;
+    if (focus === 'cpu') return roleMatch(part, 'cpu') || roleMatch(part, 'flash') ? 1 : part.id === roleId('mainboard') ? .30 : part.group === 'compute' ? .12 : 0;
+    if (focus === 'imu') return roleMatch(part, 'imu') ? 1 : part.id === roleId('mainboard') ? .30 : part.group === 'compute' ? .10 : 0;
+    if (focus === 'io') return roleMatch(part, 'usb') || roleMatch(part, 'microsd') ? 1 : part.id === roleId('mainboard') ? .30 : part.group === 'compute' ? .10 : 0;
+    if (focus === 'headers') return roleMatch(part, 'cameraFpc') || roleMatch(part, 'batteryHeader') || /^P[12]_/.test(part.id) ? 1 : part.id === roleId('mainboard') ? .30 : part.group === 'compute' ? .10 : 0;
+    if (focus === 'power') return part.group === 'power' ? 1 : 0;
+    if (focus === 'input-pcb') return part.group === 'input' ? 1 : 0;
+    if (focus === 'input') return ['input', 'controls'].includes(part.group) ? 1 : .12;
+    if (focus === 'control') return roleMatch(part, 'knob') || roleMatch(part, 'encoder') ? 1 : .13;
+    if (focus === 'printable') return part.data.printable ? 1 : 0;
+    return 1;
+  };
+
+  const focusBlend = (state, allowed) => THREE.MathUtils.lerp(
+    allowed.includes(state.focusFrom) ? 1 : 0,
+    allowed.includes(state.focus) ? 1 : 0,
+    state.focusMix,
+  );
+
+  function materialMotion(state) {
+    for (const part of parts.values()) {
+      const focus = THREE.MathUtils.lerp(
+        focusStrength(part, state.focusFrom),
+        focusStrength(part, state.focus),
+        state.focusMix,
+      );
+      const surface = THREE.MathUtils.lerp(1, part.line ? .09 : .26, state.lineArt);
+      let opacity = part.baseOpacity * focus * surface;
+      if (roleMatch(part, 'upperShell')) opacity *= state.shellOpacity;
+      if (roleMatch(part, 'screenBezel') && state.shellOpacity < 1) opacity *= .65;
+
+      tmpColor.copy(part.baseColor);
+      if (roleMatch(part, 'keycaps')) tmpColor.lerp(heroKeyColor, state.teaserMix * .72);
+      if (focus > .9) tmpColor.lerp(focusColor, state.technicalMix * .13);
+      part.mesh.material.color.copy(tmpColor);
+      part.mesh.material.roughness = part.baseRoughness;
+      part.mesh.material.metalness = part.baseMetalness;
+      part.mesh.material.transparent = opacity < .999;
+      part.mesh.material.opacity = opacity;
+      part.mesh.material.depthWrite = opacity > .50 && state.lineArt < .48;
+      part.mesh.visible = opacity > .001;
+
+      if ('emissiveIntensity' in part.mesh.material) {
+        part.mesh.material.emissiveIntensity = roleMatch(part, 'switches') ? state.keyGlow * .20 : 0;
+      }
+      if (part.line) {
+        tmpLineColor.copy(lineLight).lerp(lineDark, state.uiLightMix);
+        part.line.material.color.copy(tmpLineColor);
+        part.line.visible = focus > .02 && (state.edgeMix > .01 || state.lineArt > .01);
+        part.line.material.opacity = focus * Math.max(.18 * state.edgeMix, .82 * state.lineArt);
+      }
+    }
+
+    const glowFocus = focusBlend(state, ['product', 'input', 'control']);
+    const lcdFocus = focusBlend(state, ['product', 'input', 'control', 'display']);
+    glowMaterial.opacity = (.006 + state.keyGlow * .044) * glowFocus;
+    lcd.material.opacity = (.36 + state.lcdIntensity * .54) * lcdFocus;
+    lcd.visible = lcdFocus > .002;
+  }
+
+  function lightingMotion(state) {
+    const teaser = state.teaserMix;
+    const technical = state.technicalMix;
+    const daylight = state.uiLightMix;
+    lights.ambient.intensity = THREE.MathUtils.lerp(.52, .22, teaser) + technical * .18 + daylight * .34;
+    lights.key.intensity = THREE.MathUtils.lerp(.82, .22, teaser) + technical * .42 + daylight * .30;
+    lights.rim.intensity = THREE.MathUtils.lerp(1.55, 2.64, teaser) - technical * .22 + daylight * .20;
+    lights.edge.intensity = THREE.MathUtils.lerp(.72, 1.40, teaser) + technical * .30 + daylight * .18;
+    lights.screen.intensity = (.035 + state.lcdIntensity * .16) * focusBlend(state, ['product', 'input', 'control', 'display']);
+    lights.key.color.copy(keyNeutral).lerp(keyWarm, teaser);
+    lights.rim.color.copy(rimCool).lerp(rimWarm, teaser);
+    renderer.toneMappingExposure = .82 - teaser * .09 + technical * .08 + daylight * .08;
+    backgroundColor.setHex(state.backgroundFrom).lerp(backgroundTarget.setHex(state.backgroundTo), state.backgroundMix);
+    renderer.setClearColor(backgroundColor, 1);
+
+    const style = document.documentElement.style;
+    inkColor.copy(inkLight).lerp(inkDark, daylight);
+    const rgb = [inkColor.r, inkColor.g, inkColor.b].map((value) => Math.round(value * 255)).join(' ');
+    const bgRgb = [backgroundColor.r, backgroundColor.g, backgroundColor.b].map((value) => Math.round(value * 255)).join(' ');
+    style.setProperty('--ink-rgb', rgb);
+    style.setProperty('--stage-rgb', bgRgb);
+    style.setProperty('--vignette', String(THREE.MathUtils.lerp(teaser ? .70 : technical ? .48 : .62, .18, daylight)));
+    style.setProperty('--stage-luma', String(.80 + technical * .10 + daylight * .10 - teaser * .06));
+  }
+
+  function cameraMotion(state) {
+    const from = targetFor(state.cameraTargetFrom) || root.localToWorld(new THREE.Vector3());
+    const to = targetFor(state.cameraTarget) || root.localToWorld(new THREE.Vector3());
+    const target = from.clone().lerp(to, state.cameraTargetMix);
+    const radius = baseRadius * state.cameraRadiusScale;
+    const az = DEG(state.cameraAzimuth);
+    const el = DEG(state.cameraElevation);
     camera.position.copy(target).add(new THREE.Vector3(
       Math.sin(az) * Math.cos(el) * radius,
       -Math.cos(az) * Math.cos(el) * radius,
       Math.sin(el) * radius,
     ));
 
-    const dir = target.clone().sub(camera.position).normalize();
-    const right = new THREE.Vector3().crossVectors(dir, WORLD_UP).normalize();
-    const up = new THREE.Vector3().crossVectors(right, dir).normalize();
+    const direction = target.clone().sub(camera.position).normalize();
+    const right = new THREE.Vector3().crossVectors(direction, WORLD_UP).normalize();
+    const up = new THREE.Vector3().crossVectors(right, direction).normalize();
     const look = target.clone()
-      .addScaledVector(right, -motion.framingX * radius * .32)
-      .addScaledVector(up, motion.framingY * radius * .28);
+      .addScaledVector(right, -state.framingX * radius * .30)
+      .addScaledVector(up, state.framingY * radius * .28);
 
-    camera.fov = motion.cameraFov;
+    camera.fov = state.cameraFov;
     camera.updateProjectionMatrix();
     camera.lookAt(look);
   }
 
-  function drawLcd(force = false) {
-    if (!lcdCtx || !lcd) return;
-    const beat = beatAt(motion.filmTime).id;
-    const signature = `${beat}:${motion.lcdInteraction.toFixed(2)}:${motion.lcdIntensity.toFixed(2)}:${motion.displayInspect.toFixed(2)}`;
+  function drawLcd(state, force = false) {
+    const signature = `${state.shotId}:${Math.round(state.shotProgress * 20)}:${state.lcdIntensity.toFixed(2)}`;
     if (!force && signature === lcdSignature) return;
     lcdSignature = signature;
 
     const ctx = lcdCtx;
     const w = lcdCanvas.width;
     const h = lcdCanvas.height;
-    ctx.fillStyle = '#071015';
+    const tech = state.shotIndex >= 10 && state.shotIndex <= 21;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#080a0c';
     ctx.fillRect(0, 0, w, h);
 
-    ctx.strokeStyle = 'rgba(92,217,255,.20)';
-    ctx.lineWidth = 1;
-    for (let x = 32; x < w; x += 32) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
-    }
-    for (let y = 32; y < h; y += 32) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    const text = (value, x, y, size, weight = 600, color = '#eef2f2', align = 'left') => {
+      ctx.fillStyle = color;
+      ctx.font = `${weight} ${size}px system-ui, "PingFang SC", sans-serif`;
+      ctx.textAlign = align;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(value, x, y);
+    };
+    const line = (y, color = 'rgba(255,255,255,.08)') => {
+      ctx.beginPath(); ctx.moveTo(28, y); ctx.lineTo(w - 28, y); ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.stroke();
+    };
+    const pill = (x, y, width, label, active = false) => {
+      ctx.beginPath(); ctx.roundRect(x, y, width, 34, 17);
+      ctx.fillStyle = active ? '#d59a45' : '#171b1e'; ctx.fill();
+      text(label, x + width / 2, y + 24, 17, 650, active ? '#101214' : '#a9b0b3', 'center');
+    };
+
+    text(tech ? 'SYSTEM / CORE' : 'LUMA HOME', 28, 50, 20, 700, '#8d979b');
+    text(tech ? 'ESP32-S3' : '客厅', 28, 112, tech ? 48 : 42, 730);
+    text(tech ? 'LOCAL CONTROL · ONLINE' : '5 个设备 · 已同步', 30, 145, 18, 550, tech ? '#74bd92' : '#8c9599');
+    line(170);
+
+    if (tech) {
+      const rows = [['CPU', 'ESP32-S3R8'], ['MEMORY', '8MB PSRAM · 16MB Flash'], ['LINK', 'Wi-Fi / MQTT'], ['STATE', 'Home Assistant ready']];
+      rows.forEach(([name, value], index) => {
+        const y = 213 + index * 55;
+        text(name, 30, y, 17, 650, '#7b8589');
+        text(value, w - 30, y, 20, 620, '#d8dddf', 'right');
+        if (index < rows.length - 1) line(y + 20, 'rgba(255,255,255,.045)');
+      });
+      pill(28, 406, 138, 'ONLINE', true);
+      pill(178, 406, 160, 'LOCAL');
+      pill(350, 406, 260, '231 OBJECTS');
+    } else {
+      const rows = [['主灯', '72%', true], ['色温', '3800 K', true], ['餐桌吊灯', '关闭', false], ['床头灯', '18%', true]];
+      rows.forEach(([name, value, active], index) => {
+        const y = 214 + index * 53;
+        ctx.beginPath(); ctx.arc(36, y - 6, 5, 0, Math.PI * 2); ctx.fillStyle = active ? '#79c996' : '#4a5053'; ctx.fill();
+        text(name, 55, y, 23, 620, '#d8dddf');
+        text(value, w - 30, y, 22, 650, active ? '#eef2f2' : '#778084', 'right');
+        if (index < rows.length - 1) line(y + 18, 'rgba(255,255,255,.045)');
+      });
+      pill(28, 414, 176, '日常', true);
+      pill(216, 414, 176, '氛围');
+      pill(404, 414, 206, '全部关闭');
     }
 
-    const title = beat === 'compute' ? 'SYSTEM / CORE' : beat === 'input' ? 'INPUT / MATRIX' : 'LUMA / CONTROL';
-    ctx.fillStyle = '#e8fbff';
-    ctx.font = '600 30px ui-monospace';
-    ctx.fillText(title, 34, 50);
-    ctx.fillStyle = 'rgba(214,242,249,.62)';
-    ctx.font = '18px ui-monospace';
-    ctx.fillText('A3.40 · EC11 Ø24 · 240×320', 34, 82);
-
-    const value = Math.round(18 + motion.lcdInteraction * 74);
-    ctx.strokeStyle = '#5ad9ff';
-    ctx.lineWidth = 9;
-    ctx.lineCap = 'round';
     ctx.beginPath();
-    ctx.arc(w * .5, h * .58, 110, Math.PI * .72, Math.PI * (.72 + 1.55 * motion.lcdInteraction));
-    ctx.stroke();
-    ctx.fillStyle = '#f4f7f2';
-    ctx.font = '700 92px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(String(value).padStart(2, '0'), w * .5, h * .63);
-
-    if (motion.displayInspect > .05) {
-      ctx.font = '18px ui-monospace';
-      ctx.fillStyle = `rgba(224,246,250,${.35 + motion.displayInspect * .45})`;
-      ctx.fillText('DISPLAY DATUM / PROJECTED STAGE', w * .5, h * .77);
-    }
+    ctx.moveTo(w * .70, 0); ctx.lineTo(w, 0); ctx.lineTo(w, h * .36); ctx.lineTo(w * .92, h * .23);
+    ctx.closePath(); ctx.fillStyle = 'rgba(255,255,255,.035)'; ctx.fill();
     ctx.textAlign = 'left';
-
     lcdTexture.needsUpdate = true;
-    lcd.material.opacity = .28 + motion.lcdIntensity * .70;
   }
 
   function update() {
-    partMotion();
-    root.rotation.set(motion.productPitch, motion.productRoll, motion.productYaw);
+    const state = evaluateMotion(motion.filmTime);
+    Object.assign(motion, state);
+    partMotion(state);
+    root.rotation.set(0, 0, 0);
     root.updateMatrixWorld(true);
-    materialMotion();
-    cameraMotion();
+    materialMotion(state);
+    lightingMotion(state);
+    cameraMotion(state);
     root.updateMatrixWorld(true);
-    drawLcd();
+    drawLcd(state);
   }
 
   function render() {
@@ -227,24 +352,18 @@ export function createFilmEngine(model) {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight, false);
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.65));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   }
 
   function project(world) {
-    const p = world.clone().project(camera);
-    return [(p.x * .5 + .5) * innerWidth, (-p.y * .5 + .5) * innerHeight];
-  }
-
-  function roleWorld(role) {
-    const value = A340_PROFILE.roles[role];
-    return Array.isArray(value)
-      ? averageWorld(value)
-      : (parts.get(value)?.pivot.getWorldPosition(new THREE.Vector3()) || null);
+    const point = world.clone().project(camera);
+    return [(point.x * .5 + .5) * innerWidth, (-point.y * .5 + .5) * innerHeight];
   }
 
   function anchor(role, frac = [0, 0, 0]) {
-    const value = A340_PROFILE.roles[role];
-    const id = Array.isArray(value) ? value[0] : value;
+    const ids = roleIds(role);
+    if (ids.length > 1 && frac.every((value) => value === 0)) return roleWorld(role);
+    const id = roleId(role);
     const part = parts.get(id);
     if (!part) return null;
     const size = sizeOf(part.data.bboxMm);
@@ -253,18 +372,6 @@ export function createFilmEngine(model) {
       frac[1] * size.y * .5,
       frac[2] * size.z * .5,
     ));
-  }
-
-  function lcdQuad() {
-    if (!lcd) return null;
-    const [w, h] = A340_PROFILE.dimensions.displayVisible;
-    lcd.updateWorldMatrix(true, false);
-    return [
-      [-w / 2, h / 2],
-      [w / 2, h / 2],
-      [w / 2, -h / 2],
-      [-w / 2, -h / 2],
-    ].map(([x, y]) => project(lcd.localToWorld(new THREE.Vector3(x, y, 0))));
   }
 
   function productRect() {
@@ -276,13 +383,11 @@ export function createFilmEngine(model) {
       }
     }
     return {
-      left: Math.min(...points.map(([x]) => x)),
-      right: Math.max(...points.map(([x]) => x)),
-      top: Math.min(...points.map(([, y]) => y)),
-      bottom: Math.max(...points.map(([, y]) => y)),
+      left: Math.min(...points.map(([x]) => x)), right: Math.max(...points.map(([x]) => x)),
+      top: Math.min(...points.map(([, y]) => y)), bottom: Math.max(...points.map(([, y]) => y)),
     };
   }
 
-  drawLcd(true);
-  return { update, render, resize, project, roleWorld, anchor, lcdQuad, productRect };
+  drawLcd(evaluateMotion(0), true);
+  return { update, render, resize, project, roleWorld, anchor, productRect, lcd, beatAt };
 }

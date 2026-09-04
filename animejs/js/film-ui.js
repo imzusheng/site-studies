@@ -1,148 +1,161 @@
-import * as THREE from '/vendor/three.module.js';
-import { BEAT_RANGES, TOTAL_TIME, beatAt, motion } from './film.js';
+import { BEAT_RANGES, SHOTS, TOTAL_TIME, beatAt } from './film.js';
 import { A340_PROFILE } from './model-profile.js';
 
-const clamp = THREE.MathUtils.clamp;
-const smooth = (a, b, x) => {
-  if (a === b) return x >= b ? 1 : 0;
-  const t = clamp((x - a) / (b - a), 0, 1);
+const clamp = (value) => Math.max(0, Math.min(1, value));
+const smooth = (a, b, value) => {
+  const t = clamp((value - a) / Math.max(.0001, b - a));
   return t * t * (3 - 2 * t);
 };
 
+const CALLOUTS = Object.freeze({
+  xray: [
+    { role: 'activeGlass', label: '2.0 英寸显示屏', x: .07, y: .29, align: 'left' },
+    { role: 'mainboard', label: 'ESP32-S3 计算板', x: .07, y: .38, align: 'left' },
+    { role: 'inputBoards', label: '双三键输入矩阵', x: .07, y: .47, align: 'left' },
+    { role: 'lipo', label: '薄型锂电池', x: .07, y: .56, align: 'left' },
+  ],
+  'safe-open': [
+    { role: 'keycapFocus', label: '独立功能键帽', x: .71, y: .28, align: 'right' },
+    { role: 'upperShell', label: '一体上壳', x: .71, y: .38, align: 'right' },
+    { role: 'switches', label: 'CHOC V2 键轴', x: .71, y: .48, align: 'right' },
+  ],
+  explode: [
+    { role: 'upperShell', label: 'ENCLOSURE', x: .07, y: .28, align: 'left' },
+    { role: 'mainboard', label: 'COMPUTE · 137', x: .07, y: .38, align: 'left' },
+    { role: 'inputBoards', label: 'INPUT · 54', x: .07, y: .48, align: 'left' },
+    { role: 'powerBoard', label: 'POWER · 22', x: .07, y: .58, align: 'left' },
+  ],
+  board: [
+    { role: 'cpu', label: 'ESP32-S3R8', x: .07, y: .26, align: 'left' },
+    { role: 'flash', label: '16MB FLASH', x: .07, y: .35, align: 'left' },
+    { role: 'imu', label: 'QMI8658 IMU', x: .07, y: .44, align: 'left' },
+    { role: 'usb', label: 'USB-C', x: .07, y: .53, align: 'left' },
+  ],
+  'display-stack': [
+    { role: 'activeGlass', label: 'ACTIVE GLASS', x: .92, y: .30, align: 'right' },
+    { role: 'displayModule', label: 'BACKLIGHT / LCD', x: .92, y: .41, align: 'right' },
+    { role: 'mainboard', label: 'MAIN PCB', x: .92, y: .52, align: 'right' },
+  ],
+  cpu: [
+    { role: 'cpu', label: 'ESP32-S3R8 · 8MB PSRAM', x: .92, y: .34, align: 'right' },
+    { role: 'flash', label: '16MB FLASH', x: .92, y: .46, align: 'right' },
+  ],
+  wireless: [
+    { role: 'mainboard', label: 'WI-FI', x: .07, y: .34, align: 'left' },
+    { role: 'activeGlass', label: '状态同步回屏幕', x: .07, y: .46, align: 'left' },
+  ],
+  imu: [
+    { role: 'imu', label: 'QMI8658 IMU', x: .92, y: .39, align: 'right' },
+  ],
+  storage: [
+    { role: 'microsd', label: 'MICROSD', x: .07, y: .35, align: 'left' },
+    { role: 'usb', label: 'USB-C', x: .07, y: .47, align: 'left' },
+  ],
+  headers: [
+    { role: 'batteryHeader', label: 'BATTERY HEADER', x: .92, y: .44, align: 'right' },
+    { role: 'mainboard', label: 'GPIO HEADERS', x: .92, y: .55, align: 'right' },
+  ],
+  power: [
+    { role: 'lipo', label: '3.7V THIN LIPO', x: .07, y: .34, align: 'left' },
+    { role: 'powerBoard', label: 'PROTECTION / FUEL GAUGE', x: .07, y: .46, align: 'left' },
+  ],
+  'input-pcb': [
+    { role: 'inputBoards', label: '2 × 3-KEY MATRIX PCB', x: .92, y: .34, align: 'right' },
+    { role: 'switches', label: '6 × CHOC V2', x: .92, y: .46, align: 'right' },
+  ],
+  printable: [
+    { role: 'upperShell', label: 'UPPER SHELL', x: .07, y: .28, align: 'left' },
+    { role: 'screenBezel', label: 'SCREEN BEZEL', x: .07, y: .38, align: 'left' },
+    { role: 'knob', label: 'EC11 KNOB', x: .07, y: .48, align: 'left' },
+    { role: 'keycapFocus', label: '6 × KEYCAP', x: .07, y: .58, align: 'left' },
+  ],
+});
+
 export function createFilmUi(engine) {
-  const $ = (selector) => document.querySelector(selector);
-  const $$ = (selector) => [...document.querySelectorAll(selector)];
-  const leaders = $('#leader-lines');
-  const stagePath = $('#lcd-stage-path');
-  const stageDot = $('#stage-origin-dot');
-  const beatPanels = $$('.beat-panel');
-  const blueprintLabels = $$('.blueprint-label');
-  const featureCallouts = $$('.feature-callout');
-  const profile = $('#film-profile');
-  const shot = $('#film-shot');
-  const bar = $('#film-progress-bar');
-  const text = $('#film-progress-text');
+  const panels = [...document.querySelectorAll('.beat-panel')];
+  const calloutNodes = [...document.querySelectorAll('.part-callout')];
+  const profile = document.getElementById('film-profile');
+  const shotLabel = document.getElementById('film-shot');
+  const bar = document.getElementById('film-progress-bar');
+  const progressText = document.getElementById('film-progress-text');
 
   if (profile) profile.textContent = A340_PROFILE.label;
   document.documentElement.dataset.model = A340_PROFILE.id;
 
-  function stage() {
-    const quad = engine.lcdQuad();
-    if (!quad || !stagePath) return;
-
-    const cad = motion.cadMix;
-    const target = [
-      [innerWidth * THREE.MathUtils.lerp(.26, .10, cad), innerHeight * THREE.MathUtils.lerp(.12, .10, cad)],
-      [innerWidth * THREE.MathUtils.lerp(.90, .91, cad), innerHeight * THREE.MathUtils.lerp(.12, .10, cad)],
-      [innerWidth * THREE.MathUtils.lerp(.90, .91, cad), innerHeight * .90],
-      [innerWidth * THREE.MathUtils.lerp(.26, .10, cad), innerHeight * .90],
-    ];
-    const amount = clamp(motion.stageExpand, 0, 1);
-    const out = quad.map((point, index) => [
-      THREE.MathUtils.lerp(point[0], target[index][0], amount),
-      THREE.MathUtils.lerp(point[1], target[index][1], amount),
-    ]);
-
-    stagePath.setAttribute('d', `M ${out.map((point) => point.map((value) => value.toFixed(1)).join(' ')).join(' L ')} Z`);
-    stagePath.style.opacity = String(clamp(motion.stageStrength, 0, 1));
-
-    if (stageDot) {
-      const center = quad.reduce((acc, point) => [acc[0] + point[0] / 4, acc[1] + point[1] / 4], [0, 0]);
-      stageDot.setAttribute('cx', center[0].toFixed(1));
-      stageDot.setAttribute('cy', center[1].toFixed(1));
-      stageDot.style.opacity = String(.2 + clamp(motion.stageStrength, 0, 1) * .65);
-    }
-  }
-
-  function blueprintPaths(paths) {
-    const opacity = clamp(motion.blueprintLabels, 0, 1);
-    if (opacity < .01) {
-      blueprintLabels.forEach((element) => { element.style.opacity = '0'; });
-      return;
-    }
-
-    const hero = engine.productRect();
-    for (const element of blueprintLabels) {
-      element.style.opacity = String(opacity);
-      const world = engine.roleWorld(element.dataset.role);
-      if (!world) continue;
-
-      const [sx, sy] = engine.project(world);
-      const rect = element.getBoundingClientRect();
-      const left = element.dataset.side !== 'right';
-      const tx = left ? rect.right + 7 : rect.left - 7;
-      const ty = rect.top + rect.height / 2;
-      const clearanceX = left ? hero.left - 24 : hero.right + 24;
-      const exitX = left ? Math.min(sx - 28, clearanceX) : Math.max(sx + 28, clearanceX);
-
-      paths.push(`<path class="leader-path" d="M ${sx.toFixed(1)} ${sy.toFixed(1)} L ${exitX.toFixed(1)} ${sy.toFixed(1)} L ${clearanceX.toFixed(1)} ${ty.toFixed(1)} L ${tx.toFixed(1)} ${ty.toFixed(1)}"/>`);
-      paths.push(`<circle class="leader-dot" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="2.5"/>`);
-    }
-  }
-
-  function featurePaths(paths) {
-    for (const element of featureCallouts) {
-      const opacity = element.dataset.beat === 'input' ? motion.inputCallouts : motion.computeCallouts;
-      element.style.opacity = String(clamp(opacity, 0, 1));
-      if (opacity < .01) continue;
-
-      const frac = (element.dataset.frac || '0,0,0').split(',').map(Number);
-      const world = engine.anchor(element.dataset.role, frac);
-      if (!world) continue;
-
-      const [sx, sy] = engine.project(world);
-      const rect = element.getBoundingClientRect();
-      const left = element.dataset.side === 'left';
-      const tx = left ? rect.right + 7 : rect.left - 7;
-      const ty = rect.top + rect.height / 2;
-      const elbow = left ? Math.max(tx + 24, sx - 48) : Math.min(tx - 24, sx + 48);
-      paths.push(`<path class="callout-line" d="M ${sx.toFixed(1)} ${sy.toFixed(1)} L ${elbow.toFixed(1)} ${sy.toFixed(1)} L ${tx.toFixed(1)} ${ty.toFixed(1)}"/>`);
-      paths.push(`<circle class="leader-dot" cx="${sx.toFixed(1)}" cy="${sy.toFixed(1)}" r="2.4"/>`);
-    }
-  }
-
-  function overlays() {
-    stage();
-    if (!leaders) return;
-    const paths = [];
-    blueprintPaths(paths);
-    featurePaths(paths);
-    leaders.innerHTML = paths.join('');
-    leaders.style.opacity = paths.length ? '1' : '0';
-  }
-
-  // Copy transitions deliberately overlap editorial boundaries. The previous
-  // implementation faded the outgoing panel to zero before the next panel was
-  // allowed to enter, which made continuous 3D motion feel like a hard cut.
-  function copy(time) {
-    const overlap = 250;
+  const copy = (time) => {
     for (const [id, start, end] of BEAT_RANGES) {
-      const panel = beatPanels.find((element) => element.dataset.beat === id);
+      const panel = panels.find((element) => element.dataset.beat === id);
       if (!panel) continue;
-
-      const fadeIn = start === 0 ? 1 : smooth(start - overlap, start + 150, time);
-      const fadeOut = end === TOTAL_TIME ? 1 : 1 - smooth(end - 170, end + overlap, time);
-      const opacity = clamp(fadeIn * fadeOut, 0, 1);
-      const progress = clamp((time - start) / Math.max(1, end - start), 0, 1);
+      const progress = clamp((time - start) / Math.max(1, end - start));
+      const fadeIn = start === 0 ? 1 : smooth(.16, .32, progress);
+      const fadeOut = id === 'teaser' ? smooth(.38, .58, progress) : smooth(.78, .95, progress);
+      const opacity = fadeIn * (1 - fadeOut);
       panel.style.opacity = String(opacity);
-      panel.style.transform = `translate3d(0, ${(0.48 - progress) * 28}px, 0)`;
-      panel.style.pointerEvents = opacity > .48 ? 'auto' : 'none';
+      panel.style.transform = `translate3d(0, ${(0.48 - progress) * 24}px, 0)`;
+      panel.style.pointerEvents = opacity > .45 ? 'auto' : 'none';
     }
-  }
+  };
 
-  function hud(time) {
+  const callouts = (beat) => {
+    const items = CALLOUTS[beat.id] || [];
+    calloutNodes.forEach((node, index) => {
+      const item = items[index];
+      if (!item) {
+        node.style.opacity = '0';
+        return;
+      }
+      const anchor = engine.anchor(item.role);
+      if (!anchor) {
+        node.style.opacity = '0';
+        return;
+      }
+      const [anchorX, anchorY] = engine.project(anchor);
+      if (![anchorX, anchorY].every(Number.isFinite) || anchorX < -80 || anchorX > innerWidth + 80 || anchorY < -80 || anchorY > innerHeight + 80) {
+        node.style.opacity = '0';
+        return;
+      }
+
+      const labelX = innerWidth * item.x;
+      const labelY = innerHeight * item.y;
+      const lineStartX = labelX + (item.align === 'left' ? 136 : -136);
+      const lineStartY = labelY + 1;
+      const dx = anchorX - lineStartX;
+      const dy = anchorY - lineStartY;
+      const length = Math.hypot(dx, dy);
+      const angle = Math.atan2(dy, dx);
+      const enter = smooth(.32 + index * .035, .48 + index * .035, beat.progress);
+      const exit = 1 - smooth(.82, .96, beat.progress);
+      const draw = smooth(.34 + index * .035, .58 + index * .035, beat.progress) * exit;
+      const label = node.querySelector('.callout-label');
+      const line = node.querySelector('.callout-line');
+
+      node.style.opacity = String(enter * exit);
+      label.textContent = item.label;
+      label.style.left = `${labelX}px`;
+      label.style.top = `${labelY}px`;
+      label.style.textAlign = item.align;
+      label.style.transform = `translate(${item.align === 'right' ? '-100%' : '0'}, -50%)`;
+      label.style.opacity = String(smooth(.50 + index * .035, .64 + index * .035, beat.progress) * exit);
+      line.style.left = `${lineStartX}px`;
+      line.style.top = `${lineStartY}px`;
+      line.style.width = `${length}px`;
+      line.style.transform = `rotate(${angle}rad) scaleX(${draw})`;
+    });
+  };
+
+  const hud = (time) => {
     const beat = beatAt(time);
-    const index = BEAT_RANGES.findIndex(([id]) => id === beat.id) + 1;
-    const progress = clamp(time / TOTAL_TIME, 0, 1);
+    const progress = clamp(time / TOTAL_TIME);
     document.body.dataset.beat = beat.id;
-    if (shot) shot.textContent = `${String(index).padStart(2, '0')} / ${String(BEAT_RANGES.length).padStart(2, '0')} · ${beat.id.toUpperCase()}`;
+    document.body.dataset.look = beat.shot.look;
+    if (shotLabel) shotLabel.textContent = `${String(beat.index + 1).padStart(2, '0')} / ${SHOTS.length} · ${beat.shot.label}`;
     if (bar) bar.style.transform = `scaleX(${progress})`;
-    if (text) text.textContent = `${Math.round(progress * 100)}%`;
-  }
+    if (progressText) progressText.textContent = `${Math.round(progress * 100)}%`;
+    callouts(beat);
+  };
 
   return {
     update(time) {
-      overlays();
       copy(time);
       hud(time);
     },
