@@ -562,8 +562,8 @@ body.theme-light .feature-bullets { color: var(--text-muted-light); }
 /* ============ 特写分镜参数标注 ============ */
 .callouts { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
 .callout-set { display: none; }
-body[data-shot="keycaps"] .callout-set[data-for="keycaps"],
-body[data-shot="firmware"] .callout-set[data-for="firmware"] { display: block; }
+body[data-shot="input"] .callout-set[data-for="keycaps"],
+body[data-shot="compute"] .callout-set[data-for="firmware"] { display: block; }
 .callout {
   position: absolute; top: 0; left: 0;
   display: inline-flex; align-items: center;

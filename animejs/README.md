@@ -33,11 +33,24 @@
 
 ## 运行
 
+Anime.js v4 使用 npm 裸模块导入，必须通过 Vite 运行：
+
 ```bash
 cd site-studies/animejs
-python -m http.server 8416
-# 打开 http://localhost:8416/
+npm install
+npm run dev
+# 打开 http://localhost:5173/
 ```
+
+生产构建与预览：
+
+```bash
+npm run build
+npm run preview
+```
+
+`python -m http.server` 仅适用于旧版未使用 npm 裸导入的静态版本；不要用它打开当前 v31，否则浏览器会报：`Failed to resolve module specifier "animejs"`。
+
 
 ## 结构
 

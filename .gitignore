@@ -7,3 +7,6 @@ dottxt/[0-9]*-*.js
 # 系统杂项
 Thumbs.db
 .DS_Store
+
+animejs/node_modules/
+animejs/dist/

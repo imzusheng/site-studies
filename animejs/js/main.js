@@ -12,6 +12,8 @@
 
 import * as THREE from "/vendor/three.module.js";
 import { STLLoader } from "/vendor/STLLoader.js";
+import { createFilmTimeline, motion, shotAt } from "./film.js";
+import { computeAnchors } from "./film/anchors.js";
 
 (() => {
   "use strict";
@@ -106,6 +108,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     inkLineHot: new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 1.4, transparent: true, opacity: 0.9 }),
     // CAD 模式下的白轮廓（暗背景模式备用）
     darkLine: new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 1, transparent: true, opacity: 0.16 }),
+    screenGlow: new THREE.MeshBasicMaterial({ color: 0x52d8ff, transparent: true, opacity: 0.78, side: THREE.DoubleSide }),
   };
 
   // 焦点混搭两端色：暗面配角 ↔ 纸面主角（每零件实例逐帧插值，换镜不再闪切）
@@ -136,218 +139,12 @@ import { STLLoader } from "/vendor/STLLoader.js";
     return null;
   };
   const SHOTS = [
-    {
-      id: "hero", el: "#intro", theme: "pbr",
-      cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, -0.03],
-      scrub: { __default: [0, 0] },
-    },
-    {
-      // 展开幕：机位/姿态从 hero 末帧起步（边界连续），前半程滑入展开机位
-      id: "toolbox", el: "#toolbox", theme: "light",
-      cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, -0.03], spread: 1.15,
-      scrub: { __default: [0, 1] },
-      camFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        return {
-          cam: new THREE.Vector3(0, -332 + 2 * t, 244 + 56 * t),
-          look: new THREE.Vector3(0, 3 - 3 * t, 11 - 11 * t),
-        };
-      },
-      rotFn: (prog) => {
-        // 姿态全程漂移不驻留：旋转贯穿整幕（速度可慢但角速度不归零）
-        const t = Math.min(Math.max(prog, 0), 1);
-        return [0.22 * t, -0.3 * t, -0.03 - 0.39 * t];
-      },
-    },
-    {
-      // 直线推近：入镜 = toolbox 末帧机位、出镜 = keycaps 衔接位，
-      // 纯径向 dolly（方位角 0，无相机旋转）+ 偏航缓漂 → 幕内速度恒定
-      id: "ergonomics", el: '[data-feature="ergonomics"]', theme: "ink",
-      cam: [0, -330, 300], look: [0, 0, 0], rot: [0.22, -0.3, -0.42], spread: 1.15,
-      scrub: { __default: [1, 0] },
-      focus: { groups: ["enclosure"] },
-      camFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        const r = 330 - 151.1 * t;
-        return {
-          cam: new THREE.Vector3(0, -r, 300 - 138 * t),
-          look: new THREE.Vector3(0, 0, 6 * t),
-        };
-      },
-      rotFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        return [0.22 - 0.14 * t, -0.3 + 0.2 * t, -0.42 - 0.1 * t];
-      },
-    },
-    {
-      // 键帽幕：整机居中、keycap_2 为焦点；偏航/下降/推近全部缓入（斜率递增），
-      // 幕尾把「加速旋转 + 低头下探」的势头原速交给 knob 幕，观感连贯不突然。
-      id: "keycaps", el: '[data-feature="keycaps"]', theme: "ink",
-      cam: [0, -179, 162], look: [0, 0, 6], rot: [0.08, -0.1, -0.52],
-      scrub: { keycaps: [0, 1] },
-      focus: { parts: ["keycap_2"] },
-      carry: { groups: ["enclosure"] }, // 承接 ergo 的机身高亮，交棒给键帽，避免换镜瞬黑
-      rotFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        return [0.08, -0.1, -0.52 - 0.12 * t - 0.43 * t * t];
-      },
-      camFn: (prog, ctx) => {
-        const a2 = ctx.anchor("keycap_2", [0, 0, 1]);
-        const t = Math.min(Math.max(prog, 0), 1);
-        // 混合焦点（整机 65% + 键帽 35%）恒居画面中央；入镜 = ergo 末帧（零跳变）。
-        // θ 缓入跟随（20t+10t²，斜率 20→40），r 缓推（4t+5t²），z 加速下探（30t+36t²）。
-        const focus = new THREE.Vector3(0, 0, 6).lerp(a2, 0.35);
-        const th = DEG(-5 + 20 * t + 10 * t * t);
-        const r = 179 - 4 * t - 5 * t * t;
-        const z = 156 - 30 * t - 36 * t * t;
-        const orbitCam = focus.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z));
-        const startCam = new THREE.Vector3(0, -178.9, 162);
-        return {
-          cam: startCam.lerp(orbitCam, easeIn(Math.min(t / 0.22, 1))),
-          look: new THREE.Vector3(0, 0, 6).lerp(focus, easeIn(Math.min(t / 0.18, 1))),
-        };
-      },
-    },
-    {
-      // 旋钮幕：入镜 = keycaps 末帧且各轴斜率连续（无突然拉近/远离）；
-      // 旋转延续 keycaps 加速后的势头再缓收；相机下探穿过焦点水平线转为仰视。
-      id: "knob", el: '[data-feature="knob"]', theme: "ink",
-      cam: [-53, -53, 130], look: [43, 16, 56], rot: [0.08, -0.1, -1.15],
-      scrub: { "ec11-stack": [0, 0.95], keycaps: [1, 0] },
-      focus: { groups: ["ec11-stack"] },
-      carry: { parts: ["keycap_2"] }, // 键帽高亮交棒给 EC11 栈
-      screw: { ec11_knob_26x8p5: 0.5, ec11_mounting_nut: 1.1, ec11_mounting_washer: -0.8, ec11_encoder_body_15mm_d_shaft: 0.15 },
-      rotFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        // 起始角速度 = keycaps 末帧角速度（0.98），幕内缓收（-0.65 rad）。
-        return [0.08, -0.1, -1.07 - 0.98 * t + 0.33 * t * t];
-      },
-      camFn: (prog, ctx) => {
-        const aK = ctx.anchor("keycap_2", [0, 0, 1]);
-        const aE = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
-        const t = Math.min(Math.max(prog, 0), 1);
-        // 入镜 = keycaps 末帧（keyFocus + 球坐标 +25°/170/90，位置与斜率双连续）；
-        // θ 跟随先快后缓（40t-12.5t²），r 缓推渐止（14t-2t²），z 继续下探转仰视。
-        const keyFocus = new THREE.Vector3(0, 0, 6).lerp(aK, 0.35);
-        const entryCam = keyFocus.clone().add(new THREE.Vector3(
-          Math.sin(DEG(25)) * 170,
-          -Math.cos(DEG(25)) * 170,
-          90
-        ));
-        const knobFocus = new THREE.Vector3(0, 0, 6).lerp(aE, 0.72);
-        const th = DEG(25 + 40 * t - 12.5 * t * t);
-        const r = 170 - 14 * t + 2 * t * t;
-        const z = 90 - 102 * t + 20 * t * t;
-        const orbitCam = knobFocus.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z));
-        return {
-          cam: entryCam.lerp(orbitCam, easeIn(Math.min(t / 0.2, 1))),
-          look: keyFocus.lerp(knobFocus, easeIn(Math.min(t / 0.3, 1))),
-        };
-      },
-
-    },
-    {
-      // 屏幕幕：旋钮高亮交棒给屏幕/主板；模型偏航继续顺时针（-24°），
-      // 相机方位角 +15° 反向跟随，拉远转入屏幕主体特写。
-      id: "display", el: '[data-feature="display"]', theme: "ink",
-      cam: [-149, -4, 148], look: [0, -20, 22], rot: [0.08, -0.1, -1.3],
-      scrub: { screen_bezel: [0, 1], "ec11-stack": [0.95, 0] },
-      focus: { parts: ["screen_bezel", "waveshare_esp32_s3_lcd_2"] },
-      carry: { groups: ["ec11-stack"] },
-      camFn: (prog, ctx) => {
-        const aL = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
-        const aE = ctx.anchor("ec11_knob_26x8p5", [0, 0, 0]);
-        const t = Math.min(Math.max(prog, 0), 1);
-        // 入镜 = knob 末帧（knobFocus + 球坐标 +52.5°/158/8，位置与斜率双连续），
-        // 从仰视缓缓拉起拉远转入屏幕主体。
-        const knobFocus = new THREE.Vector3(0, 0, 6).lerp(aE, 0.72);
-        const knobEndCam = knobFocus.clone().add(new THREE.Vector3(
-          Math.sin(DEG(52.5)) * 158,
-          -Math.cos(DEG(52.5)) * 158,
-          8
-        ));
-        const th = DEG(52.5 + 15 * t);
-        const r = 158 + 20 * t + 30 * t * t;
-        const z = 8 + 92 * t * t;
-        const screenCam = aL.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z));
-        return {
-          cam: knobEndCam.lerp(screenCam, easeIn(Math.min(t / 0.18, 1))),
-          look: knobFocus.lerp(new THREE.Vector3(0, -20.06, 22.35).lerp(aL, easeIn(Math.min(t / 0.3, 1))), easeIn(Math.min(t / 0.3, 1))),
-        };
-      },
-      rotFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        return [0.08 * (1 - t), -0.1 * (1 - t), -1.72 - 0.32 * t - 0.28 * t * t];
-      },
-    },
-    {
-      // 主板先沿爆炸向量提出，再由局部 X 翻面把 PCB 背面朝向镜头；
-      // root Z 偏航继续顺时针全片单向旋转（-1.97 → -1.97-π），方位角链 +15° 跟随。
-      id: "firmware", el: '[data-feature="firmware"]', theme: "ink",
-      rot: [0, 0, -1.97],
-      scrub: { waveshare_esp32_s3_lcd_2: [0, 0.95], esp32_m3_retainer: [0, 0.7], screen_bezel: [1, 0] },
-      focus: { parts: ["waveshare_esp32_s3_lcd_2"] },
-      carry: { parts: ["screen_bezel"] }, // 屏幕高亮交棒给主板
-      camFn: (prog, ctx) => {
-        const a = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
-        const t = Math.min(Math.max(prog, 0), 1);
-        // 入镜 = display 末帧（a + 球坐标 +67.5°/208/100，零跳变）。
-        const th = DEG(67.5 + 15 * t);
-        const r = 208 - 58 * t;
-        const z = 100 + 90 * t;
-        return {
-          cam: a.clone().add(new THREE.Vector3(Math.sin(th) * r, -Math.cos(th) * r, z)),
-          // 注视点直接锁定 PCB 锚点（与 display 末帧同锚同姿态，边界零跳变），
-          // 爆炸提出与翻面全程保持主角居中。
-          look: a.clone(),
-        };
-      },
-      rotFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        // X 轴翻面先完成，随后保持背面朝镜头；Z 轴仍单调顺时针（-2.32 → -5.46）。
-        return [-DEG(78) * Math.min(t / 0.48, 1), 0, -2.32 - Math.PI * t];
-      },
-    },
-    {
-      // 总览幕：机位从板体拉回全景，散点爆炸铺开；爆炸扩散系数从 1 斜坡升到 1.9，
-      // 携带因子（[0.95,0]/[0.7,0]）在边界处不再被 spread 突变甩动；偏航继续顺时针。
-      id: "modules", el: "#modules", theme: "light",
-      cam: [0, -6, 175], look: [0, 0, 8], rot: [0, 0, -4.86], spreadFn: (prog) => 1 + 0.9 * Math.min(prog / 0.5, 1),
-      scrub: { __default: [0, 1], waveshare_esp32_s3_lcd_2: [0.95, 0], esp32_m3_retainer: [0.7, 0] },
-      camFn: (prog, ctx) => {
-        const a = ctx.anchor("waveshare_esp32_s3_lcd_2", [0, 0, 3]);
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        const entryCam = a.clone().add(new THREE.Vector3(Math.sin(DEG(82.5)) * 150, -Math.cos(DEG(82.5)) * 150, 190)); // = firmware 末帧
-        return {
-          cam: entryCam.lerp(new THREE.Vector3(45, -400, 380), t),
-          look: a.clone().lerp(new THREE.Vector3(0, 0, 0), t),
-        };
-      },
-      rotFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        // 保持 firmware 的 X 翻面结果，modules 仅继续沿 Z 轴顺时针展开（-5.46 → -6.2）。
-        return [-DEG(78), 0, -2.32 - Math.PI - 0.7384 * t];
-      },
-    },
-    {
-      // 规格幕：机位起步 = modules 末帧，爆炸因子携带衰减（1→0）边收拢边回到正面；
-      // 偏航 -6.20 → -6.32 ≡ -0.04（与 hero 同构，继续顺时针）
-      id: "specs", el: "#specs", theme: "pbr",
-      cam: [45, -400, 380], look: [0, 0, 0], rot: [0.22, -0.3, -6.2], spread: 1.9,
-      scrub: { __default: [1, 0] },
-      camFn: (prog) => {
-        const t = Math.min(Math.max(prog / 0.5, 0), 1);
-        return {
-          cam: new THREE.Vector3(45 - 45 * t, -400 + 48 * t, 380 - 122 * t),
-          look: new THREE.Vector3(0, 5 * t, 11 * t),
-        };
-      },
-      rotFn: (prog) => {
-        const t = Math.min(Math.max(prog, 0), 1);
-        // specs 承接 modules 的固定 X 翻面，再回到正面时保持滚动连续。
-        return [-DEG(78) * (1 - t), 0, -6.2 - 0.12 * t];
-      },
-    },
+    { id: "hero", el: "#intro", theme: "pbr", cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, -0.03], scrub: { __default: [0, 0] } },
+    { id: "blueprint", el: "#toolbox", theme: "light", cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, -0.03], spread: 1.05, scrub: { __default: [0, 0.85] }, camFn: (p) => ({ cam: new THREE.Vector3(0, -332 + 18*p, 244 + 42*p), look: new THREE.Vector3(0, 3 - 2*p, 11 - 4*p) }), rotFn: (p) => [0.08*p, -0.08*p, -0.03 - 0.16*p] },
+    { id: "input", el: '#features .feature-item[data-feature="keycaps"]:nth-of-type(2)', theme: "ink", cam: [0, -314, 205], look: [0, 0, 8], rot: [0.08, -0.08, -0.19], spread: 1.05, scrub: { keycaps: [0, 1] }, focus: { groups: ["keycaps", "switches"] }, carry: { groups: ["enclosure"] }, camFn: (p, ctx) => { const a = ctx.anchor("keycap_2", [0,0,2]); const t=Math.min(1,Math.max(0,p)); return { cam: new THREE.Vector3(0,-314+42*t,205-45*t), look: new THREE.Vector3(0,0,8).lerp(a,0.24*t) }; }, rotFn: (p) => [0.08, -0.08, -0.19 - 0.2*p] },
+    { id: "control", el: '#features .feature-item[data-feature="knob"]', theme: "ink", cam: [-90, -185, 150], look: [0, -10, 18], rot: [0.06, -0.08, -0.39], scrub: { "ec11-stack": [0, 0.85], keycaps: [1, 0] }, focus: { groups: ["ec11-stack"] }, carry: { groups: ["keycaps", "switches"] }, screw: { ec11_knob_26x8p5: 0.5, ec11_mounting_nut: 1.1 }, camFn: (p, ctx) => { const a=ctx.anchor("ec11_knob_26x8p5",[0,0,0]); const t=Math.min(1,Math.max(0,p)); return { cam:new THREE.Vector3(-90+55*t,-185+45*t,150-12*t), look:new THREE.Vector3(0,-10,18).lerp(a,0.5*t) }; }, rotFn: (p) => [0.06,-0.08,-0.39-0.35*p] },
+    { id: "compute", el: '#features .feature-item[data-feature="firmware"]', theme: "ink", cam: [30,-180,170], look: [0,8,15], rot: [0,0,-0.74], scrub: { waveshare_esp32_s3_lcd_2: [0,0.95], esp32_m3_retainer: [0,0.7], screen_bezel: [1,0] }, focus: { parts: ["waveshare_esp32_s3_lcd_2"] }, carry: { groups: ["ec11-stack"] }, camFn: (p,ctx) => { const a=ctx.anchor("waveshare_esp32_s3_lcd_2",[0,0,3]); const t=Math.min(1,Math.max(0,p)); return { cam:a.clone().add(new THREE.Vector3(35-20*t,-190+55*t,170+50*t)), look:a.clone() }; }, rotFn: (p) => [-1.0*Math.min(1,p/0.5),0,-0.74-0.7*p] },
+    { id: "final", el: "#modules", theme: "pbr", cam: [45,-300,300], look: [0,0,0], rot: [0,0,-1.44], spread: 1.05, scrub: { __default: [0.85, 0] }, camFn: (p) => ({ cam:new THREE.Vector3(45-45*p,-300+100*p,300-100*p), look:new THREE.Vector3(0,5*p,10*p) }), rotFn: (p) => [0.12*(1-p),-0.12*(1-p),-1.44+0.12*p] },
   ];
 
   // 分镜判定与进度共用同一原始信号（直接映射，无平滑）：
@@ -416,6 +213,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
     try {
       const resp = await fetch("ASSEMBLY_MANIFEST.json");
       const manifest = await resp.json();
+      window.__filmAnchors = computeAnchors(manifest);
 
       await Promise.all(manifest.parts.map((p) => new Promise((resolve) => {
         stlLoader.load(`stl/${p.filename}`, (geometry) => {
@@ -487,6 +285,7 @@ import { STLLoader } from "/vendor/STLLoader.js";
       box.getCenter(c);
       rootGroup.position.sub(c);
       state.loaded = true;
+      createLcdStage();
       window.__partsCount = partsMap.size;
     } catch (err) {
       console.error("Manifest load error:", err);
@@ -545,157 +344,61 @@ import { STLLoader } from "/vendor/STLLoader.js";
     return tmpV.clone().add(new THREE.Vector3(...off));
   }
 
-  function updateScrollAnimation(time, dt) {
-    const shotId = detectShot();
+  let lcdStage = null;
+  function createLcdStage() {
+    const part = partsMap.get("screen_bezel");
+    if (!part || lcdStage) return;
+    const geo = new THREE.Box3().setFromObject(part.mesh);
+    const size = new THREE.Vector3(); geo.getSize(size);
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(Math.max(12, size.x * 0.78), Math.max(12, size.y * 0.78)), materials.screenGlow);
+    plane.position.set(0, 0, size.z * 0.52 + 0.8);
+    part.pivot.add(plane);
+    lcdStage = plane;
+  }
+
+  function updateLcdStage() {
+    if (!lcdStage) return;
+    lcdStage.visible = state.shot === "hero" || state.shot === "control" || state.shot === "final";
+    materials.screenGlow.opacity = state.shot === "hero" ? 0.78 : state.shot === "final" ? 0.62 : 0.48;
+  }
+
+  function updateScrollAnimation() {
+    const film = shotAt(motion.filmProgress);
+    const shotId = film.id;
     const shotChanged = shotId !== state.shot;
     state.shot = shotId;
     const shot = shotById(shotId);
-
+    const prog = film.progress;
     if (shotChanged) {
       if (hudShot) hudShot.textContent = "SHOT: " + shotId.toUpperCase();
       document.body.dataset.shot = shotId;
     }
-    applyMode(shot.theme, shot); // 每帧幂等应用，覆盖异步加载的零件
-
-    // ---- 滚动擦洗爆炸因子（直接线性插值，无时间平滑）----
-    const prog = shotProgress(shot);
-    const targets = {};
+    applyMode(shot.theme, shot);
     const scrub = shot.scrub || { __default: [0, 0] };
-    for (const [key, range] of Object.entries(scrub)) {
-      targets[key] = range[0] + (range[1] - range[0]) * prog;
-    }
-    // 直接映射：所有已注册 scrub 键每帧都写入，未点名键归零。
-    SCRUB_KEYS.forEach((key) => {
-      state.f[key] = targets[key] ?? 0;
-    });
-
+    for (const key of SCRUB_KEYS) state.f[key] = scrub[key] ? scrub[key][0] + (scrub[key][1] - scrub[key][0]) * prog : 0;
     state.explosion = state.f.__default ?? 0;
-    // 扩散系数支持幕内斜坡（modules 1→1.9），携带因子在边界处不被 spread 突变甩动
-    state.spread = shot.spreadFn ? shot.spreadFn(prog) : (shot.spread ?? 1);
-
-    if (explosionFill && explosionPercent) {
-      const pct = Math.round(state.explosion * 100);
-      explosionFill.style.width = `${pct}%`;
-      explosionPercent.textContent = `${pct}%`;
-    }
-
-    // ---- Dev HUD 刷新（验收辅助）----
-    devFrames++;
-    window.__frames = devFrames;
-    if (devHud) {
-      const maxY = document.body.scrollHeight - window.innerHeight;
-      let nextFlip = null;
-      for (const s of SHOTS) {
-        const el = document.querySelector(s.el);
-        if (!el) continue;
-        const flip = el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.5;
-        if (flip > window.scrollY - 1) { nextFlip = Math.round(flip); break; }
-      }
-      devHud.textContent =
-        `Y ${Math.round(window.scrollY)} / ${Math.max(maxY, 0)} · F ${devFrames}\n` +
-        `${shotId.toUpperCase()} ${Math.round(prog * 100)}%` +
-        (nextFlip !== null ? ` · NEXT FLIP ${nextFlip}` : "");
-    }
-
-    // ---- 焦点交棒：本幕主角在前 15% 升入高亮并保持到幕尾；上一幕主角（carry）
-    // 在前 28% 淡出。边界处前一幕 rise 终值 1 = 后一幕 carry 初值 1，
-    // 高亮交接连续，不再出现「换镜瞬间全黑」。 ----
-    if (state.mode === "ink") {
-      const rise = Math.min(prog / 0.15, 1);
-      const carryFade = 1 - Math.min(prog / 0.28, 1);
-      partsMap.forEach((p) => {
-        if (!p.inkMat) return;
-        const m = Math.max((p.focusTarget || 0) * rise, (p.carryTarget || 0) * carryFade);
-        p.focusMix = m;
-        p.inkMat.color.lerpColors(INK_SOLID_COLOR, PAPER_SOLID_COLOR, m);
-        p.inkLineMat.color.lerpColors(INK_LINE_COLOR, PAPER_LINE_COLOR, m);
-        p.inkLineMat.opacity = 0.42 + 0.53 * m;
-        p.microMat.opacity = 0.13 * (1 - m);
-      });
-    }
-
-    // ---- 零件位移（scrub 点名零件 id 或组名，其余跟随 __default）----
-    // 盒体下沉与键帽抬升都挂在 keycaps 因子上：随滚动线性起落、跨镜携带衰减
+    state.spread = shot.spread ?? 1;
+    if (explosionFill && explosionPercent) { explosionFill.style.width = `${Math.round(state.explosion * 100)}%`; explosionPercent.textContent = `${Math.round(state.explosion * 100)}%`; }
+    if (shotId === "blueprint") updateLeaderLines(shotId); else svgOverlay.style.opacity = "0";
+    updatePartTags(shotId === "blueprint" && state.explosion > 0.35);
     const sinkE = Math.min(state.f.keycaps ?? 0, 1);
-    const scrubKeyOf = (part) =>
-      scrub[part.id] !== undefined ? part.id
-      : scrub[part.group] !== undefined ? part.group
-      : "__default";
     partsMap.forEach((part) => {
-      const visible = state.activeSubsystems[subsystemOf(part.group)];
-      part.pivot.visible = visible;
-      if (!visible) return;
-      const key = scrubKeyOf(part);
-      if (HERO_STACK_LIFT[part.id] !== undefined && (state.f.keycaps ?? 0) > 0) {
-        // 主角堆叠：键帽垂直升起 / 配对轴体下拉（与扇形展开区分）
-        part.pivot.position.copy(part.home);
-        part.pivot.position.z += HERO_STACK_LIFT[part.id] * (state.f.keycaps ?? 0);
-      } else if (part.fanDir && key !== "__default") {
-        // 键帽扇形升起（自原位向外 + 上）
-        part.pivot.position.copy(part.home).addScaledVector(part.fanDir, (state.f[key] ?? 0) * 26);
-      } else if (key !== "__default") {
-        part.pivot.position.copy(part.home).addScaledVector(part.explodeVec, (state.f[key] ?? 0) * state.spread);
-      } else {
-        // 层序保护：命中 EXPLODE_LIFT 的零件按 +Z 行程上浮（领先上盖），其余沿用 explodeVec
-        const lift = explodeLiftFor(part.id);
-        part.pivot.position.copy(part.home);
-        if (lift !== null) part.pivot.position.z += lift * state.f.__default * state.spread;
-        else part.pivot.position.addScaledVector(part.explodeVec, state.f.__default * state.spread);
-        if (sinkE > 0) part.pivot.position.z -= 12 * sinkE; // 盒体微微下沉，保持在画面内作背景
-      }
+      part.pivot.visible = state.activeSubsystems[subsystemOf(part.group)];
+      if (!part.pivot.visible) return;
+      const key = scrub[part.id] !== undefined ? part.id : scrub[part.group] !== undefined ? part.group : "__default";
+      part.pivot.position.copy(part.home);
+      if (part.id.startsWith("keycap") && state.f.keycaps > 0) part.pivot.position.z += (part.id === "keycap_2" ? motion.keycapLift : motion.keycapLift * 0.4);
+      else if (key !== "__default") part.pivot.position.addScaledVector(part.explodeVec, (state.f[key] ?? 0) * state.spread);
+      else part.pivot.position.addScaledVector(part.explodeVec, state.f.__default * state.spread);
+      if (sinkE > 0 && part.group?.includes("enclosure")) part.pivot.position.z -= 12 * sinkE;
     });
-
-    // ---- 自转复位（换镜瞬间），再按分镜施加 ----
-    if (shotChanged) {
-      for (const part of partsMap.values()) part.mesh.rotation.set(0, 0, 0);
-    }
-    // ---- EC11 旋出：绕自身轴边转边退 ----
-    if (shot.screw) {
-      for (const [id, turns] of Object.entries(shot.screw)) {
-        const part = partsMap.get(id);
-        if (part) part.mesh.rotation.z = turns * Math.PI * (state.f[scrubKeyOf(part)] ?? 0);
-      }
-    }
-    // ---- 本帧 root 姿态先应用，再从真实 world anchor 计算相机/注视点 ----
     const rotGoal = shot.rotFn ? shot.rotFn(prog) : shot.rot;
-    state.rot.set(rotGoal[0], rotGoal[1], rotGoal[2]);
-    rootGroup.rotation.copy(state.rot);
-    rootGroup.updateMatrixWorld(true);
-
-    const camCtx = {
-      anchor: (id, off) => anchorWorld(id, off) || new THREE.Vector3(),
-    };
-    if (shot.camFn && state.loaded) {
-      // 分镜编排相机：滚动进度驱动机位路径（各幕边界位姿严格连续）
-      const pose = shot.camFn(prog, camCtx);
-      camTarget.copy(pose.cam);
-      lookTarget.copy(pose.look);
-    } else if (shot.camAnchor && state.loaded) {
-      const p = anchorWorld(shot.camAnchor.partId, shot.camAnchor.off);
-      if (p) camTarget.copy(p);
-      const l = anchorWorld(shot.lookAnchor.partId, shot.lookAnchor.off);
-      if (l) lookTarget.copy(l);
-    } else {
-      camTarget.set(...(shot.cam || [0, -250, 195]));
-      lookTarget.set(...(shot.look || [0, 5, 10]));
-    }
-
-    // 直接映射：相机/注视点本帧即达目标，无追赶滞后
-    state.cam.copy(camTarget);
-    state.look.copy(lookTarget);
-    camOffset.copy(state.cam).sub(state.look);
-    camera.position.copy(state.look).add(camOffset);
-    camera.lookAt(state.look);
-
-    // ---- Toolbox 引线 / Modules 漂浮标签 ----
-    const inToolbox = shotId === "toolbox" && state.explosion > 0.15;
-    if (inToolbox) {
-      updateLeaderLines(shotId);
-      svgOverlay.style.opacity = "1";
-    } else {
-      svgOverlay.style.opacity = "0";
-    }
-    updatePartTags(shotId === "modules" && state.explosion > 0.35);
+    state.rot.set(rotGoal[0], rotGoal[1], rotGoal[2]); rootGroup.rotation.copy(state.rot); rootGroup.updateMatrixWorld(true);
+    const camCtx = { anchor: (id, off) => anchorWorld(id, off) || new THREE.Vector3() };
+    const pose = shot.camFn && state.loaded ? shot.camFn(prog, camCtx) : { cam: new THREE.Vector3(...shot.cam), look: new THREE.Vector3(...shot.look) };
+    camTarget.copy(pose.cam); lookTarget.copy(pose.look); state.cam.copy(camTarget); state.look.copy(lookTarget);
+    camera.position.copy(state.look).add(camOffset.copy(state.cam).sub(state.look)); camera.fov = motion.cameraFov; camera.updateProjectionMatrix(); camera.lookAt(state.look);
+    updateLcdStage();
   }
 
   function subsystemOf(group) {
@@ -934,16 +637,17 @@ import { STLLoader } from "/vendor/STLLoader.js";
     svgOverlay.innerHTML = svgLines;
   }
 
-  function animate(time) {
+  const filmRoot = document.querySelector(".content-scroll") || document.body;
+  let filmTimeline;
+  filmTimeline = createFilmTimeline(filmRoot, () => { motion.filmProgress = filmTimeline.currentTime || 0; });
+  window.__filmTimeline = filmTimeline;
+
+  function animate() {
     requestAnimationFrame(animate);
-    const t = time * 0.001;
-    if (!lastFrameT) lastFrameT = t;
-    const dt = Math.min(t - lastFrameT, 0.05);
-    lastFrameT = t;
-    updateScrollAnimation(t, dt);
+    updateScrollAnimation();
     updateCallouts(state.shot);
     renderer.render(scene, camera);
   }
-  let lastFrameT = 0;
+  requestAnimationFrame(animate);
   requestAnimationFrame(animate);
 })();

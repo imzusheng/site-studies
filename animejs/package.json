@@ -1,0 +1,23 @@
+{
+  "name": "animejs",
+  "version": "1.0.0",
+  "description": "Luma Remote v31 cinematic product film",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "validate": "node ../film-check.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "animejs": "^4.5.0"
+  },
+  "devDependencies": {
+    "vite": "^8.2.2"
+  },
+  "type": "module"
+}

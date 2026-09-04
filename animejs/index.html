@@ -97,12 +97,12 @@
 
       <!-- 特写分镜参数标注（坐标由 JS 逐帧投影，按 body[data-shot] 显隐） -->
       <div id="callouts" class="callouts" aria-hidden="true">
-        <div class="callout-set" data-for="keycaps">
+        <div class="callout-set" data-for="input">
           <span class="callout" data-part="keycap_2" data-off="0,0,4.2">FLAT-TOP · 16.2 × 15.2 mm</span>
           <span class="callout" data-part="keycap_2" data-off="8.6,0,1.4">TAPER · 17 × 16 → 3.2 H</span>
           <span class="callout" data-part="keycap_2" data-off="0,0,-4.8">STEM BOSS · Ø9.6 / DROP 1.35</span>
         </div>
-        <div class="callout-set" data-for="firmware">
+        <div class="callout-set" data-for="compute">
           <span class="callout" data-part="waveshare_esp32_s3_lcd_2" data-off="-0.58,-0.62,1" data-frac>PCB ANTENNA · Wi-Fi + BLE 5</span>
           <span class="callout" data-part="waveshare_esp32_s3_lcd_2" data-off="0.08,0.1,1" data-frac>ESP32-S3 · LX7 ×2 @240MHz</span>
           <span class="callout" data-part="waveshare_esp32_s3_lcd_2" data-off="0.5,-0.42,1" data-frac>8MB PSRAM · 16MB FLASH</span>
@@ -198,9 +198,9 @@
 
       <!-- ============ SECTION 3: FEATURES SHOWCASE ============ -->
       <section id="features" class="section-container section-dark">
-        <div class="feature-item" data-feature="ergonomics">
+        <div class="feature-item" data-feature="keycaps">
           <div class="feature-text">
-            <span class="eyebrow color-orange">01 · ERGONOMICS</span>
+            <span class="eyebrow color-orange">01 · INPUT SYSTEM</span>
             <h3>8.325° Low-Deck Slope</h3>
             <p>Front height reduced to 12.2mm. Hand rest comfort optimized for long desktop sessions without wrist fatigue.</p>
           </div>
@@ -237,7 +237,7 @@
 
         <div class="feature-item" data-feature="knob">
           <div class="feature-text">
-            <span class="eyebrow color-green">03 · ROTARY ENCODER</span>
+            <span class="eyebrow color-green">02 · CONTROL + DISPLAY</span>
             <h3>Balanced Ø26 × 8.5mm Dial</h3>
             <p>Precision knurled perimeter paired with EC11 D-shaft encoder for smooth stepped volume and parameter scrubbing.</p>
           </div>
@@ -255,7 +255,7 @@
 
         <div class="feature-item" data-feature="display">
           <div class="feature-text">
-            <span class="eyebrow color-cyan">04 · DISPLAY CORE</span>
+            <span class="eyebrow color-cyan">02 · CONTROL + DISPLAY</span>
             <h3>2.0" IPS ST7789V Display</h3>
             <p>240×320 sharp RGB IPS matrix directly driven by ESP32-S3 SPI peripheral at 40MHz DMA for fluid LVGL UI rendering.</p>
             <ul class="feature-bullets">
@@ -275,7 +275,7 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
 
         <div class="feature-item" data-feature="firmware">
           <div class="feature-text">
-            <span class="eyebrow color-purple">05 · COMPUTE CORE</span>
+            <span class="eyebrow color-purple">03 · COMPUTE CORE</span>
             <h3>ESP32-S3, Up Close</h3>
             <p>The board lifts out of the deck for service in two M3 turns. Dual-core LX7 at 240 MHz, 8MB PSRAM, Wi-Fi and BLE 5 — flashed over USB-C or OTA.</p>
             <ul class="feature-bullets">
@@ -436,7 +436,7 @@ lv_display_set_buffers(disp, buf1, buf2, ...);</code></pre>
 
     <!-- 主入口脚本 -->
     <script type="module">
-      import("./js/main.js?v=30").catch((err) => {
+      import("./js/main.js?v=31").catch((err) => {
         console.error("Module load failure:", err);
         const div = document.createElement("div");
         div.id = "debug-err";
