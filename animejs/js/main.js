@@ -117,82 +117,7 @@ import { computeAnchors } from "./film/anchors.js";
   const INK_LINE_COLOR = new THREE.Color(0xf6f4f2);
   const PAPER_LINE_COLOR = new THREE.Color(0x1c1a17);
 
-  /* =========================================================
-     4. 分镜脚本（Shot State Machine）
-     scrub: [起, 止] —— 分镜内滚动进度线性插值爆炸因子；
-     相邻分镜区间以端点值衔接（前一幕终值 = 后一幕初值），跨界无跳变
-     focus: INK 模式下白亮描线的焦点零件/组
-     ========================================================= */
-  // 键帽幕主角：键帽稍微抬起（露出轴芯间隙即可），盒体仅微微下沉保持在画面内，
-  // 键轴与盒体共同入镜构成堆叠特写
-  const HERO_STACK_LIFT = { keycap_2: 26 };
-  // toolbox/modules 爆炸层序（f=1、未乘 spread 前的 +Z 行程；上盖 explodeVec z=33.6）：
-  // 内部件沿用自身 explodeVec 会被上盖追越穿透——全部上浮且依次领先：
-  // 键轴(44) < 键帽(60)；EC11 栈自下而上 body(40)→washer(43)→nut(46)→knob(50)
-  const EXPLODE_LIFT = [
-    ["choc_v2", 44], ["keycap", 60],
-    ["ec11_encoder", 40], ["ec11_mounting_washer", 43],
-    ["ec11_mounting_nut", 46], ["ec11_knob", 50],
-  ];
-  const explodeLiftFor = (id) => {
-    for (const [prefix, lift] of EXPLODE_LIFT) if (id.startsWith(prefix)) return lift;
-    return null;
-  };
-  const SHOTS = [
-    { id: "hero", el: "#intro", theme: "pbr", cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, -0.03], scrub: { __default: [0, 0] } },
-    { id: "blueprint", el: "#toolbox", theme: "light", cam: [0, -332, 244], look: [0, 3, 11], rot: [0, 0, -0.03], spread: 1.05, scrub: { __default: [0, 0.85] }, camFn: (p) => ({ cam: new THREE.Vector3(0, -332 + 18*p, 244 + 42*p), look: new THREE.Vector3(0, 3 - 2*p, 11 - 4*p) }), rotFn: (p) => [0.08*p, -0.08*p, -0.03 - 0.16*p] },
-    { id: "input", el: '#features .feature-item[data-feature="keycaps"]:nth-of-type(2)', theme: "ink", cam: [0, -314, 205], look: [0, 0, 8], rot: [0.08, -0.08, -0.19], spread: 1.05, scrub: { keycaps: [0, 1] }, focus: { groups: ["keycaps", "switches"] }, carry: { groups: ["enclosure"] }, camFn: (p, ctx) => { const a = ctx.anchor("keycap_2", [0,0,2]); const t=Math.min(1,Math.max(0,p)); return { cam: new THREE.Vector3(0,-314+42*t,205-45*t), look: new THREE.Vector3(0,0,8).lerp(a,0.24*t) }; }, rotFn: (p) => [0.08, -0.08, -0.19 - 0.2*p] },
-    { id: "control", el: '#features .feature-item[data-feature="knob"]', theme: "ink", cam: [-90, -185, 150], look: [0, -10, 18], rot: [0.06, -0.08, -0.39], scrub: { "ec11-stack": [0, 0.85], keycaps: [1, 0] }, focus: { groups: ["ec11-stack"] }, carry: { groups: ["keycaps", "switches"] }, screw: { ec11_knob_26x8p5: 0.5, ec11_mounting_nut: 1.1 }, camFn: (p, ctx) => { const a=ctx.anchor("ec11_knob_26x8p5",[0,0,0]); const t=Math.min(1,Math.max(0,p)); return { cam:new THREE.Vector3(-90+55*t,-185+45*t,150-12*t), look:new THREE.Vector3(0,-10,18).lerp(a,0.5*t) }; }, rotFn: (p) => [0.06,-0.08,-0.39-0.35*p] },
-    { id: "compute", el: '#features .feature-item[data-feature="firmware"]', theme: "ink", cam: [30,-180,170], look: [0,8,15], rot: [0,0,-0.74], scrub: { waveshare_esp32_s3_lcd_2: [0,0.95], esp32_m3_retainer: [0,0.7], screen_bezel: [1,0] }, focus: { parts: ["waveshare_esp32_s3_lcd_2"] }, carry: { groups: ["ec11-stack"] }, camFn: (p,ctx) => { const a=ctx.anchor("waveshare_esp32_s3_lcd_2",[0,0,3]); const t=Math.min(1,Math.max(0,p)); return { cam:a.clone().add(new THREE.Vector3(35-20*t,-190+55*t,170+50*t)), look:a.clone() }; }, rotFn: (p) => [-1.0*Math.min(1,p/0.5),0,-0.74-0.7*p] },
-    { id: "final", el: "#modules", theme: "pbr", cam: [45,-300,300], look: [0,0,0], rot: [0,0,-1.44], spread: 1.05, scrub: { __default: [0.85, 0] }, camFn: (p) => ({ cam:new THREE.Vector3(45-45*p,-300+100*p,300-100*p), look:new THREE.Vector3(0,5*p,10*p) }), rotFn: (p) => [0.12*(1-p),-0.12*(1-p),-1.44+0.12*p] },
-  ];
-
-  // 分镜判定与进度共用同一原始信号（直接映射，无平滑）：
-  // 位置 = f(滚动位置) —— 鼠标停即画面停，速度即滚动速度
-  function sectionTop(el) {
-    return el.getBoundingClientRect().top;
-  }
-
-  // 换镜滞回锁：前进即刻生效；回退必须真正滚回边界外一段余量才允许，
-  // 边界处的毫米级抖动（或浏览器滚动锚定回拨）不再造成「闪回上一分镜」
-  let shotIdx = 0;
-  function detectShot() {
-    const center = window.innerHeight * 0.5;
-    const margin = window.innerHeight * 0.12;
-    let last = 0;
-    for (let i = 0; i < SHOTS.length; i++) {
-      const el = document.querySelector(SHOTS[i].el);
-      if (!el) continue;
-      if (sectionTop(el) <= center) last = i;
-    }
-    if (last > shotIdx) {
-      shotIdx = last;
-    } else if (last < shotIdx) {
-      const el = document.querySelector(SHOTS[shotIdx].el);
-      if (el && sectionTop(el) > center + margin) shotIdx = last;
-    }
-    return SHOTS[shotIdx].id;
-  }
-
-  function shotProgress(shot) {
-    const el = document.querySelector(shot.el);
-    if (!el) return 0;
-    const vh = window.innerHeight;
-    const adjTop = sectionTop(el);
-    // 进度跨度 = 整段区块高度 → prog 恰好在下一幕换镜点到达 1：
-    // 动作无缝延续到换镜瞬间，幕尾没有冻结死区（速度全程一致）
-    const span = Math.max(el.getBoundingClientRect().height, 1);
-    // 进度零点 = 换镜判定点（区块顶边过中线）→ 跨界瞬间 prog=0，
-    // camFn(0) = 上一幕末帧 → 机位严格连续
-    return Math.min(1, Math.max(0, (vh * 0.5 - adjTop) / span));
-  }
-
-  const shotById = (id) => SHOTS.find((s) => s.id === id) || SHOTS[0];
-
-  // 所有分镜的 scrub 键在启动时注册，保证 state.f 与本帧 targets 使用同一数据源。
-  const SCRUB_KEYS = new Set(["__default"]);
-  SHOTS.forEach((shot) => Object.keys(shot.scrub || {}).forEach((key) => SCRUB_KEYS.add(key)));
-  SCRUB_KEYS.forEach((key) => { state.f[key] = 0; });
+  const shotById = (id) => ({ id, theme: ({ hero: "pbr", blueprint: "light", input: "ink", control: "ink", compute: "ink", final: "pbr" })[id] || "pbr" });
 
   /* =========================================================
      5. 零件加载 + 包围盒中心锚点 + LCD 平面
@@ -285,6 +210,7 @@ import { computeAnchors } from "./film/anchors.js";
       box.getCenter(c);
       rootGroup.position.sub(c);
       state.loaded = true;
+      baseRadius = Math.max(220, box.getSize(new THREE.Vector3()).length() * 1.9);
       createLcdStage();
       window.__partsCount = partsMap.size;
     } catch (err) {
@@ -328,78 +254,86 @@ import { computeAnchors } from "./film/anchors.js";
   }
 
   /* =========================================================
-     7. 每帧更新（直接映射：位姿 = 滚动位置的纯函数，无时间平滑）
-     鼠标停即画面停、速度即滚动速度、掉帧不积累滞后
+     7. Anime.js motion state → deterministic Three.js pose
      ========================================================= */
   const camTarget = new THREE.Vector3();
   const lookTarget = new THREE.Vector3();
   const tmpV = new THREE.Vector3();
   const camOffset = new THREE.Vector3();
-  const Z_AXIS = new THREE.Vector3(0, 0, 1);
-
-  function anchorWorld(partId, off) {
-    const part = partsMap.get(partId);
-    if (!part) return null;
+  const semanticWorld = (name) => {
+    const ids = { display_center: "screen_bezel", keyboard_region: "keycap_2", knob_axis: "ec11_knob_26x8p5", mainboard_plane: "waveshare_esp32_s3_lcd_2" };
+    const part = partsMap.get(ids[name]);
+    if (!part) return new THREE.Vector3();
     part.anchor.getWorldPosition(tmpV);
-    return tmpV.clone().add(new THREE.Vector3(...off));
-  }
-
+    return tmpV.clone();
+  };
+  const resolveFocus = () => {
+    const weights = [["display_center", motion.focusDisplay], ["keyboard_region", motion.focusKeyboard], ["knob_axis", motion.focusKnob], ["mainboard_plane", motion.focusMainboard]];
+    const sum = weights.reduce((n, [, w]) => n + w, 0) || 1;
+    const target = new THREE.Vector3();
+    weights.forEach(([name, weight]) => target.addScaledVector(semanticWorld(name), weight / sum));
+    return target;
+  };
   let lcdStage = null;
+  const stageSvg = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  stageSvg.setAttribute("class", "lcd-stage-path");
+  svgOverlay.appendChild(stageSvg);
   function createLcdStage() {
     const part = partsMap.get("screen_bezel");
     if (!part || lcdStage) return;
-    const geo = new THREE.Box3().setFromObject(part.mesh);
-    const size = new THREE.Vector3(); geo.getSize(size);
-    const plane = new THREE.Mesh(new THREE.PlaneGeometry(Math.max(12, size.x * 0.78), Math.max(12, size.y * 0.78)), materials.screenGlow);
-    plane.position.set(0, 0, size.z * 0.52 + 0.8);
-    part.pivot.add(plane);
-    lcdStage = plane;
+    const box = new THREE.Box3().setFromObject(part.mesh), size = box.getSize(new THREE.Vector3());
+    lcdStage = new THREE.Mesh(new THREE.PlaneGeometry(Math.max(12, size.x * .78), Math.max(12, size.y * .78)), materials.screenGlow);
+    lcdStage.position.set(0, 0, size.z * .52 + .8); part.pivot.add(lcdStage);
   }
-
+  const project = (v) => { const p = v.clone().project(camera); return [(p.x * .5 + .5) * innerWidth, (-p.y * .5 + .5) * innerHeight]; };
   function updateLcdStage() {
-    if (!lcdStage) return;
-    lcdStage.visible = state.shot === "hero" || state.shot === "control" || state.shot === "final";
-    materials.screenGlow.opacity = state.shot === "hero" ? 0.78 : state.shot === "final" ? 0.62 : 0.48;
+    const part = partsMap.get("screen_bezel");
+    if (!part) return;
+    const box = new THREE.Box3().setFromObject(part.mesh), c = box.getCenter(new THREE.Vector3()), z = box.max.z + 1;
+    const w = (box.max.x - box.min.x) * .78, h = (box.max.y - box.min.y) * .78;
+    const quad = [project(new THREE.Vector3(c.x-w/2,c.y+h/2,z)), project(new THREE.Vector3(c.x+w/2,c.y+h/2,z)), project(new THREE.Vector3(c.x+w/2,c.y-h/2,z)), project(new THREE.Vector3(c.x-w/2,c.y-h/2,z))];
+    const pad = 40 * motion.stageExpand;
+    const cx = innerWidth / 2, cy = innerHeight / 2;
+    const stage = quad.map(([x,y]) => [x + (cx-x)*motion.stageExpand + (x < cx ? -pad : pad), y + (cy-y)*motion.stageExpand + (y < cy ? -pad : pad)]);
+    stageSvg.setAttribute("d", `M ${stage.map(([x,y]) => `${x} ${y}`).join(" L ")} Z`);
+    stageSvg.style.opacity = String(.35 + motion.stageExpand * .5);
+    if (lcdStage) { lcdStage.visible = motion.lcdIntensity > .05; materials.screenGlow.opacity = .15 + motion.lcdIntensity * .65; }
   }
-
   function updateScrollAnimation() {
-    const film = shotAt(motion.filmProgress);
-    const shotId = film.id;
-    const shotChanged = shotId !== state.shot;
-    state.shot = shotId;
-    const shot = shotById(shotId);
-    const prog = film.progress;
-    if (shotChanged) {
-      if (hudShot) hudShot.textContent = "SHOT: " + shotId.toUpperCase();
-      document.body.dataset.shot = shotId;
-    }
-    applyMode(shot.theme, shot);
-    const scrub = shot.scrub || { __default: [0, 0] };
-    for (const key of SCRUB_KEYS) state.f[key] = scrub[key] ? scrub[key][0] + (scrub[key][1] - scrub[key][0]) * prog : 0;
-    state.explosion = state.f.__default ?? 0;
-    state.spread = shot.spread ?? 1;
-    if (explosionFill && explosionPercent) { explosionFill.style.width = `${Math.round(state.explosion * 100)}%`; explosionPercent.textContent = `${Math.round(state.explosion * 100)}%`; }
-    if (shotId === "blueprint") updateLeaderLines(shotId); else svgOverlay.style.opacity = "0";
-    updatePartTags(shotId === "blueprint" && state.explosion > 0.35);
-    const sinkE = Math.min(state.f.keycaps ?? 0, 1);
+    const film = shotAt(motionTime());
+    state.shot = film.id;
+    if (hudShot) hudShot.textContent = "SHOT: " + film.id.toUpperCase();
+    document.body.dataset.shot = film.id;
+    const visual = shotById(film.id);
+    applyMode(visual.theme, visual);
+    state.rot.set(motion.productPitch, motion.productRoll, motion.productYaw);
+    rootGroup.rotation.copy(state.rot);
+    rootGroup.updateMatrixWorld(true);
+    const focus = resolveFocus();
+    const radius = Math.max(150, baseRadius * motion.cameraRadiusScale);
+    const az = THREE.MathUtils.degToRad(motion.cameraAzimuth), el = THREE.MathUtils.degToRad(motion.cameraElevation);
+    camTarget.copy(focus).add(new THREE.Vector3(Math.sin(az)*radius*Math.cos(el), -Math.cos(az)*radius*Math.cos(el), radius*Math.sin(el)));
+    lookTarget.copy(focus);
+    camera.position.copy(camTarget); camera.lookAt(lookTarget); camera.fov = motion.cameraFov; camera.updateProjectionMatrix();
+    state.cam.copy(camTarget); state.look.copy(lookTarget);
+    const explode = motion.blueprintSeparation;
+    if (explosionFill && explosionPercent) { explosionFill.style.width = `${Math.round(explode*100)}%`; explosionPercent.textContent = `${Math.round(explode*100)}%`; }
     partsMap.forEach((part) => {
       part.pivot.visible = state.activeSubsystems[subsystemOf(part.group)];
       if (!part.pivot.visible) return;
-      const key = scrub[part.id] !== undefined ? part.id : scrub[part.group] !== undefined ? part.group : "__default";
       part.pivot.position.copy(part.home);
-      if (part.id.startsWith("keycap") && state.f.keycaps > 0) part.pivot.position.z += (part.id === "keycap_2" ? motion.keycapLift : motion.keycapLift * 0.4);
-      else if (key !== "__default") part.pivot.position.addScaledVector(part.explodeVec, (state.f[key] ?? 0) * state.spread);
-      else part.pivot.position.addScaledVector(part.explodeVec, state.f.__default * state.spread);
-      if (sinkE > 0 && part.group?.includes("enclosure")) part.pivot.position.z -= 12 * sinkE;
+      const isInput = part.id.startsWith("keycap") || part.group?.includes("choc");
+      const isCompute = part.group?.includes("esp32") || part.group?.includes("board") || part.id.includes("waveshare");
+      const amount = isInput ? motion.keycapLift / 40 : isCompute ? motion.boardLift * 0.7 : explode;
+      part.pivot.position.addScaledVector(part.explodeVec, amount);
+      if (part.id.startsWith("keycap") && motion.keycapSequence) part.pivot.position.z += (part.id === "keycap_2" ? motion.keycapLift : motion.keycapLift * .35);
+      if (part.id.includes("ec11") && motion.knobRotation) part.mesh.rotation.z = motion.knobRotation;
+      if (isCompute && motion.boardFlip) part.mesh.rotation.x = -Math.PI * .9 * motion.boardFlip;
     });
-    const rotGoal = shot.rotFn ? shot.rotFn(prog) : shot.rot;
-    state.rot.set(rotGoal[0], rotGoal[1], rotGoal[2]); rootGroup.rotation.copy(state.rot); rootGroup.updateMatrixWorld(true);
-    const camCtx = { anchor: (id, off) => anchorWorld(id, off) || new THREE.Vector3() };
-    const pose = shot.camFn && state.loaded ? shot.camFn(prog, camCtx) : { cam: new THREE.Vector3(...shot.cam), look: new THREE.Vector3(...shot.look) };
-    camTarget.copy(pose.cam); lookTarget.copy(pose.look); state.cam.copy(camTarget); state.look.copy(lookTarget);
-    camera.position.copy(state.look).add(camOffset.copy(state.cam).sub(state.look)); camera.fov = motion.cameraFov; camera.updateProjectionMatrix(); camera.lookAt(state.look);
     updateLcdStage();
   }
+  let baseRadius = 330;
+  const motionTime = () => motion.filmTime || window.__filmTimeline?.currentTime || 0;
 
   function subsystemOf(group) {
     const g = group || "";
@@ -639,7 +573,7 @@ import { computeAnchors } from "./film/anchors.js";
 
   const filmRoot = document.querySelector(".content-scroll") || document.body;
   let filmTimeline;
-  filmTimeline = createFilmTimeline(filmRoot, () => { motion.filmProgress = filmTimeline.currentTime || 0; });
+  filmTimeline = createFilmTimeline(filmRoot, () => { motion.filmTime = filmTimeline.currentTime || 0; });
   window.__filmTimeline = filmTimeline;
 
   function animate() {
