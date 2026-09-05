@@ -6,6 +6,7 @@ import { sizeOf } from './model-scene.js';
 const DEG = THREE.MathUtils.degToRad;
 const FACE_ANGLE = DEG(A340_PROFILE.dimensions.faceAngleDeg);
 const FACE_NORMAL = new THREE.Vector3(0, -Math.sin(FACE_ANGLE), Math.cos(FACE_ANGLE)).normalize();
+const FACE_TANGENT = new THREE.Vector3(0, Math.cos(FACE_ANGLE), Math.sin(FACE_ANGLE)).normalize();
 const WORLD_UP = new THREE.Vector3(0, 0, 1);
 export const CONTROL_LIFT_MM = 8;
 
@@ -25,14 +26,19 @@ export function createFilmEngine(model) {
   const lineDark = new THREE.Color(0x202628);
   const inkLight = new THREE.Color(0xf2f4f3);
   const inkDark = new THREE.Color(0x121719);
-  const keyWarm = new THREE.Color(0xffd7b7);
-  const keyNeutral = new THREE.Color(0xf4f2ed);
-  const rimWarm = new THREE.Color(0xffcfaa);
+  const keyWarm = new THREE.Color(0xffddc6);
+  const keyNeutral = new THREE.Color(0xf2f1ed);
+  const rimWarm = new THREE.Color(0xffd7bd);
   const rimCool = new THREE.Color(0x9dbed2);
+  const edgeWarm = new THREE.Color(0xffe3d1);
+  const edgeCool = new THREE.Color(0xa9c2cd);
   const computeAxis = new THREE.Vector3(1, 0, 0);
   const computeRotation = new THREE.Quaternion();
   const focusColor = new THREE.Color(0xdce6e9);
-  const heroKeyColor = new THREE.Color(0x343638);
+  const heroKeyColor = new THREE.Color(0x3a3834);
+  const heroShellColor = new THREE.Color(0x403b36);
+  const heroKnobColor = new THREE.Color(0x272624);
+  const heroBezelColor = new THREE.Color(0x070809);
   const controlLift = FACE_NORMAL.clone().multiplyScalar(CONTROL_LIFT_MM);
   let lcdSignature = '';
 
@@ -105,9 +111,33 @@ export function createFilmEngine(model) {
       if (roleMatch(part, 'keycaps') || roleMatch(part, 'knob')) {
         const offset = controlLift.clone().multiplyScalar(state.controlLift);
         if (state.controlFan > 0) offset.lerp(part.explode, state.controlFan);
+        if (roleMatch(part, 'keycaps')) offset.addScaledVector(FACE_NORMAL, .35 * state.teaserMix);
+        if (roleMatch(part, 'knob')) {
+          part.pivot.scale.set(
+            1 + .34 * state.teaserMix,
+            1 + .08 * state.teaserMix,
+            1 + .10 * state.teaserMix,
+          );
+          offset.addScaledVector(FACE_NORMAL, .62 * state.teaserMix);
+          offset.addScaledVector(FACE_TANGENT, -3.2 * state.teaserMix);
+        }
         part.pivot.position.add(offset);
       } else {
         part.pivot.position.addScaledVector(part.explode, explodeFactor(part, state));
+      }
+
+      if (part.id === roleId('screenBezel')) {
+        part.pivot.scale.set(
+          1 + .10 * state.teaserMix,
+          1 + .15 * state.teaserMix,
+          1 + .15 * state.teaserMix,
+        );
+      } else if ([roleId('activeGlass'), roleId('displayModule')].includes(part.id)) {
+        part.pivot.scale.set(
+          1 + .16 * state.teaserMix,
+          1 + .28 * state.teaserMix,
+          1 + .28 * state.teaserMix,
+        );
       }
 
       if (part.detailExplode.lengthSq() > 0) {
@@ -149,7 +179,10 @@ export function createFilmEngine(model) {
       });
     }
 
-    lcd.position.copy(lcdHomePosition);
+    lcd.position.copy(lcdHomePosition)
+      .addScaledVector(FACE_NORMAL, .48 * state.teaserMix)
+      .addScaledVector(FACE_TANGENT, .45 * state.teaserMix);
+    lcd.scale.set(1 + .08 * state.teaserMix, 1 + .03 * state.teaserMix, 1);
   }
 
   const focusStrength = (part, focus) => {
@@ -185,9 +218,17 @@ export function createFilmEngine(model) {
       let opacity = part.baseOpacity * focus * surface;
       if (roleMatch(part, 'upperShell')) opacity *= state.shellOpacity;
       if (roleMatch(part, 'screenBezel') && state.shellOpacity < 1) opacity *= .65;
+      const assembledInterior = ['input', 'compute', 'power', 'fasteners'].includes(part.group)
+        && ![roleId('activeGlass'), roleId('displayModule')].includes(part.id);
+      if (assembledInterior || roleMatch(part, 'encoder')) {
+        opacity *= Math.max(state.technicalMix, state.controlLift, state.shellOpen, state.switchOpen, state.internalOpen);
+      }
 
       tmpColor.copy(part.baseColor);
-      if (roleMatch(part, 'keycaps')) tmpColor.lerp(heroKeyColor, state.teaserMix * .72);
+      if (roleMatch(part, 'keycaps')) tmpColor.lerp(heroKeyColor, state.teaserMix * .68);
+      if (roleMatch(part, 'upperShell')) tmpColor.lerp(heroShellColor, state.teaserMix * .45);
+      if (roleMatch(part, 'knob')) tmpColor.lerp(heroKnobColor, state.teaserMix * .42);
+      if (roleMatch(part, 'screenBezel')) tmpColor.lerp(heroBezelColor, state.teaserMix * .38);
       if (focus > .9) tmpColor.lerp(focusColor, state.technicalMix * .13);
       part.mesh.material.color.copy(tmpColor);
       part.mesh.material.roughness = part.baseRoughness;
@@ -196,6 +237,9 @@ export function createFilmEngine(model) {
       part.mesh.material.opacity = opacity;
       part.mesh.material.depthWrite = opacity > .50 && state.lineArt < .48;
       part.mesh.visible = opacity > .001;
+      part.mesh.castShadow = opacity > .50 && state.lineArt < .35;
+      part.mesh.receiveShadow = opacity > .50 && state.lineArt < .35;
+      if (part.mesh.material.userData.heroMix) part.mesh.material.userData.heroMix.value = state.teaserMix;
 
       if ('emissiveIntensity' in part.mesh.material) {
         part.mesh.material.emissiveIntensity = roleMatch(part, 'switches') ? state.keyGlow * .20 : 0;
@@ -211,7 +255,7 @@ export function createFilmEngine(model) {
     const glowFocus = focusBlend(state, ['product', 'input', 'control']);
     const lcdFocus = focusBlend(state, ['product', 'input', 'control', 'display']);
     glowMaterial.opacity = (.006 + state.keyGlow * .044) * glowFocus;
-    lcd.material.opacity = (.36 + state.lcdIntensity * .54) * lcdFocus;
+    lcd.material.opacity = (.28 + state.lcdIntensity * .48 + state.teaserMix * .44) * lcdFocus;
     lcd.visible = lcdFocus > .002;
   }
 
@@ -219,14 +263,15 @@ export function createFilmEngine(model) {
     const teaser = state.teaserMix;
     const technical = state.technicalMix;
     const daylight = state.uiLightMix;
-    lights.ambient.intensity = THREE.MathUtils.lerp(.52, .22, teaser) + technical * .18 + daylight * .34;
-    lights.key.intensity = THREE.MathUtils.lerp(.82, .22, teaser) + technical * .42 + daylight * .30;
-    lights.rim.intensity = THREE.MathUtils.lerp(1.55, 2.64, teaser) - technical * .22 + daylight * .20;
-    lights.edge.intensity = THREE.MathUtils.lerp(.72, 1.40, teaser) + technical * .30 + daylight * .18;
+    lights.ambient.intensity = THREE.MathUtils.lerp(.46, .14, teaser) + technical * .18 + daylight * .34;
+    lights.key.intensity = THREE.MathUtils.lerp(.76, .48, teaser) + technical * .42 + daylight * .30;
+    lights.rim.intensity = THREE.MathUtils.lerp(1.42, 1.7, teaser) - technical * .22 + daylight * .20;
+    lights.edge.intensity = THREE.MathUtils.lerp(.66, 1.2, teaser) + technical * .30 + daylight * .18;
     lights.screen.intensity = (.035 + state.lcdIntensity * .16) * focusBlend(state, ['product', 'input', 'control', 'display']);
     lights.key.color.copy(keyNeutral).lerp(keyWarm, teaser);
     lights.rim.color.copy(rimCool).lerp(rimWarm, teaser);
-    renderer.toneMappingExposure = .82 - teaser * .09 + technical * .08 + daylight * .08;
+    lights.edge.color.copy(edgeCool).lerp(edgeWarm, teaser);
+    renderer.toneMappingExposure = .84 + teaser * .06 + technical * .08 + daylight * .08;
     backgroundColor.setHex(state.backgroundFrom).lerp(backgroundTarget.setHex(state.backgroundTo), state.backgroundMix);
     renderer.setClearColor(backgroundColor, 1);
 
@@ -236,15 +281,18 @@ export function createFilmEngine(model) {
     const bgRgb = [backgroundColor.r, backgroundColor.g, backgroundColor.b].map((value) => Math.round(value * 255)).join(' ');
     style.setProperty('--ink-rgb', rgb);
     style.setProperty('--stage-rgb', bgRgb);
-    style.setProperty('--vignette', String(THREE.MathUtils.lerp(teaser ? .70 : technical ? .48 : .62, .18, daylight)));
-    style.setProperty('--stage-luma', String(.80 + technical * .10 + daylight * .10 - teaser * .06));
+    style.setProperty('--vignette', String(THREE.MathUtils.lerp(teaser ? .52 : technical ? .46 : .58, .18, daylight)));
+    style.setProperty('--stage-luma', String(.88 + technical * .08 + daylight * .06 + teaser * .05));
   }
 
   function cameraMotion(state) {
     const from = targetFor(state.cameraTargetFrom) || root.localToWorld(new THREE.Vector3());
     const to = targetFor(state.cameraTarget) || root.localToWorld(new THREE.Vector3());
     const target = from.clone().lerp(to, state.cameraTargetMix);
-    const radius = baseRadius * state.cameraRadiusScale;
+    const referenceAspect = 1672 / 941;
+    const portraitFit = THREE.MathUtils.clamp(referenceAspect / camera.aspect, 1, 3.25);
+    const heroCover = THREE.MathUtils.lerp(1, portraitFit, state.teaserMix);
+    const radius = baseRadius * state.cameraRadiusScale * heroCover;
     const az = DEG(state.cameraAzimuth);
     const el = DEG(state.cameraElevation);
     camera.position.copy(target).add(new THREE.Vector3(
@@ -275,7 +323,11 @@ export function createFilmEngine(model) {
     const h = lcdCanvas.height;
     const tech = state.shotIndex >= 10 && state.shotIndex <= 21;
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = '#080a0c';
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(5, 5, w - 10, h - 10, 30);
+    ctx.clip();
+    ctx.fillStyle = '#101316';
     ctx.fillRect(0, 0, w, h);
 
     const text = (value, x, y, size, weight = 600, color = '#eef2f2', align = 'left') => {
@@ -294,39 +346,98 @@ export function createFilmEngine(model) {
       text(label, x + width / 2, y + 24, 17, 650, active ? '#101214' : '#a9b0b3', 'center');
     };
 
-    text(tech ? 'SYSTEM / CORE' : 'LUMA HOME', 28, 50, 20, 700, '#8d979b');
-    text(tech ? 'ESP32-S3' : '客厅', 28, 112, tech ? 48 : 42, 730);
-    text(tech ? 'LOCAL CONTROL · ONLINE' : '5 个设备 · 已同步', 30, 145, 18, 550, tech ? '#74bd92' : '#8c9599');
-    line(170);
+    const drawHeroUi = () => {
+      ctx.strokeStyle = 'rgba(214,218,216,.12)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(55, 68); ctx.lineTo(w - 55, 68); ctx.stroke();
+      for (let index = 0; index <= 32; index += 1) {
+        const x = 55 + index * ((w - 110) / 32);
+        const height = index % 8 === 0 ? 13 : index % 4 === 0 ? 9 : 5;
+        ctx.beginPath(); ctx.moveTo(x, 68 - height); ctx.lineTo(x, 68 + height); ctx.stroke();
+      }
+      const markerX = 55 + 18 * ((w - 110) / 32);
+      ctx.fillStyle = '#c55e36';
+      ctx.fillRect(markerX - 2, 49, 4, 38);
 
-    if (tech) {
-      const rows = [['CPU', 'ESP32-S3R8'], ['MEMORY', '8MB PSRAM · 16MB Flash'], ['LINK', 'Wi-Fi / MQTT'], ['STATE', 'Home Assistant ready']];
-      rows.forEach(([name, value], index) => {
-        const y = 213 + index * 55;
-        text(name, 30, y, 17, 650, '#7b8589');
-        text(value, w - 30, y, 20, 620, '#d8dddf', 'right');
-        if (index < rows.length - 1) line(y + 20, 'rgba(255,255,255,.045)');
+      const rows = [
+        [124, 82, .90],
+        [180, 122, .44],
+        [236, 74, .34],
+        [292, 106, .40],
+        [348, 64, .26],
+      ];
+      rows.forEach(([y, width, alpha], index) => {
+        ctx.beginPath(); ctx.roundRect(48, y - 22, w - 96, 43, 9);
+        ctx.fillStyle = index === 2 ? 'rgba(255,255,255,.070)' : 'rgba(255,255,255,.025)';
+        ctx.fill();
+        ctx.beginPath(); ctx.roundRect(62, y - 5, width, 10, 5);
+        ctx.fillStyle = `rgba(202,139,72,${Math.min(1, alpha * 1.16)})`;
+        ctx.fill();
+        ctx.beginPath(); ctx.moveTo(74 + width, y); ctx.lineTo(w - 126, y);
+        ctx.strokeStyle = 'rgba(202,139,72,.10)'; ctx.lineWidth = 1; ctx.stroke();
+        for (let dot = 0; dot < 2; dot += 1) {
+          ctx.beginPath(); ctx.arc(w - 88 + dot * 28, y, 6, 0, Math.PI * 2);
+          ctx.strokeStyle = dot === 0 && index === 0 ? 'rgba(197,132,67,.72)' : 'rgba(214,218,216,.16)';
+          ctx.stroke();
+        }
       });
-      pill(28, 406, 138, 'ONLINE', true);
-      pill(178, 406, 160, 'LOCAL');
-      pill(350, 406, 260, '231 OBJECTS');
-    } else {
-      const rows = [['主灯', '72%', true], ['色温', '3800 K', true], ['餐桌吊灯', '关闭', false], ['床头灯', '18%', true]];
-      rows.forEach(([name, value, active], index) => {
-        const y = 214 + index * 53;
-        ctx.beginPath(); ctx.arc(36, y - 6, 5, 0, Math.PI * 2); ctx.fillStyle = active ? '#79c996' : '#4a5053'; ctx.fill();
-        text(name, 55, y, 23, 620, '#d8dddf');
-        text(value, w - 30, y, 22, 650, active ? '#eef2f2' : '#778084', 'right');
-        if (index < rows.length - 1) line(y + 18, 'rgba(255,255,255,.045)');
-      });
-      pill(28, 414, 176, '日常', true);
-      pill(216, 414, 176, '氛围');
-      pill(404, 414, 206, '全部关闭');
+      ctx.beginPath(); ctx.moveTo(48, 388); ctx.lineTo(w - 48, 388); ctx.strokeStyle = 'rgba(197,132,67,.22)'; ctx.stroke();
+    };
+
+    const drawStandardUi = () => {
+      text(tech ? 'SYSTEM / CORE' : 'LUMA HOME', 28, 50, 20, 700, '#8d979b');
+      text(tech ? 'ESP32-S3' : '客厅', 28, 112, tech ? 48 : 42, 730);
+      text(tech ? 'LOCAL CONTROL · ONLINE' : '5 个设备 · 已同步', 30, 145, 18, 550, tech ? '#74bd92' : '#8c9599');
+      line(170);
+
+      if (tech) {
+        const rows = [['CPU', 'ESP32-S3R8'], ['MEMORY', '8MB PSRAM · 16MB Flash'], ['LINK', 'Wi-Fi / MQTT'], ['STATE', 'Home Assistant ready']];
+        rows.forEach(([name, value], index) => {
+          const y = 213 + index * 55;
+          text(name, 30, y, 17, 650, '#7b8589');
+          text(value, w - 30, y, 20, 620, '#d8dddf', 'right');
+          if (index < rows.length - 1) line(y + 20, 'rgba(255,255,255,.045)');
+        });
+        pill(28, 406, 138, 'ONLINE', true);
+        pill(178, 406, 160, 'LOCAL');
+        pill(350, 406, 260, '231 OBJECTS');
+      } else {
+        const rows = [['主灯', '72%', true], ['色温', '3800 K', true], ['餐桌吊灯', '关闭', false], ['床头灯', '18%', true]];
+        rows.forEach(([name, value, active], index) => {
+          const y = 214 + index * 53;
+          ctx.beginPath(); ctx.arc(36, y - 6, 5, 0, Math.PI * 2); ctx.fillStyle = active ? '#79c996' : '#4a5053'; ctx.fill();
+          text(name, 55, y, 23, 620, '#d8dddf');
+          text(value, w - 30, y, 22, 650, active ? '#eef2f2' : '#778084', 'right');
+          if (index < rows.length - 1) line(y + 18, 'rgba(255,255,255,.045)');
+        });
+        pill(28, 414, 176, '日常', true);
+        pill(216, 414, 176, '氛围');
+        pill(404, 414, 206, '全部关闭');
+      }
+    };
+
+    if (state.teaserMix > .001) {
+      ctx.save();
+      ctx.globalAlpha = state.teaserMix;
+      drawHeroUi();
+      ctx.restore();
+    }
+    if (state.teaserMix < .999) {
+      ctx.save();
+      ctx.globalAlpha = 1 - state.teaserMix;
+      drawStandardUi();
+      ctx.restore();
     }
 
-    ctx.beginPath();
-    ctx.moveTo(w * .70, 0); ctx.lineTo(w, 0); ctx.lineTo(w, h * .36); ctx.lineTo(w * .92, h * .23);
-    ctx.closePath(); ctx.fillStyle = 'rgba(255,255,255,.035)'; ctx.fill();
+    const reflection = ctx.createLinearGradient(w * .48, 0, w, h * .44);
+    reflection.addColorStop(0, 'rgba(255,255,255,0)');
+    reflection.addColorStop(.48, 'rgba(255,255,255,.018)');
+    reflection.addColorStop(.62, 'rgba(255,255,255,.075)');
+    reflection.addColorStop(.78, 'rgba(255,255,255,.010)');
+    reflection.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = reflection;
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
     ctx.textAlign = 'left';
     lcdTexture.needsUpdate = true;
   }
