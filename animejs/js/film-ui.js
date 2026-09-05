@@ -1,163 +1,144 @@
-import { BEAT_RANGES, SHOTS, TOTAL_TIME, beatAt } from './film.js';
-import { A340_PROFILE } from './model-profile.js';
+import { BEAT_RANGES, SHOTS, TOTAL_TIME, beatAt, evaluateMotion } from './film.js';
 
 const clamp = (value) => Math.max(0, Math.min(1, value));
 const smooth = (a, b, value) => {
   const t = clamp((value - a) / Math.max(.0001, b - a));
   return t * t * (3 - 2 * t);
 };
-
-const CALLOUTS = Object.freeze({
-  xray: [
-    { role: 'activeGlass', label: '2.0 英寸显示屏', x: .07, y: .29, align: 'left' },
-    { role: 'mainboard', label: 'ESP32-S3 计算板', x: .07, y: .38, align: 'left' },
-    { role: 'inputBoards', label: '双三键输入矩阵', x: .07, y: .47, align: 'left' },
-    { role: 'lipo', label: '薄型锂电池', x: .07, y: .56, align: 'left' },
-  ],
-  'safe-open': [
-    { role: 'keycapFocus', label: '独立功能键帽', x: .71, y: .28, align: 'right' },
-    { role: 'upperShell', label: '一体上壳', x: .71, y: .38, align: 'right' },
-    { role: 'switches', label: 'CHOC V2 键轴', x: .71, y: .48, align: 'right' },
-  ],
-  explode: [
-    { role: 'upperShell', label: 'ENCLOSURE', x: .07, y: .28, align: 'left' },
-    { role: 'mainboard', label: 'COMPUTE · 137', x: .07, y: .38, align: 'left' },
-    { role: 'inputBoards', label: 'INPUT · 54', x: .07, y: .48, align: 'left' },
-    { role: 'powerBoard', label: 'POWER · 22', x: .07, y: .58, align: 'left' },
-  ],
-  board: [
-    { role: 'cpu', label: 'ESP32-S3R8', x: .07, y: .26, align: 'left' },
-    { role: 'flash', label: '16MB FLASH', x: .07, y: .35, align: 'left' },
-    { role: 'imu', label: 'QMI8658 IMU', x: .07, y: .44, align: 'left' },
-    { role: 'usb', label: 'USB-C', x: .07, y: .53, align: 'left' },
-  ],
-  'display-stack': [
-    { role: 'activeGlass', label: 'ACTIVE GLASS', x: .92, y: .30, align: 'right' },
-    { role: 'displayModule', label: 'BACKLIGHT / LCD', x: .92, y: .41, align: 'right' },
-    { role: 'mainboard', label: 'MAIN PCB', x: .92, y: .52, align: 'right' },
-  ],
-  cpu: [
-    { role: 'cpu', label: 'ESP32-S3R8 · 8MB PSRAM', x: .92, y: .34, align: 'right' },
-    { role: 'flash', label: '16MB FLASH', x: .92, y: .46, align: 'right' },
-  ],
-  wireless: [
-    { role: 'mainboard', label: 'WI-FI', x: .07, y: .34, align: 'left' },
-    { role: 'activeGlass', label: '状态同步回屏幕', x: .07, y: .46, align: 'left' },
-  ],
-  imu: [
-    { role: 'imu', label: 'QMI8658 IMU', x: .92, y: .39, align: 'right' },
-  ],
-  storage: [
-    { role: 'microsd', label: 'MICROSD', x: .07, y: .35, align: 'left' },
-    { role: 'usb', label: 'USB-C', x: .07, y: .47, align: 'left' },
-  ],
-  headers: [
-    { role: 'batteryHeader', label: 'BATTERY HEADER', x: .92, y: .44, align: 'right' },
-    { role: 'mainboard', label: 'GPIO HEADERS', x: .92, y: .55, align: 'right' },
-  ],
-  power: [
-    { role: 'lipo', label: '3.7V THIN LIPO', x: .07, y: .34, align: 'left' },
-    { role: 'powerBoard', label: 'PROTECTION / FUEL GAUGE', x: .07, y: .46, align: 'left' },
-  ],
-  'input-pcb': [
-    { role: 'inputBoards', label: '2 × 3-KEY MATRIX PCB', x: .92, y: .34, align: 'right' },
-    { role: 'switches', label: '6 × CHOC V2', x: .92, y: .46, align: 'right' },
-  ],
-  printable: [
-    { role: 'upperShell', label: 'UPPER SHELL', x: .07, y: .28, align: 'left' },
-    { role: 'screenBezel', label: 'SCREEN BEZEL', x: .07, y: .38, align: 'left' },
-    { role: 'knob', label: 'EC11 KNOB', x: .07, y: .48, align: 'left' },
-    { role: 'keycapFocus', label: '6 × KEYCAP', x: .07, y: .58, align: 'left' },
-  ],
-});
+const CALLOUTS = {
+  recovery: [{ role: 'mainboard', label: 'FIRMWARE RECOVERY' }],
+  fit: [{ role: 'keycapFocus', label: 'KEYCAP CLEARANCE' }],
+  shoulder: [{ role: 'upperShell', label: 'SWITCH SUPPORT' }],
+  closure: [{ role: 'serviceCover', label: 'M3 FASTENING' }],
+  unfold: [{ role: 'upperShell', label: 'ENCLOSURE' }, { role: 'mainboard', label: 'COMPUTE CORE' }],
+  core: [{ role: 'mainboard', label: 'ESP32-S3-LCD-2' }],
+  display: [{ role: 'activeGlass', label: '2.0 INCH LCD' }],
+  optics: [{ role: 'displayModule', label: 'DISPLAY MODULE' }],
+  mechanism: [{ role: 'switchStems', label: 'MECHANICAL INPUT' }],
+  dial: [{ role: 'knob', label: 'ROTATE + PRESS' }],
+  encoder: [{ role: 'encoder', label: 'EC11 ENCODER' }],
+  stability: [{ role: 'retainer', label: 'BOARD RETAINER' }],
+  service: [{ role: 'serviceCover', label: 'SERVICE COVER' }],
+  controls: [{ role: 'keycapFocus', label: 'SIX TACTILE KEYS' }, { role: 'knob', label: 'ROTATE + PRESS' }],
+  craft: [{ role: 'upperShell', label: 'PRINTABLE ENCLOSURE' }, { role: 'screenBezel', label: 'MODULAR STRUCTURE' }],
+};
 
 export function createFilmUi(engine) {
   const panels = [...document.querySelectorAll('.beat-panel')];
   const calloutNodes = [...document.querySelectorAll('.part-callout')];
-  const profile = document.getElementById('film-profile');
   const shotLabel = document.getElementById('film-shot');
   const bar = document.getElementById('film-progress-bar');
   const progressText = document.getElementById('film-progress-text');
+  const sequence = document.getElementById('film-sequence');
+  const signal = document.getElementById('signal-diagram');
+  const signalPulse = signal?.querySelector('.signal-pulse');
+  const links = [...document.querySelectorAll('a[href^="#"]')];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let activeId = '';
+  const chapters = document.getElementById('chapter-select');
+  const jumpTo = (id) => {
+    const range = BEAT_RANGES.find(([key]) => key === id);
+    if (!range) return;
+    const time = range[1] === 0 || range[0] === 'surface' ? range[1] : range[1] + (range[2] - range[1]) * .5;
+    window.scrollTo({ top: time / TOTAL_TIME * (sequence.offsetHeight - innerHeight), behavior: reduced.matches ? 'instant' : 'smooth' });
+  };
+  chapters?.addEventListener('change', () => jumpTo(chapters.value));
 
-  if (profile) profile.textContent = A340_PROFILE.label;
-  document.documentElement.dataset.model = A340_PROFILE.id;
+  const layout = () => {
+    for (const [id, start, end] of BEAT_RANGES) {
+      const section = document.getElementById(id);
+      if (section) section.style.height = `${(end - start) / 1000 * innerHeight}px`;
+    }
+    sequence.style.paddingBottom = `${innerHeight}px`;
+  };
+  layout();
+  addEventListener('resize', layout);
+  links.forEach((link) => link.addEventListener('click', (event) => {
+    const range = BEAT_RANGES.find(([id]) => `#${id}` === link.getAttribute('href'));
+    if (!range) return;
+    event.preventDefault();
+    const time = range[1] === 0 || range[0] === 'surface' ? range[1] : range[1] + (range[2] - range[1]) * .5;
+    window.scrollTo({ top: time / TOTAL_TIME * (sequence.offsetHeight - innerHeight), behavior: reduced.matches ? 'instant' : 'smooth' });
+  }));
 
   const copy = (time) => {
-    for (const [id, start, end] of BEAT_RANGES) {
-      const panel = panels.find((element) => element.dataset.beat === id);
-      if (!panel) continue;
-      const progress = clamp((time - start) / Math.max(1, end - start));
-      const fadeIn = start === 0 ? smooth(.10, .22, progress) : smooth(.16, .32, progress);
-      const fadeOut = id === 'teaser' ? smooth(.42, .60, progress) : smooth(.78, .95, progress);
-      const opacity = fadeIn * (1 - fadeOut);
+    for (const panel of panels) {
+      const range = BEAT_RANGES.find(([id]) => panel.dataset.beat === id);
+      if (!range) continue;
+      const [id, start, end] = range;
+      const progress = (time - start) / (end - start);
+      const first = start === 0;
+      const last = id === 'final';
+      const fadeIn = first ? 1 : smooth(-.025, .10, progress);
+      const fadeOut = last ? 0 : smooth(.90, 1.025, progress);
+      const opacity = progress < -.025 || (progress > 1.025 && !last) ? 0 : fadeIn * (1 - fadeOut);
+      const offset = reduced.matches ? 0 : (1 - smooth(0, .23, progress)) * 12;
       panel.style.opacity = String(opacity);
-      panel.style.transform = `translate3d(0, ${(0.48 - progress) * 24}px, 0)`;
-      panel.style.pointerEvents = opacity > .45 ? 'auto' : 'none';
+      panel.style.transform = `translateY(calc(var(--panel-offset, -50%) + ${offset}px))`;
+      panel.style.pointerEvents = opacity > .6 ? 'auto' : 'none';
+      panel.inert = opacity < .6;
+      panel.setAttribute('aria-hidden', String(opacity < .1));
     }
   };
 
   const callouts = (beat) => {
     const items = CALLOUTS[beat.id] || [];
+    const occupied = [];
+    const lineLength = Math.min(80, innerWidth * .055);
+    const labelWidth = 170;
     calloutNodes.forEach((node, index) => {
       const item = items[index];
-      if (!item) {
-        node.style.opacity = '0';
-        return;
+      const anchor = item && engine.anchor(item.role);
+      if (!anchor || innerWidth <= 800) { node.style.opacity = '0'; return; }
+      const [x, y] = engine.project(anchor);
+      const labelX = x + lineLength + 12;
+      if (![x, y].every(Number.isFinite) || x < innerWidth * .42 || labelX + labelWidth > innerWidth * .96 || y < 100 || y > innerHeight * .8) {
+        node.style.opacity = '0'; return;
       }
-      const anchor = engine.anchor(item.role);
-      if (!anchor) {
-        node.style.opacity = '0';
-        return;
+      // A single horizontal lane includes both the leader and its label.
+      // Keep the first annotation when another would crowd or cross that lane.
+      const bounds = { left: x - 8, right: labelX + labelWidth + 8, top: y - 18, bottom: y + 18 };
+      if (occupied.some((other) => bounds.left < other.right && bounds.right > other.left && bounds.top < other.bottom && bounds.bottom > other.top)) {
+        node.style.opacity = '0'; return;
       }
-      const [anchorX, anchorY] = engine.project(anchor);
-      if (![anchorX, anchorY].every(Number.isFinite) || anchorX < -80 || anchorX > innerWidth + 80 || anchorY < -80 || anchorY > innerHeight + 80) {
-        node.style.opacity = '0';
-        return;
-      }
-
-      const labelX = innerWidth * item.x;
-      const labelY = innerHeight * item.y;
-      const lineStartX = labelX + (item.align === 'left' ? 136 : -136);
-      const lineStartY = labelY + 1;
-      const dx = anchorX - lineStartX;
-      const dy = anchorY - lineStartY;
-      const length = Math.hypot(dx, dy);
-      const angle = Math.atan2(dy, dx);
-      const enter = smooth(.32 + index * .035, .48 + index * .035, beat.progress);
-      const exit = 1 - smooth(.82, .96, beat.progress);
-      const draw = smooth(.34 + index * .035, .58 + index * .035, beat.progress) * exit;
+      occupied.push(bounds);
+      const opacity = smooth(.24, .40, beat.progress) * (1 - smooth(.75, .92, beat.progress));
       const label = node.querySelector('.callout-label');
       const line = node.querySelector('.callout-line');
-
-      node.style.opacity = String(enter * exit);
+      node.style.opacity = String(opacity);
       label.textContent = item.label;
-      label.style.left = `${labelX}px`;
-      label.style.top = `${labelY}px`;
-      label.style.textAlign = item.align;
-      label.style.transform = `translate(${item.align === 'right' ? '-100%' : '0'}, -50%)`;
-      label.style.opacity = String(smooth(.50 + index * .035, .64 + index * .035, beat.progress) * exit);
-      line.style.left = `${lineStartX}px`;
-      line.style.top = `${lineStartY}px`;
-      line.style.width = `${length}px`;
-      line.style.transform = `rotate(${angle}rad) scaleX(${draw})`;
+      label.style.cssText = `left:${labelX}px;top:${y}px;text-align:left;transform:translateY(-50%)`;
+      line.style.cssText = `left:${x}px;top:${y}px;width:${lineLength}px;transform:scaleX(${opacity})`;
     });
-  };
-
-  const hud = (time) => {
-    const beat = beatAt(time);
-    const progress = clamp(time / TOTAL_TIME);
-    document.body.dataset.beat = beat.id;
-    document.body.dataset.look = beat.shot.look;
-    if (shotLabel) shotLabel.textContent = `${String(beat.index + 1).padStart(2, '0')} / ${SHOTS.length} · ${beat.shot.label}`;
-    if (bar) bar.style.transform = `scaleX(${progress})`;
-    if (progressText) progressText.textContent = `${Math.round(progress * 100)}%`;
-    callouts(beat);
   };
 
   return {
     update(time) {
       copy(time);
-      hud(time);
+      const paper = time < BEAT_RANGES[2][1] ? smooth(BEAT_RANGES[1][1]-90,BEAT_RANGES[1][1]-15,time) : evaluateMotion(time).paper;
+      const blend = (dark, light) => `rgb(${dark.map((v, i) => Math.round(v + (light[i] - v) * paper)).join(' ')})`;
+      const root = document.documentElement.style;
+      root.setProperty('--paper', String(paper));
+      root.setProperty('--fg', blend([238,241,243], [24,29,34]));
+      root.setProperty('--muted', blend([165,173,182], [87,94,102]));
+      root.setProperty('--accent', blend([223,175,115], [118,79,36]));
+      root.setProperty('--soft', blend([112,124,136], [107,114,121]));
+      root.setProperty('--line', blend([90,105,119], [155,162,169]));
+      const beat = beatAt(time);
+      const progress = clamp(time / TOTAL_TIME);
+      if (activeId !== beat.id) {
+        activeId = beat.id;
+        if (chapters) chapters.value = beat.id;
+        document.body.dataset.beat = beat.id;
+        document.body.dataset.look = beat.shot.look;
+        links.forEach((link) => link.setAttribute('aria-current', String(link.getAttribute('href') === `#${beat.id}`)));
+        if (shotLabel) shotLabel.textContent = `${String(beat.index + 1).padStart(2, '0')} / ${String(SHOTS.length).padStart(2, '0')} — ${beat.shot.label}`;
+      }
+      if (bar) bar.style.transform = `scaleX(${progress})`;
+      if (progressText) progressText.textContent = `${Math.round(progress * 100)}%`;
+      if (signal) signal.style.opacity = String(beat.id === 'signal' ? smooth(.15, .32, beat.progress) * (1 - smooth(.8, .98, beat.progress)) : 0);
+      if (signalPulse) signalPulse.style.strokeDashoffset = String(reduced.matches ? 0 : -time * .08);
+      callouts(beat);
     },
   };
 }

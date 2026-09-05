@@ -10,3 +10,6 @@ Thumbs.db
 
 animejs/node_modules/
 animejs/dist/
+
+# Blender animation working frames and exported render scene
+animejs/renders/

@@ -1,7 +1,8 @@
-import { createFilmTimeline, motion } from './film.js';
+import { createFilmTimeline, motion, scrollMotion } from './film.js';
 import { createModelScene } from './model-scene.js';
 import { createFilmEngine } from './film-engine.js';
 import { createFilmUi } from './film-ui.js';
+import { createHeroVideo } from './hero-video.js';
 
 const canvas = document.getElementById('webgl-canvas');
 const loading = document.getElementById('model-loading');
@@ -30,15 +31,24 @@ async function boot() {
     const ui = createFilmUi(engine);
     window.__film = { ...model, engine, motion };
     window.__filmTimeline = createFilmTimeline(document.getElementById('film-sequence'));
-    addEventListener('resize', engine.resize);
+    addEventListener('resize', () => { engine.resize(); engine.update(); engine.render(); });
 
     model.root.visible = true;
     engine.update();
     ui.update(motion.filmTime);
     engine.render();
 
-    const frame = () => {
+    let lastFrame = performance.now();
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const frame = (now) => {
       requestAnimationFrame(frame);
+      const dt = Math.min(100, now - lastFrame);
+      lastFrame = now;
+      const delta = scrollMotion.filmTime - motion.filmTime;
+      if (Math.abs(delta) < .01) return;
+      motion.filmTime = Math.abs(delta) < .1 || reduced.matches
+        ? scrollMotion.filmTime
+        : motion.filmTime + delta * (1 - Math.exp(-dt / 65));
       engine.update();
       ui.update(motion.filmTime);
       engine.render();
@@ -47,10 +57,11 @@ async function boot() {
     requestAnimationFrame(() => {
       document.body.dataset.loading = 'false';
       loading?.classList.add('is-ready');
+      createHeroVideo();
       loading?.setAttribute('aria-hidden', 'true');
     });
   } catch (error) {
-    console.error('Luma A3.40 film boot failed', error);
+    console.error('Luma A3.43 film boot failed', error);
     document.body.dataset.error = 'true';
     if (loadingStatus) loadingStatus.textContent = '模型加载失败';
     if (loadingCount) loadingCount.textContent = error.message;

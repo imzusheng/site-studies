@@ -1,60 +1,63 @@
-export const A340_PROFILE = Object.freeze({
-  id: 'industrial_a3_40',
-  revision: 'A3.40_EC11_BEZEL_CLEARANCE',
-  label: 'A3.40 / ALL-IN-ONE CONTROL',
-  source: 'luma-remote / A3.40 presentation source',
+// Formal A3.43 Physical Twin. Object IDs follow the source manifest exactly.
+// Vendor STEP objects have no verified chip-level semantic mapping: do not infer
+// CPU/flash/IMU labels from geometry or substitute the previous proxy meshes.
+export const A343_PROFILE = Object.freeze({
+  id: 'industrial_a3_43',
+  revision: 'A3.43_TRUE_PHYSICAL_TWIN',
+  label: 'A3.43 / ALL-IN-ONE CONTROL',
+  source: 'luma-remote / formal A3.43 physical twin',
+  manifestUrl: '/models/a343/ASSEMBLY_MANIFEST.json',
   dimensions: Object.freeze({
     width: 120,
     depth: 81,
-    frontHeight: 15.5,
-    backHeight: 28.4,
+    frontHeight: 17.6,
+    backHeight: 30.5,
     screenCenter: [0, 14],
-    displayVisible: [41.4, 31.2],
+    displayVisible: [40.8, 30.6],
     keyPitch: 19.5,
-    knobCenter: [0, -19.5],
+    keyCenters: [[-43, 16.5], [43, 16.5], [-43, -3], [43, -3], [-43, -22.5], [43, -22.5]],
+    knobCenter: [0, -22.5],
     knobWellDiameter: 26,
-    knobOuterDiameter: 24,
-    faceAngleDeg: 9.049,
-    sceneObjectCount: 231,
+    knobOuterDiameter: 22.5,
+    faceAngleDeg: Math.atan(12.9 / 81) * 180 / Math.PI,
+    sceneObjectCount: 471,
     printablePartCount: 11,
   }),
   roles: Object.freeze({
     upperShell: 'cosmetic_upper_shell',
-    serviceCover: 'bottom_service_cover',
+    serviceCover: 'bottom_service_cover_battery_cradle',
     screenBezel: 'screen_bezel',
     retainer: 'esp32_m3_retainer',
-    displayModule: 'lcd_backlight_stack',
-    activeGlass: 'lcd_active_glass',
-    mainboard: 'compute_pcb',
-    cpu: 'compute_u2',
-    flash: 'compute_u5',
-    imu: 'compute_u3',
-    usb: 'compute_usb_c',
-    microsd: 'compute_microsd',
-    cameraFpc: 'compute_camera_fpc',
-    batteryHeader: 'compute_battery_jst',
-    knob: 'ec11_knob_24x8p5',
-    encoder: 'ec11_reference',
+    displayModule: 'lcd_rear_frame',
+    activeGlass: 'lcd_front_cover_glass',
+    mainboard: 'waveshare_vendor_solid_001_59d126fe',
+    knob: 'ec11_knob_22p5',
+    encoder: 'ec11_metal_can',
     keycapFocus: 'keycap_2',
     keycaps: ['keycap_1', 'keycap_2', 'keycap_3', 'keycap_4', 'keycap_5', 'keycap_6'],
-    switches: ['choc_v2_1', 'choc_v2_2', 'choc_v2_3', 'choc_v2_4', 'choc_v2_5', 'choc_v2_6'],
-    inputBoards: ['input_pcb_left', 'input_pcb_right'],
-    lipo: 'lipo_cell',
-    powerBoard: 'power_pcb',
+    switches: Array.from({ length: 6 }, (_, i) => `choc_v2_${i + 1}_top_housing`),
+    switchStems: Array.from({ length: 6 }, (_, i) => `choc_v2_${i + 1}_stem`),
+    switchSprings: Array.from({ length: 6 }, (_, i) => `choc_v2_${i + 1}_spring`),
+    lipo: 'battery_503450_pouch',
+    powerBoard: 'battery_503450_pcm',
+    batteryHeader: 'battery_mx125_housing',
     printable: [
-      'cosmetic_upper_shell', 'bottom_service_cover', 'screen_bezel', 'esp32_m3_retainer',
-      'ec11_knob_24x8p5', 'keycap_1', 'keycap_2', 'keycap_3', 'keycap_4', 'keycap_5', 'keycap_6',
+      'cosmetic_upper_shell', 'bottom_service_cover_battery_cradle', 'screen_bezel', 'esp32_m3_retainer',
+      'ec11_knob_22p5', 'keycap_1', 'keycap_2', 'keycap_3', 'keycap_4', 'keycap_5', 'keycap_6',
     ],
   }),
 });
 
+// Existing UI/film modules can migrate independently without retaining old assets.
+export const A340_PROFILE = A343_PROFILE;
+
 export const roleId = (role) => {
-  const value = A340_PROFILE.roles[role];
+  const value = A343_PROFILE.roles[role];
   return Array.isArray(value) ? value[0] : value;
 };
 
 export const roleIds = (role) => {
-  const value = A340_PROFILE.roles[role];
+  const value = A343_PROFILE.roles[role];
   if (!value) return [];
   return Array.isArray(value) ? [...value] : [value];
 };
