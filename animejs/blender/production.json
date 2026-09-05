@@ -1,0 +1,98 @@
+{
+  "revision": "A3.43",
+  "engine": "CYCLES",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "samples": 48,
+  "adaptive_threshold": 0.025,
+  "denoise": true,
+  "view_transform": "AgX",
+  "look": "AgX - Medium High Contrast",
+  "exposure": -4.0,
+  "world_color": [
+    0.018,
+    0.023,
+    0.031
+  ],
+  "world_strength": 0.12,
+  "core": {
+    "frames": 120,
+    "lens_mm": 100,
+    "fstop": 18,
+    "camera_start": [
+      -0.018,
+      -0.032,
+      0.043
+    ],
+    "camera_end": [
+      0.005,
+      -0.044,
+      0.06
+    ],
+    "target": [
+      0.001,
+      -0.001,
+      0
+    ],
+    "focus": [
+      0,
+      0,
+      0
+    ],
+    "subject_object": "waveshare_vendor_solid_320_80d55808",
+    "description": "Package portrait within the supplied official STEP board. Identification uses package position against Waveshare onboard-resource photograph; no invented die/interconnect detail."
+  },
+  "switch": {
+    "frames": 120,
+    "lens_mm": 85,
+    "fstop": 24,
+    "camera_start": [
+      -0.05124,
+      -0.07076,
+      0.05734
+    ],
+    "camera_end": [
+      -0.021959999999999997,
+      -0.0915,
+      0.06954
+    ],
+    "target": [
+      0,
+      0,
+      0.006
+    ],
+    "focus": [
+      0,
+      0,
+      0.006
+    ],
+    "description": "Actual Choc V2 assembly, held in a separated display pose; the camera moves in one arc.",
+    "exposure": -3.4
+  },
+  "craft": {
+    "lens_mm": 75,
+    "fstop": 32,
+    "camera": [
+      0.16,
+      -0.42,
+      0.82
+    ],
+    "target": [
+      0,
+      -0.02,
+      0
+    ],
+    "description": "Eleven actual printable parts arranged as a spaced studio composition.",
+    "exposure": -2.6
+  },
+  "encoding": {
+    "codec": "libx264",
+    "crf": 18,
+    "preset": "slow",
+    "pixel_format": "yuv420p",
+    "faststart": true
+  }
+}

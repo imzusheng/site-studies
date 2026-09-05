@@ -5,8 +5,10 @@ an existing user project. Output: renders/intro/luma-intro.blend and PNG frames.
 import bpy, math, os, json
 from mathutils import Vector, Matrix
 
-BASE = '/Users/lizusheng/.zcode/workspace/default/site-studies/animejs'
-SOURCE = '/Users/lizusheng/Desktop/luma-remote/hardware/mechanical/source/blender/Luma_A3_43_Physical_Twin.blend'
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SOURCE = os.environ.get('LUMA_A343_SOURCE')
+if not SOURCE:
+    raise RuntimeError('Set LUMA_A343_SOURCE to the original A3.43 physical-twin .blend, or render the self-contained blender/luma-a343-studio.blend.')
 OUT = os.path.join(BASE, 'renders/intro')
 os.makedirs(OUT, exist_ok=True)
 with bpy.data.libraries.load(SOURCE, link=False) as (available, imported):

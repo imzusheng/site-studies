@@ -1,73 +1,58 @@
-import { createFilmTimeline, motion, scrollMotion } from './film.js';
-import { createModelScene } from './model-scene.js';
-import { createFilmEngine } from './film-engine.js';
-import { createFilmUi } from './film-ui.js';
-import { createHeroVideo } from './hero-video.js';
+import { createPromoPage } from './promo-page.js';
 
-const canvas = document.getElementById('webgl-canvas');
+// Media and reading start immediately; 3D is only needed near its own section.
+const page = createPromoPage();
+const stage = document.getElementById('engine-stage');
+const section = document.getElementById('structure');
 const loading = document.getElementById('model-loading');
-const loadingStatus = document.getElementById('loading-status');
-const loadingCount = document.getElementById('loading-count');
-const loadingPercent = document.getElementById('loading-percent');
-const loadingBar = document.getElementById('loading-bar');
 const retry = document.getElementById('loading-retry');
+let started = false;
 
-const updateLoading = ({ phase, loaded, total }) => {
-  const ratio = total ? loaded / total : 0;
-  if (loadingBar) loadingBar.style.transform = `scaleX(${ratio})`;
-  if (loadingPercent) loadingPercent.textContent = `${String(Math.round(ratio * 100)).padStart(3, '0')}%`;
-  if (loadingCount) loadingCount.textContent = `${loaded} / ${total}`;
-  if (loadingStatus) {
-    loadingStatus.textContent = phase === 'manifest'
-      ? '正在读取场景'
-      : phase === 'ready' ? '正在准备第一帧' : '正在载入完整结构';
-  }
-};
-
-async function boot() {
+async function bootStructure() {
+  if (started) return;
+  started = true;
   try {
-    const model = await createModelScene(canvas, updateLoading);
-    const engine = createFilmEngine(model);
-    const ui = createFilmUi(engine);
-    window.__film = { ...model, engine, motion };
-    window.__filmTimeline = createFilmTimeline(document.getElementById('film-sequence'));
-    addEventListener('resize', () => { engine.resize(); engine.update(); engine.render(); });
-
-    model.root.visible = true;
-    engine.update();
-    ui.update(motion.filmTime);
-    engine.render();
-
-    let lastFrame = performance.now();
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const frame = (now) => {
-      requestAnimationFrame(frame);
-      const dt = Math.min(100, now - lastFrame);
-      lastFrame = now;
-      const delta = scrollMotion.filmTime - motion.filmTime;
-      if (Math.abs(delta) < .01) return;
-      motion.filmTime = Math.abs(delta) < .1 || reduced.matches
-        ? scrollMotion.filmTime
-        : motion.filmTime + delta * (1 - Math.exp(-dt / 65));
-      engine.update();
-      ui.update(motion.filmTime);
-      engine.render();
-    };
-    requestAnimationFrame(frame);
-    requestAnimationFrame(() => {
-      document.body.dataset.loading = 'false';
-      loading?.classList.add('is-ready');
-      createHeroVideo();
-      loading?.setAttribute('aria-hidden', 'true');
+    const [{ createModelScene }, { createFilmEngine }] = await Promise.all([
+      import('./model-scene.js'), import('./film-engine.js'),
+    ]);
+    const model = await createModelScene(document.getElementById('webgl-canvas'), ({loaded,total}) => {
+      const ratio=total ? loaded/total : 0;
+      document.getElementById('loading-bar').style.transform=`scaleX(${ratio})`;
+      document.getElementById('loading-percent').textContent=`${Math.round(ratio*100)}%`;
+      document.getElementById('loading-status').textContent='正在准备结构展示';
     });
-  } catch (error) {
-    console.error('Luma A3.43 film boot failed', error);
-    document.body.dataset.error = 'true';
-    if (loadingStatus) loadingStatus.textContent = '模型加载失败';
-    if (loadingCount) loadingCount.textContent = error.message;
-    retry?.removeAttribute('hidden');
+    const engine = createFilmEngine(model);
+    const state={progress:0,target:0};
+    window.__film={...model,engine,state};
+    model.root.visible=true;
+    let frame=0, previous=performance.now();
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+    function draw(now) {
+      frame=0;
+      const dt=Math.min(100,now-previous);previous=now;
+      state.progress=reduced.matches ? state.target : state.progress+(state.target-state.progress)*(1-Math.exp(-dt/65));
+      if(Math.abs(state.target-state.progress)<.0001) state.progress=state.target;
+      engine.update(state.progress);engine.render();
+      if(state.progress!==state.target) frame=requestAnimationFrame(draw);
+    }
+    function update() {
+      const rect=section.getBoundingClientRect();
+      state.target=Math.max(0,Math.min(1,-rect.top/Math.max(1,rect.height-innerHeight)));
+      if(!frame){previous=performance.now()-16;frame=requestAnimationFrame(draw);}
+    }
+    addEventListener('scroll',update,{passive:true});
+    addEventListener('resize',()=>{engine.resize();update();});
+    engine.resize();update();
+    loading.classList.add('is-ready');loading.setAttribute('aria-hidden','true');
+    page.update();
+  } catch(error) {
+    console.error('Luma structure failed',error);
+    document.getElementById('loading-status').textContent='结构展示暂时无法载入';
+    retry.hidden=false;started=false;
   }
 }
-
-retry?.addEventListener('click', () => location.reload());
-boot();
+const observer=new IntersectionObserver(entries=>{
+  if(entries.some(e=>e.isIntersecting)){observer.disconnect();bootStructure();}
+},{rootMargin:'1500px'});
+observer.observe(stage);
+retry.addEventListener('click',()=>{retry.hidden=true;bootStructure();});

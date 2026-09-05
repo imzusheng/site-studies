@@ -1,84 +1,39 @@
-# Luma Remote A3.40 — Anime.js Product Film
+# Luma Remote A3.43 宣传网站
 
-A scroll-directed industrial product film built with **Anime.js v4 + Three.js**.
+Blender 产品短片与海报、自然滚动的产品介绍、一个局部 Three.js 结构展示。首页与视频无需等待模型加载。A3.43 的 471 个原始对象与 11 个可打印部件保留在模型清单中；重复的供应商实体仅在展示层去重。
 
-This branch is not a CAD-viewer clone of animejs.com. The film keeps Luma Remote spatially legible while moving between product form, engineering structure, interaction, display feedback and compute-core inspection.
+## 启动
 
-## Runtime
-
-```text
-DOM scroll
-→ Anime.js onScroll({ sync: true })
-→ one createTimeline() master film
-→ numeric motion state + staggered keycap proxy tracks
-→ Three.js scene / orbit camera / material blend
-→ LCD-plane projection + SVG callouts
-→ render
-```
-
-There is no second scroll-to-camera state machine and no frame-to-frame damping.
-
-## Nine cinematic beats
-
-1. **Hero** — establish the complete product.
-2. **Stage** — the physical LCD projection grows into the presentation frame.
-3. **Blueprint** — restrained system-level separation, five fixed labels.
-4. **Form** — A3.40 exterior / EC11 clearance decision.
-5. **Input** — camera enters the key region, then caps reveal Choc V2.
-6. **Control** — Ø24 knob motion drives LCD feedback.
-7. **Display** — screen plane becomes the visual datum.
-8. **Compute** — service cover, board lift, local board flip, macro inspection.
-9. **Final** — mechanisms close and the film returns to the finished product.
-
-Each beat is long-form (`~165vh`) and the motion tracks begin/end across broad scroll spans rather than switching pose at section boundaries.
-
-## A3.40 model truth
-
-Source of truth: `luma-remote` PR #31 / merge `48bd3ea`.
-
-A3.40 is intentionally a small exact mechanical delta on top of the frozen A3.32 R2 envelope + PR #30 keycaps:
-
-- envelope remains `120 × 81 mm`;
-- screen / bezel position remains frozen;
-- EC11 center remains `(0, -19.5)`;
-- cosmetic knob well changes `Ø30 → Ø26 mm`;
-- knob OD changes `Ø26 → Ø24 mm`;
-- PR #30 PETG icon keycap proportions are inherited.
-
-PR #31 intentionally **does not commit 231 generated loose STL files**. This site therefore keeps the already-vendored frozen assembly meshes and applies the visible A3.40 exterior delta in the Web scene:
-
-- the rotary knob mesh is scaled to Ø24;
-- the Ø30→Ø26 recovered cosmetic-well annulus is materialized as an A3.40 shell patch in the sloped deck plane;
-- keycaps are adapted to the PR #30 `17 × 15 × 5 mm` presentation proportions and receive the six product glyphs;
-- unchanged screen, enclosure datums, Choc hardware and ESP32 reference geometry remain the frozen source assets.
-
-The 231-object electronics model in PR #31 is presentation/reference truth rather than manufacturing truth; this film keeps the existing high-detail ESP32 reference mesh for the Compute shot instead of copying 220 generated reference STL files into `site-studies`.
-
-Concrete source IDs are isolated to `js/model-profile.js`; choreography only works with semantic product roles.
-
-## Development
+需要 Node.js 22.12+ 和 npm。从仓库根目录运行：
 
 ```bash
 cd animejs
-npm install
+npm ci
 npm run dev
 ```
 
-Validation:
+打开终端输出的地址，默认 http://localhost:5173/。浏览器播放已提交的 MP4，不需要安装 Blender。
+
+生产构建及本地预览：
 
 ```bash
-npm run build
 npm run validate
+npm run build
+npm run preview -- --host 0.0.0.0
 ```
 
-`npm run validate` checks the A3.40 contract, nine-beat film structure, deterministic timeline evaluation, camera motion spikes/direction changes, semantic role resolution, callout limits and the absence of the old shot-state driver.
+预览默认 http://localhost:4173/。部署 `animejs/dist/` 到静态服务器根路径即可；本项目资源 URL 使用 `/videos/`、`/models/` 等绝对路径。
 
-## Stack
+## 页面与素材
 
-- Vanilla HTML / CSS / ESM
-- Anime.js `4.5.0`
-- Three.js (vendored existing runtime)
-- STLLoader
-- SVG 3D→2D overlays
-- CanvasTexture LCD UI
-- Vite
+- `index.html` / `css/style.css`：产品叙事、排版、基础移动端适配。
+- `js/promo-page.js`：首屏到阅读段的滚动颜色过渡、视频按可见性播放、暂停及重播。
+- `js/main.js`：结构段附近才加载三维模型。
+- `js/film-engine.js` / `js/explosion-space.js`：局部纸色线稿与刚性功能组件的分离路线。
+- `public/videos/`：首屏、ESP32-S3、Choc V2 短片。
+- `public/images/`：视频封面和可打印部件海报。
+- `blender/`：可独立重渲染的工程、参数、建景与编码脚本，见其中 README。
+
+## 验证边界
+
+`npm run validate` 验证 A3.43 模型文件完整性、页面资源、运动数值和精确复位；它不替代浏览器的构图、闪烁与碰撞检查。渲染素材是产品设计展示，不是实拍或制造验收证据。
