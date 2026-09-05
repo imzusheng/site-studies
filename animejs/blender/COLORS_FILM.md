@@ -1,5 +1,6 @@
 # A3.44 three-color film
 
+Current final camera revision: see `CAMERA_FILMS.md` and `camera-films.json`. The source scenes below retain the reusable model/material setup; final colors/support MP4s use the separate authored camera bundle.
 This is a single Blender scene containing three complete 450-mesh A3.44 assemblies. Chalk, Ember, and Graphite share three broad studio area lights and one 70 mm perspective camera. It is not a composite of individually rendered images. Printable surfaces retain the approved matte color materials. Switch upper housings use the translucent nylon material.
 
 `colors-film.json` records the layout, camera endpoints, exposure, output size, frame count, and sampling. Each assembly remains rigid. The camera drifts right and approaches gently throughout the 96-frame shot; there is no reverse or ping-pong section. Playback should finish on the last frame with a replay button.

@@ -1,0 +1,41 @@
+{
+  "revision": "A3.44",
+  "colors": {
+    "source": "luma-a344-colors.blend",
+    "scene_prefix": "Luma A3.44 Three Colors Film",
+    "mode": "arc",
+    "radius": 0.615,
+    "azimuth_degrees": [-96, -84],
+    "height": [0.635, 0.685],
+    "target": [0, 0, 0.018],
+    "frames": 96,
+    "fps": 24,
+    "resolution": [1280, 720],
+    "intent": "12-degree rightward arc with 50mm continuous rise; three complete products retain their fixed placements and shared light."
+  },
+  "support": {
+    "source": "luma-a344-internal-films.blend",
+    "scene_prefix": "Luma A3.44 Support Film",
+    "mode": "arc",
+    "radius": 0.885,
+    "azimuth_degrees": [-65, -75],
+    "height": [0.535, 0.57],
+    "target": [0.01, 0, 0.014],
+    "frames": 96,
+    "fps": 24,
+    "resolution": [1280, 720],
+    "intent": "10-degree leftward oblique arc with a gentle rise, opposite to the color film; frozen safe layer expansion remains intact."
+  },
+  "core": {
+    "source": "luma-a343-studio.blend",
+    "scene_prefix": "Luma Core Portrait",
+    "mode": "rail",
+    "camera_start": [0.020, -0.042, 0.054],
+    "camera_end": [-0.010, -0.036, 0.063],
+    "target": [0.001, -0.001, 0],
+    "frames": 120,
+    "fps": 30,
+    "resolution": [1920, 1080],
+    "intent": "30mm leftward macro rail with a 9mm rise, revealing parallax over the package edge while keeping the ESP32-S3 package centered. No orbit reversal."
+  }
+}

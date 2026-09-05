@@ -83,3 +83,7 @@ python3 blender/encode-internal-films.py interior
 ```
 
 独立工程包含模型与材质，直接重渲染不依赖 CAD 原仓库。重新建景时脚本从同目录 studio 读取冻结配色场景。编码成品和海报位于 `public/videos` 与 `public/images`；中间 PNG 帧不入库，可从工程再生成。
+
+## 当前三支短片的镜头版本
+
+三色、内外分工与核心的最终镜头由 [CAMERA_FILMS.md](CAMERA_FILMS.md) 说明，参数在 `camera-films.json`，可直接从 `luma-a344-camera-films.blend` 重渲染。原工程保留作为材质和几何来源；重建原场景后应再次运行 `author-camera-films.py`，避免回退到旧镜头。

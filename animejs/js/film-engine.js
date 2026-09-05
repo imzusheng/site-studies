@@ -106,7 +106,8 @@ export function createFilmEngine(model){
   progress=THREE.MathUtils.clamp(value,0,1);
   const opening=.64+.36*smooth(progress/.30);
   space.update(opening);
-  const dark=(1-smooth(progress/.12))+smooth((progress-.25)/.15)*(1-smooth((progress-.80)/.20));
+  // One gradual dark-to-paper transition across the whole passage.
+  const dark=1-smooth((progress-.28)/.40);
   scene.background.copy(paper).lerp(night,dark);
   dust.visible=dark>.01;dust.material.opacity=dark*.24;
   for(const part of displayParts){

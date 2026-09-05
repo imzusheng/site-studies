@@ -1,5 +1,6 @@
 # A3.44 internal product films
 
+Current final camera revision: see `CAMERA_FILMS.md` and `camera-films.json`. The source scenes below retain the reusable model/material setup; final colors/support MP4s use the separate authored camera bundle.
 These scenes use the frozen A3.44 product meshes from `Luma Color Graphite` in the retained website studio. They do not use the historical exploratory `Luma Chassis` scene. The actual internal support part is `esp32_m3_retainer`, with its three `retainer_m3_*` fixings.
 
 - **Support:** 316 source meshes, four separately composed layers: upper shell, populated PCB, M3 retaining frame, and service cover. The layers have disjoint vertical bounds and modest lateral offsets. Over four seconds, their safe initial separation increases by 5%; the camera travels gently right and up. The composition sits on the right, leaving the left third for webpage text.
