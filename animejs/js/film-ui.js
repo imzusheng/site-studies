@@ -87,8 +87,8 @@ export function createFilmUi(engine) {
       const panel = panels.find((element) => element.dataset.beat === id);
       if (!panel) continue;
       const progress = clamp((time - start) / Math.max(1, end - start));
-      const fadeIn = start === 0 ? 1 : smooth(.16, .32, progress);
-      const fadeOut = id === 'teaser' ? smooth(.38, .58, progress) : smooth(.78, .95, progress);
+      const fadeIn = start === 0 ? smooth(.10, .22, progress) : smooth(.16, .32, progress);
+      const fadeOut = id === 'teaser' ? smooth(.42, .60, progress) : smooth(.78, .95, progress);
       const opacity = fadeIn * (1 - fadeOut);
       panel.style.opacity = String(opacity);
       panel.style.transform = `translate3d(0, ${(0.48 - progress) * 24}px, 0)`;

@@ -2,7 +2,7 @@ import { createTimeline, onScroll } from 'animejs';
 
 // A single clockwise camera path keeps spatial memory intact while the product changes state.
 export const SHOTS = Object.freeze([
-  { id: 'teaser', duration: 1250, label: '完整控制面', target: 'product', focus: 'product', az: 18, el: 47, radius: .68, fov: 27, frameX: 0, frameY: .34, look: 'teaser', bg: 0x010203, ui: 0, line: 0 },
+  { id: 'teaser', duration: 1250, label: '完整控制面', target: 'product', focus: 'product', az: 0, el: 47, radius: .52, fov: 27, frameX: 0, frameY: .27, look: 'teaser', bg: 0x010203, ui: 0, line: 0 },
   { id: 'reveal', duration: 1200, label: '实体控制', target: 'product', focus: 'product', az: 24, el: 36, radius: .92, fov: 28, frameX: -.12, frameY: .01, look: 'product', bg: 0x0d1114, ui: 0, line: 0 },
   { id: 'controls', duration: 1000, label: '三种输入', target: 'product', focus: 'input', az: 30, el: 44, radius: .84, fov: 29, frameX: .13, frameY: .02, look: 'product', bg: 0x17191a, ui: 0, line: .08 },
   { id: 'knob', duration: 950, label: 'EC11 旋钮', target: 'product', focus: 'control', az: 36, el: 50, radius: .62, fov: 29, frameX: -.20, frameY: .02, look: 'product', bg: 0x151718, ui: 0, line: .06 },
@@ -109,8 +109,8 @@ export function evaluateMotion(time) {
   else if (index === 22) printableLayout = 1 - smooth(.02, .14, progress);
 
   const weight = (item, look) => item.look === look ? 1 : 0;
-  const lcdLevel = (item) => item.id === 'teaser' ? .30 : ['ha', 'lcd'].includes(item.id) ? 1 : .66;
-  const keyLevel = (item) => item.id === 'teaser' ? .12 : ['controls', 'keypress'].includes(item.id) ? .50 : .14;
+  const lcdLevel = (item) => item.id === 'teaser' ? .20 : ['ha', 'lcd'].includes(item.id) ? 1 : .66;
+  const keyLevel = (item) => item.id === 'teaser' ? .055 : ['controls', 'keypress'].includes(item.id) ? .50 : .14;
   const lineArt = mix(previous.line, shot.line, sceneTransition);
   let shellOpacity = 1;
   if (index === 7) shellOpacity = mix(1, .22, smooth(.34, .78, progress));
