@@ -1,15 +1,16 @@
 const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
 const smooth = (v) => { const t = clamp(v); return t * t * (3 - 2 * t); };
-const mixColor = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(' ')})`;
 
 /** The page owns editorial color and media playback; the engine owns only the structure scene. */
 export function createPromoPage() {
-  const opening = document.getElementById('opening');
-  const reading = document.getElementById('surface');
+  const hero = document.getElementById('teaser');
+  const heroWindow = document.querySelector('.hero-window');
   const header = document.querySelector('.site-header');
   const structure = document.getElementById('structure');
-  const steps = [...document.querySelectorAll('[data-structure-step]')];
+  const stage = document.getElementById('engine-stage');
+  const steps = [...document.querySelectorAll('[data-structure-panel]')];
   const progressBar = document.getElementById('structure-progress-bar');
+  const chapterLabel = document.getElementById('structure-chapter');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let frame = 0;
   let disposed = false;
@@ -18,30 +19,38 @@ export function createPromoPage() {
   function updatePage() {
     frame = 0;
     const height = innerHeight;
-    const readingTop = reading.getBoundingClientRect().top;
-    // Hero and reading share one background: there is no white section edge to reveal.
-    const warmth = smooth((height * .82 - readingTop) / (height * .94));
-    opening.style.backgroundColor = mixColor([8, 11, 15], [241, 238, 231], warmth);
-    // Avoid blending ink through the same grey as its background during the inversion.
-    const darkInk = warmth > .49;
-    opening.style.setProperty('--reading-ink', darkInk ? '#292b2c' : '#f0f1f2');
-    opening.style.setProperty('--reading-muted', darkInk ? '#4f504d' : '#e0e2e3');
-    const footerTop = document.getElementById('open-source').getBoundingClientRect().top;
-    const lightHeader = footerTop > 45 && (readingTop < 45 ? warmth > .62 : false);
-    header.classList.toggle('is-light', lightHeader);
+    const heroBounds = hero.getBoundingClientRect();
+    const heroProgress = clamp(-heroBounds.top / Math.max(1, heroBounds.height - height));
+    const shrink = reduced.matches ? 0 : smooth((heroProgress - .30) / .60);
+    heroWindow.style.setProperty('--hero-inset', `${shrink * Math.min(innerWidth * .045, 72)}px`);
+    heroWindow.style.setProperty('--hero-radius', `${shrink * 24}px`);
     const r = structure.getBoundingClientRect();
     const p = clamp(-r.top / Math.max(1, r.height - height));
     progressBar.style.transform = `scaleX(${p})`;
-    const step = p < .32 ? 0 : p < .72 ? 1 : 2;
+    const step = Math.min(3, Math.floor(p * 4));
     if (step !== activeStep) {
       activeStep = step;
       steps.forEach((el, i) => {
         el.classList.toggle('is-active', i === step);
         el.setAttribute('aria-hidden', String(i !== step));
       });
+      if (chapterLabel) chapterLabel.textContent = `${String(step + 1).padStart(2, '0')} / 04`;
     }
+    const beneathHeader = (id) => {
+      const rect = document.getElementById(id)?.getBoundingClientRect();
+      return rect && rect.top <= 50 && rect.bottom > 50;
+    };
+    const darkHeader = (beneathHeader('teaser') && shrink < .55) || beneathHeader('colors') || beneathHeader('material') || beneathHeader('chassis') || beneathHeader('interior') || beneathHeader('open-source') || (beneathHeader('structure') && stage.dataset.sceneTone === 'dark');
+    header.classList.toggle('is-light', !darkHeader);
   }
   function requestUpdate() { if (!frame && !disposed) frame = requestAnimationFrame(updatePage); }
+  let lastTone = stage.dataset.sceneTone;
+  const toneObserver = new MutationObserver(() => {
+    if (lastTone === stage.dataset.sceneTone) return;
+    lastTone = stage.dataset.sceneTone;
+    requestUpdate();
+  });
+  toneObserver.observe(stage, { attributes: true, attributeFilter: ['data-scene-tone'] });
   addEventListener('scroll', requestUpdate, { passive: true });
   addEventListener('resize', requestUpdate);
   updatePage();
@@ -113,6 +122,7 @@ export function createPromoPage() {
     update: requestUpdate,
     destroy() {
       disposed = true; cancelAnimationFrame(frame);
+      toneObserver.disconnect();
       removeEventListener('scroll', requestUpdate);
       removeEventListener('resize', requestUpdate);
       players.forEach(destroy => destroy());

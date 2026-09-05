@@ -6,20 +6,24 @@ import { gunzipSync } from 'node:zlib';
 import { createHash } from 'node:crypto';
 import * as THREE from './animejs/vendor/three.module.js';
 import { createExplosionSpace } from './animejs/js/explosion-space.js';
-import { A343_PROFILE, roleIds } from './animejs/js/model-profile.js';
+import { A344_PROFILE, roleIds } from './animejs/js/model-profile.js';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const assetRoot = path.join(root, 'animejs/public/models/a343');
+const assetRoot = path.join(root, 'animejs/public/models/a344');
 const manifest = JSON.parse(fs.readFileSync(path.join(assetRoot, 'ASSEMBLY_MANIFEST.json'), 'utf8'));
 const html = fs.readFileSync(path.join(root, 'animejs/index.html'), 'utf8');
-assert.equal(manifest.profile.id, A343_PROFILE.id);
-assert.equal(manifest.parts.length, 471);
+assert.equal(manifest.profile.id, A344_PROFILE.id);
+assert.ok(manifest.parts.length > 0);
 assert.equal(manifest.partCount, manifest.parts.length);
-assert.equal(A343_PROFILE.dimensions.sceneObjectCount, manifest.parts.length);
+assert.equal(manifest.profile.metrics.sceneObjectCount, manifest.parts.length);
+assert.ok(!manifest.parts.some(part => part.id.startsWith('lcd_fpc_')), 'Removed LCD cable must stay absent');
+const lcdParts = manifest.parts.filter(part => part.group === 'lcd');
+assert.ok(lcdParts.length > 0);
+for (const part of lcdParts) assert.deepEqual(part.explodeKeyframesMm, lcdParts[0].explodeKeyframesMm, `LCD rigid source path: ${part.id}`);
 assert.equal(manifest.parts.filter(part => part.printable).length, 11);
 const ids = new Set(manifest.parts.map(part => part.id));
 assert.equal(ids.size, manifest.parts.length, 'part IDs must be unique');
-for (const role of Object.keys(A343_PROFILE.roles)) {
+for (const role of Object.keys(A344_PROFILE.roles)) {
   for (const id of roleIds(role)) assert.ok(ids.has(id), `Missing role ${role}: ${id}`);
 }
 let triangles = 0;
@@ -43,7 +47,7 @@ for (const part of manifest.parts) {
   }
 }
 
-const chapters = ['teaser','surface','core','controls','structure','craft','technical','open-source'];
+const chapters = ['teaser','surface','colors','material','chassis', 'interior','architecture','exploded','core-space','connections','core','controls','display','interaction','craft','service','technical'];
 for (const id of chapters) assert.equal([...html.matchAll(new RegExp(`id="${id}"`, 'g'))].length, 1, `Page section: ${id}`);
 for (const url of [...html.matchAll(/(?:src|poster)="(\/(?:videos|images)\/[^"]+)"/g)].map(m=>m[1])) {
  assert.ok(fs.statSync(path.join(root, 'animejs/public', url)).size > 1000, `Missing media: ${url}`);
@@ -64,6 +68,6 @@ for(const p of parts.values()){
  assert.ok(p.pivot.position.distanceTo(p.home)<1e-9,`Assembly return: ${p.id}`);
  assert.ok(p.pivot.quaternion.angleTo(new THREE.Quaternion())<1e-9,`Assembly orientation: ${p.id}`);
 }
-console.log(`PASS: A3.43, ${ids.size} objects / ${triangles.toLocaleString()} triangles, lossless gzip integrity and canonical paths.`);
+console.log(`PASS: A3.44, ${ids.size} objects / ${triangles.toLocaleString()} triangles, lossless gzip integrity and canonical paths.`);
 console.log(`PASS: ${chapters.length} page sections and their media; 101 explosion samples with finite transforms and exact assembly return.`);
 console.log('Composition, collisions, LCD stability and playback require real browser review.');

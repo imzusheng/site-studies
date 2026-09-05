@@ -1,6 +1,6 @@
 import * as THREE from '/vendor/three.module.js';
 import { STLLoader } from '/vendor/STLLoader.js';
-import { A343_PROFILE as PROFILE, roleId, roleIds } from './model-profile.js';
+import { A344_PROFILE as PROFILE, roleId, roleIds } from './model-profile.js';
 
 export const sizeOf = b => new THREE.Vector3(...b[1]).sub(new THREE.Vector3(...b[0]));
 const centerOf = b => new THREE.Vector3(...b[0]).add(new THREE.Vector3(...b[1])).multiplyScalar(.5);
@@ -102,9 +102,9 @@ function materialFor(data, micro) {
     else if(typeof data.color==='string')color=data.color;
   }
   if(data.colorRgba && !data.printable) color=new THREE.Color().setRGB(...data.colorRgba.slice(0,3).map(v=>v/255),THREE.SRGBColorSpace);
-  if(id.includes('top_housing')) return new THREE.MeshPhysicalMaterial({color:0x899398,roughness:.28,metalness:0,transmission:.7,thickness:1.2,ior:1.46,envMapIntensity:.55});
+  if(id.includes('top_housing')) return new THREE.MeshPhysicalMaterial({color:0xe1e6e3,roughness:.22,metalness:0,transmission:.86,thickness:.8,ior:1.46,envMapIntensity:.55});
   const material=new THREE.MeshStandardMaterial({color,roughness,metalness,envMapIntensity:.55});
-  if(data.printable){const map=micro.clone();map.repeat.set(.45,.45);map.needsUpdate=true;material.bumpMap=map;material.bumpScale=.13;}
+  if(data.printable){const map=micro.clone();map.repeat.set(.45,.45);map.needsUpdate=true;material.bumpMap=map;material.bumpScale=.20;}
   return material;
 }
 export async function createModelScene(canvas,onProgress=()=>{}) {
@@ -118,11 +118,11 @@ export async function createModelScene(canvas,onProgress=()=>{}) {
   // A fixed, diffuse light volume: the camera travels through it. No cone lights,
   // camera-following lights or shadow maps that sweep across the product.
   const lights={
-    ambient:new THREE.HemisphereLight(0xdde8f5,0x8292a3,1.05),
-    key:new THREE.DirectionalLight(0xffe8cd,1.45),
-    rim:new THREE.DirectionalLight(0xd5e5fa,1.2),
-    edge:new THREE.DirectionalLight(0xd9e5f1,.65),
-    under:new THREE.DirectionalLight(0xc6d8ec,.8),
+    ambient:new THREE.HemisphereLight(0xdde8f5,0x465464,.30),
+    key:new THREE.DirectionalLight(0xe9eff5,1.5),
+    rim:new THREE.DirectionalLight(0xd5e5fa,1.3),
+    edge:new THREE.DirectionalLight(0xd9e5f1,.40),
+    under:new THREE.DirectionalLight(0xc6d8ec,.38),
   };
   lights.ambient.position.set(0,0,1);
   lights.key.position.set(-160,90,200);
@@ -131,12 +131,12 @@ export async function createModelScene(canvas,onProgress=()=>{}) {
   lights.under.position.set(-30,-70,-180);
   scene.add(...Object.values(lights));
   const root=new THREE.Group();root.visible=false;scene.add(root);
-  onProgress({phase:'manifest',loaded:0,total:PROFILE.dimensions.sceneObjectCount});
-  const assetBase='/models/a343/';
-  const response=await fetch(`${assetBase}ASSEMBLY_MANIFEST.json`);
-  if(!response.ok)throw new Error('A3.43 场景清单无法读取');
+  onProgress({phase:'manifest',loaded:0,total:0});
+  const response=await fetch(PROFILE.manifestUrl);
+  if(!response.ok)throw new Error('A3.44 场景清单无法读取');
   const manifest=await response.json();
-  if(manifest.profile?.id!==PROFILE.id)throw new Error('模型版本与 A3.43 不匹配');
+  if(manifest.profile?.id!==PROFILE.id)throw new Error('模型版本与 A3.44 不匹配');
+  const assetBase=manifest.assetBase;
   const loader=new STLLoader();const parts=new Map();const micro=microTexture();let completed=0;
   async function load(data){
     const response=await fetch(`${assetBase}stl/${data.filename}.gz`);
@@ -160,7 +160,12 @@ export async function createModelScene(canvas,onProgress=()=>{}) {
       line=new THREE.LineSegments(new THREE.EdgesGeometry(geometry,32),new THREE.LineBasicMaterial({color:0xb6cedd,transparent:true,opacity:0,depthWrite:false}));
       line.visible=false;pivot.add(line);
     }
-    parts.set(data.id,{id:data.id,group:data.group,data,pivot,mesh,line,sourceCenter:center,home:center.clone(),explode:new THREE.Vector3(...(data.explodeVectorMm||[0,0,0])),baseColor:material.color.clone(),baseRoughness:material.roughness});
+    let silhouette=null;
+    if(data.printable){
+      silhouette=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:0x343b3b,side:THREE.BackSide,transparent:true,opacity:0,depthWrite:false}));
+      silhouette.scale.setScalar(1.006);pivot.add(silhouette);
+    }
+    parts.set(data.id,{silhouette,id:data.id,group:data.group,data,pivot,mesh,line,sourceCenter:center,home:center.clone(),explode:new THREE.Vector3(...(data.explodeVectorMm||[0,0,0])),baseColor:material.color.clone(),baseRoughness:material.roughness,baseMetalness:material.metalness,baseTransmission:material.transmission||0});
     completed++;onProgress({phase:'parts',loaded:completed,total:manifest.parts.length});
   }
   // Bound decompression and mesh work so the loading UI continues to paint.

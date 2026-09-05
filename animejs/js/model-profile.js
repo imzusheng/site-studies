@@ -1,12 +1,12 @@
-// Formal A3.43 Physical Twin. Object IDs follow the source manifest exactly.
+// Formal A3.44 Physical Twin. Object IDs follow the source manifest exactly.
 // Vendor STEP objects have no verified chip-level semantic mapping: do not infer
 // CPU/flash/IMU labels from geometry or substitute the previous proxy meshes.
-export const A343_PROFILE = Object.freeze({
-  id: 'industrial_a3_43',
-  revision: 'A3.43_TRUE_PHYSICAL_TWIN',
-  label: 'A3.43 / ALL-IN-ONE CONTROL',
-  source: 'luma-remote / formal A3.43 physical twin',
-  manifestUrl: '/models/a343/ASSEMBLY_MANIFEST.json',
+export const A344_PROFILE = Object.freeze({
+  id: 'industrial_a3_44',
+  revision: 'A3.44_MODEL_REFINEMENT',
+  label: 'A3.44 / ALL-IN-ONE CONTROL',
+  source: 'luma-remote / formal A3.44 physical twin',
+  manifestUrl: '/models/a344/ASSEMBLY_MANIFEST.json',
   dimensions: Object.freeze({
     width: 120,
     depth: 81,
@@ -20,7 +20,6 @@ export const A343_PROFILE = Object.freeze({
     knobWellDiameter: 26,
     knobOuterDiameter: 22.5,
     faceAngleDeg: Math.atan(12.9 / 81) * 180 / Math.PI,
-    sceneObjectCount: 471,
     printablePartCount: 11,
   }),
   roles: Object.freeze({
@@ -49,15 +48,15 @@ export const A343_PROFILE = Object.freeze({
 });
 
 // Existing UI/film modules can migrate independently without retaining old assets.
-export const A340_PROFILE = A343_PROFILE;
+export const A340_PROFILE = A344_PROFILE;
 
 export const roleId = (role) => {
-  const value = A343_PROFILE.roles[role];
+  const value = A344_PROFILE.roles[role];
   return Array.isArray(value) ? value[0] : value;
 };
 
 export const roleIds = (role) => {
-  const value = A343_PROFILE.roles[role];
+  const value = A344_PROFILE.roles[role];
   if (!value) return [];
   return Array.isArray(value) ? [...value] : [value];
 };

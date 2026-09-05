@@ -1,4 +1,6 @@
 import { createPromoPage } from './promo-page.js';
+import { createDisplayDemo } from './display-demo.js';
+const displayDemo = createDisplayDemo();
 
 // Media and reading start immediately; 3D is only needed near its own section.
 const page = createPromoPage();

@@ -1,0 +1,91 @@
+{
+  "core": {
+    "camera_start": [
+      0.007,
+      -0.045,
+      0.064
+    ],
+    "camera_end": [
+      0.00544,
+      -0.03356,
+      0.04736
+    ],
+    "target": [
+      0.001,
+      -0.001,
+      0
+    ],
+    "motion": "axial dolly toward the chip, no orbit"
+  },
+  "switch": {
+    "camera_start": [
+      -0.05124,
+      -0.07076,
+      0.055
+    ],
+    "camera_end": [
+      -0.05124,
+      -0.07076,
+      0.077
+    ],
+    "target": [
+      0,
+      0,
+      0.006
+    ],
+    "motion": "vertical crane from spring to upper housing, fixed horizontal position"
+  },
+  "chassis": {
+    "frames": 120,
+    "lens_mm": 70,
+    "fstop": 16,
+    "camera_start": [
+      -0.085,
+      -0.27,
+      0.225
+    ],
+    "camera_end": [
+      0.075,
+      -0.27,
+      0.255
+    ],
+    "target": [
+      0,
+      0,
+      0.009
+    ],
+    "motion": "lateral traverse across the independent inner frame, slight rise",
+    "source_revision": "independent chassis checkpoint 964d6a1; design exploration, not the frozen A3.43 production baseline"
+  },
+  "colors": {
+    "camera": [
+      0.21469999999999997,
+      -0.33899999999999997,
+      0.34873999999999994
+    ],
+    "target": [
+      0,
+      0,
+      0.012
+    ],
+    "lens_mm": 85,
+    "fstop": 22,
+    "graphite": [
+      0.028,
+      0.032,
+      0.036
+    ],
+    "chalk": [
+      0.55,
+      0.52,
+      0.45
+    ],
+    "ember": [
+      0.35,
+      0.07,
+      0.024
+    ],
+    "roughness": 0.82,
+    "exposure": -3.4
+  }
+}

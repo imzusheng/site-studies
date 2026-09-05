@@ -1,0 +1,54 @@
+{
+  "revision": "A3.44",
+  "source": "luma-a343-studio.blend",
+  "resolution": [
+    1280,
+    720
+  ],
+  "fps": 24,
+  "frames": 96,
+  "samples": 48,
+  "support": {
+    "lens_mm": 65,
+    "fstop": 22,
+    "camera_start": [
+      0.3,
+      -0.83,
+      0.54
+    ],
+    "camera_end": [
+      0.33,
+      -0.83,
+      0.555
+    ],
+    "target": [
+      0.01,
+      0,
+      0.014
+    ],
+    "exposure": -3.4,
+    "intent": "Continuous rightward and upward camera traverse around the real A3.44 upper shell, PCB, M3 retaining frame and service cover. Layers are already safely separated and ease a further 5 percent apart; no crossing assembly paths.",
+    "shift_x": -0.19
+  },
+  "interior": {
+    "lens_mm": 70,
+    "fstop": 13,
+    "camera_start": [
+      -0.076,
+      -0.058,
+      -0.048
+    ],
+    "camera_end": [
+      -0.069,
+      -0.052,
+      -0.047
+    ],
+    "target": [
+      -0.017,
+      0.017,
+      0.018
+    ],
+    "exposure": -3.5,
+    "intent": "A restrained diagonal macro dolly toward the left M3 retainer fixing and adjacent PCB. The real assembly stays still; shallow optical depth of field carries attention from the frame edge to the screw and board."
+  }
+}

@@ -5,7 +5,7 @@ from pathlib import Path
 base=Path(__file__).resolve().parent
 args=sys.argv[sys.argv.index('--')+1:]
 kind=args[0] if args else 'core'
-prefix={'intro':'Luma Intro Film','core':'Luma Core Portrait','switch':'Luma Switch Portrait','craft':'Luma Craft Portrait'}[kind]
+prefix=('Luma Color '+kind.removeprefix('color-').title()) if kind.startswith('color-') else {'intro':'Luma Intro Film','core':'Luma Core Portrait','switch':'Luma Switch Portrait','craft':'Luma Craft Portrait','chassis':'Luma Chassis Portrait'}[kind]
 scene=next(s for s in bpy.data.scenes if s.name.startswith(prefix))
 bpy.context.window.scene=scene
 prefs=bpy.context.preferences.addons['cycles'].preferences
@@ -19,7 +19,7 @@ scene.cycles.device='GPU' if gpu else 'CPU'
 out=base.parent/'renders'/'production'/kind
 out.mkdir(parents=True,exist_ok=True)
 if '--preview' in args:
-    frames=[1] if kind=='craft' else [1,scene.frame_end//2,scene.frame_end]
+    frames=[1] if scene.frame_end==1 else [1,scene.frame_end//2,scene.frame_end]
     for frame in frames:
         scene.frame_set(frame);scene.render.filepath=str(out/f'preview_{frame:04d}.png')
         bpy.ops.render.render(write_still=True,scene=scene.name)

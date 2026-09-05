@@ -113,7 +113,9 @@ face_normal=Vector((0,-.157277,.987554)).normalized()
 rot=face_normal.rotation_difference(Vector((0,0,1))).to_matrix().to_4x4()
 transform=rot@Matrix.Translation(-center)
 black=material('Switch graphite housing',(.035,.039,.043),.62)
-ivory=material('Switch ivory housing',(.38,.40,.39),.47)
+import runpy
+upper_housing = runpy.run_path(str(BASE / 'switch-material.py'))
+ivory = upper_housing['upper_housing_material']()
 brown=material('Tactile brown stem',(.21,.10,.045),.58)
 metal=material('Contact alloy',(.34,.22,.10),.32,.65)
 for src in seed.objects:
@@ -129,6 +131,8 @@ for src in seed.objects:
         o.data.set_sharp_from_angle(angle=math.radians(38))
     elif 'contact' in src.name or 'pins' in src.name:use_material(o,metal)
     else:use_material(o,black)
+
+upper_housing['apply'](switch)
 
 craft=studio('craft')
 names=['cosmetic_upper_shell','bottom_service_cover_battery_cradle','esp32_m3_retainer','screen_bezel','ec11_knob_22p5']+[f'keycap_{i}' for i in range(1,7)]

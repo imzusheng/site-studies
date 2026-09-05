@@ -1,14 +1,15 @@
 import * as THREE from '/vendor/three.module.js';
 import { createExplosionSpace } from './explosion-space.js';
-import { A343_PROFILE as PROFILE, roleId } from './model-profile.js';
+import { A344_PROFILE as PROFILE, roleId } from './model-profile.js';
 const angle=PROFILE.dimensions.faceAngleDeg*Math.PI/180;
 const normal=new THREE.Vector3(0,-Math.sin(angle),Math.cos(angle));
 const vertical=new THREE.Vector3(0,Math.cos(angle),Math.sin(angle));
 
 export function createFilmEngine(model){
  const {scene,camera,renderer,root,parts,dust}=model,space=createExplosionSpace(model);
- const paper=new THREE.Color(0xe9e6df),ink=new THREE.Color(0x67665f);
- scene.background=paper;dust.visible=false;
+ const paper=new THREE.Color(0xe9e6df),ink=new THREE.Color(0x343b3b),night=new THREE.Color(0x000000);
+ const displayParts=[];
+ scene.background=paper.clone();dust.visible=false;
  // The vendor STEP contains duplicated connector solids at the same placement.
  // The canonical shape suffix alone is insufficient: repeated hardware elsewhere
  // must remain visible. Require both that identity and identical source bounds.
@@ -24,8 +25,12 @@ export function createFilmEngine(model){
    }
    if(signature)placedVendorShapes.set(signature,p.id);
   }
+  p.presentationColor=p.baseColor.clone();
+  if(p.data.printable)p.presentationColor.set(0x222a30);
+  displayParts.push(p);
   const m=p.mesh.material;m.color.set(0xd8d5ce);m.roughness=.88;m.metalness=0;m.envMapIntensity=.12;
-  if('transmission' in m)m.transmission=0;
+  // Preserve the authored material response for the dark studio passage.
+  m.emissive.copy(paper);
   m.polygonOffset=true;m.polygonOffsetFactor=1;m.polygonOffsetUnits=1;
   // Internal optical interfaces are not decorative contours. The LCD remains
   // assembled and opaque; outlining its touching layers creates shimmering seams.
@@ -60,27 +65,80 @@ export function createFilmEngine(model){
   `);
  };
  host.mesh.material.needsUpdate=true;
- const target=new THREE.Vector3(0,0,24),direction=new THREE.Vector3(.32,-.75,.58).normalize();
+ // A single forward dolly rail with a fixed lens and a gentle continuous arc. The camera
+ // advances toward the intact display/compute cluster; it never pulls back to
+ // reset the assembly. The following reading section carries the transition.
+ const smooth=x=>{const t=THREE.MathUtils.clamp(x,0,1);return t*t*(3-2*t);};
+ const railStart=new THREE.Vector3(0,0,36);
+ const railEnd=new THREE.Vector3(15,7,-27);
+ const railDirection=new THREE.Vector3(.45,-.78,.44).normalize();
+ const orbitAxis=new THREE.Vector3(0,0,1);
+ const stage=renderer.domElement.parentElement;
+ const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+ svg.setAttribute('aria-hidden','true');svg.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:hidden';stage.append(svg);
+ const labelSpecs=[['screen_bezel','DISPLAY BEZEL'],['keycap_2','PRINTED KEYCAP'],['cosmetic_upper_shell','OUTER ENCLOSURE'],['lcd_front_cover_glass','DISPLAY + COMPUTE'],['esp32_m3_retainer','INNER SUPPORT'],['bottom_service_cover_battery_cradle','SERVICE COVER']];
+ const labels=labelSpecs.map(([id,text])=>{
+  const group=document.createElementNS(svg.namespaceURI,'g'),path=document.createElementNS(svg.namespaceURI,'path'),dot=document.createElementNS(svg.namespaceURI,'circle'),label=document.createElementNS(svg.namespaceURI,'text');
+  path.setAttribute('fill','none');path.setAttribute('stroke-width','.7');dot.setAttribute('r','1.6');label.textContent=text;label.setAttribute('font-size','8');label.setAttribute('font-family','monospace');label.setAttribute('letter-spacing','1');group.append(path,dot,label);svg.append(group);return {part:parts.get(id),group,path,dot,label};
+ });
+ const projected=new THREE.Vector3();
+ function annotate(dark){
+  const {width:w,height:h}=stage.getBoundingClientRect();svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  const focused=progress>.48;
+  const candidates=labels.map(item=>{item.part.pivot.getWorldPosition(projected);projected.project(camera);return {...item,x:(projected.x*.5+.5)*w,y:(-.5*projected.y+.5)*h,z:projected.z};}).sort((a,b)=>a.y-b.y);
+  let lastY=-100;
+  const accepted=candidates.filter(item=>{
+   item.group.style.display='none';
+   if(progress<.14||w<900||item.z>1||item.x<w*.42||item.x>w*.81||item.y<h*.14||item.y>h*.86||item.y-lastY<48||(focused&&item.part.id!=='lcd_front_cover_glass'))return false;
+   lastY=item.y;return true;
+  });
+  const rail=Math.max(w*.79,...accepted.map(item=>item.x+12)),elbow=rail+28,labelX=Math.min(w-138,elbow+24);
+  for(const item of accepted){
+   const color=dark>.5?'#aebbc4':'#73736b';item.group.style.display='';item.group.setAttribute('opacity',String(.8));
+   item.path.setAttribute('d',`M ${item.x} ${item.y} H ${rail} l 28 -28 H ${labelX}`);item.path.setAttribute('stroke',color);
+   item.dot.setAttribute('cx',item.x);item.dot.setAttribute('cy',item.y);item.dot.setAttribute('fill',color);
+   item.label.setAttribute('x',labelX+7);item.label.setAttribute('y',item.y-25);item.label.setAttribute('fill',color);
+  }
+ }
+ const target=new THREE.Vector3(),direction=new THREE.Vector3();
  let progress=0;
  function update(value=progress){
-  progress=THREE.MathUtils.clamp(value,0,1);space.update(progress);
-  // A single gently opening view: the same optical axis and fixed light volume
-  // carry both the assembled and separated composition, including reverse scroll.
-  const u=progress*progress*(3-2*progress);
-  target.set(0,2,8+u*17);
+  progress=THREE.MathUtils.clamp(value,0,1);
+  const opening=.64+.36*smooth(progress/.30);
+  space.update(opening);
+  const dark=(1-smooth(progress/.12))+smooth((progress-.25)/.15)*(1-smooth((progress-.80)/.20));
+  scene.background.copy(paper).lerp(night,dark);
+  dust.visible=dark>.01;dust.material.opacity=dark*.24;
+  for(const part of displayParts){
+   const mat=part.mesh.material;
+   const lineColor=ink.clone().lerp(new THREE.Color(0xc8d5db),dark);
+   if(part.silhouette){part.silhouette.material.color.copy(lineColor);part.silhouette.material.opacity=.8;}
+   // Both passages are illustrations: opaque paper fill, then inverted ink.
+   // Material lighting never takes over mid-shot.
+   mat.color.set(0x000000);
+   mat.emissive.copy(paper).lerp(night,dark);mat.emissiveIntensity=.72;
+   mat.roughness=1;mat.metalness=0;mat.envMapIntensity=0;
+   if('transmission' in mat)mat.transmission=0;
+   if(part.line){part.line.material.color.copy(lineColor);part.line.material.opacity=part.data.printable?.85:.52;}
+
+  }
+  target.copy(railStart).lerp(railEnd,progress);
+  // Ten degrees over the whole passage; no chapter-local easing or reversal.
+  direction.copy(railDirection).applyAxisAngle(orbitAxis,progress*.175);
   camera.fov=34;camera.near=2;camera.far=1600;
-  const framing=THREE.MathUtils.lerp(195,365,u);
-  const distance=framing/(2*Math.tan(THREE.MathUtils.degToRad(camera.fov/2)))*Math.max(1,1.22/camera.aspect);
-  camera.position.copy(target).addScaledVector(direction,distance);
-  camera.lookAt(target);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
+  const distance=(520-270*progress)*Math.max(1,1.22/camera.aspect);
+  camera.position.copy(target).addScaledVector(direction,distance);camera.lookAt(target);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
   renderer.toneMappingExposure=1.02;
+  stage.style.setProperty('--structure-ink',dark>.48?'#eef0ed':'#303534');stage.style.setProperty('--structure-muted',dark>.48?'#bac5cc':'#626a67');
+  stage.dataset.sceneTone=dark>.48?'dark':'light';
+  annotate(dark);
  }
  function render(){renderer.render(scene,camera);}
  function resize(){
   const box=renderer.domElement.parentElement.getBoundingClientRect();
   const width=Math.max(1,box.width),height=Math.max(1,box.height);
   camera.aspect=width/height;
-  if(width>760)camera.setViewOffset(width,height,-width*.16,0,width,height);else camera.clearViewOffset();
+  if(width>760)camera.setViewOffset(width,height,-width*.13,0,width,height);else camera.clearViewOffset();
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.setSize(width,height,false);update();
  }
  return {update,render,resize};

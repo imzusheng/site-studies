@@ -1,0 +1,63 @@
+{
+  "source": "luma-a343-studio.blend",
+  "revision": "A3.44",
+  "resolution": [
+    1280,
+    720
+  ],
+  "fps": 24,
+  "frames": 96,
+  "samples": 48,
+  "lens_mm": 70,
+  "exposure": -3.2,
+  "camera_start": [
+    -0.024,
+    -0.61,
+    0.66
+  ],
+  "camera_end": [
+    0.004,
+    -0.6,
+    0.653
+  ],
+  "target_start": [
+    0,
+    0,
+    0.018
+  ],
+  "target_end": [
+    0,
+    0,
+    0.018
+  ],
+  "products": [
+    {
+      "color": "Chalk",
+      "position": [
+        -0.135,
+        0.009,
+        0.006
+      ],
+      "yaw_degrees": -7
+    },
+    {
+      "color": "Ember",
+      "position": [
+        0,
+        -0.018,
+        0.014
+      ],
+      "yaw_degrees": 0
+    },
+    {
+      "color": "Graphite",
+      "position": [
+        0.135,
+        0.012,
+        0.009
+      ],
+      "yaw_degrees": 7
+    }
+  ],
+  "intent": "Three complete frozen A3.44 assemblies share one studio and one camera. The camera travels gently right and forward without reversing. Matte printed polymers, generous shared softboxes, no composite image planes."
+}

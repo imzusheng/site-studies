@@ -1,5 +1,5 @@
 import * as THREE from '../vendor/three.module.js';
-import { A343_PROFILE as PROFILE } from './model-profile.js';
+import { A344_PROFILE as PROFILE } from './model-profile.js';
 const clamp = x => Math.max(0, Math.min(1, x));
 const ease = x => { const t = clamp(x); return t*t*(3-2*t); };
 const normal = new THREE.Vector3(0,-Math.sin(PROFILE.dimensions.faceAngleDeg*Math.PI/180),Math.cos(PROFILE.dimensions.faceAngleDeg*Math.PI/180));

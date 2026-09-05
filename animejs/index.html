@@ -6,64 +6,76 @@
   <meta name="theme-color" content="#080b0f" />
   <link rel="icon" href="data:," />
   <title>Luma Remote — 把控制留在手边</title>
-  <meta name="description" content="Luma Remote A3.43：六枚按键，一只旋钮，一块状态屏。为实体输入、本地联动与自由制作而设计的开源桌面控制器。" />
+  <meta name="description" content="Luma Remote A3.44：六枚按键，一只旋钮，一块状态屏。为实体输入、本地联动与自由制作而设计的开源桌面控制器。" />
   <link rel="preload" as="image" href="/images/luma-a343-video-poster.webp" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/display-demo.css" />
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="#teaser" aria-label="Luma Remote 首页">luma<span>remote</span></a>
-    <nav aria-label="产品导航"><a href="#core">核心</a><a href="#controls">触感</a><a href="#structure">结构</a><a href="#craft">制作</a></nav>
+    <nav aria-label="产品导航"><a href="#colors">外观</a><a href="#structure">结构</a><a href="#display">体验</a><a href="#craft">制作</a></nav>
     <a class="repo-link" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">探索开源项目 <span>↗</span></a>
   </header>
   <main>
-    <div id="opening" class="opening">
-      <section id="teaser" class="photographic-intro" aria-labelledby="intro-title">
-        <video id="hero-photograph" class="hero-photograph" src="/videos/luma-a343-intro.mp4" poster="/images/luma-a343-video-poster.webp" muted playsinline preload="metadata" aria-label="Luma Remote 产品特写短片" data-promo-video></video>
-        <div class="intro-heading"><div><span class="eyebrow">LUMA REMOTE / A3.43</span><h1 id="intro-title">Luma Remote.</h1></div><p>把控制，留在手边。<span>为日常操作，留一个专属位置。</span></p></div>
-        <div class="intro-scroll" aria-hidden="true">向下探索 <span>↓</span></div>
-        <div class="hero-playback"><button id="hero-play-toggle" type="button" aria-controls="hero-photograph" data-video-toggle="hero-photograph">播放短片</button><button id="hero-replay" type="button" aria-controls="hero-photograph" data-video-replay="hero-photograph" hidden>重播 ↺</button></div>
-      </section>
-      <section id="surface" class="reading-interlude" aria-labelledby="surface-title">
+<div id="opening" class="opening">
+<section id="teaser" class="photographic-intro" aria-labelledby="intro-title"><div class="hero-sticky"><div class="hero-window"><video id="hero-photograph" class="hero-photograph" src="/videos/luma-a343-intro.mp4" poster="/images/luma-a343-video-poster.webp" muted playsinline preload="metadata" aria-label="Luma Remote 产品特写短片" data-promo-video></video><div class="intro-heading"><div><span class="eyebrow">A SMALL OBJECT. A BIG DIFFERENCE.</span><h1 id="intro-title">Luma Remote.</h1></div><p>把控制，留在手边。<span>为日常操作，留一个专属位置。</span></p></div><div class="intro-scroll" aria-hidden="true">向下探索 <span>↓</span></div><div class="hero-playback"><button id="hero-play-toggle" type="button" aria-controls="hero-photograph" data-video-toggle="hero-photograph">播放短片</button><button id="hero-replay" type="button" aria-controls="hero-photograph" data-video-replay="hero-photograph" hidden>重播 ↺</button></div></div></div></section>
+<section id="surface" class="reading-interlude" aria-labelledby="surface-title">
         <div class="reading-heading"><span class="eyebrow">回到直觉</span><h2 id="surface-title">少一点寻找。<br />多一点直觉。</h2><p>常用的操作，不必每次都从菜单里寻找。<br />让按键负责触发，旋钮负责调节，屏幕带来反馈。<br />把注意力，留给正在做的事。</p></div>
         <div class="reading-features" aria-label="三个实体控制区域"><div><strong>6<span> 枚</span></strong><p>快捷按键</p></div><div><strong>1<span> 只</span></strong><p>旋转与按压旋钮</p></div><div><strong>2.0<span> 英寸</span></strong><p>状态屏</p></div></div>
-      </section>
-    </div>
-    <section id="core" class="feature-section" aria-labelledby="core-title">
-      <div class="section-heading"><div><span class="eyebrow">01 / CONNECTED AT HEART</span><h2 id="core-title">小小核心。<br />连接你的日常。</h2></div><p>ESP32-S3，将显示、输入与无线连接汇聚在一起。<br />通过 Wi-Fi、MQTT 与 Home Assistant，<br />让一次实体操作，成为智能空间的入口。</p></div>
-      <figure class="media-frame core-media"><video id="core-video" src="/videos/luma-a343-core.mp4" poster="/images/luma-a343-core.webp" muted playsinline preload="none" aria-label="ESP32-S3 计算核心特写" data-promo-video></video><figcaption><span>ESP32-S3 <i>计算核心</i></span><button type="button" data-video-toggle="core-video" aria-controls="core-video">播放短片</button></figcaption></figure>
-      <div class="feature-notes"><p><strong>操作有回应。</strong> 状态回到眼前，调节更直观。</p><p><strong>保持开放。</strong> 从固件到联动方式，为自己的日常继续迭代。</p></div>
-    </section>
-    <section id="controls" class="feature-section tactile-section" aria-labelledby="controls-title">
-      <div class="section-heading"><div><span class="eyebrow">02 / FEEL EVERY ACTION</span><h2 id="controls-title">每一次操作，<br />都落在实处。</h2></div><p>六枚 Kailh Choc V2 机械按键，给常用操作清楚的位置。<br />一只 EC11 旋钮，将旋转调节与按压确认放在一起。<br />不必看着手，也能找到熟悉的动作。</p></div>
-      <figure class="media-frame switch-media"><video id="switch-video" src="/videos/luma-a343-switch.mp4" poster="/images/luma-a343-switch.webp" muted playsinline preload="none" aria-label="机械键轴结构特写" data-promo-video></video><figcaption><span>KAILH CHOC V2 <i>触感，来自细节的配合。</i></span><button type="button" data-video-toggle="switch-video" aria-controls="switch-video">播放短片</button></figcaption></figure>
-    </section>
-    <section id="structure" class="structure-section" aria-label="探索内部结构">
-      <div id="engine-stage" class="engine-stage" aria-label="Luma Remote A3.43 三维结构展示">
-        <canvas id="webgl-canvas" class="webgl-canvas"></canvas>
-  <div id="model-loading" class="model-loading" role="status" aria-live="polite">
+      </section></div>
+<section id="colors" class="colors-section" aria-labelledby="colors-title">
+  <div class="color-heading"><span class="eyebrow">YOUR OBJECT. YOUR EXPRESSION.</span><h2 id="colors-title">同一种直觉。<br />不同的表达。</h2><p>沉静石墨。柔和粉白。温暖赤陶。<br />三种表情，同样属于你的手边。</p></div>
+  <figure class="media-frame color-film"><video id="colors-video" src="/videos/luma-a344-colors.mp4" poster="/images/luma-a344-colors.webp" muted playsinline preload="none" aria-label="石墨、粉白与赤陶三款 Luma Remote 同框短片" data-promo-video></video><figcaption><span>GRAPHITE / CHALK / EMBER <i>三种表情，同一份直觉。</i></span><button type="button" data-video-toggle="colors-video" aria-controls="colors-video">播放短片</button></figcaption></figure>
+</section>
+<section id="material" class="material-section" aria-labelledby="material-title">
+  <div class="material-copy"><span class="eyebrow">A QUIETER KIND OF DETAIL</span><h2 id="material-title">细节，<br />留给指尖。</h2><p>柔和的哑光，收住多余反光。<br />圆润的边缘，接住每一次触碰。<br />让形状与纹理，一起成为日常的手感。</p></div>
+  <figure class="material-macro"><img src="/images/luma-a344-color-ember.webp" alt="赤陶打印表面的纹理、键帽裙边与圆润旋钮细节" width="1920" height="1080" loading="lazy" /><figcaption>MATTE SURFACE · SOFT EDGES</figcaption></figure>
+  <p class="material-note">外观渲染示意。实际纹理与颜色随打印材料和工艺变化。</p>
+</section>
+<section id="chassis" class="chassis-section" aria-labelledby="chassis-title"><div class="chassis-copy"><span class="eyebrow">INSIDE HAS A PURPOSE</span><h2 id="chassis-title">内外分工。</h2><p>外层定义轮廓与触感。<br />内层安排承托、定位与连接。<br />把每一份支撑，交给合适的位置。</p><span class="exploration-note">A3.44 · 内部支撑</span></div><figure class="media-frame chassis-media"><video id="chassis-video" src="/videos/luma-a344-support.mp4" poster="/images/luma-a344-support.webp" muted playsinline preload="none" aria-label="内层支架结构探索" data-promo-video></video><figcaption><span>INNER STRUCTURE</span><button type="button" data-video-toggle="chassis-video" aria-controls="chassis-video">播放短片</button></figcaption></figure></section>
+<section id="interior" class="feature-section interior-section" aria-labelledby="interior-title">
+<div class="section-heading"><div><span class="eyebrow">A CLOSER LOOK INSIDE</span><h2 id="interior-title">看不见的地方，<br />也有章法。</h2></div><p>承托板卡，留出连接，安排定位。<br />靠近一点，看清细节如何彼此配合。</p></div>
+<figure class="media-frame"><video id="interior-video" src="/videos/luma-a344-interior.mp4" poster="/images/luma-a344-interior.webp" muted playsinline preload="none" aria-label="内部支撑与连接细节特写" data-promo-video></video><figcaption><span>DETAILS WITH A PURPOSE</span><button type="button" data-video-toggle="interior-video" aria-controls="interior-video">播放短片</button></figcaption></figure>
+</section>
+<div id="structure" class="structure-section" aria-label="探索内部结构"><div id="engine-stage" class="engine-stage" aria-label="Luma Remote 三维爆炸空间"><canvas id="webgl-canvas" class="webgl-canvas"></canvas><div id="model-loading" class="model-loading" role="status" aria-live="polite">
     <div class="loading-copy"><span class="eyebrow">LUMA REMOTE</span><h2>让控制，<br />回到手边。</h2>
       <div class="loading-meter"><strong id="loading-percent">000%</strong><span class="loading-track" aria-hidden="true"><i id="loading-bar"></i></span></div>
       <div class="loading-status-row"><span id="loading-status">正在准备产品空间</span><span id="loading-count"></span></div>
       <button id="loading-retry" type="button" hidden>重新加载</button>
     </div>
-  </div>
-
-        <div class="structure-copy">
-          <span class="eyebrow">03 / CONSIDERED INSIDE OUT</span>
-          <div class="structure-step is-active" data-structure-step="0"><h2>每个细节，<br />都有自己的位置。</h2><p>外壳、输入与显示，围绕同一个控制面协作。<br />向下滚动，看看表面之下。</p></div>
-          <div class="structure-step" data-structure-step="1"><h2>打开之后，<br />设计依然完整。</h2><p>键轴肩部负责承托，独立固定架负责主板定位。<br />把支撑留在需要的位置，为内部留出空间。</p></div>
-          <div class="structure-step" data-structure-step="2"><h2>方便装配。<br />也方便再打开。</h2><p>可拆底盖与三点 M3 连接，让闭合路径清楚。<br />每一处连接，都为维护留下入口。</p></div>
-        </div>
-        <div class="structure-meta"><span>LUMA REMOTE / A3.43</span><span class="structure-progress"><i id="structure-progress-bar"></i></span><span>滚动探索 ↓</span></div>
-      </div>
+  </div><section id="architecture" class="structure-panel is-active" data-structure-panel="0" aria-labelledby="architecture-title"><span class="eyebrow">01 / ANATOMY</span><h2 id="architecture-title">先看清结构。<br />再走进其中。</h2><p>外壳、显示与输入，各自承担明确的职责。<br />线条让它们的边界与装配关系清晰可见。</p></section><section id="exploded" class="structure-panel " data-structure-panel="1" aria-labelledby="exploded-title"><span class="eyebrow">02 / A WORLD WITHIN</span><h2 id="exploded-title">一件物品。<br />一个内部世界。</h2><p>沿着层次展开，在同一空间中看见细节。<br />每个零件都有来处，也有回到整体的位置。</p></section><section id="core-space" class="structure-panel " data-structure-panel="2" aria-labelledby="core-space-title"><span class="eyebrow">03 / THE CONNECTED CORE</span><h2 id="core-space-title">穿过表面。<br />抵达核心。</h2><p>屏幕、输入与连接，围绕主板协作。<br />保持完整的板卡关系，靠近真正的计算核心。</p></section><section id="connections" class="structure-panel " data-structure-panel="3" aria-labelledby="connections-title"><span class="eyebrow">04 / AT YOUR COMMAND</span><h2 id="connections-title">每个动作。<br />都有回应。</h2><p>输入在这里汇聚，状态从这里回到屏幕。<br />从一个实体动作，连接到你的日常。</p></section><div id="part-callouts" class="part-callouts" aria-hidden="true"><div class="part-callout"><i class="callout-line"></i><span class="callout-label"></span></div><div class="part-callout"><i class="callout-line"></i><span class="callout-label"></span></div></div><div class="structure-meta"><span>LUMA REMOTE / A3.44</span><span class="structure-progress"><i id="structure-progress-bar"></i></span><span id="structure-chapter">01 / 04</span></div></div></div>
+<section id="core" class="feature-section" aria-labelledby="core-title">
+      <div class="section-heading"><div><span class="eyebrow">01 / CONNECTED AT HEART</span><h2 id="core-title">小小核心。<br />连接你的日常。</h2></div><p>ESP32-S3，将显示、输入与无线连接汇聚在一起。<br />通过 Wi-Fi、MQTT 与 Home Assistant，<br />让一次实体操作，成为智能空间的入口。</p></div>
+      <figure class="media-frame core-media"><video id="core-video" src="/videos/luma-a344-core.mp4" poster="/images/luma-a344-core.webp" muted playsinline preload="none" aria-label="ESP32-S3 计算核心特写" data-promo-video></video><figcaption><span>ESP32-S3 <i>计算核心</i></span><button type="button" data-video-toggle="core-video" aria-controls="core-video">播放短片</button></figcaption></figure>
+      <div class="feature-notes"><p><strong>操作有回应。</strong> 状态回到眼前，调节更直观。</p><p><strong>保持开放。</strong> 从固件到联动方式，为自己的日常继续迭代。</p></div>
     </section>
-    <section id="craft" class="feature-section craft-section" aria-labelledby="craft-title">
+<section id="controls" class="feature-section tactile-section" aria-labelledby="controls-title">
+      <div class="section-heading"><div><span class="eyebrow">02 / FEEL EVERY ACTION</span><h2 id="controls-title">每一次操作，<br />都落在实处。</h2></div><p>六枚 Kailh Choc V2 机械按键，给常用操作清楚的位置。<br />一只 EC11 旋钮，将旋转调节与按压确认放在一起。<br />不必看着手，也能找到熟悉的动作。</p></div>
+      <figure class="media-frame switch-media"><video id="switch-video" src="/videos/luma-a344-switch.mp4" poster="/images/luma-a344-switch.webp" muted playsinline preload="none" aria-label="机械键轴结构特写" data-promo-video></video><figcaption><span>KAILH CHOC V2 <i>触感，来自细节的配合。</i></span><button type="button" data-video-toggle="switch-video" aria-controls="switch-video">播放短片</button></figcaption></figure>
+    </section>
+<section id="display" class="display-story" aria-labelledby="display-title">
+  <div class="demo-header"><div><p class="section-kicker">AT A GLANCE / 屏幕反馈</p><h2 id="display-title">房间的状态，<br>一眼就知道。</h2></div><p class="demo-intro">五盏灯的明暗、色温与连接状态，收进一块横屏。深入一层，亮度和灯效也有自己的位置。无需在手机里来回寻找。</p></div>
+  <div class="demo-screen"><iframe data-luma-demo src="/demo/luma-ui.html" title="Luma Remote 灯光界面预览" loading="lazy" sandbox="allow-scripts" tabindex="-1"></iframe></div>
+  <div class="demo-tours" aria-label="界面预览"><button type="button" data-demo-action="tour" data-demo-value="home" aria-pressed="true">灯光总览</button><button type="button" data-demo-action="tour" data-demo-value="brightness" aria-pressed="false">亮度调节</button><button type="button" data-demo-action="tour" data-demo-value="temperature" aria-pressed="false">冷暖色温</button><button type="button" data-demo-action="tour" data-demo-value="presets" aria-pressed="false">全局预设</button></div>
+  <p class="demo-caption">Luma 原生界面设计 · 320 × 240 横屏 · 交互预览</p>
+</section>
+<section id="interaction" class="interaction-story" aria-labelledby="interaction-title">
+ <div class="interaction-grid"><div><p class="section-kicker">TURN. PRESS. DONE. / 操作体验</p><h2 id="interaction-title">转一下。<br>刚刚好。</h2><p class="demo-intro">精细调节交给旋钮。常用场景交给六颗按键。手指找到自己的节奏，光也随之改变。</p><ol class="demo-steps"><li><em>01</em><div><b>旋转选择，按下进入。</b><p>挑一盏灯，再选择亮度、色温或灯效。</p></div></li><li><em>02</em><div><b>每一格，都看得见。</b><p>进入编辑后旋转调节，再按一次完成。长按可以返回。</p></div></li><li><em>03</em><div><b>熟悉的场景，一按到位。</b><p>四个场景、全部打开、全部关闭。六键在每个页面都保持一致。</p></div></li></ol></div>
+ <div class="interaction-console"><div class="demo-screen"><iframe data-luma-demo src="/demo/luma-ui.html" title="可操作的 Luma Remote 界面" loading="lazy" sandbox="allow-scripts" tabindex="-1"></iframe></div><div class="demo-inputs"><div class="demo-keys" aria-label="六个全局预设键"><button type="button" data-demo-action="preset" data-demo-value="0" aria-label="场景1 日常">1<small>日常</small></button><button type="button" data-demo-action="preset" data-demo-value="1" aria-label="场景2 氛围">2<small>氛围</small></button><button type="button" data-demo-action="preset" data-demo-value="2" aria-label="场景3 睡眠">3<small>睡眠</small></button><button type="button" data-demo-action="preset" data-demo-value="3" aria-label="场景4">4<small>场景 4</small></button><button type="button" data-demo-action="preset" data-demo-value="4" aria-label="全部打开">5<small>全部打开</small></button><button type="button" data-demo-action="preset" data-demo-value="5" aria-label="全部关闭">6<small>全部关闭</small></button></div><div><button type="button" class="demo-dial" data-demo-action="press" aria-label="旋钮短按，进入或确认">按下</button><div class="demo-rotation"><button type="button" data-demo-action="rotate" data-demo-value="-1" aria-label="旋钮逆时针一格">↶</button><button type="button" data-demo-action="rotate" data-demo-value="1" aria-label="旋钮顺时针一格">↷</button></div></div></div><button type="button" class="demo-return" data-demo-action="long">模拟长按 · 返回</button><p class="demo-status" data-demo-status aria-live="polite">灯光首页 · 旋转选灯，按下进入</p></div></div>
+ <p class="demo-caption">点击旋钮与按键试用。场景名称为演示配置，不连接真实灯具。</p>
+</section>
+
+<section id="craft" class="feature-section craft-section" aria-labelledby="craft-title">
       <div class="section-heading"><div><span class="eyebrow">04 / MADE TO BE MADE</span><h2 id="craft-title">从一份文件，<br />到你的桌面。</h2></div><p>11 个可打印部件，从外壳到键帽与旋钮。<br />薄壁与局部支撑，让材料用在需要的地方。<br />选择自己的材料与颜色，把设计变成自己的物品。</p></div>
-      <figure class="media-frame craft-media"><img src="/images/luma-a343-craft.webp" alt="Luma Remote 可打印外壳、键帽、旋钮与内部支撑结构" loading="lazy" width="1920" height="1080" /><figcaption><span>11 PRINTABLE PARTS <i>一件物品，多一种表达。</i></span></figcaption></figure>
+      <figure class="media-frame craft-media"><img src="/images/luma-a344-craft.webp" alt="Luma Remote 可打印外壳、键帽、旋钮与内部支撑结构" loading="lazy" width="1920" height="1080" /><figcaption><span>11 PRINTABLE PARTS <i>一件物品，多一种表达。</i></span></figcaption></figure>
       <div class="craft-details"><div><h3>把材料留给结构。</h3><p>内部空腔、定位台与局部加强肋，<br />各自承担明确的作用。</p></div><div><h3>把选择留给你。</h3><p>STL 与 3MF 文件开放，<br />从一次打印开始自己的版本。</p></div></div>
     </section>
-    <section id="technical" class="technical-section" aria-labelledby="technical-title"><div><span class="eyebrow">THE ESSENTIALS</span><h2 id="technical-title">进一步了解。</h2><p>从实体结构到开放固件。<br />更多技术细节，留在项目文档里。</p><a class="text-link" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">查看项目与制作文件 <span>↗</span></a></div><dl><div><dt>计算与显示</dt><dd>ESP32-S3-LCD-2 · 2.0 英寸 LCD</dd></div><div><dt>实体输入</dt><dd>6 × Kailh Choc V2 · EC11 旋钮</dd></div><div><dt>连接与联动</dt><dd>Wi-Fi · MQTT · Home Assistant</dd></div><div><dt>可打印设计</dt><dd>11 个部件 · STL / 3MF</dd></div><div><dt>结构版本</dt><dd>A3.43</dd></div></dl></section>
+<section id="service" class="service-section" aria-labelledby="service-title">
+  <div class="section-heading"><div><span class="eyebrow">DESIGNED TO OPEN AGAIN</span><h2 id="service-title">为下一次打开，<br />留好位置。</h2></div><p>三处螺钉连接，保留拆装入口。<br />螺钉头藏进底面的凹位，内部为定位与承托留出空间。<br />需要检查或调整时，设计仍然向你敞开。</p></div>
+  <div class="service-gallery"><figure><img src="/images/luma-a344-cover-inside.png" alt="A3.44 底盖内侧，展示螺钉座与内部定位结构" width="1500" height="1100" loading="lazy" /><figcaption><span>01 / INSIDE</span><h3>支撑，安排在内部。</h3><p>定位边与局部支撑各司其职，为内部组件安排空间。</p></figcaption></figure><figure><img src="/images/luma-a344-cover-underside.png" alt="A3.44 底盖外侧，三颗螺钉头收进沉孔" width="1500" height="1100" loading="lazy" /><figcaption><span>02 / UNDERSIDE</span><h3>底面，留给桌面。</h3><p>凹陷螺钉位，让连接件收在底面轮廓以内。</p></figcaption></figure></div>
+</section>
+<section id="technical" class="technical-section" aria-labelledby="technical-title"><div><span class="eyebrow">THE ESSENTIALS</span><h2 id="technical-title">进一步了解。</h2><p>从实体结构到开放固件。<br />更多技术细节，留在项目文档里。</p><a class="text-link" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">查看项目与制作文件 <span>↗</span></a></div><dl><div><dt>计算与显示</dt><dd>ESP32-S3-LCD-2 · 2.0 英寸 LCD</dd></div><div><dt>实体输入</dt><dd>6 × Kailh Choc V2 · EC11 旋钮</dd></div><div><dt>连接与联动</dt><dd>Wi-Fi · MQTT · Home Assistant</dd></div><div><dt>可打印设计</dt><dd>11 个部件 · STL / 3MF</dd></div><div><dt>结构版本</dt><dd>A3.44</dd></div></dl></section>
   </main>
   <footer id="open-source" class="site-footer"><div><span class="eyebrow">OPEN BY DESIGN</span><h2>手边的控制。<br />由你定义。</h2><a class="text-link" href="https://github.com/imzusheng/luma-remote" target="_blank" rel="noopener">探索 Luma Remote <span>↗</span></a></div><div class="footer-bottom"><a class="brand" href="#teaser">luma<span>remote</span></a><span>开放设计。持续迭代。</span><a href="#teaser">回到顶部 ↑</a></div></footer>
   <script type="module" src="/js/main.js"></script>
