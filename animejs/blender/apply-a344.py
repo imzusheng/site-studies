@@ -1,8 +1,9 @@
-"""Synchronize source CAD meshes in non-hero studio scenes by semantic ID.
+"""Synchronize source CAD meshes in studio scenes by semantic ID.
 
 Run after build-production.py/build-expansion.py. Reads the committed A3.44
-lossless STL assets, preserves authored object transforms/materials/cameras,
-and leaves the approved A3.43 Intro scene and encoded video unchanged.
+lossless STL assets, preserves authored object transforms/materials/cameras.
+The retired Luma Chassis exploration scene stays frozen; every other scene,
+including the Intro film, tracks the approved A3.44 model revision.
 """
 import bpy, gzip, hashlib, json, struct
 from pathlib import Path
@@ -19,7 +20,7 @@ scenes = loaded.scenes
 updated = []
 removed = []
 for scene in scenes:
-    if scene.name.startswith(('Luma Intro Film', 'Luma Chassis')):
+    if scene.name.startswith('Luma Chassis'):
         continue
     scene.frame_set(1)
     for obj in list(scene.objects):

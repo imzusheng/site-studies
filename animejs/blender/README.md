@@ -87,3 +87,38 @@ python3 blender/encode-internal-films.py interior
 ## 当前三支短片的镜头版本
 
 三色、内外分工与核心的最终镜头由 [CAMERA_FILMS.md](CAMERA_FILMS.md) 说明，参数在 `camera-films.json`，可直接从 `luma-a344-camera-films.blend` 重渲染。原工程保留作为材质和几何来源；重建原场景后应再次运行 `author-camera-films.py`，避免回退到旧镜头。
+
+## 首屏运镜与草稿审核工作流（2026-09-06 起标准流程）
+
+首屏（`Luma Intro Film` 场景）的模型、材质、运镜改动一律走"改 → 草稿 → 人工审核 → 全量"循环，不做未审核的全量渲染。本机（Windows + RTX 4060）命令如下，macOS 把可执行文件换成 `/Applications/Blender.app/Contents/MacOS/Blender` 即可。
+
+### 流程链
+
+1. **几何同步**：`blender --factory-startup -b blender/luma-a343-studio.blend --python blender/apply-a344.py` —— 首屏已纳入同步范围（按 MANIFEST 语义 ID + mesh SHA-256 换网格，自动移除 LCD 排线/金手指）。
+2. **打印材质**：`--python blender/apply-print-material.py -- graphite|chalk|ember` —— 给 11 个打印件上 A3.44 审核材质（哑光 + Noise Bump 颗粒，参数与 `review_a3_44.py` 一致）；颜色权威值在 `expansion.json` 的 `colors`。
+3. **运镜**：`--python blender/recamera-intro.py` —— 重写首屏相机 150 帧关键帧：位置 y -0.22→-0.30、z 0.075→0.197（后退+抬升），x 恒 0（严禁横向位移，ease 曲线下会放大成侧摆），二次 ease-out（速度线性递减缓停，无过冲），逐帧 aim target，镜头 100mm/f22 不变。改前备份 `.pre-recamera.bak`。
+4. **灯光渐亮**：`--python blender/relight-intro.py` —— 四盏灯错峰接力（全部二次 ease-out）：`Intro front boost`（正面补光，0→1.2W，帧 1-30 亮起照亮竖立阶段、帧 30-105 随躺下淡出）、`Cool side bounce`（rim 勾边，帧 1-40，起始 0.15）、`Broad front fill`（帧 1-60，起始 0.2）、`Wide warm ceiling`（主顶光，帧 10-80 最后打亮 + 位置从低后角扫入）。幂等可重跑。
+5. **产品躺倒**：`--python blender/recline-intro.py` —— 450 个网格逐帧写世界矩阵关键帧，绕前缘底部 hinge (0,-0.0405,0)m 从 +90°（屏幕面对镜头）→0°（平放），二次 ease-out。**必须从干净基线运行**（脚本内置断言：对象 scale 须为 0.001，即网格毫米数据×0.001 缩放=世界米；破坏即中止）。
+6. **曝光**：`--python blender/reexposure-intro.py` —— 当前 -3.2；改机位/灯光后必须复核。
+7. **构图留白**：`--python blender/reshift-intro.py` —— 静态 `camera.data.shift_y`（当前 0.20：旋钮半露 + 上方留白），不改透视。
+8. **草稿**：`--python blender/render.py -- intro --draft`（640×360、8 samples、无降噪，GPU 约 1s/帧）→ ffmpeg 编 MP4 / PIL 拼 sheet → 交人工审核。快速构图检查可用 `-- preview`（首/中/尾三帧 1080p）。
+9. **全量**：审核通过后 `--python blender/render.py -- intro`（1080p、32 samples、150 帧，GPU 约 6s/帧 ≈ 16 分钟）。
+10. **编码接入**：`python blender/encode.py intro` → `public/videos/luma-a344-intro.mp4` + WebP 海报；更新 `index.html` 首屏 `<video>` 引用与本文档口径；ffprobe 验证（1920×1080 / 30fps / 150 帧 / 5s）。
+
+### 已定稿的构图语言（用户 2026-09-06 审定，改动前先对照）
+
+- **躺倒开场**：产品竖立、屏幕面对镜头（全黑中仅 LCD 轮廓微光），随后绕前缘向后躺平（+90°→0°，二次 ease-out 缓停）；相机同步后退+抬升（y -0.22→-0.30、z 0.075→0.197），x 恒 0 无侧摆。
+- **灯光接力**：正面 boost 照亮竖立阶段（前 1 秒主体必须可见，打亮窗口不得后置）→ 随躺下淡出；rim 勾边先现、fill 跟进、主顶光最后打亮+扫入；屏幕是画面里的背光亮点。
+- **收尾定妆**（frame 150）：产品平放居中、旋钮至少露一半（shift_y 0.20）、上方留白给标题、顶面轮廓完整入画、结尾不出现完整全身。配套 CSS `.intro-heading` padding-top 19vh（移动端 17vh）。
+- 材质必须与 luma-remote 仓库 A3.44 审核图一致（哑光打印颗粒），不是光滑软触感。
+- 动画曲线一律二次 ease-out（速度线性递减缓停）；线性、cubic、任何过冲回弹都被否。
+
+### 本机已知的坑
+
+- **GPU 静默回退 CPU**：`--factory-startup -b` 下 `compute_device_type` 的 `enum_items` 为空，"先判断后赋值"永不匹配 → 25s/帧。`render.py` 已改为 try 直赋 OPTIX→CUDA→HIP→METAL；生效标志是日志打印 `{"device_type":"OPTIX",...}` 且帧速约 6s。任务管理器看不到 Blender 的 GPU 占用不能说明没用 GPU。
+- **Blender 5.2 slotted Action**：`action.fcurves` 不存在；fcurves 在 `layers[].strips[].channelbags[]`。同一 action 常被多场景共享，遍历修改会污染别的场景；必须只改 `bag.slot_handle == obj.animation_data.action_slot.handle` 的 bag。孤立 slot 上的 fcurve（如原 shift_y 动画）从未生效，诊断后改静态值。
+- 任何脚本写回 `luma-a343-studio.blend` 前先做 `.bak` 备份；材质/相机脚本只动自己的范围，不动几何/动画/灯光。
+
+### Blender GUI 实时预览（不渲染看运镜）
+
+切场景到 `Luma Intro Film.005`（注意别停在 `Luma Chassis Portrait` 灰骨架场景）→ 鼠标悬停视口按 Numpad 0 进相机视角 → 视口着色切 Material Preview → 拖时间轴/空格播放。CLI 改过 blend 后需 File → Revert 重新载入。

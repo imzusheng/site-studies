@@ -24,7 +24,7 @@ npm run preview -- --host 0.0.0.0
 
 预览默认 http://localhost:4173/。部署 `animejs/dist/` 到静态服务器根路径即可；本项目资源 URL 使用 `/videos/`、`/models/` 等绝对路径。
 
-页面共 17 个内容章节，保留滚动爆炸线稿和 Blender 实景短片。首屏沿用已认可的历史渲染。
+页面共 17 个内容章节，保留滚动爆炸线稿和 Blender 实景短片。首屏已按 A3.44 重渲染（33° 俯角、上方留白、graphite 打印材质），流程见 `blender/README.md` 的"首屏运镜与草稿审核工作流"。
 
 ## 页面与素材
 

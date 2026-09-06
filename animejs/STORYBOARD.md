@@ -29,7 +29,7 @@
 
 ## 资源与事实边界
 
-- 首屏：`/videos/luma-a343-intro.mp4`，海报 `/images/luma-a343-video-poster.webp`。
+- 首屏：`/videos/luma-a344-intro.mp4`，海报 `/images/luma-a344-video-poster.webp`（2026-09-06 按 A3.44 重渲染：33° 俯角、上方留白、graphite 打印材质，经四轮草稿审核定稿）。
 - 三色同框：`/videos/luma-a344-colors.mp4`、`/images/luma-a344-colors.webp`。单款渲染保留供材质细节使用。
 - 底盖细节：`/images/luma-a344-cover-{inside,underside}.png`，来自 A3.44 已批准模型审核渲染。
 - 支架探索：`/videos/luma-a343-chassis.mp4`、`/images/luma-a343-chassis.webp`。
@@ -49,7 +49,7 @@
 
 ### A3.44 定稿接入（2026-09-06）
 
-模型基线已由用户批准并推送 luma-remote `7f7c547`（PR #39）。网站从清单读取对象数量和资源地址，当前为 450 个对象；LCD 20 个细节对象保持整体，FPC 已移除。原首屏 MP4 保留。宣传材质工作工程按语义 ID 和 mesh SHA 同步修正模型，避免下一次替换模型逐个补名单。
+模型基线已由用户批准并推送 luma-remote `7f7c547`（PR #39）。网站从清单读取对象数量和资源地址，当前为 450 个对象；LCD 20 个细节对象保持整体，FPC 已移除。首屏已用 A3.44 模型与审核材质重渲染替换（原 A3.43 首屏退役）。宣传材质工作工程按语义 ID 和 mesh SHA 同步修正模型，避免下一次替换模型逐个补名单。
 
 ## 当前视觉修订
 

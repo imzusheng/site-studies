@@ -8,10 +8,11 @@ if kind not in ('core', 'switch', 'craft', 'intro', 'chassis', 'color-graphite',
     raise SystemExit('Expected core, switch, craft or intro')
 frames = base/'renders/production'/kind
 public = base/'public'
-revision = 'a343' if kind in ('intro', 'chassis') else 'a344'
+revision = 'a343' if kind == 'chassis' else 'a344'
 poster = public/'images'/f'luma-{revision}-{kind if kind != "intro" else "video-poster"}.webp'
 still = kind == 'craft' or kind.startswith('color-')
-first = frames/('preview_0001.png' if still else 'frame_0001.png')
+poster_frame = 'frame_0150.png' if kind == 'intro' else 'frame_0001.png'
+first = frames/('preview_0001.png' if still else poster_frame)
 subprocess.run(['ffmpeg','-v','error','-y','-i',str(first),'-frames:v','1','-quality','90',str(poster)],check=True)
 if not still:
     count = 150 if kind == 'intro' else (json.loads((base/'blender/expansion.json').read_text())['chassis']['frames'] if kind == 'chassis' else config[kind]['frames'])

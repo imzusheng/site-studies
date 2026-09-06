@@ -9,14 +9,27 @@ prefix=('Luma Color '+kind.removeprefix('color-').title()) if kind.startswith('c
 scene=next(s for s in bpy.data.scenes if s.name.startswith(prefix))
 bpy.context.window.scene=scene
 prefs=bpy.context.preferences.addons['cycles'].preferences
-if 'METAL' in {x.identifier for x in prefs.bl_rna.properties['compute_device_type'].enum_items}:
-    prefs.compute_device_type='METAL'
+gpu_type=None
+for dev_type in ('OPTIX', 'CUDA', 'HIP', 'METAL'):
+    try:
+        prefs.compute_device_type=dev_type
+        gpu_type=dev_type
+        break
+    except TypeError:
+        pass
 prefs.get_devices()
 gpu=False
 for d in prefs.devices:
     d.use=d.type!='CPU';gpu |= d.use
 scene.cycles.device='GPU' if gpu else 'CPU'
+print(json.dumps({'device_type':gpu_type,'active_devices':[d.name for d in prefs.devices if d.use]}))
 out=base.parent/'renders'/'production'/kind
+if '--draft' in args:
+    out=base.parent/'renders'/'drafts'/kind
+    scene.render.resolution_x=640
+    scene.render.resolution_y=360
+    scene.cycles.samples=8
+    scene.cycles.use_denoising=False
 out.mkdir(parents=True,exist_ok=True)
 if '--preview' in args:
     frames=[1] if scene.frame_end==1 else [1,scene.frame_end//2,scene.frame_end]
