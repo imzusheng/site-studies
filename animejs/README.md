@@ -1,3 +1,5 @@
+> **〔已冻结 / 已迁出〕** 本目录从 animejs.com 临摹演化为 **Luma Remote 官方产品宣传站**，已于 2026-09-06 正式迁入 [`imzusheng/luma-remote`](https://github.com/imzusheng/luma-remote)：网站本体在 `website/`，Blender 拍摄工程在 `design/product-film/`（决策记录见其 `docs/decisions/0015-product-website-monorepo.md`）。此处仅作历史归档，不再更新产品内容；本文档保留原文以说明归档时的状态。
+
 # Luma Remote A3.44 宣传网站
 
 Blender 产品短片与海报、自然滚动的产品介绍、一个局部 Three.js 结构展示。首页与视频无需等待模型加载。A3.44 的 450 个原始对象与 11 个可打印部件保留在模型清单中；重复的供应商实体仅在展示层去重。

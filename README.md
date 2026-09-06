@@ -10,7 +10,7 @@
 |---|---|---|
 | [dottxt.ai](https://dottxt.ai) | [dottxt/](dottxt/) | 复古终端 / 像素 brutalist：点云多形态重组（立方体⇄狗⇄猫⇄人像）、打字机终端、乱码定格、棋盘格噪声等 16 项动效，零依赖 → [详细说明](dottxt/README.md) |
 | [subscrr.app](https://subscrr.app) | [subscrr/](subscrr/) | 暖纸底 + 品牌橘玻璃拟态：AI 粒子标题（点云⇄文字点击重组）、自写平滑滚动、磁性按钮、滚动缩放影片位、通知堆叠、Widgets 暖色 tint 等 20+ 项动效，零依赖 → [详细说明](subscrr/README.md) |
-| [animejs.com](https://animejs.com) | [animejs/](animejs/) | 赛博微光 + 机械线稿（CAD Blueprint）：完整六幕分镜叙事，结合 Luma Remote A3.32 实际硬件（21 个 STL 零件），含 Toolbox 轴向爆炸引线、动态 2.0" LCD 屏幕、Modular 全爆炸质量标签与可点图例拆装面板 → [详细说明](animejs/README.md) |
+| [animejs.com](https://animejs.com) | [animejs/](animejs/) | **已迁出（归档）**：从 animejs.com 临摹演化为 Luma Remote 官方产品宣传站，2026-09-06 迁入 [luma-remote](https://github.com/imzusheng/luma-remote)（`website/` + `design/product-film/`，ADR-0015），此处仅作历史归档 → [详细说明](animejs/README.md) |
 
 ## 本地运行
 
