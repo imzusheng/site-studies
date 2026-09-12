@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#14211d"><title>BASELINE / Motion Build</title><style>/*__CSS__*/</style></head>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#14211d"><title>BASELINE / Contact & Motion</title><style>/*__CSS__*/</style></head>
 <body>
 <canvas id="court" aria-label="第三人称网球场"></canvas>
 <div class="vignette"></div>
@@ -18,7 +18,7 @@
 <div id="mobile-note">为键盘与鼠标设计。建议在桌面浏览器全屏打开。</div>
 <div id="asset-credit"></div>
 <div id="asset-loading"><section><p class="eyebrow">BASELINE / HUMAN MOTION</p><h2 id="asset-status">准备 3D 引擎</h2><p id="asset-detail">加载 Three.js、蒙皮人物和贴图。首次打开需要联网。</p><div class="load-track"><span></span></div><div class="asset-actions"><button class="primary" id="asset-retry" onclick="location.reload()">重试</button><label class="secondary">本地 GLB<input id="model-file" type="file" accept=".glb" hidden></label></div><small>无外部账号、无数据上传。人物文件仅在当前浏览器读取。</small></section></div>
-<section id="motion-panel" hidden><div><p class="eyebrow">MOTION INSPECTOR</p><h2 id="motion-phase">准备 / READY</h2><p id="motion-detail">右手持拍</p></div><div class="motion-buttons"><button data-motion="forehand" class="active">正手</button><button data-motion="backhand">双手反手</button><button data-motion="serve">高点挥拍</button><button data-motion="side">侧移</button><button data-motion="run">跑动</button></div><label>播放速度<input id="motion-speed" type="range" min=".15" max="1" step=".05" value=".45"></label><label>观察角度<input id="motion-angle" type="range" min="-3.14" max="3.14" step=".02" value=".65"></label><p class="motion-note">检视模式只播放动作，不计算击球命中。<br>脚后跟抬起、脚尖蹬地、引拍与随挥可在这里慢放。</p><button class="primary" id="motion-exit">回到训练场 →</button></section>
+<section id="motion-panel" hidden><div><p class="eyebrow">MOTION INSPECTOR</p><h2 id="motion-phase">准备 / READY</h2><p id="motion-detail">右手持拍</p></div><div class="motion-buttons"><button data-motion="forehand" class="active">正手</button><button data-motion="backhand">双手反手</button><button data-motion="serve">高点挥拍</button><button data-motion="side">侧移</button><button data-motion="run">跑动</button></div><div class="motion-buttons"><button data-frame="ready">准备</button><button data-frame="load">引拍</button><button data-frame="contact">触球</button><button data-frame="follow">随挥</button><button data-frame="play">连续播放</button></div><label>播放速度<input id="motion-speed" type="range" min=".15" max="1" step=".05" value=".45"></label><label>观察角度<input id="motion-angle" type="range" min="-3.14" max="3.14" step=".02" value=".65"></label><p class="motion-note">检视模式只播放动作，不计算击球命中。<br>脚后跟抬起、脚尖蹬地、引拍与随挥可在这里慢放。</p><button class="primary" id="motion-exit">回到训练场 →</button></section>
 <!--__VENDOR__-->
 <script id="baseline-compiled" type="text/plain">/*__APP__*/</script>
 <script type="module">

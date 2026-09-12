@@ -26,27 +26,27 @@
   "detail": {
     "timing": [
       {
-        "time": 0,
+        "time": 0.02,
         "tier": "Late",
-        "gap": 0.10008008929040857
+        "gap": 0.04392293260606983
       },
       {
-        "time": 0.18,
-        "tier": "Perfect",
-        "gap": 0.09998451478236425
-      },
-      {
-        "time": 0.285,
+        "time": 0.09,
         "tier": "Good",
-        "gap": 0.1005288119991476
+        "gap": 0.04097828938973734
       },
       {
-        "time": 0.295,
+        "time": 0.145,
+        "tier": "Perfect",
+        "gap": 0.04099862000546298
+      },
+      {
+        "time": 0.23,
         "tier": "Early",
-        "gap": 0.099974045649379
+        "gap": 0.04100164066436614
       },
       {
-        "time": 0.34,
+        "time": 0.3,
         "tier": "Miss"
       }
     ],
@@ -64,10 +64,10 @@
           "misses": 0,
           "errors": 0,
           "bestRally": 24,
-          "maxSpeed": 67.84284549324941,
+          "maxSpeed": 68.37903432095743,
           "targets": 0,
           "landed": 24,
-          "totalSpeed": 1628.2113533679044
+          "totalSpeed": 1640.3177154817672
         },
         "hands": {
           "1": 13,
@@ -85,28 +85,28 @@
         "completed": 8,
         "goal": 8,
         "stats": {
-          "hits": 23,
-          "perfect": 12,
-          "good": 11,
+          "hits": 22,
+          "perfect": 14,
+          "good": 8,
           "early": 0,
           "late": 0,
           "misses": 6,
-          "errors": 0,
-          "bestRally": 26,
-          "maxSpeed": 67.8415425340124,
+          "errors": 1,
+          "bestRally": 18,
+          "maxSpeed": 68.79721523666313,
           "targets": 0,
           "landed": 0,
-          "totalSpeed": 1222.8624412006639
+          "totalSpeed": 1285.329361796465
         },
         "hands": {
-          "1": 14,
+          "1": 13,
           "-1": 9
         },
         "types": {
-          "topspin": 6,
-          "slice": 17
+          "topspin": 11,
+          "slice": 11
         },
-        "aiContacts": 23,
+        "aiContacts": 22,
         "levelOver": false,
         "validContacts": true
       },
@@ -123,10 +123,10 @@
           "misses": 0,
           "errors": 0,
           "bestRally": 10,
-          "maxSpeed": 67.86175720014666,
+          "maxSpeed": 68.39866700979222,
           "targets": 10,
           "landed": 10,
-          "totalSpeed": 678.5759513212964
+          "totalSpeed": 683.5965172610354
         },
         "hands": {
           "1": 5,
@@ -152,10 +152,10 @@
           "misses": 0,
           "errors": 0,
           "bestRally": 10,
-          "maxSpeed": 67.47029090794994,
+          "maxSpeed": 68.42294908705273,
           "targets": 0,
           "landed": 10,
-          "totalSpeed": 674.0641211252359
+          "totalSpeed": 683.9431359777997
         },
         "hands": {
           "1": 10
@@ -180,10 +180,10 @@
           "misses": 0,
           "errors": 0,
           "bestRally": 10,
-          "maxSpeed": 56.85940187717818,
+          "maxSpeed": 56.7703323018867,
           "targets": 0,
           "landed": 10,
-          "totalSpeed": 568.592494708523
+          "totalSpeed": 567.628658587971
         },
         "hands": {
           "1": 5,
@@ -209,14 +209,13 @@
           "misses": 0,
           "errors": 0,
           "bestRally": 10,
-          "maxSpeed": 71.60364902358087,
+          "maxSpeed": 71.66376912452206,
           "targets": 0,
           "landed": 10,
-          "totalSpeed": 716.0364018634349
+          "totalSpeed": 716.6376912452207
         },
         "hands": {
-          "1": 5,
-          "-1": 5
+          "1": 10
         },
         "types": {
           "smash": 10
@@ -231,17 +230,17 @@
         "goal": 7,
         "stats": {
           "hits": 12,
-          "perfect": 11,
-          "good": 1,
+          "perfect": 12,
+          "good": 0,
           "early": 0,
           "late": 0,
           "misses": 0,
           "errors": 0,
           "bestRally": 12,
-          "maxSpeed": 68.41371470745726,
+          "maxSpeed": 68.72621561168985,
           "targets": 0,
           "landed": 12,
-          "totalSpeed": 813.4505708763305
+          "totalSpeed": 820.004049548657
         },
         "hands": {
           "1": 12
@@ -258,7 +257,7 @@
       "completed": true,
       "score": [
         7,
-        4
+        2
       ],
       "points": [
         [
@@ -286,41 +285,33 @@
           1
         ],
         [
-          5,
-          2
-        ],
-        [
-          5,
-          3
-        ],
-        [
-          5,
-          4
+          6,
+          1
         ],
         [
           6,
-          4
+          2
         ],
         [
           7,
-          4
+          2
         ]
       ],
       "stats": {
-        "hits": 40,
-        "perfect": 3,
-        "good": 37,
+        "hits": 33,
+        "perfect": 14,
+        "good": 19,
         "early": 0,
         "late": 0,
-        "misses": 11,
+        "misses": 9,
         "errors": 0,
-        "bestRally": 12,
-        "maxSpeed": 67.35387253030868,
+        "bestRally": 11,
+        "maxSpeed": 69.3804722442298,
         "targets": 0,
         "landed": 0,
-        "totalSpeed": 2102.7288429006935
+        "totalSpeed": 1851.3010408669868
       },
-      "time": 134.89166666670832
+      "time": 113.27500000003621
     }
   }
 }

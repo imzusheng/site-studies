@@ -1,0 +1,62 @@
+{
+  "drill": 4,
+  "rows": [
+    {
+      "hand": 1,
+      "type": "volley",
+      "timing": "Perfect",
+      "gap": 0.0410011075584491,
+      "handError": 3.447170978769293e-16
+    },
+    {
+      "hand": -1,
+      "type": "volley",
+      "timing": "Perfect",
+      "gap": 0.04099618843840495,
+      "handError": 4.460365043975677e-16
+    },
+    {
+      "hand": 1,
+      "type": "volley",
+      "timing": "Perfect",
+      "gap": 0.0410011075584491,
+      "handError": 3.3422138886441676e-16
+    },
+    {
+      "hand": -1,
+      "type": "volley",
+      "timing": "Perfect",
+      "gap": 0.04099618843840493,
+      "handError": 2.0816681711721685e-16
+    },
+    {
+      "hand": 1,
+      "type": "volley",
+      "timing": "Perfect",
+      "gap": 0.0410011075584491,
+      "handError": 3.3422138886441676e-16
+    }
+  ],
+  "stats": {
+    "hits": 5,
+    "perfect": 5,
+    "good": 0,
+    "early": 0,
+    "late": 0,
+    "misses": 0,
+    "errors": 0,
+    "bestRally": 5,
+    "maxSpeed": 56.7703323018867,
+    "targets": 0,
+    "landed": 5,
+    "totalSpeed": 283.8217593362032
+  },
+  "completed": 5,
+  "pageErrors": [],
+  "requests": [],
+  "contextLosses": 0,
+  "renderer": {
+    "draws": 50,
+    "triangles": 324588
+  }
+}

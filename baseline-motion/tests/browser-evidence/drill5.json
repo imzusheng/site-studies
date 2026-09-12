@@ -1,0 +1,55 @@
+{
+  "drill": 5,
+  "rows": [
+    {
+      "hand": 1,
+      "type": "smash",
+      "timing": "Perfect",
+      "gap": 0.04100126227692851,
+      "handError": 5.087681048627601e-16
+    },
+    {
+      "hand": 1,
+      "type": "smash",
+      "timing": "Perfect",
+      "gap": 0.04100126227692851,
+      "handError": 5.087681048627601e-16
+    },
+    {
+      "hand": 1,
+      "type": "smash",
+      "timing": "Perfect",
+      "gap": 0.04100126227692851,
+      "handError": 5.087681048627601e-16
+    },
+    {
+      "hand": 1,
+      "type": "smash",
+      "timing": "Perfect",
+      "gap": 0.04100126227692851,
+      "handError": 5.087681048627601e-16
+    }
+  ],
+  "stats": {
+    "hits": 4,
+    "perfect": 4,
+    "good": 0,
+    "early": 0,
+    "late": 0,
+    "misses": 0,
+    "errors": 0,
+    "bestRally": 4,
+    "maxSpeed": 71.61065200518793,
+    "targets": 0,
+    "landed": 3,
+    "totalSpeed": 286.4426080207517
+  },
+  "completed": 3,
+  "pageErrors": [],
+  "requests": [],
+  "contextLosses": 0,
+  "renderer": {
+    "draws": 50,
+    "triangles": 324716
+  }
+}

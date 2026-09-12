@@ -10,7 +10,7 @@ function policy(g,move=false){const p=g.player,b=g.ball;g.wallTime=g.clock;
     if(!p.charging&&p.swing<0)g.charge();if(p.charging&&g.releaseIn<p.getWindup(g.setup)+.003&&g.releaseIn>.04)g.release();
   }
 }
-const tiers=[];for(const time of [0,.18,.285,.295,.34]){const g=createGame();g.start(0);let released=false;for(let i=0;i<600;i++){if(g.ball.active&&!g.pointOver&&!released){if(!g.player.charging)g.charge();if(g.releaseIn<=time){g.release();released=true;}}g.fixed(R.FIXED);if(g.stats.hits||g.pointOver)break;}tiers.push({time,tier:g.lastShot?.timing||'Miss',gap:g.lastShot?.gap});}
+const tiers=[];for(const time of [.02,.09,.145,.23,.30]){const g=createGame();g.start(0);let released=false;for(let i=0;i<600;i++){if(g.ball.active&&!g.pointOver&&!released){if(!g.player.charging)g.charge();if(g.releaseIn<=time){g.release();released=true;}}g.fixed(R.FIXED);if(g.stats.hits||g.pointOver)break;}tiers.push({time,tier:g.lastShot?.timing||'Miss',gap:g.lastShot?.gap});}
 detail.timing=tiers;
 test('Production contact code yields Perfect/Good/Early/Late/Miss',()=>assert.equal(new Set(tiers.map(t=>t.tier)).size,5));
 test('All accepted contacts have geometric gap within ball radius plus thickness',()=>assert(tiers.every(t=>t.gap===undefined||t.gap<=R.BALL_R+.012)));

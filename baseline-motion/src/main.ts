@@ -19,7 +19,7 @@ namespace Rally {
                 loading.hidden=true;document.getElementById('asset-credit')!.textContent=`蒙皮人物 / ${Math.round(first.triangles).toLocaleString()} triangles / 手指与足部骨骼`;
             };
             (window as any).__attachHuman=attach;
-            const load=async()=>{loading.hidden=false;loading.classList.remove('failed');status.textContent='载入人物';detail.textContent='模型与贴图需要联网，未载入完成前不会用方块人物代替。';try{const gltf=await loadHumanAsset(s=>status.textContent=s);attach(gltf);}catch(error){fail(error);}};
+            const load=async()=>{loading.hidden=false;loading.classList.remove('failed');status.textContent='准备球场';detail.textContent='连续蒙皮运动员与球场随游戏内置。';try{const gltf=await loadHumanAsset(s=>status.textContent=s);attach(gltf);}catch(error){fail(error);}};
             document.getElementById('asset-retry')!.onclick=()=>void load();
             (document.getElementById('model-file') as HTMLInputElement).onchange=async e=>{
                 const file=(e.target as HTMLInputElement).files?.[0];if(!file)return;
@@ -28,7 +28,8 @@ namespace Rally {
             document.getElementById('inspect')!.onclick=()=>game.enterInspection();
             document.getElementById('motion-exit')!.onclick=()=>game.start(0);
             document.querySelectorAll<HTMLElement>('[data-motion]').forEach(button=>button.onclick=()=>{game.enterInspection(button.dataset.motion!);document.querySelectorAll('[data-motion]').forEach(e=>e.classList.remove('active'));button.classList.add('active');});
-            (document.getElementById('motion-speed') as HTMLInputElement).oninput=e=>game.inspectSpeed=Number((e.target as HTMLInputElement).value);
+            document.querySelectorAll<HTMLElement>('[data-frame]').forEach(button=>button.onclick=()=>game.inspectFrame(button.dataset.frame!));
+            (document.getElementById('motion-speed') as HTMLInputElement).oninput=e=>{game.inspectFrozen=false;game.inspectSpeed=Number((e.target as HTMLInputElement).value);};
             (document.getElementById('motion-angle') as HTMLInputElement).oninput=e=>game.inspectAngle=Number((e.target as HTMLInputElement).value);
             void load();
         }catch(error){fail(error);}

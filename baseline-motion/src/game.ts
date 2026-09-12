@@ -119,6 +119,7 @@ namespace Rally {
         debug = false;
         assetsReady=false;
         inspect=false;
+        inspectFrozen=false;
         inspectMotion='forehand';
         inspectSpeed=.45;
         inspectTime=0;
@@ -152,7 +153,7 @@ namespace Rally {
         random() { this.seed = (Math.imul(this.seed, 1664525) + 1013904223) >>> 0; return this.seed / 4294967296; }
         note(title: string, sub: string, type = 'neutral', time = 1.8) { this.cue = title; this.cueSub = sub; this.cueType = type; this.cueUntil = this.wallTime + time; this.ui?.cue(); }
         clearInput() { this.keys = {}; this.player.charging = false; this.player.charge = 0; }
-        start(drill = 0, match = false) { if(!this.assetsReady)return; this.inspect=false; document.getElementById('motion-panel')?.setAttribute('hidden',''); this.running = true; this.paused = false; this.mode = match ? 'match' : 'training'; this.drill = drill; this.stats = newStats(); this.lastShot = null; this.ball.active = false; this.clock = 0; this.releaseIn = 9; this.ready = this.predictionValid = this.interceptValid = false; this.aiThinkCooldown = 0; this.completed = this.feedCount = this.rally = this.combo = 0; this.goalAnnounced = this.levelOver = this.matchOver = this.pointOver = false; this.scoreP = this.scoreAI = 0; this.tossOwner = 0; this.feedTimer = 1.25; this.predictAge = 99; this.hitstop = 0; this.clearInput(); this.player.reset(0, drill === 4 && !match ? 2.8 : drill === 5 && !match ? 4.6 : 8.2); this.ai.reset(0, -8.2); this.world.resetTrail(); for (const effect of this.world.effects) effect.age = 9; this.world.cameraKick = 0; this.flashAge = 0; this.lastContactDiagnostics.length = 0; this.lastMissAt = -9; this.trainingMissRun = 0; this.trainingAttemptDone = false; this.ui?.closeOverlay(false); this.ui?.state(); if (match)
+        start(drill = 0, match = false) { if(!this.assetsReady)return; this.inspect=false; document.getElementById('motion-panel')?.setAttribute('hidden',''); this.running = true; this.paused = false; this.mode = match ? 'match' : 'training'; this.drill = drill; this.stats = newStats(); this.lastShot = null; this.ball.active = false; this.clock = 0; this.releaseIn = 9; this.ready = this.predictionValid = this.interceptValid = false; this.aiThinkCooldown = 0; this.completed = this.feedCount = this.rally = this.combo = 0; this.goalAnnounced = this.levelOver = this.matchOver = this.pointOver = false; this.scoreP = this.scoreAI = 0; this.tossOwner = 0; this.feedTimer = 1.25; this.predictAge = 99; this.hitstop = 0; this.clearInput(); this.player.reset(0, drill === 4 && !match ? 2.8 : drill === 5 && !match ? 4.18 : 8.2); this.ai.reset(0, -8.2); this.world.resetTrail(); for (const effect of this.world.effects) effect.age = 9; this.world.cameraKick = 0; this.flashAge = 0; this.lastContactDiagnostics.length = 0; this.lastMissAt = -9; this.trainingMissRun = 0; this.trainingAttemptDone = false; this.ui?.closeOverlay(false); this.ui?.state(); if (match)
             this.resetPoint();
         else {
             this.awaitServe = false;
@@ -161,8 +162,8 @@ namespace Rally {
                 this.nextTarget();
         } this.sound.unlock(); }
         resetPoint() { this.releaseIn = 9; this.ready = this.predictionValid = this.interceptValid = false; this.pointOver = false; this.ball.active = false; this.rally = 0; this.combo = 0; this.player.reset(.4, 8.5); this.ai.reset(-.4, -8.5); this.world.resetTrail(); this.server = Math.floor((this.scoreP + this.scoreAI) / 2) % 2 === 0 ? 1 : 2; this.awaitServe = this.server === 1; this.tossOwner = 0; this.feedTimer = 1.2; this.predictAge = 99; this.clearInput(); this.note(this.awaitServe ? '你的发球' : '准备接发', this.awaitServe ? '按住空格，松开抛球并发球。' : '站在底线附近，等球落地后回击。', 'neutral', 2.7); }
-        charge() { if (!this.running || this.paused || this.pointOver || this.matchOver || this.levelOver || this.player.swing >= 0 || this.tossOwner)
-            return; this.sound.unlock(); this.player.charging = true; this.player.charge = .03; this.player.hand = (this.ball.p.x - this.player.x) < -.12 ? -1 : 1; }
+        charge() { if (!this.running || this.paused || this.pointOver || this.matchOver || this.levelOver || (this.player.swing >= 0 && this.player.swing < this.player.windup+.38) || this.tossOwner)
+            return; if(this.player.swing>=0)this.player.swing=-1; this.sound.unlock(); this.player.charging = true; this.player.charge = .03; this.player.hand = (this.ball.p.x - this.player.x) < -.12 ? -1 : 1; }
         release() { if (!this.player.charging || this.paused)
             return; if (this.awaitServe) {
             this.serveToss(1);
@@ -171,7 +172,7 @@ namespace Rally {
         planSwing(a: Actor, serve = false) {
             this.scratch.copy(this.ball);
             const base=a.getWindup(a===this.player?this.setup:DEFAULT_SETUP,serve);
-            const arrival=this.ball.active&&Math.abs(this.ball.v.z)>.1?((a.z-.52*a.side)-this.ball.p.z)/this.ball.v.z:base;
+            const arrival=this.ball.active&&Math.abs(this.ball.v.z)>.1?((a.z-a.getContactDepth()*a.side)-this.ball.p.z)/this.ball.v.z:base;
             const dur=!serve&&Math.abs(arrival-base)<.10?clamp(arrival,base*.78,base*1.25):base;
             for (let t = 0; t < dur; t += FIXED)
                 integrate(this.scratch, FIXED);
@@ -181,7 +182,7 @@ namespace Rally {
             a.start(this.scratch.p, a === this.player ? this.setup : DEFAULT_SETUP, serve);
             a.windup=dur;
             this.sound.swing(a.power);
-            a.timingError = serve ? 0 : clamp(((a.z - .52 * a.side) - this.ball.p.z) / this.ball.v.z - base, -.3, .3);
+            a.timingError = serve ? 0 : clamp(((a.z - a.getContactDepth() * a.side) - this.ball.p.z) / this.ball.v.z - base, -.3, .3);
             a.stroke = serve ? 'serve' : chooseStroke(this.scratch.p.y, localZ, localX, Math.hypot(a.vx, a.vz), a.power, Math.abs(a.z) < 4, this.ball.bounces);
             if (a === this.player) {
                 a.aim = this.aimX;
@@ -239,7 +240,7 @@ namespace Rally {
                 spin = 350;
             }
             if (this.drill === 5) {
-                x = this.feedCount % 2 ? .66 : -.66;
+                x = .73;
                 z = 5.6;
                 pace = 7.7;
                 spin = 350;
@@ -318,7 +319,7 @@ namespace Rally {
             if (b.active && b.last === 1 && a.swing < 0 && b.v.z < -.1) {
                 // Prepare before the bounce; waiting until after it can leave less time than a full swing needs.
                 a.charging=true;a.charge=this.mode==='match'?.64:.57;
-                const t = (a.z + .52 - b.p.z) / b.v.z;
+                const t = (a.z + a.getContactDepth() - b.p.z) / b.v.z;
                 if (t < a.getWindup(DEFAULT_SETUP)+.012 && t > .06 && Math.abs(b.p.x - a.x) < 1.7 && b.p.y < 2.8) this.planSwing(a);
             }else if(a.swing<0){a.charging=false;a.charge=0;}
         }
@@ -335,10 +336,10 @@ namespace Rally {
             a.tossing = false;
             a.strain = 1;
             const incoming = b.v.len(), localZ = (this.tmp.z - a.z) * a.side, off = Math.hypot(c.u, c.v), serve = this.tossOwner === who;
-            let timing: Timing = serve ? 'Good' : timingFor(localZ, off, a.timingError);
+            let timing: Timing = serve ? 'Good' : timingFor(localZ, off, a.timingError,a.getContactDepth());
             const effective = who === 1 ? this.ratings : this.aiRatings;
             const pressure = Math.max(0, incoming - 13) * (1 - effective.stability / 100) * .012;
-            const quality = clamp(1 - pressure - Math.abs(a.timingError) * .65 - Math.abs(localZ + .52) * .7 - Math.max(0, off - .45) * (.29 - effective.forgiveness * .0008) - Math.hypot(a.vx, a.vz) * .014 - a.overcharge * .18, .26, 1);
+            const quality = clamp(1 - pressure - Math.abs(a.timingError) * .65 - Math.abs(localZ + a.getContactDepth()) * .7 - Math.max(0, off - .45) * (.29 - effective.forgiveness * .0008) - Math.hypot(a.vx, a.vz) * .014 - a.overcharge * .18, .26, 1);
             const ratings = who === 1 ? this.ratings : this.aiRatings;
             let pace = (12 + 6 * a.power + (ratings.power - 60) * .03 + incoming * .025) * (.80 + quality * .2);
             let spin = a.stroke === 'topspin' ? 1700 + a.power * 700 : a.stroke === 'slice' ? -650 : a.stroke === 'reach' ? 500 : a.stroke === 'drive' ? 550 : 850;
@@ -370,7 +371,7 @@ namespace Rally {
             if (timing === 'Early')
                 depth += .85 + a.overcharge * 2;
             const controlError = (1 - quality) * 1.55 + (68 - ratings.control) * .013;
-            let tx = a.aim + (localZ + .8) * a.hand * controlError + c.u * .16, tz = -depth * a.side;
+            let tx = a.aim + (localZ + a.getContactDepth()) * a.hand * controlError + c.u * .16, tz = -depth * a.side;
             tx += Math.sign(a.aim || 1) * a.overcharge * .6;
             const safe = quality > .55;
             launch(b, this.tmp, tx, tz, pace, spin, clamp(c.u * 200, -240, 240), safe);
@@ -503,10 +504,14 @@ namespace Rally {
             for(const actor of this.actors){
                 if(actor.swing<0&&!actor.tossing&&this.ball.active){
                     const dx=(this.ball.p.x+this.ball.v.x*.18-actor.x)*actor.side;
+                    actor.ballOffset=dx;
                     const next=Math.abs(dx)>.22?(dx<0?-1:1):actor.hand;
                     if(next!==actor.hand){actor.hand=next;actor.prep*=.45;}
                 }
             }
+            // Holding Space during follow-through queues the next preparation. It never
+            // swings automatically, and cannot interrupt the contact/follow-through interval.
+            if(this.keys.Space&&!this.player.charging&&(this.player.swing<0||this.player.swing>=this.player.windup+.38))this.charge();
             this.player.tick(dt, this.setup);
             this.ai.tick(dt, DEFAULT_SETUP);
             for (const a of this.actors)
@@ -612,7 +617,7 @@ namespace Rally {
                 this.predict();
             }
             const vz = b.v.z;
-            this.releaseIn = vz > .1 ? (this.player.z - .52 - b.p.z) / vz : 9;
+            this.releaseIn = vz > .1 ? (this.player.z - this.player.getContactDepth() - b.p.z) / vz : 9;
             this.ready=this.canRelease&&Math.abs(this.releaseIn-this.player.getWindup(this.setup))<.12;
         }
         tick = (ms: number) => {
@@ -651,6 +656,7 @@ namespace Rally {
             requestAnimationFrame(this.tick);
         };
         inspectTick(realDt:number){
+            if(this.inspectFrozen)return;
             const dt=Math.min(realDt,.04)*this.inspectSpeed,a=this.player;
             this.inspectTime+=dt;
             if(this.inspectMotion==='run'||this.inspectMotion==='side'){
@@ -660,15 +666,32 @@ namespace Rally {
             }else{
                 if(this.inspectTime>=2.7){this.inspectTime%=2.7;this.inspectedShot=false;a.reset(0,6.5);}
                 const phase=this.inspectTime;
-                if(!this.inspectedShot){a.hand=this.inspectMotion==='backhand'?-1:1;a.charging=true;a.charge=Math.min(.75,phase);if(phase>.70){a.local(this.tmp,a.hand*.73,this.inspectMotion==='serve'?2.4:1.25,-.8);a.start(this.tmp,this.setup,this.inspectMotion==='serve');this.inspectedShot=true;}}
+                if(!this.inspectedShot){a.hand=this.inspectMotion==='backhand'?-1:1;a.charging=true;a.charge=Math.min(.75,phase);if(phase>.70){a.local(this.tmp,a.hand*.73,this.inspectMotion==='serve'?1.99:1.25,this.inspectMotion==='serve'?-.55:-a.getContactDepth());a.start(this.tmp,this.setup,this.inspectMotion==='serve');this.inspectedShot=true;}}
                 a.tick(dt,this.setup);
             }
             const label=document.getElementById('motion-phase');if(label)label.textContent=a.actionPhase;
             const info=document.getElementById('motion-detail');if(info)info.textContent=`${a.hand>0?'右手持拍 · 正手':'右手持拍 · 双手反手'} / ${this.inspectSpeed.toFixed(2)}×`;
         }
         enterInspection(motion='forehand'){
-            if(!this.assetsReady)return;this.inspect=true;this.paused=true;this.clearInput();this.inspectMotion=motion;this.inspectTime=0;this.inspectedShot=false;this.player.reset(0,6.5);this.ball.active=false;
+            if(!this.assetsReady)return;this.inspect=true;this.inspectFrozen=false;this.paused=true;this.clearInput();this.inspectMotion=motion;this.inspectTime=0;this.inspectedShot=false;this.player.reset(0,6.5);this.ball.active=false;
             document.getElementById('welcome')?.setAttribute('hidden','');document.getElementById('hud')?.setAttribute('hidden','');document.getElementById('overlay')?.setAttribute('hidden','');document.getElementById('motion-panel')?.removeAttribute('hidden');
+        }
+        inspectFrame(frame:string){
+            const motion=this.inspectMotion;this.enterInspection(motion);
+            if(frame==='play')return;
+            const a=this.player;this.inspectFrozen=true;
+            a.hand=motion==='backhand'?-1:1;
+            if(frame!=='ready'){
+                a.charging=true;for(let i=0;i<85;i++)a.tick(FIXED,this.setup);
+                if(frame!=='load'){
+                    a.local(this.tmp,a.hand*.78,motion==='serve'?1.99:1.25,motion==='serve'?-.55:-a.getContactDepth());a.start(this.tmp,this.setup,motion==='serve');
+                    const goal=a.windup+(frame==='follow'?.38:0);
+                    for(let t=0;t+FIXED<goal;t+=FIXED)a.tick(FIXED,this.setup);
+                    a.swing=goal;a.pose(FIXED,this.setup);
+                }
+            }else a.pose(FIXED,this.setup);
+            document.getElementById('motion-phase')!.textContent=a.actionPhase;
+            document.getElementById('motion-detail')!.textContent=`定格 · 握柄误差 ${(a.visualHandError*1000).toFixed(1)} mm`;
         }
         bind() { window.addEventListener('keydown', e => { if(!this.assetsReady)return; if(e.code==='KeyV'){e.preventDefault();if(this.inspect)this.start(0);else this.enterInspection();return;}if(this.inspect){if(e.code==='Escape')this.start(0);return;}if (e.code === 'Escape') {
             e.preventDefault();

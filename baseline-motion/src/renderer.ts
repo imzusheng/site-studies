@@ -27,8 +27,8 @@ namespace Rally {
         vp = new Float32Array(16);
         view = new Float32Array(16);
         proj = new Float32Array(16);
-        camera = new V(0, 8.0, 17);
-        target = new V(0, .5, 0);
+        camera = new V(0, 2.65, 13.0);
+        target = new V(0, .43, 3.0);
         m = new Float32Array(16);
         p = new V();
         s = new V();
@@ -53,13 +53,13 @@ namespace Rally {
         initThree(){
             this.backend='Three.js · SkinnedMesh';this.quality='high';
             this.threeRenderer=new THREE.WebGLRenderer({canvas:this.canvas,antialias:true,powerPreference:'high-performance'});
-            this.threeRenderer.outputColorSpace=THREE.SRGBColorSpace;this.threeRenderer.toneMapping=THREE.ACESFilmicToneMapping;this.threeRenderer.toneMappingExposure=1.05;
+            this.threeRenderer.outputColorSpace=THREE.SRGBColorSpace;this.threeRenderer.toneMapping=THREE.ACESFilmicToneMapping;this.threeRenderer.toneMappingExposure=1.0;
             this.threeRenderer.shadowMap.enabled=true;this.threeRenderer.shadowMap.type=THREE.PCFSoftShadowMap;
             this.threeScene=new THREE.Scene();this.threeScene.background=new THREE.Color(0x101713);this.threeScene.fog=new THREE.Fog(0x101713,32,78);
             this.threeCamera=new THREE.PerspectiveCamera(49,1,.08,130);
-            this.threeScene.add(new THREE.HemisphereLight(0xe5eeff,0x505545,2.4));
-            const sun=new THREE.DirectionalLight(0xfff1d9,3.5);sun.position.set(-9,16,9);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-15;sun.shadow.camera.right=15;sun.shadow.camera.top=19;sun.shadow.camera.bottom=-19;sun.shadow.camera.near=1;sun.shadow.camera.far=55;sun.shadow.bias=-.00015;sun.shadow.normalBias=.025;this.threeScene.add(sun);
-            const fill=new THREE.DirectionalLight(0xdbe4ee,1.0);fill.position.set(8,6,-12);this.threeScene.add(fill);
+            this.threeScene.add(new THREE.HemisphereLight(0xe5eeff,0x6f7269,1.6));
+            const sun=new THREE.DirectionalLight(0xfff1d9,2.8);sun.position.set(-7,11,-8);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-15;sun.shadow.camera.right=15;sun.shadow.camera.top=19;sun.shadow.camera.bottom=-19;sun.shadow.camera.near=1;sun.shadow.camera.far=55;sun.shadow.bias=-.00006;sun.shadow.normalBias=.003;this.threeScene.add(sun);
+            const fill=new THREE.DirectionalLight(0xdbe4ee,.45);fill.position.set(8,6,-12);this.threeScene.add(fill);
             this.matrix3=new THREE.Matrix4();this.color3=new THREE.Color();
         }
         initNative() {
@@ -119,7 +119,7 @@ namespace Rally {
             b.three = new THREE.InstancedMesh(g, new THREE.MeshStandardMaterial({color:0xffffff,roughness:.88,metalness:.015,side:THREE.DoubleSide}), b.capacity);
             b.three.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
             b.three.frustumCulled = false;
-            b.three.receiveShadow=true;
+            b.three.receiveShadow=true; b.three.castShadow=true;
             this.threeScene.add(b.three);
         } }
         resize() { this.dpr = Math.min(devicePixelRatio || 1, this.quality === 'low' ? 1 : 2); if (this.threeRenderer) {
@@ -171,7 +171,7 @@ namespace Rally {
                     for (let i = 0; i < b.count; i++) {
                         this.matrix3.fromArray(b.data, i * 20);
                         b.three.setMatrixAt(i, this.matrix3);
-                        this.color3.setRGB(b.data[i * 20 + 16], b.data[i * 20 + 17], b.data[i * 20 + 18]);
+                        this.color3.setRGB(b.data[i * 20 + 16], b.data[i * 20 + 17], b.data[i * 20 + 18],THREE.SRGBColorSpace);
                         b.three.setColorAt(i, this.color3);
                     }
                     b.three.instanceMatrix.needsUpdate = true;

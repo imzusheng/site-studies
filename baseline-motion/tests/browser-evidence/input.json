@@ -1,0 +1,15 @@
+{
+  "realKeyboardMovement": 0.8751429930490776,
+  "heldSpaceQueuesAfterFollowThrough": true,
+  "swingOnRelease": true,
+  "dash": true,
+  "pauseResume": true,
+  "frameInspector": true,
+  "pageErrors": [],
+  "requests": [],
+  "contextLosses": 0,
+  "renderer": {
+    "draws": 45,
+    "triangles": 322770
+  }
+}
