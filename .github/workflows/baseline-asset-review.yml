@@ -1,0 +1,47 @@
+name: Baseline asset review
+on:
+  push:
+    branches: [codex/baseline-contact-motion-fix]
+    paths: ['.github/workflows/baseline-asset-review.yml']
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: baseline-motion
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Acquire artist-authored CC0 topology (no credentials)
+        shell: bash
+        run: |
+          mkdir -p review-assets
+          python3 - <<'PY'
+          import urllib.request, pathlib, hashlib, json
+          base='https://raw.githubusercontent.com/V-Sekai-fire/quaternius-stage/5141a38668de31ea57b9332aeccbdced2ee54953/models/UniversalBaseCharacters/'
+          names=['SK_SuperheroFemaleFullBody.usda','SK_HairBunsFBX(Unity).usda','SK_HairBuzzedFemaleFBX(Unity).usda','SK_EyebrowsFemaleFBX(Unity).usda']
+          manifest=[]
+          for name in names:
+              url=base+urllib.parse.quote(name)
+              data=urllib.request.urlopen(url,timeout=60).read()
+              assert len(data)<12000000 and data.startswith(b'#usda'), name
+              pathlib.Path('review-assets',name).write_bytes(data)
+              manifest.append({'file':name,'url':url,'sha256':hashlib.sha256(data).hexdigest(),'license':'CC0-1.0','author':'Quaternius','original':'https://quaternius.com/packs/universalbasecharacters.html'})
+          pathlib.Path('review-assets/provenance.json').write_text(json.dumps(manifest,indent=2))
+          PY
+      - name: Tooling for deterministic local conversion
+        run: python3 -m pip download --only-binary=:all: --no-deps usd-core==25.5.1 --dest review-assets
+      - name: Install pinned web dependencies
+        working-directory: baseline-motion
+        run: npm ci
+      - name: Review archive
+        run: tar -czf review-assets.tar.gz review-assets baseline-motion/node_modules
+      - uses: actions/upload-artifact@v4
+        with:
+          name: baseline-artist-asset-review
+          path: review-assets.tar.gz
+          retention-days: 3
