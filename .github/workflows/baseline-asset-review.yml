@@ -16,12 +16,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Acquire artist-authored CC0 topology (no credentials)
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Acquire artist-authored CC0 topology
         shell: bash
         run: |
           mkdir -p review-assets
           python3 - <<'PY'
-          import urllib.request, pathlib, hashlib, json
+          import urllib.request, urllib.parse, pathlib, hashlib, json
           base='https://raw.githubusercontent.com/V-Sekai-fire/quaternius-stage/5141a38668de31ea57b9332aeccbdced2ee54953/models/UniversalBaseCharacters/'
           names=['SK_SuperheroFemaleFullBody.usda','SK_HairBunsFBX(Unity).usda','SK_HairBuzzedFemaleFBX(Unity).usda','SK_EyebrowsFemaleFBX(Unity).usda']
           manifest=[]
@@ -34,7 +37,8 @@ jobs:
           pathlib.Path('review-assets/provenance.json').write_text(json.dumps(manifest,indent=2))
           PY
       - name: Tooling for deterministic local conversion
-        run: python3 -m pip download --only-binary=:all: --no-deps usd-core==25.5.1 --dest review-assets
+        run: |
+          python3 -m pip download --only-binary=:all: --no-deps usd-core==25.5.1 --dest review-assets
       - name: Install pinned web dependencies
         working-directory: baseline-motion
         run: npm ci
