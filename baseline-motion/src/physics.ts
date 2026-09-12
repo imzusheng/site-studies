@@ -1,5 +1,6 @@
 namespace Rally {
-    export const BALL_R = .095, NET = .92, COURT_X = 4.12, COURT_Z = 10.2;
+    export const RACKET = Object.freeze({rx:.1224,ry:.1678,grip:.435,secondGrip:.353,butt:.508,handleTop:.338,length:.6858});
+    export const BALL_R = .040, NET = .92, COURT_X = 4.12, COURT_Z = 10.2;
     export interface Setup {
         weight: number;
         balance: number;
@@ -82,8 +83,8 @@ namespace Rally {
         u = new V(1, 0, 0);
         v = new V(0, 1, 0);
         n = new V(0, 0, 1);
-        rx = .29;
-        ry = .40;
+        rx: number = RACKET.rx;
+        ry: number = RACKET.ry;
         copy(r: RacketPose) { this.p.copy(r.p); this.u.copy(r.u); this.v.copy(r.v); this.n.copy(r.n); this.rx = r.rx; this.ry = r.ry; return this; }
         lerp(a: RacketPose, b: RacketPose, t: number) { this.p.lerp(a.p, b.p, t); this.n.lerp(a.n, b.n, t).norm(); this.v.lerp(a.v, b.v, t).norm(); this.u.cross(this.v, this.n).norm(); this.v.cross(this.n, this.u).norm(); this.rx = mix(a.rx, b.rx, t); this.ry = mix(a.ry, b.ry, t); return this; }
     }
@@ -112,7 +113,7 @@ namespace Rally {
             planar = Math.hypot(cpose.rx * Math.cos(a) - au, cpose.ry * Math.sin(a) - av);
         }
         const gap = Math.hypot(d, planar);
-        if (gap <= BALL_R + .012 && t < out.t) {
+        if (gap <= BALL_R + (q>1?.010:.002) && t < out.t) {
             out.hit = true;
             out.t = t;
             out.u = u / cpose.rx;
@@ -133,7 +134,7 @@ namespace Rally {
             return out;
         const delta = d0 - d1;
         if (Math.abs(delta) > .000001) {
-            const radius = BALL_R + .005;
+            const radius = BALL_R + .001;
             checkSurface(clamp((d0 - Math.sign(d0 || 1) * radius) / delta), b0, b1, r0, r1, out);
             checkSurface(clamp(d0 / delta), b0, b1, r0, r1, out);
         }
@@ -147,10 +148,10 @@ namespace Rally {
     export function chooseStroke(height: number, localZ: number, localX: number, run: number, charge: number, nearNet: boolean, bounces: number): Stroke { if (height > 2.02 && charge > .42)
         return 'smash'; if (nearNet && bounces === 0 && height > .68)
         return 'volley'; if (Math.abs(localX) > 1.10 || run > 6.3)
-        return 'reach'; if (height < .74 || localZ > -.40)
+        return 'reach'; if (height < .74 || localZ > (localX < -.16 ? -.23 : -.40))
         return 'slice'; if (height > 1.35 && charge > .78)
         return 'drive'; return 'topspin'; }
-    export function timingFor(localZ: number, offcenter: number, releaseError = 0): Timing { const e = localZ + .52; if (e < -.24 || releaseError > .075)
+    export function timingFor(localZ: number, offcenter: number, releaseError = 0, depth = .52): Timing { const e = localZ + depth; if (e < -.24 || releaseError > .075)
         return 'Early'; if (e > .23 || releaseError < -.085)
         return 'Late'; return Math.abs(e) < .13 && offcenter < .76 && Math.abs(releaseError) < .055 ? 'Perfect' : 'Good'; }
     export class Sound {

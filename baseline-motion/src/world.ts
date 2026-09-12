@@ -1,6 +1,7 @@
 namespace Rally {
     export class World {
         r: Renderer;
+        club:SunsetClub;
         aimDim = rgb(0x758c68);
         trailDim = rgb(0x819958);
         tmp = new V();
@@ -13,7 +14,7 @@ namespace Rally {
         effects = Array.from({ length: 8 }, () => ({ x: 0, z: 0, age: 9, color: C.lime, kind: 0 }));
         effectIndex = 0;
         cameraKick = 0;
-        constructor(canvas: HTMLCanvasElement) { this.r = new Renderer(canvas); this.buildCourt(); this.r.freeze(); }
+        constructor(canvas: HTMLCanvasElement) { this.r = new Renderer(canvas); this.club=new SunsetClub(this.r); this.r.freeze(); }
         buildCourt() {
             const r = this.r;
             r.add('box', C.dark, 0, -.22, 0, 85, .35, 85);
@@ -76,13 +77,14 @@ namespace Rally {
         update(g: Game, dt: number) {
             const r = this.r, p = g.player, b = g.ball;
             r.begin();
+            this.club.update(g.paused?0:dt);
             const high = Math.max(0, b.p.y - 2.4);
             this.cameraKick = damp(this.cameraKick, 0, 9, dt);
-            const desiredY = 5.25 + high * .25, desiredZ = p.z + 7.9 - this.cameraKick * .08;
-            r.camera.x = damp(r.camera.x, p.x * .32, 4, dt);
+            const desiredY = 2.65 + high * .30, desiredZ = p.z + 4.8 - this.cameraKick * .08;
+            r.camera.x = damp(r.camera.x, p.x * .65, 4, dt);
             r.camera.y = damp(r.camera.y, desiredY, 2.8, dt);
             r.camera.z = damp(r.camera.z, desiredZ, 5, dt);
-            r.target.x = damp(r.target.x, p.x * .13, 4, dt);
+            r.target.x = damp(r.target.x, p.x * .28, 4, dt);
             r.target.y = damp(r.target.y, .43 + high * .12, 3, dt);
             r.target.z = damp(r.target.z, 3.0 + clamp(p.z - 8.2, -4, 3) * .30, 3, dt);
             if(g.ai.visual)g.ai.visual.root.visible=false;

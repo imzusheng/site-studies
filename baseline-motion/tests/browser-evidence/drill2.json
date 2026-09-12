@@ -1,0 +1,74 @@
+{
+  "drill": 2,
+  "rows": [
+    {
+      "hand": 1,
+      "type": "topspin",
+      "timing": "Perfect",
+      "gap": 0.04099869928809291,
+      "handError": 2.7755575615628914e-16
+    },
+    {
+      "hand": -1,
+      "type": "topspin",
+      "timing": "Perfect",
+      "gap": 0.040996073004784056,
+      "handError": 0.0009698419440456067
+    },
+    {
+      "hand": 1,
+      "type": "topspin",
+      "timing": "Perfect",
+      "gap": 0.04099869928809291,
+      "handError": 2.7755575615628914e-16
+    }
+  ],
+  "stats": {
+    "hits": 3,
+    "perfect": 3,
+    "good": 0,
+    "early": 0,
+    "late": 0,
+    "misses": 0,
+    "errors": 0,
+    "bestRally": 3,
+    "maxSpeed": 68.34116003218892,
+    "targets": 0,
+    "landed": 3,
+    "totalSpeed": 204.9980364985842
+  },
+  "completed": 0,
+  "contacts": [
+    {
+      "gap": 0.04099869928809291,
+      "radius": 0.04,
+      "u": 0.06629063095898445,
+      "v": -0.010177549934070924,
+      "who": 1,
+      "time": 2.6833333333333265
+    },
+    {
+      "gap": 0.040996073004784056,
+      "radius": 0.04,
+      "u": -0.12837187017485976,
+      "v": 0.16021255937099912,
+      "who": 1,
+      "time": 5.975000000000087
+    },
+    {
+      "gap": 0.04099869928809291,
+      "radius": 0.04,
+      "u": 0.06629063095898445,
+      "v": -0.010177549934070924,
+      "who": 1,
+      "time": 9.258333333333448
+    }
+  ],
+  "pageErrors": [],
+  "requests": [],
+  "contextLosses": 0,
+  "renderer": {
+    "draws": 52,
+    "triangles": 325612
+  }
+}

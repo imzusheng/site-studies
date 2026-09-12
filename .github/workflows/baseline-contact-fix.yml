@@ -1,0 +1,43 @@
+name: Baseline contact checks
+on:
+  push:
+    branches: [codex/baseline-contact-motion-fix]
+    paths: ['baseline-motion/**', '.github/workflows/baseline-contact-fix.yml']
+  pull_request:
+    paths: ['baseline-motion/**', '.github/workflows/baseline-contact-fix.yml']
+permissions:
+  contents: read
+concurrency:
+  group: baseline-contact-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: baseline-motion
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned dependencies
+        working-directory: baseline-motion
+        run: npm ci
+      - name: Build offline game
+        working-directory: baseline-motion
+        run: npm run build
+      - name: Core and game regressions
+        working-directory: baseline-motion
+        run: npm test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: baseline-contact-review
+          path: |
+            baseline-motion/dist/index.html
+            baseline-motion/MOTION_FIX.md
+            baseline-motion/MOTION_VALIDATION.md
+            baseline-motion/tests/*results.json
+            baseline-motion/tests/browser-evidence/*.json
+          retention-days: 3

@@ -1,26 +1,17 @@
-# Third-party references / 第三方资源
+# Third-party resources
 
-## Three.js
+## Default build
 
-- Library: Three.js `0.180.0` (pinned).
-- Repository: https://github.com/mrdoob/three.js
-- Runtime CDN candidates: https://cdn.jsdelivr.net/npm/three@0.180.0/ and https://unpkg.com/three@0.180.0/
-- Loader utilities: GLTFLoader, DRACOLoader, SkeletonUtils.clone.
-- Upstream library license: MIT; retain the bundled license notices in local builds.
-- Draco decoder files are copied from the installed Three.js package with their included notices.
+Three.js 0.180.0 is pinned in package-lock.json and bundled at build time. Includes MarchingCubes, BufferGeometryUtils, GLTFLoader/DRACOLoader and SkeletonUtils from the same package. MIT notice is retained in `LICENSE-THREE.txt`.
 
-## Reference human
+The default athlete, rig curves, court geometry and material setup are original procedural content in `src/athlete.ts`, `src/avatar.ts`, `src/human.ts` and `src/club.ts`. No GTA assets, professional motion-capture pack, copyrighted player likeness, external font or downloaded character textures are used by the default runtime. Neither a scan nor measured biomechanical reproduction is claimed.
 
-Runtime candidates, also listed in `src/human.ts` and `tools/download-assets.mjs`:
+## Preserved legacy assets
 
-1. https://threejs.org/examples/models/gltf/Michelle.glb
-2. https://cdn.jsdelivr.net/gh/mrdoob/three.js@r180/examples/models/gltf/Michelle.glb
-3. https://raw.githubusercontent.com/mrdoob/three.js/r180/examples/models/gltf/Michelle.glb
+The user's existing cached Michelle.glb and Draco files have not been modified or removed from the repository. The default build no longer requests them. Their presence in the original repository is not a representation that the Three.js library MIT license automatically clears every example model for commercial distribution. Check asset-specific provenance before any commercial use.
 
-This is a reference skinned character used by Three.js examples. It is not a tennis motion-capture pack, custom commissioned athlete, or GTA V asset. The model binary was not successfully retrieved in this execution environment and is not included in this ZIP. Availability and final rendering were not verified.
+The optional legacy loader and local GLB import require a compatible Mixamo-style rig and asset permission. They have not been calibrated or visually validated by this change.
 
-Do not assume the repository's library license automatically clears every example model for every commercial use. Confirm the specific asset provenance and intended distribution terms before shipping a commercial product. No proprietary game assets have been extracted or distributed.
+## Motion / scale references
 
-## Locally selected models
-
-Use a GLB you have permission to use, with a compatible Mixamo skeleton, rest/bind pose, and textures embedded in the file. Required bone names after removing the Mixamo prefix include hips, spine, arms, forearms, hands, upper legs, legs, feet and toe bases. Detailed finger bones improve grip pose but do not automatically calibrate every hand mesh. Custom models still require visual adjustment and verification.
+Public educational and original research links are documented in `MOTION_FIX.md`. These sources inform direction and proportions only; no source animations or branded racquet models are copied into the game.
