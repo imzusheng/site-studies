@@ -10,3 +10,6 @@ Thumbs.db
 
 animejs/node_modules/
 animejs/dist/
+
+baseline-motion/node_modules/
+baseline-motion/dist/

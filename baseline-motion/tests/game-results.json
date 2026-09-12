@@ -1,0 +1,326 @@
+{
+  "scope": "Non-rendering production Game fixed loop with no-op World/audio. HumanRig/asset loading/rendering NOT validated.",
+  "passed": 20,
+  "cases": [
+    "Production contact code yields Perfect/Good/Early/Late/Miss",
+    "All accepted contacts have geometric gap within ball radius plus thickness",
+    "Without Space input there are no automatic returns",
+    "A ball outside reach is not sucked into the racket",
+    "Ready stance changes hands before commitment and locks after release",
+    "Drill 0: new motion timing can complete its goal in the logic harness",
+    "Drill 1: new motion timing can complete its goal in the logic harness",
+    "Drill 2: new motion timing can complete its goal in the logic harness",
+    "Drill 3: new motion timing can complete its goal in the logic harness",
+    "Drill 4: new motion timing can complete its goal in the logic harness",
+    "Drill 5: new motion timing can complete its goal in the logic harness",
+    "Drill 6: new motion timing can complete its goal in the logic harness",
+    "Both forehand and backhand return real simulated feeds",
+    "Training partner sustains a rally using the new swing timings",
+    "Net and high-point drills choose volley and overhead without extra keys",
+    "Every drill retains swept racket contact constraints",
+    "A match finishes through actual rules and contacts, without injecting score",
+    "Match includes player serve contact, not only service faults",
+    "Slow-motion inspector loops completed swings rather than freezing after one",
+    "Pausing for tuning does not advance the ball"
+  ],
+  "detail": {
+    "timing": [
+      {
+        "time": 0,
+        "tier": "Late",
+        "gap": 0.10008008929040857
+      },
+      {
+        "time": 0.18,
+        "tier": "Perfect",
+        "gap": 0.09998451478236425
+      },
+      {
+        "time": 0.285,
+        "tier": "Good",
+        "gap": 0.1005288119991476
+      },
+      {
+        "time": 0.295,
+        "tier": "Early",
+        "gap": 0.099974045649379
+      },
+      {
+        "time": 0.34,
+        "tier": "Miss"
+      }
+    ],
+    "drills": [
+      {
+        "drill": 0,
+        "completed": 24,
+        "goal": 5,
+        "stats": {
+          "hits": 24,
+          "perfect": 24,
+          "good": 0,
+          "early": 0,
+          "late": 0,
+          "misses": 0,
+          "errors": 0,
+          "bestRally": 24,
+          "maxSpeed": 67.84284549324941,
+          "targets": 0,
+          "landed": 24,
+          "totalSpeed": 1628.2113533679044
+        },
+        "hands": {
+          "1": 13,
+          "-1": 11
+        },
+        "types": {
+          "topspin": 24
+        },
+        "aiContacts": 0,
+        "levelOver": false,
+        "validContacts": true
+      },
+      {
+        "drill": 1,
+        "completed": 8,
+        "goal": 8,
+        "stats": {
+          "hits": 23,
+          "perfect": 12,
+          "good": 11,
+          "early": 0,
+          "late": 0,
+          "misses": 6,
+          "errors": 0,
+          "bestRally": 26,
+          "maxSpeed": 67.8415425340124,
+          "targets": 0,
+          "landed": 0,
+          "totalSpeed": 1222.8624412006639
+        },
+        "hands": {
+          "1": 14,
+          "-1": 9
+        },
+        "types": {
+          "topspin": 6,
+          "slice": 17
+        },
+        "aiContacts": 23,
+        "levelOver": false,
+        "validContacts": true
+      },
+      {
+        "drill": 2,
+        "completed": 10,
+        "goal": 4,
+        "stats": {
+          "hits": 10,
+          "perfect": 10,
+          "good": 0,
+          "early": 0,
+          "late": 0,
+          "misses": 0,
+          "errors": 0,
+          "bestRally": 10,
+          "maxSpeed": 67.86175720014666,
+          "targets": 10,
+          "landed": 10,
+          "totalSpeed": 678.5759513212964
+        },
+        "hands": {
+          "1": 5,
+          "-1": 5
+        },
+        "types": {
+          "topspin": 10
+        },
+        "aiContacts": 0,
+        "levelOver": true,
+        "validContacts": true
+      },
+      {
+        "drill": 3,
+        "completed": 10,
+        "goal": 6,
+        "stats": {
+          "hits": 10,
+          "perfect": 10,
+          "good": 0,
+          "early": 0,
+          "late": 0,
+          "misses": 0,
+          "errors": 0,
+          "bestRally": 10,
+          "maxSpeed": 67.47029090794994,
+          "targets": 0,
+          "landed": 10,
+          "totalSpeed": 674.0641211252359
+        },
+        "hands": {
+          "1": 10
+        },
+        "types": {
+          "topspin": 10
+        },
+        "aiContacts": 0,
+        "levelOver": true,
+        "validContacts": true
+      },
+      {
+        "drill": 4,
+        "completed": 10,
+        "goal": 5,
+        "stats": {
+          "hits": 10,
+          "perfect": 10,
+          "good": 0,
+          "early": 0,
+          "late": 0,
+          "misses": 0,
+          "errors": 0,
+          "bestRally": 10,
+          "maxSpeed": 56.85940187717818,
+          "targets": 0,
+          "landed": 10,
+          "totalSpeed": 568.592494708523
+        },
+        "hands": {
+          "1": 5,
+          "-1": 5
+        },
+        "types": {
+          "volley": 10
+        },
+        "aiContacts": 0,
+        "levelOver": true,
+        "validContacts": true
+      },
+      {
+        "drill": 5,
+        "completed": 10,
+        "goal": 5,
+        "stats": {
+          "hits": 10,
+          "perfect": 10,
+          "good": 0,
+          "early": 0,
+          "late": 0,
+          "misses": 0,
+          "errors": 0,
+          "bestRally": 10,
+          "maxSpeed": 71.60364902358087,
+          "targets": 0,
+          "landed": 10,
+          "totalSpeed": 716.0364018634349
+        },
+        "hands": {
+          "1": 5,
+          "-1": 5
+        },
+        "types": {
+          "smash": 10
+        },
+        "aiContacts": 0,
+        "levelOver": true,
+        "validContacts": true
+      },
+      {
+        "drill": 6,
+        "completed": 12,
+        "goal": 7,
+        "stats": {
+          "hits": 12,
+          "perfect": 11,
+          "good": 1,
+          "early": 0,
+          "late": 0,
+          "misses": 0,
+          "errors": 0,
+          "bestRally": 12,
+          "maxSpeed": 68.41371470745726,
+          "targets": 0,
+          "landed": 12,
+          "totalSpeed": 813.4505708763305
+        },
+        "hands": {
+          "1": 12
+        },
+        "types": {
+          "topspin": 12
+        },
+        "aiContacts": 0,
+        "levelOver": true,
+        "validContacts": true
+      }
+    ],
+    "match": {
+      "completed": true,
+      "score": [
+        7,
+        4
+      ],
+      "points": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          7,
+          4
+        ]
+      ],
+      "stats": {
+        "hits": 40,
+        "perfect": 3,
+        "good": 37,
+        "early": 0,
+        "late": 0,
+        "misses": 11,
+        "errors": 0,
+        "bestRally": 12,
+        "maxSpeed": 67.35387253030868,
+        "targets": 0,
+        "landed": 0,
+        "totalSpeed": 2102.7288429006935
+      },
+      "time": 134.89166666670832
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "baseline-motion-build",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.cjs",
+    "assets": "node tools/download-assets.mjs",
+    "build:local": "node build.cjs --local",
+    "start": "node tools/server.mjs",
+    "test": "node tests/core.cjs && node tests/game.cjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "esbuild": "0.25.5"
+  }
+}

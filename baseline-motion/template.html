@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#14211d"><title>BASELINE / Motion Build</title><style>/*__CSS__*/</style></head>
+<body>
+<canvas id="court" aria-label="第三人称网球场"></canvas>
+<div class="vignette"></div>
+<header><a class="brand" href="#" id="home"><svg width="26" height="30" viewBox="0 0 26 30" fill="none" aria-hidden="true"><path d="M5 25L18 4M3 19h17M9 10h14" stroke="currentColor" stroke-width="4"/></svg><span>BASELINE<i>ON COURT / MOTION BUILD</i></span></a><nav aria-label="游戏模式"><button id="nav-warm" class="selected">自由热身</button><button id="nav-drills">训练挑战</button><button id="nav-match">抢七对打 <span>↗</span></button></nav><div class="utilities"><button id="sound" title="开关音效" aria-label="开关音效">声音 <b>开</b></button><button id="inspect" title="动作检视（V）">动作检视</button><button id="settings" title="设置">设置</button><button id="pause" title="暂停（Esc）">Ⅱ</button></div></header>
+<section id="hud" hidden>
+<div class="objective"><div class="eyebrow" id="drill-en">FIND YOUR RHYTHM</div><h2 id="drill-name">找到击球点</h2><p id="task">打出 5 次有效回球</p><div class="progress"><span id="goal-fill"></span></div><div class="goal-detail"><span id="goal-text">0 / 5</span><button id="next-drill" hidden>下一项 ↗</button></div></div>
+<div class="match-score" id="match-score" hidden><div><small>你</small><b id="score-p">0</b></div><em>:</em><div><small>陪练</small><b id="score-ai">0</b></div><p>先得 7 分，净胜 2 分</p></div>
+<aside class="live-stats"><div class="stat-kicker">THIS SESSION</div><div class="stat"><b id="rally-count">00</b><span id="rally-label">连续回合</span></div><div class="mini-stat"><b id="speed">—</b><span>km/h · 上一拍</span></div><div class="mini-stat"><b id="best">0</b><span>最佳连续回合</span></div><div class="impact-map"><svg id="impact-svg" width="44" height="67" viewBox="0 0 44 67"><ellipse cx="22" cy="23" rx="17" ry="21" fill="none" stroke="#788575" stroke-width="1.5"/><path d="M12 40l8 11h4l8-11M22 50v16M6 17h32M6 29h32M16 4v37M28 4v37" stroke="#788575" fill="none"/><circle id="impact-dot" cx="22" cy="23" r="3.6" fill="#c7ef49"/></svg><div><b id="stroke-label">等待第一拍</b><span id="shot-quality">触球位置</span></div></div></aside>
+<div id="cue" aria-live="polite"><strong id="cue-title"></strong><p id="cue-sub"></p></div>
+<div class="bottom"><button class="quiet-action" id="change-drill"><span>↗</span> 换个练习</button><div class="rhythm"><div class="rhythm-title"><span id="rhythm-message">提前按住，近身松开</span><b id="power-number">SPACE</b></div><div class="power-track"><div class="ideal-band"></div><span id="power-fill"></span><i></i></div><div class="rhythm-foot"><span id="direction-hint">白圈预览回球方向</span><span id="dash-hint">Shift · 快速调整</span></div></div><button class="quiet-action" id="tune"><span>⌁</span> 球拍偏好</button></div>
+<div class="key-guide"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 移动</span><span><kbd>SPACE</kbd> 蓄力 / 松开挥拍</span><span><kbd>SHIFT</kbd> 短冲刺</span></div>
+</section>
+<div id="welcome"><div class="welcome-shade"></div><section class="start-panel"><p class="eyebrow">READ THE BALL. FINISH THE SWING.</p><h1>找到<br>节奏<span>。</span></h1><p class="intro">先找到节奏，再打出好球。<br>提前引拍、判断来球、转体挥出。</p><button class="primary large" id="start">开始热身 <span>↗</span></button><button class="secondary" id="start-match">直接对打 →</button><div class="start-keys"><span><kbd>WASD</kbd> 移动</span><span><kbd>SPACE</kbd> 击球</span><span><kbd>SHIFT</kbd> 冲刺</span></div></section><div class="welcome-corner"><span>COURT 01</span><b>MOVE. LOAD. FOLLOW THROUGH.</b><small>第三人称 · 单人 · 桌面键鼠</small></div></div>
+<div id="overlay" hidden><button id="scrim" aria-label="返回球场"></button><section id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title"></section></div>
+<div id="debug" hidden></div><div id="fatal" hidden role="alert"></div>
+<div id="mobile-note">为键盘与鼠标设计。建议在桌面浏览器全屏打开。</div>
+<div id="asset-credit"></div>
+<div id="asset-loading"><section><p class="eyebrow">BASELINE / HUMAN MOTION</p><h2 id="asset-status">准备 3D 引擎</h2><p id="asset-detail">加载 Three.js、蒙皮人物和贴图。首次打开需要联网。</p><div class="load-track"><span></span></div><div class="asset-actions"><button class="primary" id="asset-retry" onclick="location.reload()">重试</button><label class="secondary">本地 GLB<input id="model-file" type="file" accept=".glb" hidden></label></div><small>无外部账号、无数据上传。人物文件仅在当前浏览器读取。</small></section></div>
+<section id="motion-panel" hidden><div><p class="eyebrow">MOTION INSPECTOR</p><h2 id="motion-phase">准备 / READY</h2><p id="motion-detail">右手持拍</p></div><div class="motion-buttons"><button data-motion="forehand" class="active">正手</button><button data-motion="backhand">双手反手</button><button data-motion="serve">高点挥拍</button><button data-motion="side">侧移</button><button data-motion="run">跑动</button></div><label>播放速度<input id="motion-speed" type="range" min=".15" max="1" step=".05" value=".45"></label><label>观察角度<input id="motion-angle" type="range" min="-3.14" max="3.14" step=".02" value=".65"></label><p class="motion-note">检视模式只播放动作，不计算击球命中。<br>脚后跟抬起、脚尖蹬地、引拍与随挥可在这里慢放。</p><button class="primary" id="motion-exit">回到训练场 →</button></section>
+<!--__VENDOR__-->
+<script id="baseline-compiled" type="text/plain">/*__APP__*/</script>
+<script type="module">
+async function loadEngine(){
+  const status=document.getElementById('asset-status'), detail=document.getElementById('asset-detail');
+  try {
+    if(!window.BASELINE_ENGINE){
+      let base='';
+      for(const candidate of ['https://cdn.jsdelivr.net/npm/three@0.180.0/','https://unpkg.com/three@0.180.0/']){
+        try {const r=await fetch(candidate+'build/three.module.js',{signal:AbortSignal.timeout(12000),cache:'force-cache'});if(r.ok){base=candidate;break;}}catch{}
+      }
+      if(!base)throw new Error('3D 引擎 CDN 不可达。请联网重试，或使用源码包的本地构建。没有载入替代人物。');
+      const map=document.createElement('script');map.type='importmap';map.textContent=JSON.stringify({imports:{three:base+'build/three.module.js'}});document.head.appendChild(map);
+      const [three,loader,draco,skeleton]=await Promise.all([import('three'),import(base+'examples/jsm/loaders/GLTFLoader.js'),import(base+'examples/jsm/loaders/DRACOLoader.js'),import(base+'examples/jsm/utils/SkeletonUtils.js')]);
+      window.THREE=three;window.BASELINE_ENGINE={GLTFLoader:loader.GLTFLoader,DRACOLoader:draco.DRACOLoader,cloneSkeleton:skeleton.clone};
+      window.BASELINE_DECODER_PATH=base+'examples/jsm/libs/draco/';
+    }
+    const script=document.createElement('script');script.textContent=document.getElementById('baseline-compiled').textContent;document.body.appendChild(script);
+  }catch(error){document.getElementById('asset-loading').classList.add('failed');status.textContent='无法完成载入';detail.textContent=error.message;console.error(error);}
+}
+loadEngine();
+</script>
+</body></html>

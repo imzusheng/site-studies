@@ -1,0 +1,19 @@
+{
+  "scope": "Browser dependency-failure UX ONLY. CDN requests intentionally blocked. No model, Three.js rendering or live gameplay visual verification.",
+  "browser": "144.0.7559.96",
+  "passed": 7,
+  "cases": [
+    "Unavailable CDNs produce a visible error rather than a blank game",
+    "Loader attempts both configured engine origins",
+    "Retry action remains available after dependency failure",
+    "No primitive renderer or auto-started game replaces the missing engine",
+    "Loader failure is handled without an uncaught exception",
+    "Error panel remains inside 1440x900 viewport",
+    "Error panel remains inside 1280x720 viewport"
+  ],
+  "requests": [
+    "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "https://unpkg.com/three@0.180.0/build/three.module.js"
+  ],
+  "uncaughtErrors": []
+}

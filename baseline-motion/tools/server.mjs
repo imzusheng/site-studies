@@ -1,0 +1,4 @@
+import http from 'node:http';import {readFile,stat} from 'node:fs/promises';import path from 'node:path';import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../dist/',import.meta.url));
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.wasm':'application/wasm','.glb':'model/gltf-binary'};
+http.createServer(async(req,res)=>{try{const url=new URL(req.url,'http://localhost'),file=path.resolve(root,'.'+decodeURIComponent(url.pathname==='/'?'/baseline-motion.html':url.pathname));if(!file.startsWith(root))throw Error('Invalid path');const s=await stat(file);if(!s.isFile())throw Error('Not a file');res.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');res.end(await readFile(file));}catch{res.writeHead(404);res.end('Not found');}}).listen(4173,'127.0.0.1',()=>console.log('Open http://127.0.0.1:4173'));

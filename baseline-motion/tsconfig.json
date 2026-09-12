@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "none",
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "strict": true,
+    "skipLibCheck": true,
+    "outFile": "dist/game.js",
+    "removeComments": false,
+    "noEmitOnError": true
+  },
+  "files": [
+    "src/math.ts",
+    "src/renderer.ts",
+    "src/physics.ts",
+    "src/human.ts",
+    "src/avatar.ts",
+    "src/world.ts",
+    "src/game.ts",
+    "src/ui.ts",
+    "src/main.ts"
+  ]
+}
