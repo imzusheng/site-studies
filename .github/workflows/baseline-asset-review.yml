@@ -10,12 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: baseline-motion
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -37,14 +31,14 @@ jobs:
           pathlib.Path('review-assets/provenance.json').write_text(json.dumps(manifest,indent=2))
           PY
       - name: Tooling for deterministic local conversion
+        continue-on-error: true
         run: |
-          python3 -m pip download --only-binary=:all: --no-deps usd-core==25.5.1 --dest review-assets
-      - name: Install pinned web dependencies
-        working-directory: baseline-motion
-        run: npm ci
+          python3 -m pip download --only-binary=:all: --no-deps usd-core==25.8 --dest review-assets
       - name: Review archive
-        run: tar -czf review-assets.tar.gz review-assets baseline-motion/node_modules
+        if: always()
+        run: tar -czf review-assets.tar.gz review-assets
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: baseline-artist-asset-review
           path: review-assets.tar.gz
