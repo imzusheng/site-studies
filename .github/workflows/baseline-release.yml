@@ -1,0 +1,41 @@
+name: Baseline release checks
+on:
+  push:
+    branches: [codex/baseline-sunset-club]
+    paths: ['baseline-motion/**', '.github/workflows/baseline-release.yml']
+  pull_request:
+    paths: ['baseline-motion/**', '.github/workflows/baseline-release.yml']
+permissions:
+  contents: read
+concurrency:
+  group: baseline-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: baseline-motion
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned dependencies
+        working-directory: baseline-motion
+        run: npm ci
+      - name: Build self-hosted game
+        working-directory: baseline-motion
+        run: npm run build:local
+      - name: Core and match regression
+        working-directory: baseline-motion
+        run: npm test
+      - name: Package reproducible review workspace
+        if: always()
+        run: tar -czf baseline-review-workspace.tar.gz baseline-motion
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: baseline-review-workspace
+          path: baseline-review-workspace.tar.gz
+          retention-days: 3
