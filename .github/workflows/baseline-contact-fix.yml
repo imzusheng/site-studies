@@ -1,0 +1,82 @@
+name: Baseline contact source verification
+on:
+  push:
+    branches: [codex/baseline-contact-motion-fix]
+    paths: ['.github/workflows/baseline-contact-fix.yml']
+permissions:
+  contents: write
+concurrency:
+  group: baseline-contact-source
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.repository == 'imzusheng/site-studies' && github.ref == 'refs/heads/codex/baseline-contact-motion-fix'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/baseline-contact-motion-fix
+          sparse-checkout: |
+            baseline-motion
+            .github/workflows
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify bounded source patch
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, lzma, pathlib, re
+          root = pathlib.Path('baseline-motion')
+          encoded = ''.join((root / f'.motion-transfer-{i}').read_text().strip() for i in range(6))
+          patch = lzma.decompress(base64.b64decode(encoded, validate=True))
+          expected = 'a308ecaefe2fbb9c40a1dcdd24d2abe1aa40a918eb3edee4798863c3c33ff4b0'
+          assert hashlib.sha256(patch).hexdigest() == expected, 'Source patch checksum mismatch'
+          names = []
+          for line in patch.decode('utf-8').splitlines():
+              if line.startswith('diff --git '):
+                  m = re.fullmatch(r'diff --git a/(\S+) b/(\S+)', line)
+                  assert m and m[1] == m[2], 'Unexpected source patch path'
+                  p = pathlib.PurePosixPath(m[1])
+                  assert p.parts[0] == 'baseline-motion' and '..' not in p.parts and not p.is_absolute()
+                  assert not any(x.startswith('.motion-transfer') for x in p.parts)
+                  names.append(str(p))
+              assert not line.startswith(('new file mode 120000', 'new file mode 160000')), 'No symlinks or submodules'
+          assert len(names) == 35 and len(set(names)) == 35
+          pathlib.Path('/tmp/baseline-motion.patch').write_bytes(patch)
+          pathlib.Path('/tmp/baseline-motion-paths').write_text('\n'.join(names) + '\n')
+          print(f'Verified {len(patch)} bytes; {len(names)} source files; SHA-256 {expected}')
+          PY
+          git apply --check /tmp/baseline-motion.patch
+          git apply /tmp/baseline-motion.patch
+      - name: Install pinned dependencies
+        working-directory: baseline-motion
+        run: npm ci
+      - name: Build offline game
+        working-directory: baseline-motion
+        run: npm run build
+      - name: Core and game regressions
+        working-directory: baseline-motion
+        run: npm test
+      - name: Commit verified plaintext source on work branch only
+        shell: bash
+        run: |
+          test "$(git branch --show-current)" = 'codex/baseline-contact-motion-fix'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --pathspec-from-file=/tmp/baseline-motion-paths
+          git rm baseline-motion/.motion-transfer-0 baseline-motion/.motion-transfer-1 baseline-motion/.motion-transfer-2 baseline-motion/.motion-transfer-3 baseline-motion/.motion-transfer-4 baseline-motion/.motion-transfer-5
+          git commit -m 'fix(baseline): align garment skinning, anatomical grip and real racket contact'
+          git push origin HEAD:refs/heads/codex/baseline-contact-motion-fix
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: baseline-contact-review
+          path: |
+            baseline-motion/dist/index.html
+            baseline-motion/MOTION_FIX.md
+            baseline-motion/MOTION_VALIDATION.md
+            baseline-motion/tests/*results.json
+            baseline-motion/tests/browser-evidence/*.json
+          retention-days: 3
