@@ -1,0 +1,23 @@
+{
+  "name": "court-study-cypress",
+  "version": "1.0.0-rc1",
+  "private": true,
+  "description": "Offline tennis game and motion studio at Cypress Court",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "vendor": "node tools/vendor-engine.mjs",
+    "build": "node tools/build.mjs",
+    "start": "node tools/serve.mjs",
+    "verify": "node tools/verify.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.5"
+  }
+}

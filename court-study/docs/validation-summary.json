@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0-rc1",
+  "htmlSHA256": "8cf434f613aa1d9ba689bb478ab8895a5df5e8b98f9f934e4bcbe294a95e1244",
+  "htmlBytes": 916258,
+  "browserVersion": "144.0.7559.96",
+  "method": "Built self-contained HTML injected into blank pages; headed Chromium using SwiftShader; 120 Hz deterministic simulation. Desktop and touch viewports are emulated, not real-device performance tests.",
+  "browserChecks": {
+    "passed": 48,
+    "total": 48
+  },
+  "liveChecks": {
+    "passed": 8,
+    "total": 8
+  },
+  "runtimeRequests": 0,
+  "uncaughtErrors": 0,
+  "shaderErrors": 0,
+  "characterTriangles": 47605,
+  "rig": {
+    "bones": 18,
+    "meshes": 10,
+    "vertices": 26651,
+    "maxWeightError": 3.771856427192688e-08,
+    "finite": true,
+    "socketAttached": true
+  },
+  "simulations": {
+    "rallySimulation120s": {
+      "simulatedSeconds": 120,
+      "feeds": 32,
+      "returns": 32,
+      "misses": 0,
+      "in": 32,
+      "score": 0
+    },
+    "targetSimulation45s": {
+      "simulatedSeconds": 45,
+      "feeds": 12,
+      "returns": 11,
+      "misses": 0,
+      "in": 11,
+      "score": 1240
+    },
+    "enduranceDemo100s": {
+      "simulatedSeconds": 100,
+      "feeds": 30,
+      "returns": 30,
+      "misses": 0,
+      "in": 29,
+      "score": 0
+    }
+  },
+  "live": {
+    "method": "Headed Chromium / SwiftShader / real requestAnimationFrame loop; built HTML injected into a blank page.",
+    "wallSeconds": 11.094,
+    "simulationSeconds": 3.2,
+    "returns": 1
+  },
+  "notValidated": [
+    "Physical mobile-device performance, battery and thermals",
+    "Safari and Firefox compatibility",
+    "Long-session memory stress and exhaustive mesh penetration",
+    "Fresh npm dependency install in this offline container"
+  ]
+}

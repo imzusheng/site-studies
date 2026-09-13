@@ -1,0 +1,18 @@
+Court Study — Cypress Court / 1.0.0-rc1
+
+Open index.html in a desktop browser with WebGL2.
+This delivered HTML is self-contained and does not need Internet access.
+
+WASD / arrows: move. Space: hold to charge, release to swing.
+Click the far side of the court to aim.
+P: pause. R: restart. J: last-shot replay. Escape: exit replay.
+
+Settings (top-right) change quality, lighting and outfit.
+About contains controls, credits and source information.
+
+Rebuild from this offline ZIP:
+  node tools/build.mjs
+  node tools/verify.mjs
+
+A fresh Git checkout needs npm ci && npm run vendor before building.
+See README.md and docs/VALIDATION.md for the tested scope.
