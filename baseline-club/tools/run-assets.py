@@ -1,5 +1,5 @@
 """Isolated artist conversion with explicit rig-version adaptations."""
-import pathlib, subprocess, sys, textwrap
+import pathlib, subprocess, sys, textwrap, json, struct
 source=pathlib.Path('baseline-club/tools/asset-audit.py').read_text()
 canonical='''def canonical(name):
  if who!='snow':return name
@@ -23,6 +23,7 @@ source=source.replace("['scarf','cornea','eye_dots']", "['scarf','cornea','eye_d
 source=source.replace("if 'body' in name:", "if 'body' in name or 'skin' in name:")
 source=source.replace("ps=[images.get(f'TEX-rain_body_diffuse.{1001+i}.png') for i in range(3)]", "ps=[images.get((f'TEX-rain_body_diffuse.{1001+i}.png' if who=='rain' else f'skin_diffuse.{1001+i}.png')) for i in range(3)]")
 source=source.replace("if who=='rain' and all(ps):", "if all(ps):")
+source=source.replace("m=me.materials[mi] if me.materials else None", "m=o.material_slots[mi].material if mi<len(o.material_slots) else (me.materials[mi] if mi<len(me.materials) else None)")
 compile(source,'generated-asset-converter','exec')
 for who in ['rain','snow']:
     script=source.replace("for who in ['rain','snow']:","for who in ['"+who+"']:")
@@ -30,3 +31,4 @@ for who in ['rain','snow']:
     result=subprocess.run([sys.executable,'-u',str(p)],timeout=300)
     output=pathlib.Path('asset-audit')/(who+'-tennis.glb')
     if result.returncode or not output.exists():raise RuntimeError(who+' conversion failed: '+str(result.returncode))
+    raw=output.read_bytes();size=struct.unpack_from('<I',raw,12)[0];doc=json.loads(raw[20:20+size]);assert all(m['primitives'] for m in doc['meshes']), 'Missing artist mesh primitives'
