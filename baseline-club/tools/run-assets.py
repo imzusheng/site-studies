@@ -17,13 +17,14 @@ source=source.replace("groups={g.index:g.name for g in o.vertex_groups}","groups
 source=source.replace("if any(x in s for x in ['thumb','index','middle','ring','pinky','hand']):", "if any(x in s for x in ['thumb','index','middle','pinky','hand']) or s.startswith('def-ring'):")
 source=source.replace("if 'shin' in s or 'knee' in s:", "if 'shin' in s or 'knee' in s or 'ankle' in s:")
 source=source.replace("if 'pelvis' in s or 'spine1' in s:", "if 'pelvis' in s or 'spine1' in s or 'hip' in s:")
-source=source.replace("for vert in me.vertices:\n", "rigid_head=any(w in o.name.lower() for w in ['head','hair','eye','brow','lash','gum','tongue','teeth'])\n  for vert in me.vertices:\n")
-source=source.replace("idx=classify(name);p=original.copy()", "idx=(2 if 'neck' in name.lower() else 1 if 'spine' in name.lower() else 3) if rigid_head else classify(name);p=original.copy()")
 source=source.replace("['scarf','cornea','eye_dots']", "['scarf','cornea','eye_dots','helper','deformer']")
 source=source.replace("if 'body' in name:", "if 'body' in name or 'skin' in name:")
 source=source.replace("ps=[images.get(f'TEX-rain_body_diffuse.{1001+i}.png') for i in range(3)]", "ps=[images.get((f'TEX-rain_body_diffuse.{1001+i}.png' if who=='rain' else f'skin_diffuse.{1001+i}.png')) for i in range(3)]")
 source=source.replace("if who=='rain' and all(ps):", "if all(ps):")
 source=source.replace("m=me.materials[mi] if me.materials else None", "m=o.material_slots[mi].material if mi<len(o.material_slots) else (me.materials[mi] if mi<len(me.materials) else None)")
+source=source.replace("uv=list(me.uv_layers.active.data[li].uv) if me.uv_layers.active else [0,0]", "uv_layer=next((layer for layer in me.uv_layers if layer.active_render),me.uv_layers.active);uv=list(uv_layer.data[li].uv) if uv_layer else [0,0]")
+# Keep the artist's hair surface, bending the straight rig rest shape into a relaxed arc.
+source=source.replace("coords=np.asarray(coords);faces=", "coords=np.asarray(coords)\n  if who=='rain' and 'hair_ponytail' in o.name:\n   d=np.clip((-coords[:,2]-.12)/.45,0,1);angle=-1.10*d;yy=coords[:,1]-1.753;zz=coords[:,2]+.12;coords[:,1]=1.753+yy*np.cos(angle)-zz*np.sin(angle);coords[:,2]=-.12+yy*np.sin(angle)+zz*np.cos(angle)\n  faces=")
 compile(source,'generated-asset-converter','exec')
 for who in ['rain','snow']:
     script=source.replace("for who in ['rain','snow']:","for who in ['"+who+"']:")
