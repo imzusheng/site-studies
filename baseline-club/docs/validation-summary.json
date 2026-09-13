@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0-rc2",
+  "htmlSHA256": "1a9e26ef77a0da7cef9927681d0f163dc32dd4110bdce15349c530c6af8cfa2f",
+  "htmlBytes": 9146390,
+  "tests": {
+    "acceptance": {"passed": 41, "total": 41},
+    "behavior": {"passed": 19, "total": 19},
+    "live-smoke": {"passed": 8, "total": 8}
+  },
+  "match90s": {"hits": [16,10], "score": [3,7], "longestRally": 9, "retained": 10},
+  "opponents": {
+    "steady": {"avgSpeed": 56.25714285714285, "kinds": ["backhand","forehand"], "score": [3,7], "character": "snow", "hits": 7},
+    "power": {"avgSpeed": 65.5, "kinds": ["backhand","forehand"], "score": [4,7], "character": "snow", "hits": 5},
+    "tactician": {"avgSpeed": 61.6, "kinds": ["slice","smash"], "score": [1,7], "character": "rain", "hits": 3}
+  },
+  "difficultyMeanFeedSpeedMps": {"easy": 17.264333222770354, "club": 19.938728843834305, "pro": 21.837263176347722},
+  "externalRequests": 0,
+  "uncaughtJS": 0,
+  "WebGLerrors": 0,
+  "liveLoopWallSeconds": 14.189,
+  "limitations": [
+    "Chromium SwiftShader only; not physical phone FPS",
+    "7-point club match, CPU initiates every point; not complete competition rules",
+    "Approximate contact physics, not a calibrated racket-string solver",
+    "Production character rigs simplified to 18 joints; not full facial/corrective parity"
+  ]
+}

@@ -1,0 +1,27 @@
+Baseline Club — Web Tennis / 2.0.0-rc2
+
+Open index.html in a modern WebGL2 browser. The delivered HTML is self-contained and does not require Internet access.
+
+PLAY
+- Choose one of three opponents from the home screen, or enter ball-machine training.
+- WASD / arrow keys: move. Hold Space: charge. Release: swing.
+- P: pause. R: restart. J: replay the previous shot. Escape: leave replay/dialogs.
+- On touch devices use the joystick and HIT button.
+
+SETTINGS
+- Physics-derived landing is the default. Manual target mode remains optional.
+- Difficulty changes pace, width, depth, spin, opponent response and timing tolerance without changing gravity.
+- Predicted bounce, recommended position, trajectory, timing cue, auto movement and timing assist are independent switches.
+
+SOURCE
+- Rain v3 / Snow v4: Blender Studio, CC BY 4.0.
+- Tennis motions: Tennis-MoCap, CC BY-SA 3.0.
+- Three.js: MIT.
+All player-facing source notices are centralized in About.
+
+Rebuild from this cached project:
+  node tools/build.mjs
+  node tools/verify.mjs
+  node tools/run-bounded.mjs 180000 xvfb-run -a python tests/acceptance.py
+
+See README.md and docs/VALIDATION.md for scope and limits.
