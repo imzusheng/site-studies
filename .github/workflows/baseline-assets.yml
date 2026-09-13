@@ -1,37 +1,70 @@
-name: Baseline Club asset audit
+name: Baseline Club asset preparation
 on:
   push:
     branches: [feat/court-study-cypress-rc1]
     paths: ['.github/workflows/baseline-assets.yml', 'baseline-club/tools/asset-audit.py']
 permissions:
   contents: read
+concurrency:
+  group: baseline-assets
+  cancel-in-progress: true
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
-      - name: Inspect public Blender Studio download links
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Download authorized source assets and pinned Blender
         run: |
           python3 - <<'PY'
-          import urllib.request, re, json, pathlib
-          out=pathlib.Path('asset-audit');out.mkdir()
-          result=[]
-          for slug in ['rain/v3','snow/v4']:
-            url='https://studio.blender.org/characters/'+slug+'/'
-            try:
-              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (BaselineClub asset preparation)'})
-              with urllib.request.urlopen(req, timeout=25) as r: text=r.read().decode()
-              (out/(slug.replace('/','-')+'.html')).write_text(text)
-              links=re.findall(r'(?:href|src)=[\"\']([^\"\']+)',text)
-              matches=[s for s in links if any(w in s.lower() for w in ['download','blend','zip'])]
-              result.append({'source':url,'bytes':len(text),'links':matches})
-            except Exception as e: result.append({'source':url,'error':str(e)})
-          print(json.dumps(result,indent=2))
-          (out/'audit.json').write_text(json.dumps(result,indent=2))
+          import urllib.request, pathlib, hashlib, zipfile, json, re
+          out=pathlib.Path('asset-audit');out.mkdir(exist_ok=True)
+          sources={'rain':'https://studio.blender.org/download-source/files/ee/a7/eea73e55dba1cea31c09848df6a794b2-4.zip','snow':'https://studio.blender.org/download-source/files/ba/0f/ba0fe6d810333b1d73c1c359e4dc03cb-6.zip'}
+          receipts=[]
+          for name,url in sources.items():
+            req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
+            with urllib.request.urlopen(req,timeout=60) as r: data=r.read(180*1024*1024)
+            p=out/(name+'.zip');p.write_bytes(data)
+            with zipfile.ZipFile(p) as z:
+              target=(out/name).resolve();target.mkdir(exist_ok=True)
+              for entry in z.infolist():
+                dest=(target/entry.filename).resolve()
+                if not dest.is_relative_to(target):raise ValueError('Unsafe ZIP entry')
+              z.extractall(target)
+            receipts.append({'name':name,'source':url,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+          (out/'source-receipts.json').write_text(json.dumps(receipts,indent=2));print(json.dumps(receipts,indent=2))
+          base='https://download.blender.org/release/Blender4.2/'
+          filename='blender-4.2.23-linux-x64.tar.xz'
+          urllib.request.urlretrieve(base+filename,filename)
+          with urllib.request.urlopen(base+'blender-4.2.23.sha256',timeout=30) as r: checks=r.read().decode()
+          expected=next(l.split()[0] for l in checks.splitlines() if filename in l)
+          assert hashlib.sha256(pathlib.Path(filename).read_bytes()).hexdigest()==expected
+          print('Blender checksum verified',expected)
+          # Full-source motions are cached as data, not executed.
+          motions=out/'motion';motions.mkdir(exist_ok=True)
+          commit='9af88bb4df4e78b22127719744fdca993ced2733'
+          for name in ['lvargas_Derecha_4seg.bvh','adorozco_Reves_8seg.bvh','lvargas_Servicio_21seg.bvh','lvargas_Remate.bvh','lvargas_VDerecha.bvh','lvargas_VReves.bvh']:
+            urllib.request.urlretrieve('https://raw.githubusercontent.com/jdpulgarin/Tennis-MoCap/'+commit+'/data/'+name,motions/name)
           PY
-      - name: Upload asset discovery evidence
+          tar -xf blender-4.2.23-linux-x64.tar.xz
+      - name: Inspect and export native game candidates
+        run: timeout 600 blender-4.2.23-linux-x64/blender -b --disable-autoexec --python baseline-club/tools/asset-audit.py
+      - name: Upload compact candidate assets and metadata
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: baseline-asset-audit
-          path: asset-audit/
+          name: baseline-character-candidates
+          path: |
+            asset-audit/*.json
+            asset-audit/*.glb
+            asset-audit/motion/
+          retention-days: 3
+      - name: Preserve licensed artist source cache
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: baseline-artist-sources
+          path: asset-audit/*.zip
+          compression-level: 0
           retention-days: 3
