@@ -2,7 +2,7 @@ name: Baseline Club asset preparation
 on:
   push:
     branches: [feat/court-study-cypress-rc1]
-    paths: ['.github/workflows/baseline-assets.yml', 'baseline-club/tools/asset-audit.py']
+    paths: ['.github/workflows/baseline-assets.yml', 'baseline-club/tools/asset-audit.py', 'baseline-club/tools/run-assets.py']
 permissions:
   contents: read
 concurrency:
@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install pinned asset conversion tools
-        run: python -m pip install --disable-pip-version-check 'bpy==4.2.0' 'numpy==1.26.4' 'pillow==11.3.0'
+        run: python -m pip install --disable-pip-version-check 'bpy==4.5.13' 'numpy==1.26.4' 'pillow==11.3.0'
       - name: Download and verify authorized artist sources
         run: |
           python - <<'PY'
@@ -46,17 +46,7 @@ jobs:
             urllib.request.urlretrieve('https://raw.githubusercontent.com/jdpulgarin/Tennis-MoCap/'+commit+'/data/'+name,motions/name)
           PY
       - name: Convert each character in a fresh Blender process
-        run: |
-          python - <<'PY'
-          import pathlib,subprocess,sys
-          source=pathlib.Path('baseline-club/tools/asset-audit.py').read_text()
-          for who in ['rain','snow']:
-            script=source.replace("for who in ['rain','snow']:","for who in ['"+who+"']:")
-            p=pathlib.Path('asset-audit')/('convert-'+who+'.py');p.write_text(script)
-            result=subprocess.run([sys.executable,str(p)],timeout=300)
-            output=pathlib.Path('asset-audit')/(who+'-tennis.glb')
-            if result.returncode or not output.exists():raise RuntimeError(who+' conversion failed')
-          PY
+        run: timeout 650 python baseline-club/tools/run-assets.py
       - name: Upload local game candidates and provenance
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
