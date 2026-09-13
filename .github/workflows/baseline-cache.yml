@@ -1,0 +1,58 @@
+name: Baseline Club cache verified assets
+on:
+  push:
+    branches: [feat/court-study-cypress-rc1]
+    paths: ['.github/workflows/baseline-cache.yml']
+permissions:
+  contents: write
+  actions: read
+jobs:
+  cache:
+    if: github.ref == 'refs/heads/feat/court-study-cypress-rc1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: feat/court-study-cypress-rc1
+      - uses: actions/download-artifact@v4
+        with:
+          name: baseline-character-candidates
+          run-id: 34742914370
+          github-token: ${{ github.token }}
+          path: verified-assets
+      - name: Verify and cache professional character meshes
+        run: |
+          python3 - <<'PY'
+          import pathlib,hashlib,shutil,json
+          src=pathlib.Path('verified-assets');root=pathlib.Path('baseline-club')
+          dest=root/'assets/characters';dest.mkdir(parents=True,exist_ok=True)
+          expected={'rain':'0bdedb1f9823c549eb97a8a0c8580688e45dd7894fbcc237bba9e989d9b458a6','snow':'de5814f91a255fc913bc9ca5be0a1e2b5952226c92961688293dc66674ed0e77'}
+          for who,digest in expected.items():
+            p=src/(who+'-tennis.glb');assert hashlib.sha256(p.read_bytes()).hexdigest()==digest
+            shutil.copy2(p,dest/(who+'.glb'))
+            shutil.copy2(src/('convert-'+who+'.py'),root/'tools'/('convert-'+who+'.py'))
+          full=root/'assets-source/full';full.mkdir(parents=True,exist_ok=True)
+          for p in (src/'motion').glob('*.bvh'):shutil.copy2(p,full/p.name)
+          shutil.copy2(src/'source-receipts.json',root/'assets-source/artist-receipts.json')
+          print('Verified Rain and Snow, cached all six original BVH recordings.')
+          PY
+      - name: Build and cache pinned Three.js engine
+        run: |
+          cd court-study
+          npm ci --no-audit --no-fund
+          npm run vendor
+          mkdir -p ../baseline-club/vendor
+          cp vendor/three.bundle.js ../baseline-club/vendor/three.bundle.js
+      - name: Commit only cached assets to the existing PR branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f baseline-club/assets/characters baseline-club/assets-source/full baseline-club/assets-source/artist-receipts.json baseline-club/tools/convert-rain.py baseline-club/tools/convert-snow.py baseline-club/vendor/three.bundle.js
+          git diff --cached --quiet || git commit -m 'build(baseline): cache licensed Rain/Snow meshes, source mocap and engine'
+          git push origin HEAD:feat/court-study-cypress-rc1
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: baseline-cached-engine
+          path: baseline-club/vendor/three.bundle.js
+          retention-days: 3
