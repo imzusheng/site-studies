@@ -1,0 +1,14 @@
+[
+  {
+    "name": "rain",
+    "source": "https://studio.blender.org/download-source/files/ee/a7/eea73e55dba1cea31c09848df6a794b2-4.zip",
+    "bytes": 67579177,
+    "sha256": "80217f163f6392dc829233d63c2cfb5e1376775bc34101ad14f39631fea70d24"
+  },
+  {
+    "name": "snow",
+    "source": "https://studio.blender.org/download-source/files/ba/0f/ba0fe6d810333b1d73c1c359e4dc03cb-6.zip",
+    "bytes": 111580346,
+    "sha256": "98d58ef3a07083ede14140bc462cccb55d317062846aa0eb652d2e4a7ac422a6"
+  }
+]

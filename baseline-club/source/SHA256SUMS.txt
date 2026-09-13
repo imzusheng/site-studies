@@ -1,0 +1,4 @@
+52db4ae539ce209650d8a55c0d4b58ace7d0aa7d80238bfee954daafe9c883f8  baseline-club-src.tar.gz
+1a9e26ef77a0da7cef9927681d0f163dc32dd4110bdce15349c530c6af8cfa2f  baseline-club-2.0.0-rc2.html
+0bdedb1f9823c549eb97a8a0c8580688e45dd7894fbcc237bba9e989d9b458a6  assets/characters/rain.glb
+de5814f91a255fc913bc9ca5be0a1e2b5952226c92961688293dc66674ed0e77  assets/characters/snow.glb
