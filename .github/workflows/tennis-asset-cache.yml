@@ -1,0 +1,60 @@
+name: Tennis public asset cache
+on:
+  push:
+    branches: [codex/tennis-web-local-assets-20260913]
+    paths: [.github/workflows/tennis-asset-cache.yml]
+permissions:
+  contents: read
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Download pinned public assets and record hashes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, hashlib, urllib.request, time
+          root=pathlib.Path('tennis-assets');root.mkdir()
+          records=[]
+          def get(url):
+              for i in range(3):
+                  try:
+                      req=urllib.request.Request(url,headers={'User-Agent':'Baseline-Asset-Cache/1.0'})
+                      with urllib.request.urlopen(req,timeout=35) as r:return r.read()
+                  except Exception:
+                      if i==2:raise
+                      time.sleep(i+1)
+          def save(url,path,license,expected=None):
+              b=get(url)
+              if expected and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()!=expected:raise ValueError('Git blob mismatch: '+path)
+              if b.startswith(b'version https://git-lfs'):raise ValueError('Git LFS pointer: '+path)
+              p=root/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+              records.append(dict(path=path,source=url,license=license,bytes=len(b),sha256=hashlib.sha256(b).hexdigest(),gitBlob=expected))
+              print(path,len(b),flush=True)
+          mocap='9af88bb4df4e78b22127719744fdca993ced2733'
+          base='https://raw.githubusercontent.com/jdpulgarin/Tennis-MoCap/'+mocap+'/'
+          for f in ['README.md','Copyright.md','labels.csv','data/lvargas_Derecha_4seg.bvh','data/lvargas_Derecha_7seg.bvh','data/lvargas_Reves.bvh','data/lvargas_Servicio_21seg.bvh','data/lvargas_Remate.bvh','data/lvargas_VDerecha.bvh','data/lvargas_VReves.bvh','data/adorozco_Reves_8seg.bvh']:
+              save(base+f,'tennis-mocap/'+f,'CC-BY-SA-3.0')
+          repo='lord3nd3r/ffxi-browser';rev='d65cd213cffb9c0ef17e3f70a6a46ea82ba47dfa'
+          tree=json.loads(get('https://api.github.com/repos/'+repo+'/git/trees/'+rev+'?recursive=1'))['tree']
+          base='https://raw.githubusercontent.com/'+repo+'/'+rev+'/'
+          save(base+'README.md','quaternius/MIRROR-README.md','Asset CC0 declaration; mirror code not included')
+          for item in tree:
+              p=item['path']
+              if item['type']=='blob' and p.startswith('public/models/chars/') and pathlib.Path(p).suffix in ['.gltf','.glb','.bin','.png','.jpg']:
+                  save(base+p,'quaternius/'+p.removeprefix('public/models/chars/'),'CC0-1.0; Quaternius; verify per-asset provenance before publishing',item['sha'])
+          for name,url in [('BASE-CHARACTERS','https://quaternius.com/packs/universalbasecharacters.html'),('ANIMATIONS','https://quaternius.com/packs/universalanimationlibrary.html')]:
+              try:save(url,'licenses/'+name+'.html','License evidence page, not a runtime asset')
+              except Exception as e:print('License page unavailable:',str(e),flush=True)
+          (root/'download-manifest.json').write_text(json.dumps(dict(mocapRevision=mocap,characterMirrorRevision=rev,files=records),indent=2))
+          print('CACHED',len(records),'FILES',sum(x['bytes'] for x in records),'BYTES',flush=True)
+          PY
+      - name: Upload reusable local asset package
+        uses: actions/upload-artifact@v4
+        with:
+          name: tennis-public-assets
+          path: tennis-assets/
+          if-no-files-found: error
+          retention-days: 3
+          compression-level: 6
