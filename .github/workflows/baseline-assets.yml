@@ -1,0 +1,37 @@
+name: Baseline Club asset audit
+on:
+  push:
+    branches: [feat/court-study-cypress-rc1]
+    paths: ['.github/workflows/baseline-assets.yml', 'baseline-club/tools/asset-audit.py']
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Inspect public Blender Studio download links
+        run: |
+          python3 - <<'PY'
+          import urllib.request, re, json, pathlib
+          out=pathlib.Path('asset-audit');out.mkdir()
+          result=[]
+          for slug in ['rain/v3','snow/v4']:
+            url='https://studio.blender.org/characters/'+slug+'/'
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (BaselineClub asset preparation)'})
+              with urllib.request.urlopen(req, timeout=25) as r: text=r.read().decode()
+              (out/(slug.replace('/','-')+'.html')).write_text(text)
+              links=re.findall(r'(?:href|src)=[\"\']([^\"\']+)',text)
+              matches=[s for s in links if any(w in s.lower() for w in ['download','blend','zip'])]
+              result.append({'source':url,'bytes':len(text),'links':matches})
+            except Exception as e: result.append({'source':url,'error':str(e)})
+          print(json.dumps(result,indent=2))
+          (out/'audit.json').write_text(json.dumps(result,indent=2))
+          PY
+      - name: Upload asset discovery evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: baseline-asset-audit
+          path: asset-audit/
+          retention-days: 3
