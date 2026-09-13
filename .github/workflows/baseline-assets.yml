@@ -31,7 +31,7 @@ jobs:
           for name,url,expected in sources:
             req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
             with urllib.request.urlopen(req,timeout=60) as r: data=r.read(180*1024*1024)
-            digest=hashlib.sha256(data).hexdigest();assert digest==expected, 'Artist source changed'
+            digest=hashlib.sha256(data).hexdigest();assert digest==expected
             p=out/(name+'.zip');p.write_bytes(data)
             with zipfile.ZipFile(p) as z:
               target=(out/name).resolve();target.mkdir(exist_ok=True)
@@ -39,14 +39,24 @@ jobs:
                 if not (target/entry.filename).resolve().is_relative_to(target):raise ValueError('Unsafe ZIP entry')
               z.extractall(target)
             receipts.append({'name':name,'source':url,'bytes':len(data),'sha256':digest})
-          (out/'source-receipts.json').write_text(json.dumps(receipts,indent=2));print(json.dumps(receipts,indent=2))
+          (out/'source-receipts.json').write_text(json.dumps(receipts,indent=2))
           motions=out/'motion';motions.mkdir(exist_ok=True)
           commit='9af88bb4df4e78b22127719744fdca993ced2733'
           for name in ['lvargas_Derecha_4seg.bvh','adorozco_Reves_8seg.bvh','lvargas_Servicio_21seg.bvh','lvargas_Remate.bvh','lvargas_VDerecha.bvh','lvargas_VReves.bvh']:
             urllib.request.urlretrieve('https://raw.githubusercontent.com/jdpulgarin/Tennis-MoCap/'+commit+'/data/'+name,motions/name)
           PY
-      - name: Convert professional artist topology to game-ready GLB
-        run: timeout 600 python baseline-club/tools/asset-audit.py
+      - name: Convert each character in a fresh Blender process
+        run: |
+          python - <<'PY'
+          import pathlib,subprocess,sys
+          source=pathlib.Path('baseline-club/tools/asset-audit.py').read_text()
+          for who in ['rain','snow']:
+            script=source.replace("for who in ['rain','snow']:","for who in ['"+who+"']:")
+            p=pathlib.Path('asset-audit')/('convert-'+who+'.py');p.write_text(script)
+            result=subprocess.run([sys.executable,str(p)],timeout=300)
+            output=pathlib.Path('asset-audit')/(who+'-tennis.glb')
+            if result.returncode or not output.exists():raise RuntimeError(who+' conversion failed')
+          PY
       - name: Upload local game candidates and provenance
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -55,6 +65,7 @@ jobs:
           path: |
             asset-audit/*.json
             asset-audit/*.glb
+            asset-audit/*.py
             asset-audit/motion/
           retention-days: 3
       - name: Preserve licensed artist source cache
