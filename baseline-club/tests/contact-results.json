@@ -1,0 +1,52 @@
+{
+  "suite": "forgiving-contact",
+  "testedAt": "2026-09-13T09:01:11.999Z",
+  "runtime": "v24.21.0",
+  "passed": 11,
+  "checks": [
+    {
+      "name": "finite reach admits nearby off-circle contact and rejects remote, behind and high balls",
+      "passed": true
+    },
+    {
+      "name": "production contact hits 1.3 m off recommendation without moving the ball or aiming IK",
+      "passed": true
+    },
+    {
+      "name": "swing retries after first miss, then connects inside the late window",
+      "passed": true
+    },
+    {
+      "name": "early and late accepted hits continue from contact into follow-through on the next frame",
+      "passed": true
+    },
+    {
+      "name": "a distant ball misses once the swing window closes and keeps flying",
+      "passed": true
+    },
+    {
+      "name": "manual tolerance still allows off-circle contact, with a smaller time window",
+      "passed": true
+    },
+    {
+      "name": "opponent difficulty never changes player reach, timing or running speed",
+      "passed": true
+    },
+    {
+      "name": "visual helper toggles do not change contact or outgoing velocity",
+      "passed": true
+    },
+    {
+      "name": "physics, target and demonstration return paths remain available",
+      "passed": true
+    },
+    {
+      "name": "AI contact keeps its own existing reach and timing limits",
+      "passed": true
+    },
+    {
+      "name": "release buffers with rhythm assistance and starts immediately when it is disabled",
+      "passed": true
+    }
+  ]
+}

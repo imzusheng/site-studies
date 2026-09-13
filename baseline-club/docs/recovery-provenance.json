@@ -1,0 +1,12 @@
+{
+  "source": "C:/Users/Zusheng/Downloads/baseline-club-recovered.html",
+  "sha256": "1a9e26ef77a0da7cef9927681d0f163dc32dd4110bdce15349c530c6af8cfa2f",
+  "method": "Extracted the three scripts, stylesheet, GLBs and motion JSON from the user-supplied HTML; original ZIP unavailable.",
+  "recoveredAt": "2026-09-13T08:20:58.819Z",
+  "verifiedHandoffZip": {
+    "sha256": "0558f02cde9d2d648446b7f92cbfb4f8b860f047c3f3f2cc9322d3be61a9297a",
+    "CRC": "pass",
+    "filesVerified": 60,
+    "offlineRebuildMatches": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "baseline-club",
+  "version": "2.0.0-local.1",
+  "private": true,
+  "type": "module",
+  "scripts": {"build": "node tools/build.mjs", "build:qa": "node tools/build.mjs --qa", "start": "node tools/serve.mjs", "test": "node tests/physics.mjs && node tests/contact.mjs"},
+  "engines": {"node": ">=22"}
+}

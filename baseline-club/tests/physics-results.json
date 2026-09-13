@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "Fixed gravity",
+      "passed": true
+    },
+    {
+      "name": "Three opponent profiles",
+      "passed": true
+    },
+    {
+      "name": "Distinct opponent power/reaction",
+      "passed": true
+    },
+    {
+      "name": "Predict does not mutate input",
+      "passed": true
+    },
+    {
+      "name": "Prediction agrees with same integrator",
+      "passed": true
+    },
+    {
+      "name": "Automatic ignores arbitrary target input",
+      "passed": true
+    },
+    {
+      "name": "Power affects launch",
+      "passed": true
+    },
+    {
+      "name": "Timing affects launch",
+      "passed": true
+    },
+    {
+      "name": "Contact lateral offset affects launch",
+      "passed": true
+    },
+    {
+      "name": "Dead ball still bounces",
+      "passed": true
+    },
+    {
+      "name": "Dead ball eventually sleeps",
+      "passed": true
+    },
+    {
+      "name": "Wall rebounds",
+      "passed": true
+    }
+  ],
+  "scope": "Recovered solver basic regression only; not real-world calibration"
+}

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src blob:; base-uri 'none'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#132e28"><meta name="description" content="Baseline Club: 网球俱乐部、不同风格的对手、击球物理与个人训练。">
+<title>Baseline Club — Web Tennis</title>
+<style>{{STYLE}}</style>
+</head>
+<body data-screen="home">
+<canvas id="view" aria-label="三维网球场"></canvas><div class="screen-shade" aria-hidden="true"></div><div id="impactFlash" aria-hidden="true"></div>
+<header><a class="wordmark" href="#" id="home" aria-label="返回首页"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><path d="M7 9c15 5 11 21 25 23M31 7c-6 14-20 11-24 24"/></svg><span>BASELINE <i>CLUB</i><small>WEB TENNIS / CYPRESS COURT</small></span></a><div class="top-right"><button class="icon-button" id="soundBtn" aria-label="开启声音" title="声音"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM17 8c2 2 2 6 0 8M20 5c4 4 4 10 0 14"/></svg></button><button class="icon-button" id="cameraBtn" aria-label="切换镜头" title="切换追踪 / 全场镜头"><svg viewBox="0 0 24 24"><path d="M3 7h5l2-3h5l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg></button><button class="icon-button" id="settingsBtn" aria-label="画面设置" title="画面设置"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16M9 2v6M16 9v6M8 16v6"/></svg></button><button class="icon-button" id="fullBtn" aria-label="全屏" title="全屏"><svg viewBox="0 0 24 24"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg></button><button class="about-button" id="assetsTab">关于 <span>↗</span></button></div></header>
+<section id="intro" class="intro"><div class="eyebrow"><span></span> YOUR NEXT GOOD SHOT</div><h1>One more<br><em>ball.</em></h1><p class="intro-copy">把下一球，打得更好。</p><div class="intro-actions"><button id="playBtn" class="primary">选择对手 <span>↗</span></button><button id="demoBtn" class="text-btn"><span class="play-glyph">▶</span> 对战示范</button></div><div class="intro-note"><span>YOUR EVERYDAY TENNIS CLUB</span><p id="homeOpponent">Rowan · 稳健底线 / 轻松</p></div><div class="home-secondary"><button class="motion-entry" id="practiceBtn">发球机训练 <span>→</span></button><button class="motion-entry" id="introMotionBtn">角色与动作 <span>→</span></button></div></section>
+<div class="venue-caption" id="venueCaption"><span>THE AFTERNOON SESSION</span><b>Play at your own pace.</b></div>
+<section id="scoreboard" class="scoreboard hidden" aria-label="训练成绩"><div><span id="returnsLabel">你</span><strong id="returns">00</strong></div><i></i><div><span id="streakLabel">连续</span><strong id="streak">00</strong></div><i></i><div><span>球速</span><strong id="speed">—<small> km/h</small></strong></div><button id="pauseBtn" title="暂停 / P" aria-label="暂停">Ⅱ</button></section>
+<div id="practiceLabel" class="practice-label hidden"><span class="live-dot"></span><div><b id="modeLabel">自由练习</b><small id="shotHint">准备接球</small><small id="challengeHint">Rally</small></div></div>
+<div id="sessionToast" role="status" class="session-toast"></div><button id="replayBtn" class="replay-button hidden">↺ <span>上一拍</span><small>J</small></button><div id="replayBanner" class="replay-banner hidden"><span>IN THE MOMENT</span><b>击球回放 · 0.5×</b><button id="exitReplayBtn">返回球场 →</button></div>
+<section id="chargeHUD" class="charge-hud hidden"><div><span id="chargeLabel">按住空格蓄力</span><b id="powerValue">0%</b></div><div class="charge-track"><span id="chargeFill"></span></div><small id="aimHint">点击对面球场，选择落点</small></section>
+<section id="motionPanel" class="motion-panel hidden"><div class="eyebrow">FORM &amp; MOVEMENT</div><h2>角色与动作<span>08 SWINGS</span></h2><p>拖动旋转视角，慢下来看看每一拍。</p><div class="motion-tabs">
+<button data-motion="forehand" class="active"><small>01 / FOREHAND</small>正手平击</button><button data-motion="backhand"><small>02 / BACKHAND</small>反手驱动</button>
+<button data-motion="volley"><small>03 / VOLLEY</small>正手截击</button><button data-motion="backVolley"><small>04 / BACK VOLLEY</small>反手截击</button>
+<button data-motion="serve"><small>05 / SERVE</small>上手发球</button><button data-motion="smash"><small>06 / SMASH</small>高压扣杀</button>
+<button data-motion="reach"><small>07 / REACH</small>正手救球</button><button data-motion="slice"><small>08 / SLICE</small>反手切削</button></div>
+<div class="studio-character"><button data-character="rain" class="active">Rain</button><button data-character="snow">Snow</button></div><div class="motion-toggles"><label class="switch"><input id="skeletonToggle" type="checkbox"><span>骨骼与轨迹</span></label><label class="switch"><input id="wireToggle" type="checkbox"><span>网格</span></label></div><div class="motion-caption"><span>CONTROL THE MOMENT</span><p>引拍 → 击球 → 随挥</p></div></section>
+<section id="timeline" class="timeline hidden"><button id="motionPlayBtn" class="icon-button" aria-label="播放或暂停动作">Ⅱ</button><div><label><span id="phaseLabel">准备</span><b id="clipTime">0.00 / 1.60s</b></label><input id="scrub" aria-label="动画时间" type="range" min="0" max="1" step="0.001" value="0"></div><button id="slowBtn" class="speed-button">0.5×</button></section>
+<nav id="bottomNav" class="bottom-nav hidden" aria-label="主导航"><button id="matchTab" class="active">对战</button><button id="courtTab">训练</button><button id="motionTab">动作室</button></nav>
+<div id="assistTools" class="assist-tools hidden"><button id="assistBtn" class="active">辅助跑位 <b>开</b></button><div id="modeTools" class="mode-tools" aria-label="游戏模式"><button id="modeRallyBtn" class="active">自由练习</button><button id="modeTargetBtn">目标挑战</button><button id="modeEnduranceBtn">耐力挑战</button></div><button id="restartBtn" title="重新开始 / R" aria-label="重新开始">↺</button></div>
+<div id="desktopHint" class="desktop-hint hidden"><span><kbd>WASD</kbd> 移动</span><span><kbd>SPACE</kbd> 蓄力</span><span><kbd>P</kbd> 暂停</span></div>
+<div id="touchControls" class="touch-controls hidden"><div id="joystick" aria-label="移动摇杆"><span></span><div id="joystickKnob"></div></div><button id="hitButton">HIT<small>按住蓄力</small></button></div>
+<div id="loading" class="loading"><span class="loading-wordmark">BASELINE CLUB</span><span class="loading-line"></span><p>正在准备球场</p></div><div id="fatal" class="fatal hidden"><h2>暂时无法进入球场</h2><p id="fatalMessage"></p><button onclick="location.reload()">重新加载</button></div>
+<dialog id="settingsDialog"><button id="closeSettings" class="dialog-close" aria-label="关闭">×</button><div class="eyebrow">PLAY YOUR WAY</div><h2>体验设置</h2>
+<fieldset><legend>击球落点</legend><div class="setting-segment"><button data-aimmode="physics" class="active">击球推导</button><button data-aimmode="target">手动瞄准</button></div><p>击球推导：来球、触球时机、拍面与蓄力共同决定出球，落点不再预设。手动瞄准：点击对面场地选择目标。</p></fieldset>
+<fieldset><legend>难度</legend><div class="setting-segment"><button data-difficulty="easy" class="active">轻松</button><button data-difficulty="club">俱乐部</button><button data-difficulty="pro">竞技</button></div><p>改变来球速度、旋转、角度与对手反应。你的移速和击球容错保持一致。</p></fieldset>
+<fieldset><legend>独立辅助</legend><div class="assist-grid">
+<label class="switch setting-switch"><input id="opt-autoMove" type="checkbox" checked><span>辅助跑位</span></label>
+<label class="switch setting-switch"><input id="opt-timingAssist" type="checkbox" checked><span>击球节奏辅助</span></label>
+<label class="switch setting-switch"><input id="opt-contactAssist" type="checkbox" checked><span>宽容击球</span></label>
+<label class="switch setting-switch"><input id="opt-showBounce" type="checkbox" checked><span>预判落点</span></label>
+<label class="switch setting-switch"><input id="opt-showPosition" type="checkbox" checked><span>推荐站位</span></label>
+<label class="switch setting-switch"><input id="opt-showTrajectory" type="checkbox"><span>完整来球轨迹</span></label>
+<label class="switch setting-switch"><input id="opt-showTiming" type="checkbox" checked><span>击球窗口提示</span></label></div><p>靠近来球就能挥拍，站位圈只供参考。宽容击球会扩大可及范围和接触时间窗；关闭后仍不必踩圈。节奏辅助允许提前松开、等待来球；关闭后，松开立即挥拍。隐藏提示不会改变击球判定。</p></fieldset>
+<fieldset><legend>画质</legend><div class="setting-segment"><button data-quality="eco">流畅</button><button data-quality="auto" class="active">均衡</button><button data-quality="high">精细</button></div></fieldset>
+<fieldset><legend>球场光线</legend><div class="setting-segment"><button data-light="day" class="active">午后阳光</button><button data-light="evening">落日余晖</button></div></fieldset>
+<fieldset><legend>服装配色</legend><div class="setting-segment"><button data-outfit="ivory" class="active">象牙白</button><button data-outfit="green">松柏绿</button><button data-outfit="rust">陶土红</button></div></fieldset>
+<label class="switch setting-switch"><input id="opt-effects" type="checkbox" checked><span>动态镜头与击球反馈</span></label></dialog>
+<dialog id="setupDialog" class="setup-dialog"><button class="dialog-close" aria-label="关闭">×</button><div class="eyebrow">MEET YOUR NEXT CHALLENGE</div><h2>今天，和谁打一场？</h2><p>俱乐部 7 分练习赛 · 领先 2 分取胜</p>
+<div class="opponent-list">
+<button data-opponent="steady" class="opponent-card active"><span class="opponent-number">01</span><div><b>Rowan <small>稳健底线</small></b><p>移动积极、回球稳定，偏好深球和长回合。</p><i>CONTROL ━━━━━ / POWER ━━</i></div></button>
+<button data-opponent="power" class="opponent-card"><span class="opponent-number">02</span><div><b>Kai <small>强力进攻</small></b><p>抢攻、大角度和快节奏，也会承担出界风险。</p><i>CONTROL ━━━ / POWER ━━━━━</i></div></button>
+<button data-opponent="tactician" class="opponent-card"><span class="opponent-number">03</span><div><b>Noa <small>变线高手</small></b><p>交替长短与左右线路，用切削打乱节奏。</p><i>VARIETY ━━━━━ / POWER ━━━</i></div></button></div>
+<fieldset><legend>你的角色</legend><div class="setting-segment"><button data-character="rain" class="active">Rain</button><button data-character="snow">Snow</button></div></fieldset>
+<fieldset><legend>难度</legend><div class="setting-segment"><button data-difficulty="easy" class="active">轻松</button><button data-difficulty="club">俱乐部</button><button data-difficulty="pro">竞技</button></div></fieldset><button id="startMatchBtn" class="primary">开始对战 <span>↗</span></button></dialog>
+<dialog id="assetsDialog"><button id="closeAssets" class="dialog-close" aria-label="关闭">×</button><div class="eyebrow">ABOUT BASELINE CLUB</div><h2>Baseline Club</h2><p class="about-lead">一个随时都能打一场球的网球俱乐部。</p>
+<p>三个不同风格的对手，发球机训练、目标挑战、耐力挑战，键盘与触屏操作，动作室与上一拍回放。所有运行资源均内置，无登录，不上传游戏数据。</p>
+<details open><summary>操作</summary><p>WASD / 方向键移动，按住空格蓄力，松开挥拍；蓄满会保持。P 暂停，R 重开，J 回看上一拍，Escape 退出回放。手机使用摇杆和 HIT。默认开启击球宽容：站位圆环只是建议，球进入身边可及范围即可击打。设置中可分别关闭击球宽容、站位、落点、轨迹、节奏与跑位辅助。</p><p>「击球推导」不输入落点；早晚触球、拍面、力量、身体平衡、来球与旋转共同决定出球，允许出界和下网。「手动瞄准」保留点选落点。未接到的球仍会弹跳、滚动和撞围网，随后淡出回收。</p></details>
+<details><summary>比赛与物理范围</summary><p>对战是俱乐部 7 分练习赛：先到 7 分且领先 2 分取胜，由对手发起每个回合；不是完整的职业赛制，没有完整发球局与双误系统。训练模式仍独立保留。</p><p>击球使用触球状态驱动的近似碰撞模型；飞行统一模拟重力、阻力和旋转升力，落地带能量损耗。它不是经过实测标定的器材或职业网球物理仿真。对手通过同一球路预测与击球模型选择战术，不在球飞行时修改轨迹。</p></details>
+<details><summary>角色、动作与版权</summary><p><b>Rain Rig (CC) Blender Foundation | studio.blender.org</b><br><b>Snow Rig (CC) Blender Foundation | studio.blender.org</b></p><p>使用 Blender Studio 的 Rain v3 与 Snow v4 角色，CC-BY。保留原生身体蒙皮、手指与身体变形骨骼；在 Blender 中烘焙动作、握拍和有限的躯干避让。表情固定，未保留全部面部控制器。角色为风格化造型。</p><p>六类基础动作来自 Tennis-MoCap 的真实 BVH：正手、反手、正反手截击、发球、高压。选取单次击球并以 50 Hz 烘焙，改编遵循 CC BY-SA 3.0。跑步、左右侧移和后退来自 Mesh2Motion 的 CC0 动作库，与网球准备姿态分层组合。Three.js 使用 MIT 许可。</p><p>环境光与草地纹理来自 Poly Haven，CC0：Green Point Park（Greg Zaal、Rico Cilliers）及 Sparse Grass（Amal Kumar）。资源均嵌入本文件，可离线使用。</p><pre class="source-notice">The MIT License
+
+Copyright © 2010-2025 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+---
+
+# Blender Studio character credits
+
+Rain Rig (CC) Blender Foundation | studio.blender.org
+Snow Rig (CC) Blender Foundation | studio.blender.org
+
+Sources:
+- Rain v3: https://studio.blender.org/characters/rain/v3/
+- Snow v4: https://studio.blender.org/characters/snow/v4/
+
+The official character pages state CC-BY and require the credits above.
+Their CC-BY license link is https://creativecommons.org/licenses/by/4.0/ .
+The license, rather than this description, governs reuse. No endorsement by
+Blender Studio or Blender Foundation is implied.
+
+Adaptations made for this game: glTF/GLB export using original body skin
+weights, selected subdivision, finger phalanges and native body corrective
+deformation; 18 unweighted compatibility joints; diffuse-texture atlases;
+material and outfit colors; baked hand pose, racket socket and bounded torso
+clearance during retargeting. Blender evaluates the native rig offline.
+Facial expression is static. Blender scripts do not execute in the browser.
+This is a real-time adaptation, not feature parity with the production rig.
+
+The artist source receipt and SHA-256 values are retained in assets-source/.
+The local GLBs are derived from those cached sources. No paid model pack,
+user tracking or remote character download is needed at runtime.
+
+
+---
+
+# Tennis-MoCap attribution and adaptation notice
+
+Source: https://github.com/jdpulgarin/Tennis-MoCap
+Revision: 9af88bb4df4e78b22127719744fdca993ced2733
+License: Creative Commons Attribution-ShareAlike 3.0 Unported.
+License: https://creativecommons.org/licenses/by-sa/3.0/
+Legal code: https://creativecommons.org/licenses/by-sa/3.0/legalcode
+Source notice: https://github.com/jdpulgarin/Tennis-MoCap/blob/9af88bb4df4e78b22127719744fdca993ced2733/Copyright.md
+
+Requested academic attribution:
+Pulgarin-Giraldo J.D., Alvarez-Meza A.M., Melo-Betancourt L.G.,
+Ramos-Bermudez S., Castellanos-Dominguez G. A Similarity Indicator for
+Differentiating Kinematic Performance Between Qualified Tennis Players.
+Lecture Notes in Computer Science, 10125, pp. 309-317, 2017.
+https://doi.org/10.1007/978-3-319-52277-7_38
+
+Six full source recordings are cached locally under assets-source/full:
+- lvargas_Derecha_4seg.bvh
+- adorozco_Reves_8seg.bvh
+- lvargas_VDerecha.bvh
+- lvargas_VReves.bvh
+- lvargas_Servicio_21seg.bvh
+- lvargas_Remate.bvh
+
+The game uses a bounded excerpt from each recording, baked at 50 Hz plus
+exact start/contact marks. It does not play the whole multi-stroke file as
+one clip. All source files are retained; hashes, declared/read row counts,
+and excerpt lengths are recorded in assets-source/motion-receipts.json.
+
+Changes: selected single-stroke intervals, normalized initial heading,
+scaled positions, continuous quaternion signs, adaptation to Rain/Snow,
+time scaling, grounding and limited non-dominant-hand IK. Reach and slice
+are programmatic derivatives of the base strokes, not two new independent
+recordings. Locomotion uses the separately attributed CC0 library below,
+combined with a Tennis-MoCap ready-pose upper-body layer.
+
+The source-derived motion and adapted motion remain CC BY-SA 3.0. Preserve
+attribution, links, modification notices and the applicable ShareAlike
+obligations when distributing those assets. The original game code and
+artist character assets retain their separately documented licenses. No
+claim of author endorsement is made. The legal code governs actual use.
+
+---
+Mesh2Motion community human animation library, CC0-1.0
+https://github.com/Mesh2Motion/mesh2motion-app
+https://github.com/Mesh2Motion/mesh2motion-app/blob/main/LICENSE-CC0.MD
+Clips: Run_Female, Strafe_left, Strafe_right, Walk_Backwards.
+Adaptation: lower-body retargeting, in-place root motion and a Tennis-MoCap
+ready-pose upper-body layer. The combined motion is distributed CC BY-SA 3.0.
+
+Poly Haven environment and surface textures, CC0-1.0
+Green Point Park by Greg Zaal and Rico Cilliers:
+https://polyhaven.com/a/green_point_park
+Sparse Grass by Amal Kumar:
+https://polyhaven.com/a/sparse_grass
+https://polyhaven.com/license
+Adaptation: HDR image-based lighting and background, tiled diffuse/normal maps.
+</pre></details><p class="build-version">BASELINE CLUB / 2.0.0-local.1 / OFFLINE</p><button id="exportTelemetry" class="text-btn">导出本次运行数据 ↗</button><small class="about-signature">Built for Zusheng.</small></dialog>
+<script>{{ENGINE}}</script><script>{{ASSETS}}</script><script>{{APP}}</script>
+</body></html>

@@ -1,0 +1,38 @@
+{
+  "version": "local-handoff-2026-09-13",
+  "runtimeVersion": "2.0.0-rc2",
+  "runtimeUnchanged": true,
+  "htmlSHA256": "1a9e26ef77a0da7cef9927681d0f163dc32dd4110bdce15349c530c6af8cfa2f",
+  "htmlBytes": 9146390,
+  "staticPassed": true,
+  "sourceWarnings": [
+    {
+      "file": "lvargas_Derecha_4seg.bvh",
+      "kind": "source-frame-count-mismatch",
+      "declaredFrames": 479,
+      "actualRows": 480,
+      "action": "Preserved raw bytes. Review the import policy before re-baking; bundled runtime clips are unchanged."
+    }
+  ],
+  "physics": {
+    "passed": true,
+    "checks": 12
+  },
+  "browserSmoke": {
+    "passed": true,
+    "checks": 8,
+    "simulatedSeconds": 8,
+    "externalHTTPRequests": 0,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "browser": "144.0.7559.96"
+  },
+  "notClaimed": [
+    "Full release acceptance",
+    "Native Windows/macOS GPU performance",
+    "Real-device mobile performance",
+    "Original Blender-export repeatability",
+    "Full historical test restoration"
+  ],
+  "githubWriteOperations": 0
+}

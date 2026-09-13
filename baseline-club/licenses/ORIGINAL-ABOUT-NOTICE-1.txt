@@ -1,0 +1,94 @@
+The MIT License
+
+Copyright © 2010-2025 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+---
+
+# Blender Studio character credits
+
+Rain Rig (CC) Blender Foundation | studio.blender.org
+Snow Rig (CC) Blender Foundation | studio.blender.org
+
+Sources:
+- Rain v3: https://studio.blender.org/characters/rain/v3/
+- Snow v4: https://studio.blender.org/characters/snow/v4/
+
+The official character pages state CC-BY and require the credits above.
+Their CC-BY license link is https://creativecommons.org/licenses/by/4.0/ .
+The license, rather than this description, governs reuse. No endorsement by
+Blender Studio or Blender Foundation is implied.
+
+Adaptations made for this game: export to glTF/GLB; consolidation of the
+production control rig into an 18-joint runtime deformation rig; selected
+subdivision and topology; diffuse-texture atlas conversion; material and
+outfit colors; a baked hand-pose adaptation, racket socket, limited retarget
+and grip corrections. Full production facial controls, corrective shapes
+and Blender scripts do not execute in the browser. This is a real-time
+adaptation, not a claim of feature parity with the original production rig.
+
+The artist source receipt and SHA-256 values are retained in assets-source/.
+The local GLBs are derived from those cached sources. No paid model pack,
+user tracking or remote character download is needed at runtime.
+
+
+---
+
+# Tennis-MoCap attribution and adaptation notice
+
+Source: https://github.com/jdpulgarin/Tennis-MoCap
+Revision: 9af88bb4df4e78b22127719744fdca993ced2733
+License: Creative Commons Attribution-ShareAlike 3.0 Unported.
+License: https://creativecommons.org/licenses/by-sa/3.0/
+Legal code: https://creativecommons.org/licenses/by-sa/3.0/legalcode
+Source notice: https://github.com/jdpulgarin/Tennis-MoCap/blob/9af88bb4df4e78b22127719744fdca993ced2733/Copyright.md
+
+Requested academic attribution:
+Pulgarin-Giraldo J.D., Alvarez-Meza A.M., Melo-Betancourt L.G.,
+Ramos-Bermudez S., Castellanos-Dominguez G. A Similarity Indicator for
+Differentiating Kinematic Performance Between Qualified Tennis Players.
+Lecture Notes in Computer Science, 10125, pp. 309-317, 2017.
+https://doi.org/10.1007/978-3-319-52277-7_38
+
+Six full source recordings are cached locally under assets-source/full:
+- lvargas_Derecha_4seg.bvh
+- adorozco_Reves_8seg.bvh
+- lvargas_VDerecha.bvh
+- lvargas_VReves.bvh
+- lvargas_Servicio_21seg.bvh
+- lvargas_Remate.bvh
+
+The game uses a bounded excerpt from each recording, baked at 50 Hz plus
+exact start/contact marks. It does not play the whole multi-stroke file as
+one clip. All source files are retained; hashes, declared/read row counts,
+and excerpt lengths are recorded in assets-source/motion-receipts.json.
+
+Changes: selected single-stroke intervals, normalized initial heading,
+scaled positions, continuous quaternion signs, adaptation to Rain/Snow,
+time scaling, grounding and limited non-dominant-hand IK. Reach and slice
+are programmatic derivatives of the base strokes, not two new independent
+recordings. Locomotion is an authored/procedural movement layer.
+
+The source-derived motion and adapted motion remain CC BY-SA 3.0. Preserve
+attribution, links, modification notices and the applicable ShareAlike
+obligations when distributing those assets. The original game code and
+artist character assets retain their separately documented licenses. No
+claim of author endorsement is made. The legal code governs actual use.

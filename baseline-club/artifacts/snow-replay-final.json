@@ -1,0 +1,747 @@
+{
+  "version": "baseline-club-2.0.0-local.1",
+  "screen": "play",
+  "mode": "match",
+  "demo": true,
+  "clock": 20,
+  "paused": false,
+  "ended": false,
+  "options": {
+    "quality": "auto",
+    "light": "day",
+    "outfit": "ivory",
+    "camera": "follow",
+    "effects": true,
+    "character": "snow",
+    "opponent": "steady",
+    "difficulty": "easy",
+    "aimMode": "physics",
+    "autoMove": true,
+    "showBounce": true,
+    "showPosition": true,
+    "showTrajectory": false,
+    "showTiming": true,
+    "timingAssist": true,
+    "contactAssist": true
+  },
+  "score": [
+    2,
+    0
+  ],
+  "rally": 0,
+  "practice": {
+    "hits": 4,
+    "misses": 0,
+    "streak": 4,
+    "best": 4,
+    "points": 0,
+    "lives": 3
+  },
+  "stats": {
+    "hits": [
+      4,
+      4
+    ],
+    "errors": [
+      {
+        "player": 0,
+        "distance": 0.6567,
+        "timing": -0.0583,
+        "reach": 1.4276
+      },
+      {
+        "player": 1,
+        "distance": 0.2575,
+        "timing": 0,
+        "reach": 0.8452
+      },
+      {
+        "player": 0,
+        "distance": 0.7246,
+        "timing": -0.0583,
+        "reach": 1.4609
+      },
+      {
+        "player": 1,
+        "distance": 0.2787,
+        "timing": 0,
+        "reach": 0.4062
+      },
+      {
+        "player": 0,
+        "distance": 0.6975,
+        "timing": -0.0583,
+        "reach": 1.4816
+      },
+      {
+        "player": 1,
+        "distance": 0.23,
+        "timing": 0.0083,
+        "reach": 0.3784
+      },
+      {
+        "player": 0,
+        "distance": 0.7407,
+        "timing": -0.05,
+        "reach": 1.4174
+      },
+      {
+        "player": 1,
+        "distance": 0.3573,
+        "timing": 0.0083,
+        "reach": 0.3864
+      }
+    ],
+    "deadRetained": 2,
+    "maxDeadAge": 12.041666666665988,
+    "autoShots": 0,
+    "manualShots": 0,
+    "chosenShots": [
+      {
+        "by": 0,
+        "kind": "forehand",
+        "speed": 59.7,
+        "mode": "physics",
+        "profile": "player"
+      },
+      {
+        "by": 1,
+        "kind": "forehand",
+        "speed": 56.5,
+        "mode": "physics",
+        "profile": "steady"
+      },
+      {
+        "by": 0,
+        "kind": "forehand",
+        "speed": 56.8,
+        "mode": "physics",
+        "profile": "player"
+      },
+      {
+        "by": 1,
+        "kind": "backhand",
+        "speed": 55.4,
+        "mode": "physics",
+        "profile": "steady"
+      },
+      {
+        "by": 0,
+        "kind": "forehand",
+        "speed": 60,
+        "mode": "physics",
+        "profile": "player"
+      },
+      {
+        "by": 1,
+        "kind": "backhand",
+        "speed": 58.9,
+        "mode": "physics",
+        "profile": "steady"
+      },
+      {
+        "by": 0,
+        "kind": "forehand",
+        "speed": 58.5,
+        "mode": "physics",
+        "profile": "player"
+      },
+      {
+        "by": 1,
+        "kind": "backhand",
+        "speed": 56.1,
+        "mode": "physics",
+        "profile": "steady"
+      }
+    ],
+    "netHits": 1,
+    "longestRally": 4
+  },
+  "events": [
+    {
+      "t": 0,
+      "type": "screen",
+      "screen": "play",
+      "mode": "match",
+      "demo": true
+    },
+    {
+      "t": 1.2083,
+      "type": "feed",
+      "id": 1,
+      "mode": "match",
+      "difficulty": "easy",
+      "spin": [
+        37.800000000000004,
+        5.7006931602954865,
+        0
+      ],
+      "initialSpeed": 15.113784167851168,
+      "target": [
+        1.2532721915747969,
+        0.0335,
+        3.859507569205016
+      ]
+    },
+    {
+      "t": 2.7833,
+      "type": "bounce",
+      "id": 1,
+      "count": 1,
+      "inside": true,
+      "p": [
+        1.2959160892556094,
+        0.0335,
+        4.075117423714512
+      ],
+      "lastHitter": 1
+    },
+    {
+      "t": 3.1667,
+      "type": "hit",
+      "by": 0,
+      "kind": "forehand",
+      "error": 0.6566702374671007,
+      "preContactError": 1.156975278478521,
+      "impactElapsed": 0.2499999999999991,
+      "reach": 1.427620217423197,
+      "timing": -0.05833333333333535,
+      "mode": "physics",
+      "v": [
+        -2.040841747748835,
+        4.1370489284610725,
+        -15.928301648044188
+      ],
+      "spin": [
+        -85.61745997214548,
+        8.310127587333756,
+        0
+      ],
+      "power": 0.44
+    },
+    {
+      "t": 4.0917,
+      "type": "bounce",
+      "id": 1,
+      "count": 1,
+      "inside": true,
+      "p": [
+        0.03895638814884598,
+        0.0335,
+        -5.457193456656585
+      ],
+      "lastHitter": 0
+    },
+    {
+      "t": 4.4917,
+      "type": "hit",
+      "by": 1,
+      "kind": "forehand",
+      "error": 0.257512820926554,
+      "preContactError": 0.2575128209272857,
+      "impactElapsed": 0.30833333333334867,
+      "reach": 0.8452402224069121,
+      "timing": 2.4868995751603507e-14,
+      "mode": "physics",
+      "v": [
+        0.7950610750442645,
+        4.600688169895328,
+        14.97798566892815
+      ],
+      "spin": [
+        91.52426512143994,
+        -6.278314608607298,
+        0
+      ],
+      "power": 0.38
+    },
+    {
+      "t": 5.4583,
+      "type": "bounce",
+      "id": 1,
+      "count": 1,
+      "inside": true,
+      "p": [
+        0.03603270942052315,
+        0.0335,
+        3.4454445194950436
+      ],
+      "lastHitter": 1
+    },
+    {
+      "t": 5.8,
+      "type": "hit",
+      "by": 0,
+      "kind": "forehand",
+      "error": 0.7245829393322809,
+      "preContactError": 1.2277643349544685,
+      "impactElapsed": 0.25000000000001243,
+      "reach": 1.4609476314920997,
+      "timing": -0.05833333333330959,
+      "mode": "physics",
+      "v": [
+        0.45107481250607184,
+        4.28004171552835,
+        -15.172078270850005
+      ],
+      "spin": [
+        -72.05757042921377,
+        -0.55854842927166,
+        0
+      ],
+      "power": 0.44
+    },
+    {
+      "t": 6.7417,
+      "type": "bounce",
+      "id": 1,
+      "count": 1,
+      "inside": true,
+      "p": [
+        0.619698928535148,
+        0.0335,
+        -6.1937771226401575
+      ],
+      "lastHitter": 0
+    },
+    {
+      "t": 7.1583,
+      "type": "hit",
+      "by": 1,
+      "kind": "backhand",
+      "error": 0.2786957645975287,
+      "preContactError": 0.2786957645975114,
+      "impactElapsed": 0.30833333333334867,
+      "reach": 0.40615295761664466,
+      "timing": 2.6645352591003757e-14,
+      "mode": "physics",
+      "v": [
+        -4.148007416746297,
+        3.4691684337385293,
+        14.419254969231254
+      ],
+      "spin": [
+        93.1788794073758,
+        14.436242583491481,
+        0
+      ],
+      "power": 0.38
+    },
+    {
+      "t": 7.9583,
+      "type": "dead-ball",
+      "id": 1,
+      "reason": "下网",
+      "p": [
+        -2.3216235697066634,
+        0.034520242803890544,
+        -0.0485
+      ]
+    },
+    {
+      "t": 7.9583,
+      "type": "point",
+      "winner": 0,
+      "reason": "下网",
+      "score": [
+        1,
+        0
+      ]
+    },
+    {
+      "t": 10.1667,
+      "type": "feed",
+      "id": 2,
+      "mode": "match",
+      "difficulty": "easy",
+      "spin": [
+        37.800000000000004,
+        6.100380223244429,
+        0
+      ],
+      "initialSpeed": 17.324765786344305,
+      "target": [
+        -0.15367315371986479,
+        0.0335,
+        5.640581971779465
+      ]
+    },
+    {
+      "t": 11.7417,
+      "type": "bounce",
+      "id": 2,
+      "count": 1,
+      "inside": true,
+      "p": [
+        -0.1371455162307611,
+        0.0335,
+        5.888191479623555
+      ],
+      "lastHitter": 1
+    },
+    {
+      "t": 12.125,
+      "type": "hit",
+      "by": 0,
+      "kind": "forehand",
+      "error": 0.6975352042153506,
+      "preContactError": 1.199892051373237,
+      "impactElapsed": 0.2499999999999858,
+      "reach": 1.4815667946817472,
+      "timing": -0.05833333333336199,
+      "mode": "physics",
+      "v": [
+        0.17620287469198162,
+        4.30126408519701,
+        -16.11072880798714
+      ],
+      "spin": [
+        -76.81745997214549,
+        0.5458936584723912,
+        0
+      ],
+      "power": 0.44
+    },
+    {
+      "t": 13.0833,
+      "type": "bounce",
+      "id": 2,
+      "count": 1,
+      "inside": true,
+      "p": [
+        0.08880727702771382,
+        0.0335,
+        -3.6649374870857057
+      ],
+      "lastHitter": 0
+    },
+    {
+      "t": 13.525,
+      "type": "hit",
+      "by": 1,
+      "kind": "backhand",
+      "error": 0.2299946037380689,
+      "preContactError": 0.25940330525238897,
+      "impactElapsed": 0.31666666666664867,
+      "reach": 0.37839062108125776,
+      "timing": 0.008333333333300885,
+      "mode": "physics",
+      "v": [
+        0.3016623932412046,
+        3.4809110681989868,
+        15.986229658393471
+      ],
+      "spin": [
+        102.90822687951872,
+        -0.5175568411968812,
+        0
+      ],
+      "power": 0.38
+    },
+    {
+      "t": 14.325,
+      "type": "bounce",
+      "id": 2,
+      "count": 1,
+      "inside": true,
+      "p": [
+        0.37086877208093183,
+        0.0335,
+        3.143654852302892
+      ],
+      "lastHitter": 1
+    },
+    {
+      "t": 14.6583,
+      "type": "hit",
+      "by": 0,
+      "kind": "forehand",
+      "error": 0.7406759926704675,
+      "preContactError": 1.2447294269927558,
+      "impactElapsed": 0.25833333333331865,
+      "reach": 1.4174007502038513,
+      "timing": -0.050000000000027356,
+      "mode": "physics",
+      "v": [
+        0.2019644045230145,
+        4.381844574498757,
+        -15.641118096760458
+      ],
+      "spin": [
+        -70.88317347854212,
+        -0.046857160507395385,
+        0
+      ],
+      "power": 0.44
+    },
+    {
+      "t": 15.5917,
+      "type": "bounce",
+      "id": 2,
+      "count": 1,
+      "inside": true,
+      "p": [
+        0.6257018620038707,
+        0.0335,
+        -6.572969179746826
+      ],
+      "lastHitter": 0
+    },
+    {
+      "t": 15.9917,
+      "type": "hit",
+      "by": 1,
+      "kind": "backhand",
+      "error": 0.35725507945706036,
+      "preContactError": 0.3777860596224128,
+      "impactElapsed": 0.31666666666664867,
+      "reach": 0.3863505040860576,
+      "timing": 0.008333333333304438,
+      "mode": "physics",
+      "v": [
+        -4.926913804833665,
+        3.6442648701936466,
+        14.340404678481567
+      ],
+      "spin": [
+        93.29802033578255,
+        16.25206302234485,
+        0
+      ],
+      "power": 0.38
+    },
+    {
+      "t": 16.8083,
+      "type": "bounce",
+      "id": 2,
+      "count": 1,
+      "inside": false,
+      "p": [
+        -3.056463923894137,
+        0.0335,
+        -0.13865919644709224
+      ],
+      "lastHitter": 1
+    },
+    {
+      "t": 16.8083,
+      "type": "dead-ball",
+      "id": 2,
+      "reason": "出界",
+      "p": [
+        -3.056463923894137,
+        0.0335,
+        -0.13865919644709224
+      ]
+    },
+    {
+      "t": 16.8083,
+      "type": "point",
+      "winner": 0,
+      "reason": "出界",
+      "score": [
+        2,
+        0
+      ]
+    },
+    {
+      "t": 19.0167,
+      "type": "feed",
+      "id": 3,
+      "mode": "match",
+      "difficulty": "easy",
+      "spin": [
+        37.800000000000004,
+        -2.9016178771853447,
+        0
+      ],
+      "initialSpeed": 15.185675987437518,
+      "target": [
+        -0.8621694300323725,
+        0.0335,
+        3.973878512624651
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "character": "snow",
+      "p": [
+        -0.1549115285521672,
+        0,
+        8.905952837045334
+      ],
+      "v": [
+        -0.7298110439782958,
+        0,
+        0.9655353178003213
+      ],
+      "plan": {
+        "kind": "backhand",
+        "at": 21.13333333333284,
+        "p": [
+          -1.1228190779840168,
+          1.137456803074895,
+          9.492248005630884
+        ],
+        "goal": [
+          -0.7476283621312514,
+          0,
+          9.681767241866769
+        ]
+      },
+      "swing": null
+    },
+    {
+      "character": "snow",
+      "p": [
+        0.0007502804704383877,
+        0,
+        -8.727016847408471
+      ],
+      "v": [
+        -6.124191963246677e-12,
+        0,
+        2.205260116586723e-10
+      ],
+      "plan": null,
+      "swing": {
+        "kind": "serve",
+        "lead": 0.7,
+        "hit": true
+      }
+    }
+  ],
+  "active": {
+    "id": 3,
+    "p": [
+      -0.4648797065139421,
+      2.157185161139199,
+      -4.096249032199835
+    ],
+    "v": [
+      -0.6762552049165683,
+      -0.6787917363849908,
+      14.532167009456805
+    ],
+    "spin": [
+      36.77466300052052,
+      -2.822910571158113,
+      0
+    ],
+    "receiver": 0,
+    "bounces": 0,
+    "held": false
+  },
+  "balls": [
+    {
+      "id": 1,
+      "dead": true,
+      "deadAge": 12.041666666665988,
+      "p": [
+        -4.557849706329589,
+        0.0335,
+        -2.528950352094231
+      ],
+      "v": [
+        0,
+        0,
+        0
+      ],
+      "sleeping": true
+    },
+    {
+      "id": 2,
+      "dead": true,
+      "deadAge": 3.1916666666664852,
+      "p": [
+        -5.904093237078584,
+        0.0335,
+        -2.4563893694528165
+      ],
+      "v": [
+        0,
+        0,
+        0
+      ],
+      "sleeping": true
+    },
+    {
+      "id": 3,
+      "dead": false,
+      "deadAge": 0,
+      "p": [
+        -0.4648797065139421,
+        2.157185161139199,
+        -4.096249032199835
+      ],
+      "v": [
+        -0.6762552049165683,
+        -0.6787917363849908,
+        14.532167009456805
+      ],
+      "sleeping": false
+    }
+  ],
+  "input": {
+    "held": false,
+    "since": 0,
+    "power": 0,
+    "queued": false,
+    "queuedAt": 0,
+    "x": 0,
+    "z": 0
+  },
+  "aim": [
+    1.5,
+    0.035,
+    -8
+  ],
+  "target": [
+    -2,
+    0.04,
+    -7
+  ],
+  "replay": false,
+  "replayFrames": 50,
+  "helpers": {
+    "bounce": true,
+    "position": true,
+    "trajectory": false,
+    "timing": false,
+    "aim": false
+  },
+  "render": {
+    "calls": 314,
+    "triangles": 374870
+  },
+  "rigs": [
+    {
+      "name": "snow",
+      "bones": 87,
+      "deformBones": 69,
+      "professionalRig": true,
+      "triangles": 141160,
+      "vertices": 95777,
+      "weightError": 4.6566128730773926e-8,
+      "socketAttached": true
+    },
+    {
+      "name": "snow",
+      "bones": 87,
+      "deformBones": 69,
+      "professionalRig": true,
+      "triangles": 141160,
+      "vertices": 95777,
+      "weightError": 4.6566128730773926e-8,
+      "socketAttached": true
+    }
+  ],
+  "replayCheck": {
+    "started": true,
+    "activeDuring": true,
+    "clockPaused": true,
+    "restoredPositions": true,
+    "exited": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "recoveredFrom": "conversation attachment /mnt/data/baseline-club/index.html",
+  "originalHTMLBytes": 9146390,
+  "originalHTMLSHA256": "1a9e26ef77a0da7cef9927681d0f163dc32dd4110bdce15349c530c6af8cfa2f",
+  "originalGameVersion": "2.0.0-rc2",
+  "recoveryVersion": "local-handoff-2026-09-13",
+  "repositorySnapshotInspected": "19ad9aa23526dbfb538f97f52f4240f09cf510b8",
+  "runtimeCodeChanged": false,
+  "originalBrokenArchiveUsed": false,
+  "originalBuildScriptsRecovered": false,
+  "newBuildAndTests": "Reconstructed here. Historical rc1/rc2 test reports are not claimed for this package.",
+  "engine": {
+    "bytes": 774784,
+    "sha256": "f23fabd11d6a3388869f5dbadfb28cc2361790277df57810f43aa763b31e96f5"
+  },
+  "motion": {}
+}

@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0-local.1",
+  "characters": {
+    "rain": "rain-pro.glb",
+    "snow": "snow-pro.glb"
+  },
+  "motion": "motions.json",
+  "environment": "green-point-park-2k.hdr",
+  "textures": {
+    "grassDiffuse": "grass-diffuse.jpg",
+    "grassNormal": "grass-normal.jpg"
+  }
+}

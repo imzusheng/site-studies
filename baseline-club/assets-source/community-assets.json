@@ -1,0 +1,86 @@
+{
+  "checkedAt": "2026-09-13",
+  "assets": [
+    {
+      "name": "Blender Studio Rain v3.3 source",
+      "license": "CC-BY-4.0",
+      "page": "https://studio.blender.org/characters/rain/v3/",
+      "url": "https://studio.blender.org/download-source/files/ee/a7/eea73e55dba1cea31c09848df6a794b2-4.zip",
+      "sha256": "80217f163f6392dc829233d63c2cfb5e1376775bc34101ad14f39631fea70d24",
+      "cache": ".cache/rain-v3.zip",
+      "extractTo": ".cache/rain-v3/",
+      "sourceBlend": ".cache/rain-v3/Rain v3.3/rain_v3.2.blend",
+      "includedInPackage": false
+    },
+    {
+      "name": "Blender Studio Snow v4 source",
+      "license": "CC-BY-4.0",
+      "page": "https://studio.blender.org/characters/snow/v4/",
+      "url": "https://studio.blender.org/download-source/files/ba/0f/ba0fe6d810333b1d73c1c359e4dc03cb-6.zip",
+      "sha256": "98d58ef3a07083ede14140bc462cccb55d317062846aa0eb652d2e4a7ac422a6",
+      "cache": ".cache/snow-v4.zip",
+      "extractTo": ".cache/snow-v4/",
+      "sourceBlend": ".cache/snow-v4/Snow/snow_v4.2.blend",
+      "includedInPackage": false
+    },
+    {
+      "name": "Mesh2Motion human addon animations",
+      "license": "CC0-1.0",
+      "page": "https://github.com/Mesh2Motion/mesh2motion-app",
+      "url": "https://raw.githubusercontent.com/Mesh2Motion/mesh2motion-app/main/static/animations/human-addon-animations.glb",
+      "file": "assets-source/community/mesh2motion-human-addon-animations.glb",
+      "usedClips": [
+        "Run_Female",
+        "Strafe_left",
+        "Strafe_right",
+        "Walk_Backwards"
+      ],
+      "includedInPackage": true,
+      "sha256": "a0d64d555e0d492026b72d58bf8e16c5e86779295f9093e376dcc001915c2c95",
+      "bytes": 5292804
+    },
+    {
+      "name": "Poly Haven Green Point Park 2K HDR",
+      "authors": [
+        "Greg Zaal",
+        "Rico Cilliers"
+      ],
+      "license": "CC0-1.0",
+      "page": "https://polyhaven.com/a/green_point_park",
+      "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/green_point_park_2k.hdr",
+      "md5": "452a789a83eedf4a96282b5320d34bfb",
+      "file": "assets/green-point-park-2k.hdr",
+      "includedInPackage": true,
+      "sha256": "01ee12eae82eddb9fd01d428217ce50c6b9e54e5332f2c428abd52cea46b120b",
+      "bytes": 6591186
+    },
+    {
+      "name": "Poly Haven Sparse Grass diffuse 1K",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "license": "CC0-1.0",
+      "page": "https://polyhaven.com/a/sparse_grass",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/sparse_grass/sparse_grass_diff_1k.jpg",
+      "md5": "5d0aba796e1b5882555161c16b10ee9d",
+      "file": "assets/grass-diffuse.jpg",
+      "includedInPackage": true,
+      "sha256": "ae94f2b34597b9108eefd88217f55eccaec6d6b382e858a478ee92df90e66617",
+      "bytes": 955945
+    },
+    {
+      "name": "Poly Haven Sparse Grass OpenGL normal 1K",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "license": "CC0-1.0",
+      "page": "https://polyhaven.com/a/sparse_grass",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/sparse_grass/sparse_grass_nor_gl_1k.jpg",
+      "md5": "3307e6ce47413c6b4e85885d4b8ae932",
+      "file": "assets/grass-normal.jpg",
+      "includedInPackage": true,
+      "sha256": "1c840a24807346ddaaf94a5057aee4078fcec3a4cd84bfe45da7d3b480ef460b",
+      "bytes": 1440314
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root = path.resolve(import.meta.dirname, '..');
+if(fs.existsSync(path.join(root,'src/app.js'))) throw new Error('Recovery is only for an empty project directory; this project already has source. Use tools/build.mjs for development.');
+const source = process.argv[2];
+if (!source) throw new Error('Pass the recovered HTML path');
+const bytes = fs.readFileSync(source);
+const hash = crypto.createHash('sha256').update(bytes).digest('hex');
+if (hash !== '1a9e26ef77a0da7cef9927681d0f163dc32dd4110bdce15349c530c6af8cfa2f') throw new Error('Recovery HTML hash mismatch');
+for (const dir of ['src','assets','vendor','docs','tests']) fs.mkdirSync(path.join(root, dir), {recursive:true});
+const write = (name, content) => fs.writeFileSync(path.join(root, name), content);
+let html = bytes.toString('utf8');
+const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)];
+if (scripts.length !== 3) throw new Error('Unexpected script structure');
+write('vendor/engine.js', scripts[0][1]);
+write('src/app.js', scripts[2][1]);
+const assets = JSON.parse(scripts[1][1].replace(/^window.CLUB_ASSETS=/,'').replace(/;\s*$/,''));
+for (const [name, data] of Object.entries(assets.characters)) write(`assets/${name}.glb`, Buffer.from(data, 'base64'));
+write('assets/motions.json', JSON.stringify(assets.motion));
+// Preserve key ordering for a byte-identical baseline reconstruction.
+write('assets/manifest.json', JSON.stringify({...assets, characters:Object.fromEntries(Object.keys(assets.characters).map(name=>[name,`${name}.glb`])), motion: 'motions.json'}, null, 2));
+html = html.replace(scripts[0][0], '<script>{{ENGINE}}</script>').replace(scripts[1][0], '<script>{{ASSETS}}</script>').replace(scripts[2][0], '<script>{{APP}}</script>');
+const style = html.match(/<style>([\s\S]*?)<\/style>/);
+write('src/style.css',style[1]);
+write('src/template.html',html.replace(style[0], '<style>{{STYLE}}</style>'));
+write('docs/recovery-provenance.json', JSON.stringify({source,sha256:hash,method:'Extracted the three scripts, stylesheet, GLBs and motion JSON from the user-supplied HTML; original ZIP unavailable.', recoveredAt:new Date().toISOString()},null,2));
+console.log('Recovered',hash);
