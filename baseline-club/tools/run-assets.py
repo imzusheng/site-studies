@@ -1,7 +1,5 @@
-"""Isolated artist conversion with explicit rig-version adaptations.
-Per-character scripts, raw source hashes and GLBs are preserved in artifacts.
-"""
-import pathlib, subprocess, sys
+"""Isolated artist conversion with explicit rig-version adaptations."""
+import pathlib, subprocess, sys, textwrap
 source=pathlib.Path('baseline-club/tools/asset-audit.py').read_text()
 canonical='''def canonical(name):
  if who!='snow':return name
@@ -14,7 +12,7 @@ canonical='''def canonical(name):
    if name.startswith(n+'.'):return name.replace(n,'DEF-'+finger+({'Carpal':'1','1':'2','2':'3','3':'4'}[seg]))
  return name.replace('DEF-Finger_Thumb','DEF-Thumb')
 '''
-source=source.replace("bn={b.name:b for b in arm.data.bones}",canonical+" bn={canonical(b.name):b for b in arm.data.bones}")
+source=source.replace(" bn={b.name:b for b in arm.data.bones}",textwrap.indent(canonical,' ')+" bn={canonical(b.name):b for b in arm.data.bones}")
 source=source.replace("groups={g.index:g.name for g in o.vertex_groups}","groups={g.index:canonical(g.name) for g in o.vertex_groups}")
 source=source.replace("if any(x in s for x in ['thumb','index','middle','ring','pinky','hand']):", "if any(x in s for x in ['thumb','index','middle','pinky','hand']) or s.startswith('def-ring'):")
 source=source.replace("if 'shin' in s or 'knee' in s:", "if 'shin' in s or 'knee' in s or 'ankle' in s:")
@@ -25,6 +23,7 @@ source=source.replace("['scarf','cornea','eye_dots']", "['scarf','cornea','eye_d
 source=source.replace("if 'body' in name:", "if 'body' in name or 'skin' in name:")
 source=source.replace("ps=[images.get(f'TEX-rain_body_diffuse.{1001+i}.png') for i in range(3)]", "ps=[images.get((f'TEX-rain_body_diffuse.{1001+i}.png' if who=='rain' else f'skin_diffuse.{1001+i}.png')) for i in range(3)]")
 source=source.replace("if who=='rain' and all(ps):", "if all(ps):")
+compile(source,'generated-asset-converter','exec')
 for who in ['rain','snow']:
     script=source.replace("for who in ['rain','snow']:","for who in ['"+who+"']:")
     p=pathlib.Path('asset-audit')/('convert-'+who+'.py');p.write_text(script)
