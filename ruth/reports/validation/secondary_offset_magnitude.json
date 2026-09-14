@@ -1,0 +1,228 @@
+{
+  "clip_frames": [
+    0,
+    244
+  ],
+  "chains": {
+    "skirt": {
+      "parent": "Hips",
+      "strength": 1.6,
+      "damp": 0.72,
+      "parent_step_mm": {
+        "max": 22.138,
+        "median": 3.963
+      },
+      "offset_o_mm": {
+        "max": 106.349,
+        "median": 22.86,
+        "p95": 77.888,
+        "max_at_frame": 133
+      },
+      "ratio_o_to_unit_base": {
+        "max": 0.106,
+        "p95": 0.078
+      },
+      "steady_state_gain": 5.714,
+      "per_bone": {
+        "SkirtF1": {
+          "rest_dir": [
+            0.0,
+            -0.9806,
+            -0.1961
+          ],
+          "aim_err_max_deg": 22.01,
+          "aim_err_median_deg": 17.77,
+          "aim_err_frame0_deg": 17.8,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "SkirtF2": {
+          "rest_dir": [
+            0.0,
+            -0.6585,
+            -0.7526
+          ],
+          "aim_err_max_deg": 13.56,
+          "aim_err_median_deg": 10.33,
+          "aim_err_frame0_deg": 10.34,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "SkirtF3": {
+          "rest_dir": [
+            0.0,
+            -0.3757,
+            -0.9267
+          ],
+          "aim_err_max_deg": 9.61,
+          "aim_err_median_deg": 5.69,
+          "aim_err_frame0_deg": 5.67,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "SkirtB1": {
+          "rest_dir": [
+            0.0,
+            0.9806,
+            -0.1961
+          ],
+          "aim_err_max_deg": 21.09,
+          "aim_err_median_deg": 18.13,
+          "aim_err_frame0_deg": 17.8,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "SkirtB2": {
+          "rest_dir": [
+            0.0,
+            0.6585,
+            -0.7526
+          ],
+          "aim_err_max_deg": 14.56,
+          "aim_err_median_deg": 10.71,
+          "aim_err_frame0_deg": 10.34,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "SkirtB3": {
+          "rest_dir": [
+            0.0,
+            0.3757,
+            -0.9267
+          ],
+          "aim_err_max_deg": 11.41,
+          "aim_err_median_deg": 6.06,
+          "aim_err_frame0_deg": 5.67,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "SkirtL1": {
+          "rest_dir": [
+            0.9806,
+            0.0,
+            -0.1961
+          ],
+          "aim_err_max_deg": 23.34,
+          "aim_err_median_deg": 17.94,
+          "aim_err_frame0_deg": 17.8,
+          "saved_pose_angle_frame0_deg": 102.437
+        },
+        "SkirtL2": {
+          "rest_dir": [
+            0.6585,
+            0.0,
+            -0.7526
+          ],
+          "aim_err_max_deg": 18.28,
+          "aim_err_median_deg": 10.6,
+          "aim_err_frame0_deg": 10.34,
+          "saved_pose_angle_frame0_deg": 138.989
+        },
+        "SkirtL3": {
+          "rest_dir": [
+            0.3757,
+            0.0,
+            -0.9267
+          ],
+          "aim_err_max_deg": 14.38,
+          "aim_err_median_deg": 5.95,
+          "aim_err_frame0_deg": 5.67,
+          "saved_pose_angle_frame0_deg": 157.959
+        },
+        "SkirtR1": {
+          "rest_dir": [
+            -0.9806,
+            0.0,
+            -0.1961
+          ],
+          "aim_err_max_deg": 21.58,
+          "aim_err_median_deg": 17.69,
+          "aim_err_frame0_deg": 17.8,
+          "saved_pose_angle_frame0_deg": 102.437
+        },
+        "SkirtR2": {
+          "rest_dir": [
+            -0.6585,
+            0.0,
+            -0.7526
+          ],
+          "aim_err_max_deg": 14.21,
+          "aim_err_median_deg": 10.13,
+          "aim_err_frame0_deg": 10.34,
+          "saved_pose_angle_frame0_deg": 138.989
+        },
+        "SkirtR3": {
+          "rest_dir": [
+            -0.3757,
+            0.0,
+            -0.9267
+          ],
+          "aim_err_max_deg": 9.99,
+          "aim_err_median_deg": 5.54,
+          "aim_err_frame0_deg": 5.67,
+          "saved_pose_angle_frame0_deg": 157.959
+        }
+      }
+    },
+    "ponytail": {
+      "parent": "Head",
+      "strength": 2.2,
+      "damp": 0.7,
+      "parent_step_mm": {
+        "max": 20.173,
+        "median": 3.835
+      },
+      "offset_o_mm": {
+        "max": 124.956,
+        "median": 29.58,
+        "p95": 92.545,
+        "max_at_frame": 133
+      },
+      "ratio_o_to_unit_base": {
+        "max": 0.125,
+        "p95": 0.093
+      },
+      "steady_state_gain": 7.333,
+      "per_bone": {
+        "Ponytail1": {
+          "rest_dir": [
+            0.0,
+            -0.3188,
+            -0.9478
+          ],
+          "aim_err_max_deg": 10.52,
+          "aim_err_median_deg": 4.83,
+          "aim_err_frame0_deg": 4.79,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "Ponytail2": {
+          "rest_dir": [
+            0.0,
+            -0.3188,
+            -0.9478
+          ],
+          "aim_err_max_deg": 10.52,
+          "aim_err_median_deg": 4.83,
+          "aim_err_frame0_deg": 4.79,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "Ponytail3": {
+          "rest_dir": [
+            0.0,
+            -0.3188,
+            -0.9478
+          ],
+          "aim_err_max_deg": 10.52,
+          "aim_err_median_deg": 4.83,
+          "aim_err_frame0_deg": 4.79,
+          "saved_pose_angle_frame0_deg": 180.0
+        },
+        "Ponytail4": {
+          "rest_dir": [
+            0.0,
+            -0.3188,
+            -0.9478
+          ],
+          "aim_err_max_deg": 10.52,
+          "aim_err_median_deg": 4.83,
+          "aim_err_frame0_deg": 4.79,
+          "saved_pose_angle_frame0_deg": 180.0
+        }
+      }
+    }
+  }
+}

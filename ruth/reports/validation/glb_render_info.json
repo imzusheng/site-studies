@@ -1,0 +1,47 @@
+{
+  "camera": {
+    "position": [
+      -2.064875,
+      -2.948947,
+      1.17
+    ],
+    "target": [
+      0.0,
+      0.0,
+      0.92
+    ],
+    "lens_mm": 50.0,
+    "sensor_width_mm": 36.0,
+    "resolution": [
+      600,
+      1000
+    ]
+  },
+  "marks": {
+    "ready": {
+      "frame": 0,
+      "tris_drawn": 13669,
+      "tris_in_view": 23780
+    },
+    "backswing": {
+      "frame": 147,
+      "tris_drawn": 13816,
+      "tris_in_view": 24155
+    },
+    "contact": {
+      "frame": 164,
+      "tris_drawn": 14465,
+      "tris_in_view": 23939
+    },
+    "follow_through": {
+      "frame": 187,
+      "tris_drawn": 14692,
+      "tris_in_view": 24759
+    },
+    "recovery": {
+      "frame": 232,
+      "tris_drawn": 12410,
+      "tris_in_view": 24014
+    }
+  }
+}

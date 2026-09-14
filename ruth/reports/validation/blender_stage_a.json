@@ -1,0 +1,1151 @@
+{
+  "source_file": "/Users/lizusheng/.zcode/workspace/default/site-studies/ruth/build/ruth_forehand_v1.blend",
+  "engine": "BLENDER_EEVEE",
+  "resolution": [
+    600,
+    1000
+  ],
+  "fps": 60.0,
+  "frame_range": [
+    0,
+    244
+  ],
+  "camera": {
+    "position": [
+      -2.064875,
+      -2.948947,
+      1.17
+    ],
+    "target": [
+      0.0,
+      0.0,
+      0.92
+    ],
+    "lens_mm": 50.0,
+    "sensor_width_mm": 36.0,
+    "sensor_fit": "VERTICAL",
+    "fov_vertical_deg": 39.5978,
+    "facing_axis_used": [
+      0.0,
+      -1.0,
+      0.0
+    ]
+  },
+  "marks": {
+    "ready": {
+      "frame": 0,
+      "verts": 31959,
+      "all_finite": true,
+      "edges_gt_2x": 3242,
+      "edges_gt_5x": 1333,
+      "edges_gt_10x": 516,
+      "pct_edges_gt_2x": 3.9763,
+      "max_ratio": 156.782,
+      "p99_ratio": 7.488,
+      "bbox_min": [
+        -0.309,
+        -0.3237,
+        -0.0884
+      ],
+      "bbox_max": [
+        0.258,
+        0.1821,
+        1.6458
+      ],
+      "worst_edges": [
+        {
+          "edge": 27345,
+          "ratio": 156.782,
+          "rest_mm": 0.81,
+          "deformed_mm": 126.993,
+          "vert_a": 26842,
+          "vert_b": 26844,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 17091,
+          "ratio": 80.298,
+          "rest_mm": 1.445,
+          "deformed_mm": 116.058,
+          "vert_a": 26833,
+          "vert_b": 26835,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 75901,
+          "ratio": 62.449,
+          "rest_mm": 1.495,
+          "deformed_mm": 93.39,
+          "vert_a": 27727,
+          "vert_b": 31174,
+          "bone_a": "SkirtL1",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 67923,
+          "ratio": 61.327,
+          "rest_mm": 1.867,
+          "deformed_mm": 114.524,
+          "vert_a": 26838,
+          "vert_b": 26840,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 78219,
+          "ratio": 61.327,
+          "rest_mm": 1.867,
+          "deformed_mm": 114.524,
+          "vert_a": 26839,
+          "vert_b": 26841,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 15018,
+          "ratio": 59.876,
+          "rest_mm": 1.564,
+          "deformed_mm": 93.64,
+          "vert_a": 22033,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 36411,
+          "ratio": 57.113,
+          "rest_mm": 4.168,
+          "deformed_mm": 238.053,
+          "vert_a": 15059,
+          "vert_b": 15133,
+          "bone_a": "Ponytail4",
+          "bone_b": "LeftArm"
+        },
+        {
+          "edge": 45442,
+          "ratio": 53.531,
+          "rest_mm": 1.775,
+          "deformed_mm": 95.04,
+          "vert_a": 26956,
+          "vert_b": 26958,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 72160,
+          "ratio": 49.382,
+          "rest_mm": 2.19,
+          "deformed_mm": 108.151,
+          "vert_a": 3319,
+          "vert_b": 3341,
+          "bone_a": "Head",
+          "bone_b": "Ponytail2"
+        },
+        {
+          "edge": 49143,
+          "ratio": 48.852,
+          "rest_mm": 4.086,
+          "deformed_mm": 199.6,
+          "vert_a": 8372,
+          "vert_b": 8386,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL3"
+        },
+        {
+          "edge": 41449,
+          "ratio": 48.77,
+          "rest_mm": 1.406,
+          "deformed_mm": 68.57,
+          "vert_a": 2052,
+          "vert_b": 4295,
+          "bone_a": "Head",
+          "bone_b": "Head"
+        },
+        {
+          "edge": 25910,
+          "ratio": 46.541,
+          "rest_mm": 2.663,
+          "deformed_mm": 123.939,
+          "vert_a": 27842,
+          "vert_b": 29853,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 6488,
+          "ratio": 46.434,
+          "rest_mm": 3.889,
+          "deformed_mm": 180.561,
+          "vert_a": 25088,
+          "vert_b": 25160,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR3"
+        },
+        {
+          "edge": 28936,
+          "ratio": 41.225,
+          "rest_mm": 4.679,
+          "deformed_mm": 192.881,
+          "vert_a": 8386,
+          "vert_b": 8435,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 5923,
+          "ratio": 39.536,
+          "rest_mm": 6.103,
+          "deformed_mm": 241.299,
+          "vert_a": 15128,
+          "vert_b": 15136,
+          "bone_a": "Ponytail4",
+          "bone_b": "LeftArm"
+        },
+        {
+          "edge": 28939,
+          "ratio": 38.997,
+          "rest_mm": 5.172,
+          "deformed_mm": 201.693,
+          "vert_a": 29842,
+          "vert_b": 29848,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 49328,
+          "ratio": 38.307,
+          "rest_mm": 8.208,
+          "deformed_mm": 314.406,
+          "vert_a": 30860,
+          "vert_b": 30865,
+          "bone_a": "Hips",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 24138,
+          "ratio": 37.457,
+          "rest_mm": 4.365,
+          "deformed_mm": 163.509,
+          "vert_a": 24442,
+          "vert_b": 24446,
+          "bone_a": "Hips",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 45408,
+          "ratio": 37.401,
+          "rest_mm": 2.512,
+          "deformed_mm": 93.949,
+          "vert_a": 22084,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 13270,
+          "ratio": 36.997,
+          "rest_mm": 2.21,
+          "deformed_mm": 81.749,
+          "vert_a": 20561,
+          "vert_b": 20562,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL1"
+        }
+      ]
+    },
+    "backswing": {
+      "frame": 147,
+      "verts": 31959,
+      "all_finite": true,
+      "edges_gt_2x": 3331,
+      "edges_gt_5x": 1326,
+      "edges_gt_10x": 484,
+      "pct_edges_gt_2x": 4.0855,
+      "max_ratio": 155.758,
+      "p99_ratio": 7.3709,
+      "bbox_min": [
+        0.08,
+        -0.1096,
+        -0.0442
+      ],
+      "bbox_max": [
+        0.7008,
+        0.5492,
+        1.6235
+      ],
+      "worst_edges": [
+        {
+          "edge": 27345,
+          "ratio": 155.758,
+          "rest_mm": 0.81,
+          "deformed_mm": 126.164,
+          "vert_a": 26842,
+          "vert_b": 26844,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 17091,
+          "ratio": 79.484,
+          "rest_mm": 1.445,
+          "deformed_mm": 114.882,
+          "vert_a": 26833,
+          "vert_b": 26835,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 15018,
+          "ratio": 61.368,
+          "rest_mm": 1.564,
+          "deformed_mm": 95.974,
+          "vert_a": 22033,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 67923,
+          "ratio": 60.966,
+          "rest_mm": 1.867,
+          "deformed_mm": 113.85,
+          "vert_a": 26838,
+          "vert_b": 26840,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 78219,
+          "ratio": 60.966,
+          "rest_mm": 1.867,
+          "deformed_mm": 113.85,
+          "vert_a": 26839,
+          "vert_b": 26841,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 75901,
+          "ratio": 60.183,
+          "rest_mm": 1.495,
+          "deformed_mm": 90.001,
+          "vert_a": 27727,
+          "vert_b": 31174,
+          "bone_a": "SkirtL1",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 45442,
+          "ratio": 53.945,
+          "rest_mm": 1.775,
+          "deformed_mm": 95.775,
+          "vert_a": 26956,
+          "vert_b": 26958,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 6488,
+          "ratio": 51.791,
+          "rest_mm": 3.889,
+          "deformed_mm": 201.393,
+          "vert_a": 25088,
+          "vert_b": 25160,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR3"
+        },
+        {
+          "edge": 49143,
+          "ratio": 48.595,
+          "rest_mm": 4.086,
+          "deformed_mm": 198.552,
+          "vert_a": 8372,
+          "vert_b": 8386,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL3"
+        },
+        {
+          "edge": 36411,
+          "ratio": 47.251,
+          "rest_mm": 4.168,
+          "deformed_mm": 196.948,
+          "vert_a": 15059,
+          "vert_b": 15133,
+          "bone_a": "Ponytail4",
+          "bone_b": "LeftArm"
+        },
+        {
+          "edge": 41449,
+          "ratio": 44.855,
+          "rest_mm": 1.406,
+          "deformed_mm": 63.066,
+          "vert_a": 2052,
+          "vert_b": 4295,
+          "bone_a": "Head",
+          "bone_b": "Head"
+        },
+        {
+          "edge": 13270,
+          "ratio": 42.738,
+          "rest_mm": 2.21,
+          "deformed_mm": 94.435,
+          "vert_a": 20561,
+          "vert_b": 20562,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL1"
+        },
+        {
+          "edge": 25910,
+          "ratio": 41.966,
+          "rest_mm": 2.663,
+          "deformed_mm": 111.758,
+          "vert_a": 27842,
+          "vert_b": 29853,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 28936,
+          "ratio": 40.967,
+          "rest_mm": 4.679,
+          "deformed_mm": 191.67,
+          "vert_a": 8386,
+          "vert_b": 8435,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 28939,
+          "ratio": 38.937,
+          "rest_mm": 5.172,
+          "deformed_mm": 201.381,
+          "vert_a": 29842,
+          "vert_b": 29848,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 15100,
+          "ratio": 38.829,
+          "rest_mm": 2.648,
+          "deformed_mm": 102.818,
+          "vert_a": 21921,
+          "vert_b": 21935,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 25212,
+          "ratio": 38.829,
+          "rest_mm": 2.648,
+          "deformed_mm": 102.818,
+          "vert_a": 21922,
+          "vert_b": 21936,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 45408,
+          "ratio": 38.455,
+          "rest_mm": 2.512,
+          "deformed_mm": 96.597,
+          "vert_a": 22084,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 27012,
+          "ratio": 37.563,
+          "rest_mm": 5.025,
+          "deformed_mm": 188.772,
+          "vert_a": 30442,
+          "vert_b": 30443,
+          "bone_a": "SkirtR3",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 72160,
+          "ratio": 36.592,
+          "rest_mm": 2.19,
+          "deformed_mm": 80.14,
+          "vert_a": 3319,
+          "vert_b": 3341,
+          "bone_a": "Head",
+          "bone_b": "Ponytail2"
+        }
+      ]
+    },
+    "contact": {
+      "frame": 164,
+      "verts": 31959,
+      "all_finite": true,
+      "edges_gt_2x": 3367,
+      "edges_gt_5x": 1365,
+      "edges_gt_10x": 515,
+      "pct_edges_gt_2x": 4.1296,
+      "max_ratio": 153.783,
+      "p99_ratio": 7.6752,
+      "bbox_min": [
+        0.153,
+        -0.1913,
+        -0.0578
+      ],
+      "bbox_max": [
+        0.7442,
+        0.4052,
+        1.6483
+      ],
+      "worst_edges": [
+        {
+          "edge": 27345,
+          "ratio": 153.783,
+          "rest_mm": 0.81,
+          "deformed_mm": 124.564,
+          "vert_a": 26842,
+          "vert_b": 26844,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 17091,
+          "ratio": 76.812,
+          "rest_mm": 1.445,
+          "deformed_mm": 111.021,
+          "vert_a": 26833,
+          "vert_b": 26835,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 75901,
+          "ratio": 61.799,
+          "rest_mm": 1.495,
+          "deformed_mm": 92.419,
+          "vert_a": 27727,
+          "vert_b": 31174,
+          "bone_a": "SkirtL1",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 15018,
+          "ratio": 59.229,
+          "rest_mm": 1.564,
+          "deformed_mm": 92.629,
+          "vert_a": 22033,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 67923,
+          "ratio": 58.624,
+          "rest_mm": 1.867,
+          "deformed_mm": 109.476,
+          "vert_a": 26838,
+          "vert_b": 26840,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 78219,
+          "ratio": 58.624,
+          "rest_mm": 1.867,
+          "deformed_mm": 109.476,
+          "vert_a": 26839,
+          "vert_b": 26841,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 6488,
+          "ratio": 53.651,
+          "rest_mm": 3.889,
+          "deformed_mm": 208.624,
+          "vert_a": 25088,
+          "vert_b": 25160,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR3"
+        },
+        {
+          "edge": 36411,
+          "ratio": 52.733,
+          "rest_mm": 4.168,
+          "deformed_mm": 219.797,
+          "vert_a": 15059,
+          "vert_b": 15133,
+          "bone_a": "Ponytail4",
+          "bone_b": "LeftArm"
+        },
+        {
+          "edge": 45442,
+          "ratio": 50.177,
+          "rest_mm": 1.775,
+          "deformed_mm": 89.085,
+          "vert_a": 26956,
+          "vert_b": 26958,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 49143,
+          "ratio": 49.971,
+          "rest_mm": 4.086,
+          "deformed_mm": 204.175,
+          "vert_a": 8372,
+          "vert_b": 8386,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL3"
+        },
+        {
+          "edge": 72160,
+          "ratio": 49.741,
+          "rest_mm": 2.19,
+          "deformed_mm": 108.935,
+          "vert_a": 3319,
+          "vert_b": 3341,
+          "bone_a": "Head",
+          "bone_b": "Ponytail2"
+        },
+        {
+          "edge": 25910,
+          "ratio": 46.66,
+          "rest_mm": 2.663,
+          "deformed_mm": 124.258,
+          "vert_a": 27842,
+          "vert_b": 29853,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 41449,
+          "ratio": 45.457,
+          "rest_mm": 1.406,
+          "deformed_mm": 63.912,
+          "vert_a": 2052,
+          "vert_b": 4295,
+          "bone_a": "Head",
+          "bone_b": "Head"
+        },
+        {
+          "edge": 28936,
+          "ratio": 42.244,
+          "rest_mm": 4.679,
+          "deformed_mm": 197.647,
+          "vert_a": 8386,
+          "vert_b": 8435,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 28939,
+          "ratio": 39.677,
+          "rest_mm": 5.172,
+          "deformed_mm": 205.208,
+          "vert_a": 29842,
+          "vert_b": 29848,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 13270,
+          "ratio": 39.364,
+          "rest_mm": 2.21,
+          "deformed_mm": 86.98,
+          "vert_a": 20561,
+          "vert_b": 20562,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL1"
+        },
+        {
+          "edge": 27012,
+          "ratio": 38.715,
+          "rest_mm": 5.025,
+          "deformed_mm": 194.562,
+          "vert_a": 30442,
+          "vert_b": 30443,
+          "bone_a": "SkirtR3",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 15326,
+          "ratio": 38.433,
+          "rest_mm": 8.426,
+          "deformed_mm": 323.851,
+          "vert_a": 23561,
+          "vert_b": 23584,
+          "bone_a": "Hips",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 24138,
+          "ratio": 37.741,
+          "rest_mm": 4.365,
+          "deformed_mm": 164.752,
+          "vert_a": 24442,
+          "vert_b": 24446,
+          "bone_a": "Hips",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 5923,
+          "ratio": 37.577,
+          "rest_mm": 6.103,
+          "deformed_mm": 229.344,
+          "vert_a": 15128,
+          "vert_b": 15136,
+          "bone_a": "Ponytail4",
+          "bone_b": "LeftArm"
+        }
+      ]
+    },
+    "follow_through": {
+      "frame": 187,
+      "verts": 31959,
+      "all_finite": true,
+      "edges_gt_2x": 3348,
+      "edges_gt_5x": 1385,
+      "edges_gt_10x": 549,
+      "pct_edges_gt_2x": 4.1063,
+      "max_ratio": 147.875,
+      "p99_ratio": 7.9709,
+      "bbox_min": [
+        0.2057,
+        -0.1212,
+        -0.0581
+      ],
+      "bbox_max": [
+        0.7736,
+        0.3416,
+        1.6413
+      ],
+      "worst_edges": [
+        {
+          "edge": 27345,
+          "ratio": 147.875,
+          "rest_mm": 0.81,
+          "deformed_mm": 119.779,
+          "vert_a": 26842,
+          "vert_b": 26844,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 17091,
+          "ratio": 74.174,
+          "rest_mm": 1.445,
+          "deformed_mm": 107.207,
+          "vert_a": 26833,
+          "vert_b": 26835,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 15018,
+          "ratio": 62.812,
+          "rest_mm": 1.564,
+          "deformed_mm": 98.233,
+          "vert_a": 22033,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 72160,
+          "ratio": 61.841,
+          "rest_mm": 2.19,
+          "deformed_mm": 135.435,
+          "vert_a": 3319,
+          "vert_b": 3341,
+          "bone_a": "Head",
+          "bone_b": "Ponytail2"
+        },
+        {
+          "edge": 75901,
+          "ratio": 61.546,
+          "rest_mm": 1.495,
+          "deformed_mm": 92.04,
+          "vert_a": 27727,
+          "vert_b": 31174,
+          "bone_a": "SkirtL1",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 67923,
+          "ratio": 56.455,
+          "rest_mm": 1.867,
+          "deformed_mm": 105.425,
+          "vert_a": 26838,
+          "vert_b": 26840,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 78219,
+          "ratio": 56.455,
+          "rest_mm": 1.867,
+          "deformed_mm": 105.425,
+          "vert_a": 26839,
+          "vert_b": 26841,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 6488,
+          "ratio": 53.307,
+          "rest_mm": 3.889,
+          "deformed_mm": 207.286,
+          "vert_a": 25088,
+          "vert_b": 25160,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR3"
+        },
+        {
+          "edge": 49143,
+          "ratio": 52.876,
+          "rest_mm": 4.086,
+          "deformed_mm": 216.042,
+          "vert_a": 8372,
+          "vert_b": 8386,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL3"
+        },
+        {
+          "edge": 36411,
+          "ratio": 52.55,
+          "rest_mm": 4.168,
+          "deformed_mm": 219.035,
+          "vert_a": 15059,
+          "vert_b": 15133,
+          "bone_a": "Ponytail4",
+          "bone_b": "LeftArm"
+        },
+        {
+          "edge": 41449,
+          "ratio": 49.478,
+          "rest_mm": 1.406,
+          "deformed_mm": 69.566,
+          "vert_a": 2052,
+          "vert_b": 4295,
+          "bone_a": "Head",
+          "bone_b": "Head"
+        },
+        {
+          "edge": 45442,
+          "ratio": 49.339,
+          "rest_mm": 1.775,
+          "deformed_mm": 87.597,
+          "vert_a": 26956,
+          "vert_b": 26958,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 25910,
+          "ratio": 48.975,
+          "rest_mm": 2.663,
+          "deformed_mm": 130.421,
+          "vert_a": 27842,
+          "vert_b": 29853,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 28936,
+          "ratio": 44.948,
+          "rest_mm": 4.679,
+          "deformed_mm": 210.297,
+          "vert_a": 8386,
+          "vert_b": 8435,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 28939,
+          "ratio": 41.434,
+          "rest_mm": 5.172,
+          "deformed_mm": 214.297,
+          "vert_a": 29842,
+          "vert_b": 29848,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 45408,
+          "ratio": 39.419,
+          "rest_mm": 2.512,
+          "deformed_mm": 99.018,
+          "vert_a": 22084,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 15326,
+          "ratio": 38.373,
+          "rest_mm": 8.426,
+          "deformed_mm": 323.341,
+          "vert_a": 23561,
+          "vert_b": 23584,
+          "bone_a": "Hips",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 13270,
+          "ratio": 38.322,
+          "rest_mm": 2.21,
+          "deformed_mm": 84.678,
+          "vert_a": 20561,
+          "vert_b": 20562,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL1"
+        },
+        {
+          "edge": 27012,
+          "ratio": 38.061,
+          "rest_mm": 5.025,
+          "deformed_mm": 191.273,
+          "vert_a": 30442,
+          "vert_b": 30443,
+          "bone_a": "SkirtR3",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 24138,
+          "ratio": 37.957,
+          "rest_mm": 4.365,
+          "deformed_mm": 165.692,
+          "vert_a": 24442,
+          "vert_b": 24446,
+          "bone_a": "Hips",
+          "bone_b": "LeftUpLeg"
+        }
+      ]
+    },
+    "recovery": {
+      "frame": 232,
+      "verts": 31959,
+      "all_finite": true,
+      "edges_gt_2x": 3158,
+      "edges_gt_5x": 1339,
+      "edges_gt_10x": 530,
+      "pct_edges_gt_2x": 3.8733,
+      "max_ratio": 156.312,
+      "p99_ratio": 7.5549,
+      "bbox_min": [
+        0.0776,
+        -0.0793,
+        -0.037
+      ],
+      "bbox_max": [
+        0.6102,
+        0.3691,
+        1.6494
+      ],
+      "worst_edges": [
+        {
+          "edge": 27345,
+          "ratio": 156.312,
+          "rest_mm": 0.81,
+          "deformed_mm": 126.613,
+          "vert_a": 26842,
+          "vert_b": 26844,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 17091,
+          "ratio": 80.08,
+          "rest_mm": 1.445,
+          "deformed_mm": 115.743,
+          "vert_a": 26833,
+          "vert_b": 26835,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 67923,
+          "ratio": 61.349,
+          "rest_mm": 1.867,
+          "deformed_mm": 114.565,
+          "vert_a": 26838,
+          "vert_b": 26840,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 78219,
+          "ratio": 61.349,
+          "rest_mm": 1.867,
+          "deformed_mm": 114.565,
+          "vert_a": 26839,
+          "vert_b": 26841,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 15018,
+          "ratio": 60.916,
+          "rest_mm": 1.564,
+          "deformed_mm": 95.268,
+          "vert_a": 22033,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 72160,
+          "ratio": 58.44,
+          "rest_mm": 2.19,
+          "deformed_mm": 127.986,
+          "vert_a": 3319,
+          "vert_b": 3341,
+          "bone_a": "Head",
+          "bone_b": "Ponytail2"
+        },
+        {
+          "edge": 75901,
+          "ratio": 58.406,
+          "rest_mm": 1.495,
+          "deformed_mm": 87.344,
+          "vert_a": 27727,
+          "vert_b": 31174,
+          "bone_a": "SkirtL1",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 49143,
+          "ratio": 57.585,
+          "rest_mm": 4.086,
+          "deformed_mm": 235.281,
+          "vert_a": 8372,
+          "vert_b": 8386,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL3"
+        },
+        {
+          "edge": 45442,
+          "ratio": 54.337,
+          "rest_mm": 1.775,
+          "deformed_mm": 96.471,
+          "vert_a": 26956,
+          "vert_b": 26958,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 6488,
+          "ratio": 49.117,
+          "rest_mm": 3.889,
+          "deformed_mm": 190.994,
+          "vert_a": 25088,
+          "vert_b": 25160,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR3"
+        },
+        {
+          "edge": 28936,
+          "ratio": 49.107,
+          "rest_mm": 4.679,
+          "deformed_mm": 229.758,
+          "vert_a": 8386,
+          "vert_b": 8435,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 41449,
+          "ratio": 48.091,
+          "rest_mm": 1.406,
+          "deformed_mm": 67.615,
+          "vert_a": 2052,
+          "vert_b": 4295,
+          "bone_a": "Head",
+          "bone_b": "Head"
+        },
+        {
+          "edge": 28939,
+          "ratio": 45.19,
+          "rest_mm": 5.172,
+          "deformed_mm": 233.721,
+          "vert_a": 29842,
+          "vert_b": 29848,
+          "bone_a": "SkirtL3",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 36411,
+          "ratio": 44.195,
+          "rest_mm": 4.168,
+          "deformed_mm": 184.21,
+          "vert_a": 15059,
+          "vert_b": 15133,
+          "bone_a": "Ponytail4",
+          "bone_b": "LeftArm"
+        },
+        {
+          "edge": 13270,
+          "ratio": 43.733,
+          "rest_mm": 2.21,
+          "deformed_mm": 96.633,
+          "vert_a": 20561,
+          "vert_b": 20562,
+          "bone_a": "LeftUpLeg",
+          "bone_b": "SkirtL1"
+        },
+        {
+          "edge": 25910,
+          "ratio": 42.826,
+          "rest_mm": 2.663,
+          "deformed_mm": 114.046,
+          "vert_a": 27842,
+          "vert_b": 29853,
+          "bone_a": "SkirtF1",
+          "bone_b": "Hips"
+        },
+        {
+          "edge": 24138,
+          "ratio": 38.657,
+          "rest_mm": 4.365,
+          "deformed_mm": 168.749,
+          "vert_a": 24442,
+          "vert_b": 24446,
+          "bone_a": "Hips",
+          "bone_b": "LeftUpLeg"
+        },
+        {
+          "edge": 45408,
+          "ratio": 38.087,
+          "rest_mm": 2.512,
+          "deformed_mm": 95.673,
+          "vert_a": 22084,
+          "vert_b": 28559,
+          "bone_a": "SkirtR1",
+          "bone_b": "RightUpLeg"
+        },
+        {
+          "edge": 25212,
+          "ratio": 36.569,
+          "rest_mm": 2.648,
+          "deformed_mm": 96.835,
+          "vert_a": 21922,
+          "vert_b": 21936,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        },
+        {
+          "edge": 15100,
+          "ratio": 36.569,
+          "rest_mm": 2.648,
+          "deformed_mm": 96.835,
+          "vert_a": 21921,
+          "vert_b": 21935,
+          "bone_a": "RightUpLeg",
+          "bone_b": "SkirtR1"
+        }
+      ]
+    }
+  }
+}

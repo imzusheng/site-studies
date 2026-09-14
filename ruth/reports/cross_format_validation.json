@@ -1,0 +1,585 @@
+{
+  "task": "定位 ruth_forehand_v1 的几何撕裂发生在 Blender / GLB Export / USDZ Conversion 的哪一步",
+  "verdict": {
+    "final": "BLENDER_FAIL",
+    "first_bad_stage": "BLENDER",
+    "blender": "FAIL",
+    "glb": "FAIL（但导出本身忠实：与 Blender 逐顶点最大差 0.0843 mm）",
+    "usdz": "NOT_CHECKED（本机不存在该文件；且按 brief「Blender 已 FAIL → 不检查 USDZ」）",
+    "root_cause": "ruth/tools/fh_refine.py 的 aim_matrix() 用固定世界 pole (0,-1,0) 决定骨骼 roll，只保证骨骼 Y 轴（方向）正确、不约束绕自身轴的滚转。foot_planting() 用它写大腿/小腿，secondary_motion() 用它写裙骨/马尾骨，并把完整 4×4 姿态经 pb.matrix_basis 烘进 action。结果：RightUpLeg/LeftUpLeg twist=156°/155°、SkirtB1/F1 twist=172°/170°、Ponytail1 twist=156°、SkirtR1/L1 twist=∓107°/90°，而 swing（方向偏差）只有 1.7°–31°，属正常范围。滚转 90–180° 把裙片绞成放射状碎片、把马尾滚成硬筒、把髋/大腿表面剪切出长三角，并在腰头处把相邻顶点拉开最多 157 倍。"
+  },
+  "tear_metric": {
+    "definition": "变形后边长 / rest 边长；>2.0 记为撕裂边",
+    "note": "rest 为 .blend 内的未形变网格，形变由 armature 求值得到"
+  },
+  "marks": {
+    "ready": {
+      "frame": 0,
+      "time_s": 0.0,
+      "blender": {
+        "edges_gt_2x": 3242,
+        "edges_gt_5x": 1333,
+        "edges_gt_10x": 516,
+        "max_ratio": 156.782,
+        "pct_edges_gt_2x": 3.9763,
+        "all_finite": true
+      },
+      "glb": {
+        "edges_gt_2x": 3242,
+        "edges_gt_5x": 1333,
+        "edges_gt_10x": 516,
+        "max_ratio": 156.78,
+        "pct_edges_gt_2x": 3.9763,
+        "all_finite": true,
+        "jointmatrix_det_min": 0.999985,
+        "jointmatrix_det_max": 1.000001,
+        "n_negative_det": 0,
+        "n_near_singular": 0
+      },
+      "blender_vs_glb": {
+        "vertices_compared": 31971,
+        "max_mm": 0.084268,
+        "mean_mm": 0.002578,
+        "p99_mm": 0.044165
+      },
+      "tear_attribution_top_joints": [
+        {
+          "joint": "SkirtR1",
+          "edges": 784
+        },
+        {
+          "joint": "SkirtL2",
+          "edges": 704
+        },
+        {
+          "joint": "SkirtB1",
+          "edges": 448
+        },
+        {
+          "joint": "SkirtR2",
+          "edges": 299
+        },
+        {
+          "joint": "SkirtL1",
+          "edges": 264
+        },
+        {
+          "joint": "RightUpLeg",
+          "edges": 205
+        }
+      ]
+    },
+    "backswing": {
+      "frame": 147,
+      "time_s": 2.45,
+      "blender": {
+        "edges_gt_2x": 3331,
+        "edges_gt_5x": 1326,
+        "edges_gt_10x": 484,
+        "max_ratio": 155.758,
+        "pct_edges_gt_2x": 4.0855,
+        "all_finite": true
+      },
+      "glb": {
+        "edges_gt_2x": 3331,
+        "edges_gt_5x": 1326,
+        "edges_gt_10x": 484,
+        "max_ratio": 155.76,
+        "pct_edges_gt_2x": 4.0855,
+        "all_finite": true,
+        "jointmatrix_det_min": 0.999986,
+        "jointmatrix_det_max": 1.000001,
+        "n_negative_det": 0,
+        "n_near_singular": 0
+      },
+      "blender_vs_glb": {
+        "vertices_compared": 31971,
+        "max_mm": 0.063015,
+        "mean_mm": 0.003263,
+        "p99_mm": 0.039136
+      },
+      "tear_attribution_top_joints": [
+        {
+          "joint": "SkirtR1",
+          "edges": 1349
+        },
+        {
+          "joint": "SkirtL2",
+          "edges": 733
+        },
+        {
+          "joint": "Hips",
+          "edges": 303
+        },
+        {
+          "joint": "SkirtB1",
+          "edges": 290
+        },
+        {
+          "joint": "SkirtR2",
+          "edges": 218
+        },
+        {
+          "joint": "LeftUpLeg",
+          "edges": 202
+        }
+      ]
+    },
+    "contact": {
+      "frame": 164,
+      "time_s": 2.73333,
+      "blender": {
+        "edges_gt_2x": 3367,
+        "edges_gt_5x": 1365,
+        "edges_gt_10x": 515,
+        "max_ratio": 153.783,
+        "pct_edges_gt_2x": 4.1296,
+        "all_finite": true
+      },
+      "glb": {
+        "edges_gt_2x": 3367,
+        "edges_gt_5x": 1365,
+        "edges_gt_10x": 515,
+        "max_ratio": 153.78,
+        "pct_edges_gt_2x": 4.1296,
+        "all_finite": true,
+        "jointmatrix_det_min": 0.999985,
+        "jointmatrix_det_max": 1.000001,
+        "n_negative_det": 0,
+        "n_near_singular": 0
+      },
+      "blender_vs_glb": {
+        "vertices_compared": 31971,
+        "max_mm": 0.059816,
+        "mean_mm": 0.002937,
+        "p99_mm": 0.03537
+      },
+      "tear_attribution_top_joints": [
+        {
+          "joint": "SkirtR1",
+          "edges": 1189
+        },
+        {
+          "joint": "SkirtL2",
+          "edges": 950
+        },
+        {
+          "joint": "SkirtB1",
+          "edges": 308
+        },
+        {
+          "joint": "LeftUpLeg",
+          "edges": 265
+        },
+        {
+          "joint": "SkirtL1",
+          "edges": 227
+        },
+        {
+          "joint": "Hips",
+          "edges": 221
+        }
+      ]
+    },
+    "follow_through": {
+      "frame": 187,
+      "time_s": 3.11667,
+      "blender": {
+        "edges_gt_2x": 3348,
+        "edges_gt_5x": 1385,
+        "edges_gt_10x": 549,
+        "max_ratio": 147.875,
+        "pct_edges_gt_2x": 4.1063,
+        "all_finite": true
+      },
+      "glb": {
+        "edges_gt_2x": 3348,
+        "edges_gt_5x": 1385,
+        "edges_gt_10x": 549,
+        "max_ratio": 147.87,
+        "pct_edges_gt_2x": 4.1063,
+        "all_finite": true,
+        "jointmatrix_det_min": 0.999985,
+        "jointmatrix_det_max": 1.000001,
+        "n_negative_det": 0,
+        "n_near_singular": 0
+      },
+      "blender_vs_glb": {
+        "vertices_compared": 31971,
+        "max_mm": 0.069231,
+        "mean_mm": 0.003011,
+        "p99_mm": 0.040595
+      },
+      "tear_attribution_top_joints": [
+        {
+          "joint": "SkirtL2",
+          "edges": 1021
+        },
+        {
+          "joint": "SkirtR1",
+          "edges": 886
+        },
+        {
+          "joint": "SkirtL1",
+          "edges": 438
+        },
+        {
+          "joint": "LeftUpLeg",
+          "edges": 355
+        },
+        {
+          "joint": "SkirtB1",
+          "edges": 259
+        },
+        {
+          "joint": "Hips",
+          "edges": 249
+        }
+      ]
+    },
+    "recovery": {
+      "frame": 232,
+      "time_s": 3.86667,
+      "blender": {
+        "edges_gt_2x": 3158,
+        "edges_gt_5x": 1339,
+        "edges_gt_10x": 530,
+        "max_ratio": 156.312,
+        "pct_edges_gt_2x": 3.8733,
+        "all_finite": true
+      },
+      "glb": {
+        "edges_gt_2x": 3158,
+        "edges_gt_5x": 1339,
+        "edges_gt_10x": 530,
+        "max_ratio": 156.31,
+        "pct_edges_gt_2x": 3.8733,
+        "all_finite": true,
+        "jointmatrix_det_min": 0.999879,
+        "jointmatrix_det_max": 1.000001,
+        "n_negative_det": 0,
+        "n_near_singular": 0
+      },
+      "blender_vs_glb": {
+        "vertices_compared": 31971,
+        "max_mm": 0.059476,
+        "mean_mm": 0.00676,
+        "p99_mm": 0.046041
+      },
+      "tear_attribution_top_joints": [
+        {
+          "joint": "SkirtR1",
+          "edges": 1224
+        },
+        {
+          "joint": "SkirtL2",
+          "edges": 727
+        },
+        {
+          "joint": "SkirtB1",
+          "edges": 305
+        },
+        {
+          "joint": "Hips",
+          "edges": 271
+        },
+        {
+          "joint": "LeftUpLeg",
+          "edges": 235
+        },
+        {
+          "joint": "SkirtR2",
+          "edges": 183
+        }
+      ]
+    }
+  },
+  "stage_evidence": {
+    "blender": {
+      "how": "blender -b ruth_forehand_v1.blend -P xf_01_blender_validate.py（直接打开实际保存文件，不重跑任何生成脚本）",
+      "renderer": "Blender 5.1.2 EEVEE，600×1000，与 GLB 列同机位",
+      "independent_reproduction": {
+        "method": "用 numpy 独立实现线性混合蒙皮（读取 blender 的权重与 pose 矩阵），与 depsgraph 结果比对",
+        "max_diff_mm": 0.01655784704657215
+      },
+      "rest_pose_tear": {
+        "edges_gt_2x": 0,
+        "max_ratio": 1.0
+      },
+      "posed_tear": {
+        "edges_gt_2x": 3242,
+        "pct_gt_2x": 3.9763,
+        "max_ratio": 156.78
+      },
+      "weight_audit": {
+        "weight_sum_min": 0.9999818885426066,
+        "weight_sum_max": 1.0000000447034836,
+        "verts_with_weight_sum_not_1": 0,
+        "max_influences_per_vertex": 4,
+        "note": "权重本身合法：和恒为 1、影响数 ≤4、无未赋权顶点"
+      },
+      "predates_export": "上一轮的成品 QA 渲染 ruth/preview/forehand/cs_ready_q34.png 与 cs_contact_side.png 里裙子已是碎片、马尾已是硬刺，早于任何 GLB/USDZ 导出"
+    },
+    "glb": {
+      "how": "xf_07_glb_audit.py：纯 Python 解析 GLB、求值 207 条动画通道、jointMatrix = globalJoint @ inverseBindMatrix、自行 LBS",
+      "renderer": "xf_08_glb_render.py：自写 z-buffer 软件光栅器，不经 Blender、不经 WebGL",
+      "structural": {
+        "joint_count": 69,
+        "ibm_count": 69,
+        "skeleton_root_node": null,
+        "joint_names": [
+          "Hips",
+          "Spine",
+          "Spine1",
+          "Spine2",
+          "Neck",
+          "Head",
+          "Ponytail1",
+          "Ponytail2",
+          "Ponytail3",
+          "Ponytail4",
+          "LeftShoulder",
+          "LeftArm",
+          "LeftForeArm",
+          "LeftHand",
+          "LeftHandThumb1",
+          "LeftHandThumb2",
+          "LeftHandThumb3",
+          "LeftHandIndex1",
+          "LeftHandIndex2",
+          "LeftHandIndex3",
+          "LeftHandMiddle1",
+          "LeftHandMiddle2",
+          "LeftHandMiddle3",
+          "LeftHandRing1",
+          "LeftHandRing2",
+          "LeftHandRing3",
+          "LeftHandPinky1",
+          "LeftHandPinky2",
+          "LeftHandPinky3",
+          "RightShoulder",
+          "RightArm",
+          "RightForeArm",
+          "RightHand",
+          "RightHandThumb1",
+          "RightHandThumb2",
+          "RightHandThumb3",
+          "RightHandIndex1",
+          "RightHandIndex2",
+          "RightHandIndex3",
+          "RightHandMiddle1",
+          "RightHandMiddle2",
+          "RightHandMiddle3",
+          "RightHandRing1",
+          "RightHandRing2",
+          "RightHandRing3",
+          "RightHandPinky1",
+          "RightHandPinky2",
+          "RightHandPinky3",
+          "RacketSocket",
+          "LeftUpLeg",
+          "LeftLeg",
+          "LeftFoot",
+          "LeftToeBase",
+          "RightUpLeg",
+          "RightLeg",
+          "RightFoot",
+          "RightToeBase",
+          "SkirtF1",
+          "SkirtF2",
+          "SkirtF3",
+          "SkirtB1",
+          "SkirtB2",
+          "SkirtB3",
+          "SkirtL1",
+          "SkirtL2",
+          "SkirtL3",
+          "SkirtR1",
+          "SkirtR2",
+          "SkirtR3"
+        ],
+        "ibm_matches_joint_count": true
+      },
+      "primitive_audit": {
+        "attributes": [
+          "JOINTS_0",
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0",
+          "WEIGHTS_0"
+        ],
+        "has_joints_0": true,
+        "has_weights_0": true,
+        "has_joints_1": false,
+        "has_weights_1": false,
+        "modes": 4,
+        "vertex_count": 31971,
+        "joint_index_max": 68,
+        "joint_index_out_of_range": 0,
+        "joint_index_negative": 0,
+        "weight_sum": {
+          "min": 1.0,
+          "max": 1.0,
+          "n_not_one": 0
+        },
+        "influences_per_vertex": {
+          "max": 4,
+          "hist": {
+            "1": 67,
+            "2": 6394,
+            "3": 5537,
+            "4": 19973
+          }
+        },
+        "joints_used_count": 66,
+        "joints_never_weighted": [
+          "LeftHandIndex2",
+          "RacketSocket",
+          "RightHandIndex2"
+        ]
+      },
+      "animation": {
+        "name": "Ruth_Forehand",
+        "channels": 207,
+        "samplers": 207,
+        "interpolations": {
+          "LINEAR": 56,
+          "STEP": 151
+        },
+        "targets": {
+          "translation": 69,
+          "rotation": 69,
+          "scale": 69
+        },
+        "animated_nodes": 69
+      },
+      "axis_convention": {
+        "axis_mode": "zup_to_yup",
+        "unmatched_as_is": 31971,
+        "unmatched_zup_to_yup": 0,
+        "glb_vertices": 31971,
+        "blender_vertices": 31959,
+        "glb_vertices_unmatched": 0,
+        "note": "glTF 会沿 UV/normal 缝拆点，所以 GLB 顶点数略多于 Blender；比对时按 rest 位置回映射"
+      },
+      "khronos_validator": "0 error；2 warning（见 gltf_validator.txt）"
+    },
+    "usdz": {
+      "status": "NOT_CHECKED",
+      "file_present": false,
+      "searched": [
+        "ruth/build/",
+        "~/Downloads",
+        "~/Desktop",
+        "repo 全树",
+        "/tmp",
+        "/var/folders",
+        "全盘 find",
+        "ZCode artifacts / exec 缓存"
+      ],
+      "reason": "全盘不存在任何 ruth_forehand_v1.usdz；且 brief 规定 Blender 已出现大片撕裂即 FAIL、不再检查 USDZ"
+    }
+  },
+  "root_cause_analysis": {
+    "blamed_bones_by_least_action": {
+      "remove_skirt_and_ponytail_pose": {
+        "edges_gt_2x_before": 3242,
+        "edges_gt_2x_after": 1621
+      },
+      "pose_only_skirt_and_ponytail_others_rest": {
+        "edges_gt_2x": 2546,
+        "max_ratio": 156.57
+      },
+      "conclusion": "只让次级骨带姿态、全身回 rest，就能单独撕出 2546 条边 → 次级骨的姿态数据自身是破坏源"
+    },
+    "twist_vs_swing": [
+      {
+        "bone": "SkirtB1",
+        "twist_deg": 172.5,
+        "swing_deg": 30.89,
+        "total_deg": 172.78,
+        "region": "skirt"
+      },
+      {
+        "bone": "SkirtF1",
+        "twist_deg": 170.38,
+        "swing_deg": 26.69,
+        "total_deg": 170.64,
+        "region": "skirt"
+      },
+      {
+        "bone": "RightUpLeg",
+        "twist_deg": 156.32,
+        "swing_deg": 15.35,
+        "total_deg": 156.53,
+        "region": "leg"
+      },
+      {
+        "bone": "Ponytail1",
+        "twist_deg": 156.27,
+        "swing_deg": 2.72,
+        "total_deg": 156.28,
+        "region": "ponytail"
+      },
+      {
+        "bone": "LeftUpLeg",
+        "twist_deg": 155.61,
+        "swing_deg": 1.71,
+        "total_deg": 155.61,
+        "region": "leg"
+      },
+      {
+        "bone": "SkirtR1",
+        "twist_deg": -107.09,
+        "swing_deg": 28.85,
+        "total_deg": 109.74,
+        "region": "skirt"
+      },
+      {
+        "bone": "LeftHand",
+        "twist_deg": -102.6,
+        "swing_deg": 104.11,
+        "total_deg": 134.78,
+        "region": "arm"
+      },
+      {
+        "bone": "SkirtL1",
+        "twist_deg": 89.96,
+        "swing_deg": 28.65,
+        "total_deg": 93.47,
+        "region": "skirt"
+      }
+    ],
+    "secondary_motion_offsets": {
+      "skirt": {
+        "offset_o_mm_max": 106.349,
+        "offset_o_over_unit_base_max": 0.106,
+        "implied_aim_error_max_deg": 23.34
+      },
+      "ponytail": {
+        "offset_o_mm_max": 124.956,
+        "offset_o_over_unit_base_max": 0.125,
+        "implied_aim_error_max_deg": 10.52
+      }
+    },
+    "mechanism": [
+      "1. aim_matrix(world_dir, pole_dir) 只把骨骼 Y 轴对准 world_dir；绕自身轴的滚转由 pole_dir 的垂直分量决定，与 rig 自身的骨 roll 无关。",
+      "2. 调用方对所有骨骼都传 pole=(0,-1,0)。当骨方向≈±Y（裙前/后片、马尾），pole 与方向平行，垂直分量退化为 0，代码落到 alt=(1,0,0) 兜底，滚转被改写成任意值。",
+      "3. 结果被写成完整 4×4：pb.matrix_basis = pre.inverted() @ tw，再 keyframe_insert 烘进 action——滚转误差无法在下游被任何消费端修正。",
+      "4. 对圆柱状肢体（大腿）滚转只是把表面拧 156°；对薄片（裙片）和细长体（马尾）直接绞碎；对腰部，被裙骨加权覆盖的顶点与只被 Hips 加权的相邻顶点被拉开 → 0.81 mm 的 rest 边变成 127 mm。"
+    ]
+  },
+  "what_the_earlier_pass_measured": {
+    "reported_stretch_check": "stretch.max_pct_over2 = 0.372%（阈值 <3% → PASS）",
+    "actual_stretch_now": "3.9763%（3242 条边，最大 156.78×）",
+    "why_the_check_missed_it": "fh_qa.py:109-116 用第 0 帧的**形变后**网格当 rest 基准：`scene.frame_set(frames[0]); rest_edges = 从 me0 取边长`。第 0 帧本身已经撕裂，于是同样的撕裂在后继帧上比值≈1，检查对它结构性失明；第 0 帧的比值恒为 1.0，最坏帧永远测不到。",
+    "reproduction": {
+      "script": "ruth/tools/xf/xf_12_qa_baseline_repro.py",
+      "command": "blender -b ruth_forehand_v1.blend -P tools/xf/xf_12_qa_baseline_repro.py",
+      "result_max_pct_over2": 0.372,
+      "matches_round2_report": true,
+      "note": "按同一口径复算得到与上一轮报告完全一致的 0.372%，证明原因就是基准取错，而不是两次量测有别的差异"
+    },
+    "conclusion": "上一轮 VERDICT=PASS 的拉伸项无效，该 PASS 不成立。"
+  }
+}

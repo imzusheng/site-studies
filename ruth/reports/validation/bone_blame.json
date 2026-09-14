@@ -1,0 +1,379 @@
+{
+  "frame": 0,
+  "mesh": {
+    "verts": 31959,
+    "edges": 81533,
+    "bones": 69
+  },
+  "weight_sum_min": 0.9999818885426066,
+  "weight_sum_max": 1.0000000447034836,
+  "verts_weight_sum_not_1": 0,
+  "max_influences": 4,
+  "independent_lbs_vs_blender_max_diff_mm": 0.01655784704657215,
+  "rest_tear": {
+    "edges_gt_2x": 0,
+    "max_ratio": 1.0
+  },
+  "posed_tear": {
+    "edges_gt_2x": 3242,
+    "pct_gt_2x": 3.9763,
+    "max_ratio": 156.78
+  },
+  "bone_displacement_field_mm": {
+    "LeftHand": 462.456,
+    "LeftHandRing3": 447.619,
+    "LeftHandPinky3": 446.309,
+    "LeftHandRing1": 445.798,
+    "LeftForeArm": 431.289,
+    "LeftHandRing2": 427.883,
+    "LeftHandMiddle3": 413.725,
+    "LeftHandThumb2": 404.758,
+    "RightHand": 388.298,
+    "LeftToeBase": 375.277,
+    "RightHandRing3": 366.263,
+    "RightHandPinky3": 359.419,
+    "RightToeBase": 356.011,
+    "RightHandThumb2": 352.671,
+    "RightHandRing1": 350.171,
+    "RightHandMiddle3": 342.863,
+    "LeftHandPinky1": 335.598,
+    "RightForeArm": 324.307,
+    "RightHandRing2": 321.894,
+    "LeftHandPinky2": 314.506,
+    "RightHandPinky1": 266.597,
+    "LeftHandThumb1": 255.584,
+    "RightFoot": 244.054,
+    "RightHandPinky2": 236.483,
+    "LeftFoot": 230.491
+  },
+  "leave_one_out": [
+    {
+      "bone": "LeftHand",
+      "edges_gt_2x": 4342,
+      "removed_pct": -33.93,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftHandRing3",
+      "edges_gt_2x": 3687,
+      "removed_pct": -13.73,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftHandPinky3",
+      "edges_gt_2x": 3615,
+      "removed_pct": -11.51,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftHandRing1",
+      "edges_gt_2x": 3713,
+      "removed_pct": -14.53,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftForeArm",
+      "edges_gt_2x": 3925,
+      "removed_pct": -21.07,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftHandRing2",
+      "edges_gt_2x": 3630,
+      "removed_pct": -11.97,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftHandMiddle3",
+      "edges_gt_2x": 3568,
+      "removed_pct": -10.06,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftHandThumb2",
+      "edges_gt_2x": 3489,
+      "removed_pct": -7.62,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "RightHand",
+      "edges_gt_2x": 4033,
+      "removed_pct": -24.4,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "LeftToeBase",
+      "edges_gt_2x": 3753,
+      "removed_pct": -15.76,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "RightHandRing3",
+      "edges_gt_2x": 3538,
+      "removed_pct": -9.13,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "RightHandPinky3",
+      "edges_gt_2x": 3466,
+      "removed_pct": -6.91,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "RightToeBase",
+      "edges_gt_2x": 3729,
+      "removed_pct": -15.02,
+      "max_ratio": 156.78
+    },
+    {
+      "bone": "RightHandThumb2",
+      "edges_gt_2x": 3472,
+      "removed_pct": -7.09,
+      "max_ratio": 156.78
+    }
+  ],
+  "top_bone_rotations": {
+    "LeftHand": {
+      "rot_angle_deg": 91.506,
+      "rot_axis": [
+        -0.7505,
+        -0.1132,
+        0.6511
+      ],
+      "translation_mm": 1452.277,
+      "rest_dir": [
+        0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 22.08,
+      "max_w_disp_mm": 462.46,
+      "bone_length_mm": 116.53
+    },
+    "LeftHandRing3": {
+      "rot_angle_deg": 91.506,
+      "rot_axis": [
+        -0.7505,
+        -0.1132,
+        0.6511
+      ],
+      "translation_mm": 1452.277,
+      "rest_dir": [
+        0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 22.08,
+      "max_w_disp_mm": 447.62,
+      "bone_length_mm": 20.08
+    },
+    "LeftHandPinky3": {
+      "rot_angle_deg": 91.506,
+      "rot_axis": [
+        -0.7505,
+        -0.1132,
+        0.6511
+      ],
+      "translation_mm": 1452.277,
+      "rest_dir": [
+        0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 22.08,
+      "max_w_disp_mm": 446.31,
+      "bone_length_mm": 16.66
+    },
+    "LeftHandRing1": {
+      "rot_angle_deg": 91.506,
+      "rot_axis": [
+        -0.7505,
+        -0.1132,
+        0.6511
+      ],
+      "translation_mm": 1452.277,
+      "rest_dir": [
+        0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 22.08,
+      "max_w_disp_mm": 445.8,
+      "bone_length_mm": 20.08
+    },
+    "LeftForeArm": {
+      "rot_angle_deg": 113.236,
+      "rot_axis": [
+        -0.6609,
+        0.0837,
+        -0.7458
+      ],
+      "translation_mm": 1041.989,
+      "rest_dir": [
+        0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 69.76,
+      "max_w_disp_mm": 431.29,
+      "bone_length_mm": 226.93
+    },
+    "LeftHandRing2": {
+      "rot_angle_deg": 91.506,
+      "rot_axis": [
+        -0.7505,
+        -0.1132,
+        0.6511
+      ],
+      "translation_mm": 1452.277,
+      "rest_dir": [
+        0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 22.08,
+      "max_w_disp_mm": 427.88,
+      "bone_length_mm": 20.08
+    },
+    "LeftHandMiddle3": {
+      "rot_angle_deg": 91.506,
+      "rot_axis": [
+        -0.7505,
+        -0.1132,
+        0.6511
+      ],
+      "translation_mm": 1452.277,
+      "rest_dir": [
+        0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 22.08,
+      "max_w_disp_mm": 413.73,
+      "bone_length_mm": 21.36
+    },
+    "LeftHandThumb2": {
+      "rot_angle_deg": 91.506,
+      "rot_axis": [
+        -0.7505,
+        -0.1132,
+        0.6511
+      ],
+      "translation_mm": 1452.277,
+      "rest_dir": [
+        0.3779,
+        -0.5965,
+        -0.7081
+      ],
+      "angle_between_axis_and_bone_dir_deg": 47.38,
+      "max_w_disp_mm": 404.76,
+      "bone_length_mm": 21.36
+    },
+    "RightHand": {
+      "rot_angle_deg": 118.718,
+      "rot_axis": [
+        -0.8599,
+        0.3754,
+        -0.3459
+      ],
+      "translation_mm": 1779.281,
+      "rest_dir": [
+        -0.4708,
+        -0.0099,
+        -0.8822
+      ],
+      "angle_between_axis_and_bone_dir_deg": 45.07,
+      "max_w_disp_mm": 388.3,
+      "bone_length_mm": 116.53
+    },
+    "LeftToeBase": {
+      "rot_angle_deg": 175.512,
+      "rot_axis": [
+        -0.1236,
+        0.3247,
+        0.9377
+      ],
+      "translation_mm": 225.283,
+      "rest_dir": [
+        -0.0,
+        -1.0,
+        0.0
+      ],
+      "angle_between_axis_and_bone_dir_deg": 71.05,
+      "max_w_disp_mm": 375.28,
+      "bone_length_mm": 49.3
+    }
+  },
+  "worst_edges_posed": [
+    {
+      "ratio": 156.78,
+      "rest_mm": 0.81,
+      "def_mm": 126.993,
+      "a_bones": "SkirtF1",
+      "b_bones": "Hips"
+    },
+    {
+      "ratio": 80.3,
+      "rest_mm": 1.445,
+      "def_mm": 116.058,
+      "a_bones": "SkirtR1",
+      "b_bones": "RightUpLeg"
+    },
+    {
+      "ratio": 62.45,
+      "rest_mm": 1.495,
+      "def_mm": 93.39,
+      "a_bones": "SkirtL1",
+      "b_bones": "LeftUpLeg"
+    },
+    {
+      "ratio": 61.33,
+      "rest_mm": 1.867,
+      "def_mm": 114.524,
+      "a_bones": "RightUpLeg",
+      "b_bones": "SkirtR1"
+    },
+    {
+      "ratio": 61.33,
+      "rest_mm": 1.867,
+      "def_mm": 114.524,
+      "a_bones": "RightUpLeg",
+      "b_bones": "SkirtR1"
+    },
+    {
+      "ratio": 59.88,
+      "rest_mm": 1.564,
+      "def_mm": 93.64,
+      "a_bones": "SkirtR1",
+      "b_bones": "RightUpLeg"
+    },
+    {
+      "ratio": 57.11,
+      "rest_mm": 4.168,
+      "def_mm": 238.053,
+      "a_bones": "Ponytail4",
+      "b_bones": "LeftArm"
+    },
+    {
+      "ratio": 53.53,
+      "rest_mm": 1.775,
+      "def_mm": 95.04,
+      "a_bones": "SkirtR1",
+      "b_bones": "RightUpLeg"
+    },
+    {
+      "ratio": 49.38,
+      "rest_mm": 2.19,
+      "def_mm": 108.151,
+      "a_bones": "Head",
+      "b_bones": "Ponytail2"
+    },
+    {
+      "ratio": 48.85,
+      "rest_mm": 4.086,
+      "def_mm": 199.6,
+      "a_bones": "LeftUpLeg",
+      "b_bones": "SkirtL3"
+    }
+  ]
+}

@@ -1,0 +1,1077 @@
+{
+  "twist_swing_frame0": [
+    {
+      "bone": "SkirtB1",
+      "twist_deg": 172.5,
+      "swing_deg": 30.89,
+      "total_deg": 172.78,
+      "region": "skirt"
+    },
+    {
+      "bone": "SkirtF1",
+      "twist_deg": 170.38,
+      "swing_deg": 26.69,
+      "total_deg": 170.64,
+      "region": "skirt"
+    },
+    {
+      "bone": "RightUpLeg",
+      "twist_deg": 156.32,
+      "swing_deg": 15.35,
+      "total_deg": 156.53,
+      "region": "leg"
+    },
+    {
+      "bone": "Ponytail1",
+      "twist_deg": 156.27,
+      "swing_deg": 2.72,
+      "total_deg": 156.28,
+      "region": "ponytail"
+    },
+    {
+      "bone": "LeftUpLeg",
+      "twist_deg": 155.61,
+      "swing_deg": 1.71,
+      "total_deg": 155.61,
+      "region": "leg"
+    },
+    {
+      "bone": "SkirtR1",
+      "twist_deg": -107.09,
+      "swing_deg": 28.85,
+      "total_deg": 109.74,
+      "region": "skirt"
+    },
+    {
+      "bone": "LeftHand",
+      "twist_deg": -102.6,
+      "swing_deg": 104.11,
+      "total_deg": 134.78,
+      "region": "arm"
+    },
+    {
+      "bone": "SkirtL1",
+      "twist_deg": 89.96,
+      "swing_deg": 28.65,
+      "total_deg": 93.47,
+      "region": "skirt"
+    },
+    {
+      "bone": "RightHand",
+      "twist_deg": 56.74,
+      "swing_deg": 97.6,
+      "total_deg": 109.16,
+      "region": "arm"
+    },
+    {
+      "bone": "RightArm",
+      "twist_deg": -54.95,
+      "swing_deg": 28.7,
+      "total_deg": 61.48,
+      "region": "arm"
+    },
+    {
+      "bone": "SkirtL2",
+      "twist_deg": 47.9,
+      "swing_deg": 51.17,
+      "total_deg": 68.97,
+      "region": "skirt"
+    },
+    {
+      "bone": "SkirtR2",
+      "twist_deg": -47.9,
+      "swing_deg": 51.17,
+      "total_deg": 68.97,
+      "region": "skirt"
+    },
+    {
+      "bone": "Hips",
+      "twist_deg": -24.17,
+      "swing_deg": 3.08,
+      "total_deg": 24.37,
+      "region": "torso"
+    },
+    {
+      "bone": "SkirtL3",
+      "twist_deg": 20.76,
+      "swing_deg": 31.41,
+      "total_deg": 37.5,
+      "region": "skirt"
+    },
+    {
+      "bone": "SkirtR3",
+      "twist_deg": -20.76,
+      "swing_deg": 31.41,
+      "total_deg": 37.5,
+      "region": "skirt"
+    },
+    {
+      "bone": "Spine",
+      "twist_deg": 16.83,
+      "swing_deg": 3.03,
+      "total_deg": 17.1,
+      "region": "torso"
+    },
+    {
+      "bone": "LeftArm",
+      "twist_deg": 15.66,
+      "swing_deg": 40.26,
+      "total_deg": 43.07,
+      "region": "arm"
+    },
+    {
+      "bone": "Neck",
+      "twist_deg": -15.61,
+      "swing_deg": 10.6,
+      "total_deg": 18.85,
+      "region": "head"
+    },
+    {
+      "bone": "RightShoulder",
+      "twist_deg": -11.11,
+      "swing_deg": 42.18,
+      "total_deg": 43.56,
+      "region": "torso"
+    },
+    {
+      "bone": "LeftFoot",
+      "twist_deg": -9.12,
+      "swing_deg": 55.35,
+      "total_deg": 56.04,
+      "region": "leg"
+    },
+    {
+      "bone": "RightFoot",
+      "twist_deg": -9.03,
+      "swing_deg": 66.66,
+      "total_deg": 67.2,
+      "region": "leg"
+    },
+    {
+      "bone": "LeftShoulder",
+      "twist_deg": 4.69,
+      "swing_deg": 66.4,
+      "total_deg": 66.54,
+      "region": "torso"
+    },
+    {
+      "bone": "Spine1",
+      "twist_deg": -1.23,
+      "swing_deg": 0.16,
+      "total_deg": 1.24,
+      "region": "torso"
+    },
+    {
+      "bone": "Head",
+      "twist_deg": 0.21,
+      "swing_deg": 8.3,
+      "total_deg": 8.3,
+      "region": "head"
+    },
+    {
+      "bone": "RightForeArm",
+      "twist_deg": 0.03,
+      "swing_deg": 67.95,
+      "total_deg": 67.95,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftForeArm",
+      "twist_deg": 0.02,
+      "swing_deg": 83.51,
+      "total_deg": 83.51,
+      "region": "arm"
+    },
+    {
+      "bone": "Spine2",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "torso"
+    },
+    {
+      "bone": "Ponytail2",
+      "twist_deg": -0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "ponytail"
+    },
+    {
+      "bone": "Ponytail3",
+      "twist_deg": -0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "ponytail"
+    },
+    {
+      "bone": "Ponytail4",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "ponytail"
+    },
+    {
+      "bone": "LeftHandThumb1",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandThumb2",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandThumb3",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandIndex1",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandIndex2",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandIndex3",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandMiddle1",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandMiddle2",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandMiddle3",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandRing1",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandRing2",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandRing3",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandPinky1",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandPinky2",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "LeftHandPinky3",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandThumb1",
+      "twist_deg": 0.0,
+      "swing_deg": 22.0,
+      "total_deg": 22.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandThumb2",
+      "twist_deg": 0.0,
+      "swing_deg": 26.0,
+      "total_deg": 26.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandThumb3",
+      "twist_deg": 0.0,
+      "swing_deg": 16.0,
+      "total_deg": 16.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandIndex1",
+      "twist_deg": 0.0,
+      "swing_deg": 58.0,
+      "total_deg": 58.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandIndex2",
+      "twist_deg": 0.0,
+      "swing_deg": 62.0,
+      "total_deg": 62.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandIndex3",
+      "twist_deg": 0.0,
+      "swing_deg": 40.0,
+      "total_deg": 40.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandMiddle1",
+      "twist_deg": 0.0,
+      "swing_deg": 62.0,
+      "total_deg": 62.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandMiddle2",
+      "twist_deg": 0.0,
+      "swing_deg": 68.0,
+      "total_deg": 68.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandMiddle3",
+      "twist_deg": 0.0,
+      "swing_deg": 44.0,
+      "total_deg": 44.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandRing1",
+      "twist_deg": 0.0,
+      "swing_deg": 60.0,
+      "total_deg": 60.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandRing2",
+      "twist_deg": 0.0,
+      "swing_deg": 66.0,
+      "total_deg": 66.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandRing3",
+      "twist_deg": 0.0,
+      "swing_deg": 42.0,
+      "total_deg": 42.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandPinky1",
+      "twist_deg": 0.0,
+      "swing_deg": 56.0,
+      "total_deg": 56.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandPinky2",
+      "twist_deg": 0.0,
+      "swing_deg": 62.0,
+      "total_deg": 62.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RightHandPinky3",
+      "twist_deg": 0.0,
+      "swing_deg": 40.0,
+      "total_deg": 40.0,
+      "region": "arm"
+    },
+    {
+      "bone": "RacketSocket",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "other"
+    },
+    {
+      "bone": "LeftLeg",
+      "twist_deg": 0.0,
+      "swing_deg": 6.14,
+      "total_deg": 6.14,
+      "region": "leg"
+    },
+    {
+      "bone": "LeftToeBase",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "leg"
+    },
+    {
+      "bone": "RightLeg",
+      "twist_deg": -0.0,
+      "swing_deg": 5.13,
+      "total_deg": 5.13,
+      "region": "leg"
+    },
+    {
+      "bone": "RightToeBase",
+      "twist_deg": 0.0,
+      "swing_deg": 0.0,
+      "total_deg": 0.0,
+      "region": "leg"
+    },
+    {
+      "bone": "SkirtF2",
+      "twist_deg": 0.0,
+      "swing_deg": 67.54,
+      "total_deg": 67.54,
+      "region": "skirt"
+    },
+    {
+      "bone": "SkirtF3",
+      "twist_deg": -0.0,
+      "swing_deg": 33.57,
+      "total_deg": 33.57,
+      "region": "skirt"
+    },
+    {
+      "bone": "SkirtB2",
+      "twist_deg": 0.0,
+      "swing_deg": 67.54,
+      "total_deg": 67.54,
+      "region": "skirt"
+    },
+    {
+      "bone": "SkirtB3",
+      "twist_deg": -0.0,
+      "swing_deg": 33.57,
+      "total_deg": 33.57,
+      "region": "skirt"
+    }
+  ],
+  "twist_over_60deg": [
+    {
+      "bone": "SkirtB1",
+      "twist_deg": 172.5,
+      "swing_deg": 30.89,
+      "total_deg": 172.78,
+      "region": "skirt"
+    },
+    {
+      "bone": "SkirtF1",
+      "twist_deg": 170.38,
+      "swing_deg": 26.69,
+      "total_deg": 170.64,
+      "region": "skirt"
+    },
+    {
+      "bone": "RightUpLeg",
+      "twist_deg": 156.32,
+      "swing_deg": 15.35,
+      "total_deg": 156.53,
+      "region": "leg"
+    },
+    {
+      "bone": "Ponytail1",
+      "twist_deg": 156.27,
+      "swing_deg": 2.72,
+      "total_deg": 156.28,
+      "region": "ponytail"
+    },
+    {
+      "bone": "LeftUpLeg",
+      "twist_deg": 155.61,
+      "swing_deg": 1.71,
+      "total_deg": 155.61,
+      "region": "leg"
+    },
+    {
+      "bone": "SkirtR1",
+      "twist_deg": -107.09,
+      "swing_deg": 28.85,
+      "total_deg": 109.74,
+      "region": "skirt"
+    },
+    {
+      "bone": "LeftHand",
+      "twist_deg": -102.6,
+      "swing_deg": 104.11,
+      "total_deg": 134.78,
+      "region": "arm"
+    },
+    {
+      "bone": "SkirtL1",
+      "twist_deg": 89.96,
+      "swing_deg": 28.65,
+      "total_deg": 93.47,
+      "region": "skirt"
+    }
+  ],
+  "frames": {
+    "ready": {
+      "frame": 0,
+      "edges_gt_2x": 3242,
+      "pct_gt_2x": 3.9763,
+      "max_ratio": 156.78,
+      "top_bone_pairs": [
+        {
+          "pair": "SkirtR1 | SkirtR1",
+          "count": 294
+        },
+        {
+          "pair": "SkirtL1 | SkirtL1",
+          "count": 252
+        },
+        {
+          "pair": "Hips | Hips",
+          "count": 193
+        },
+        {
+          "pair": "SkirtB1 | SkirtB1",
+          "count": 169
+        },
+        {
+          "pair": "LeftUpLeg | SkirtL1",
+          "count": 169
+        },
+        {
+          "pair": "RightUpLeg | SkirtR1",
+          "count": 159
+        },
+        {
+          "pair": "Hips | Spine",
+          "count": 128
+        },
+        {
+          "pair": "SkirtF1 | SkirtF1",
+          "count": 104
+        },
+        {
+          "pair": "Head | Head",
+          "count": 102
+        },
+        {
+          "pair": "Head | Ponytail1",
+          "count": 89
+        },
+        {
+          "pair": "SkirtB1 | SkirtR1",
+          "count": 85
+        },
+        {
+          "pair": "Spine1 | Spine1",
+          "count": 83
+        }
+      ],
+      "top_region_pairs": [
+        {
+          "pair": "skirt | skirt",
+          "count": 1181
+        },
+        {
+          "pair": "leg | skirt",
+          "count": 597
+        },
+        {
+          "pair": "torso | torso",
+          "count": 576
+        },
+        {
+          "pair": "arm | arm",
+          "count": 232
+        },
+        {
+          "pair": "head | ponytail",
+          "count": 184
+        },
+        {
+          "pair": "leg | torso",
+          "count": 111
+        },
+        {
+          "pair": "head | head",
+          "count": 102
+        },
+        {
+          "pair": "skirt | torso",
+          "count": 89
+        },
+        {
+          "pair": "ponytail | torso",
+          "count": 56
+        },
+        {
+          "pair": "head | torso",
+          "count": 54
+        },
+        {
+          "pair": "arm | ponytail",
+          "count": 36
+        },
+        {
+          "pair": "ponytail | ponytail",
+          "count": 14
+        }
+      ]
+    },
+    "backswing": {
+      "frame": 147,
+      "edges_gt_2x": 3331,
+      "pct_gt_2x": 4.0855,
+      "max_ratio": 155.76,
+      "top_bone_pairs": [
+        {
+          "pair": "SkirtR1 | SkirtR1",
+          "count": 276
+        },
+        {
+          "pair": "SkirtL1 | SkirtL1",
+          "count": 213
+        },
+        {
+          "pair": "Hips | Hips",
+          "count": 169
+        },
+        {
+          "pair": "LeftUpLeg | SkirtL1",
+          "count": 163
+        },
+        {
+          "pair": "RightUpLeg | SkirtR1",
+          "count": 158
+        },
+        {
+          "pair": "Hips | Spine",
+          "count": 150
+        },
+        {
+          "pair": "SkirtB1 | SkirtB1",
+          "count": 147
+        },
+        {
+          "pair": "Spine1 | Spine1",
+          "count": 126
+        },
+        {
+          "pair": "Head | Head",
+          "count": 98
+        },
+        {
+          "pair": "SkirtF1 | SkirtF1",
+          "count": 97
+        },
+        {
+          "pair": "Head | Ponytail1",
+          "count": 86
+        },
+        {
+          "pair": "SkirtB1 | SkirtR1",
+          "count": 84
+        }
+      ],
+      "top_region_pairs": [
+        {
+          "pair": "skirt | skirt",
+          "count": 1090
+        },
+        {
+          "pair": "torso | torso",
+          "count": 671
+        },
+        {
+          "pair": "leg | skirt",
+          "count": 590
+        },
+        {
+          "pair": "arm | arm",
+          "count": 283
+        },
+        {
+          "pair": "head | ponytail",
+          "count": 176
+        },
+        {
+          "pair": "leg | torso",
+          "count": 108
+        },
+        {
+          "pair": "head | head",
+          "count": 98
+        },
+        {
+          "pair": "head | torso",
+          "count": 92
+        },
+        {
+          "pair": "skirt | torso",
+          "count": 88
+        },
+        {
+          "pair": "ponytail | torso",
+          "count": 57
+        },
+        {
+          "pair": "arm | ponytail",
+          "count": 36
+        },
+        {
+          "pair": "arm | torso",
+          "count": 23
+        }
+      ]
+    },
+    "contact": {
+      "frame": 164,
+      "edges_gt_2x": 3367,
+      "pct_gt_2x": 4.1296,
+      "max_ratio": 153.78,
+      "top_bone_pairs": [
+        {
+          "pair": "SkirtR1 | SkirtR1",
+          "count": 294
+        },
+        {
+          "pair": "SkirtL1 | SkirtL1",
+          "count": 251
+        },
+        {
+          "pair": "Hips | Hips",
+          "count": 193
+        },
+        {
+          "pair": "SkirtB1 | SkirtB1",
+          "count": 170
+        },
+        {
+          "pair": "LeftUpLeg | SkirtL1",
+          "count": 169
+        },
+        {
+          "pair": "Hips | Spine",
+          "count": 159
+        },
+        {
+          "pair": "RightUpLeg | SkirtR1",
+          "count": 157
+        },
+        {
+          "pair": "SkirtF1 | SkirtF1",
+          "count": 103
+        },
+        {
+          "pair": "Head | Head",
+          "count": 96
+        },
+        {
+          "pair": "Spine1 | Spine1",
+          "count": 96
+        },
+        {
+          "pair": "SkirtB1 | SkirtR1",
+          "count": 84
+        },
+        {
+          "pair": "Head | Ponytail1",
+          "count": 80
+        }
+      ],
+      "top_region_pairs": [
+        {
+          "pair": "skirt | skirt",
+          "count": 1180
+        },
+        {
+          "pair": "torso | torso",
+          "count": 664
+        },
+        {
+          "pair": "leg | skirt",
+          "count": 595
+        },
+        {
+          "pair": "arm | arm",
+          "count": 251
+        },
+        {
+          "pair": "head | ponytail",
+          "count": 175
+        },
+        {
+          "pair": "leg | torso",
+          "count": 111
+        },
+        {
+          "pair": "head | head",
+          "count": 96
+        },
+        {
+          "pair": "skirt | torso",
+          "count": 88
+        },
+        {
+          "pair": "head | torso",
+          "count": 83
+        },
+        {
+          "pair": "ponytail | torso",
+          "count": 57
+        },
+        {
+          "pair": "arm | ponytail",
+          "count": 36
+        },
+        {
+          "pair": "arm | torso",
+          "count": 18
+        }
+      ]
+    },
+    "follow_through": {
+      "frame": 187,
+      "edges_gt_2x": 3348,
+      "pct_gt_2x": 4.1063,
+      "max_ratio": 147.88,
+      "top_bone_pairs": [
+        {
+          "pair": "SkirtR1 | SkirtR1",
+          "count": 281
+        },
+        {
+          "pair": "SkirtL1 | SkirtL1",
+          "count": 273
+        },
+        {
+          "pair": "Hips | Hips",
+          "count": 196
+        },
+        {
+          "pair": "SkirtB1 | SkirtB1",
+          "count": 174
+        },
+        {
+          "pair": "LeftUpLeg | SkirtL1",
+          "count": 169
+        },
+        {
+          "pair": "RightUpLeg | SkirtR1",
+          "count": 158
+        },
+        {
+          "pair": "Hips | Spine",
+          "count": 122
+        },
+        {
+          "pair": "SkirtF1 | SkirtF1",
+          "count": 103
+        },
+        {
+          "pair": "Head | Head",
+          "count": 100
+        },
+        {
+          "pair": "Spine2 | Spine2",
+          "count": 91
+        },
+        {
+          "pair": "Spine1 | Spine1",
+          "count": 88
+        },
+        {
+          "pair": "Head | Ponytail1",
+          "count": 86
+        }
+      ],
+      "top_region_pairs": [
+        {
+          "pair": "skirt | skirt",
+          "count": 1193
+        },
+        {
+          "pair": "torso | torso",
+          "count": 646
+        },
+        {
+          "pair": "leg | skirt",
+          "count": 596
+        },
+        {
+          "pair": "arm | arm",
+          "count": 245
+        },
+        {
+          "pair": "head | ponytail",
+          "count": 181
+        },
+        {
+          "pair": "leg | torso",
+          "count": 110
+        },
+        {
+          "pair": "head | head",
+          "count": 100
+        },
+        {
+          "pair": "skirt | torso",
+          "count": 87
+        },
+        {
+          "pair": "head | torso",
+          "count": 64
+        },
+        {
+          "pair": "ponytail | torso",
+          "count": 57
+        },
+        {
+          "pair": "arm | ponytail",
+          "count": 36
+        },
+        {
+          "pair": "arm | torso",
+          "count": 16
+        }
+      ]
+    },
+    "recovery": {
+      "frame": 232,
+      "edges_gt_2x": 3158,
+      "pct_gt_2x": 3.8733,
+      "max_ratio": 156.31,
+      "top_bone_pairs": [
+        {
+          "pair": "SkirtR1 | SkirtR1",
+          "count": 282
+        },
+        {
+          "pair": "SkirtL1 | SkirtL1",
+          "count": 216
+        },
+        {
+          "pair": "Hips | Hips",
+          "count": 179
+        },
+        {
+          "pair": "LeftUpLeg | SkirtL1",
+          "count": 164
+        },
+        {
+          "pair": "RightUpLeg | SkirtR1",
+          "count": 159
+        },
+        {
+          "pair": "SkirtB1 | SkirtB1",
+          "count": 153
+        },
+        {
+          "pair": "Hips | Spine",
+          "count": 136
+        },
+        {
+          "pair": "Head | Head",
+          "count": 96
+        },
+        {
+          "pair": "SkirtF1 | SkirtF1",
+          "count": 96
+        },
+        {
+          "pair": "SkirtB1 | SkirtR1",
+          "count": 85
+        },
+        {
+          "pair": "Head | Ponytail1",
+          "count": 81
+        },
+        {
+          "pair": "Spine1 | Spine1",
+          "count": 80
+        }
+      ],
+      "top_region_pairs": [
+        {
+          "pair": "skirt | skirt",
+          "count": 1105
+        },
+        {
+          "pair": "leg | skirt",
+          "count": 592
+        },
+        {
+          "pair": "torso | torso",
+          "count": 571
+        },
+        {
+          "pair": "arm | arm",
+          "count": 246
+        },
+        {
+          "pair": "head | ponytail",
+          "count": 176
+        },
+        {
+          "pair": "leg | torso",
+          "count": 110
+        },
+        {
+          "pair": "head | head",
+          "count": 96
+        },
+        {
+          "pair": "skirt | torso",
+          "count": 88
+        },
+        {
+          "pair": "head | torso",
+          "count": 70
+        },
+        {
+          "pair": "ponytail | torso",
+          "count": 53
+        },
+        {
+          "pair": "arm | ponytail",
+          "count": 36
+        },
+        {
+          "pair": "ponytail | ponytail",
+          "count": 9
+        }
+      ]
+    }
+  }
+}
