@@ -88,7 +88,7 @@ def main():
     # ---- turnaround ----
     turn = []
     for v in ("front", "side", "back", "q34"):
-        p = PREV / f"source_{v}.png"
+        p = PREV / f"turnaround_{v}.png"
         if p.exists():
             turn.append((v, p))
     if turn:
