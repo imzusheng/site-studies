@@ -1,0 +1,1324 @@
+{
+  "height": 1.6500001053775568,
+  "arm_axis": {
+    "samples": 15,
+    "a": 0.83137,
+    "b": -0.55452,
+    "angle_from_vertical_deg": 29.01
+  },
+  "hand_measure": {
+    "t_min": 0.1994,
+    "t_p05": 0.2413,
+    "t_median": 0.5019,
+    "t_max": 0.6182,
+    "n": 1719,
+    "origin": [
+      0.0857,
+      0.0405,
+      1.3448
+    ],
+    "direction": [
+      0.4849,
+      0.0,
+      -0.8745
+    ],
+    "max_perp_m": 0.099
+  },
+  "wrist_t": 0.4967,
+  "hand_len_m": 0.1165,
+  "ponytail_envelope": [
+    [
+      0.1355,
+      1.5861,
+      729
+    ],
+    [
+      0.1331,
+      1.5242,
+      894
+    ],
+    [
+      0.1298,
+      1.4623,
+      819
+    ],
+    [
+      0.0445,
+      1.4004,
+      600
+    ],
+    [
+      0.0628,
+      1.3386,
+      367
+    ],
+    [
+      0.069,
+      1.2767,
+      475
+    ],
+    [
+      0.063,
+      1.2148,
+      1274
+    ],
+    [
+      0.0511,
+      1.1529,
+      471
+    ]
+  ],
+  "skirt_measure": {
+    "n": 9582,
+    "z_range": [
+      0.726,
+      1.056
+    ],
+    "radius_median": 0.137,
+    "radius_p95": 0.368,
+    "radius_max": 0.3873
+  },
+  "foot_measure": {
+    "n": 3861,
+    "y_min": -0.1675,
+    "y_p05": -0.1577,
+    "y_median": -0.0144,
+    "y_max": 0.1081
+  },
+  "landmarks": {
+    "shoulder": [
+      0.08568,
+      0.04047,
+      1.34475
+    ],
+    "elbow": [
+      0.21274,
+      0.0378,
+      1.10668
+    ],
+    "wrist": [
+      0.31959,
+      0.03556,
+      0.90649
+    ],
+    "finger_tip": [
+      0.37445,
+      0.0344,
+      0.80369
+    ],
+    "hip": [
+      0.07321,
+      -0.0215,
+      0.8745
+    ],
+    "knee": [
+      0.07238,
+      0.01374,
+      0.47025
+    ],
+    "ankle": [
+      0.07167,
+      0.04394,
+      0.12375
+    ]
+  },
+  "bone_count": 68,
+  "bones": [
+    "Hips",
+    "Spine",
+    "Spine1",
+    "Spine2",
+    "Neck",
+    "Head",
+    "Ponytail1",
+    "Ponytail2",
+    "Ponytail3",
+    "Ponytail4",
+    "LeftShoulder",
+    "LeftArm",
+    "LeftForeArm",
+    "LeftHand",
+    "LeftHandThumb1",
+    "LeftHandThumb2",
+    "LeftHandThumb3",
+    "LeftHandIndex1",
+    "LeftHandIndex2",
+    "LeftHandIndex3",
+    "LeftHandMiddle1",
+    "LeftHandMiddle2",
+    "LeftHandMiddle3",
+    "LeftHandRing1",
+    "LeftHandRing2",
+    "LeftHandRing3",
+    "LeftHandPinky1",
+    "LeftHandPinky2",
+    "LeftHandPinky3",
+    "RightShoulder",
+    "RightArm",
+    "RightForeArm",
+    "RightHand",
+    "RightHandThumb1",
+    "RightHandThumb2",
+    "RightHandThumb3",
+    "RightHandIndex1",
+    "RightHandIndex2",
+    "RightHandIndex3",
+    "RightHandMiddle1",
+    "RightHandMiddle2",
+    "RightHandMiddle3",
+    "RightHandRing1",
+    "RightHandRing2",
+    "RightHandRing3",
+    "RightHandPinky1",
+    "RightHandPinky2",
+    "RightHandPinky3",
+    "LeftUpLeg",
+    "LeftLeg",
+    "LeftFoot",
+    "LeftToeBase",
+    "RightUpLeg",
+    "RightLeg",
+    "RightFoot",
+    "RightToeBase",
+    "SkirtF1",
+    "SkirtF2",
+    "SkirtF3",
+    "SkirtB1",
+    "SkirtB2",
+    "SkirtB3",
+    "SkirtL1",
+    "SkirtL2",
+    "SkirtL3",
+    "SkirtR1",
+    "SkirtR2",
+    "SkirtR3"
+  ],
+  "validation": {
+    "total": 68,
+    "inside": 37,
+    "outside": [
+      "Ponytail2",
+      "Ponytail3",
+      "LeftHand",
+      "LeftHandThumb1",
+      "LeftHandThumb2",
+      "LeftHandThumb3",
+      "LeftHandIndex1",
+      "LeftHandIndex2",
+      "LeftHandIndex3",
+      "LeftHandMiddle1",
+      "LeftHandMiddle2",
+      "LeftHandMiddle3",
+      "RightHand",
+      "RightHandThumb1",
+      "RightHandThumb2",
+      "RightHandThumb3",
+      "RightHandIndex1",
+      "RightHandIndex2",
+      "RightHandIndex3",
+      "RightHandMiddle1",
+      "RightHandMiddle2",
+      "RightHandMiddle3",
+      "SkirtF1",
+      "SkirtF2",
+      "SkirtF3",
+      "SkirtB1",
+      "SkirtB2",
+      "SkirtB3",
+      "SkirtL2",
+      "SkirtL3",
+      "SkirtR3"
+    ],
+    "bones": [
+      {
+        "name": "Hips",
+        "length_mm": 140.25,
+        "head": [
+          0.0,
+          0.0,
+          0.8745
+        ],
+        "tail": [
+          0.0,
+          0.0,
+          1.0148
+        ],
+        "surface_distance_mm": 71.5,
+        "mid_inside": true
+      },
+      {
+        "name": "Spine",
+        "length_mm": 140.25,
+        "head": [
+          0.0,
+          0.0,
+          1.0148
+        ],
+        "tail": [
+          0.0,
+          0.0,
+          1.155
+        ],
+        "surface_distance_mm": 33.8,
+        "mid_inside": true
+      },
+      {
+        "name": "Spine1",
+        "length_mm": 132.0,
+        "head": [
+          0.0,
+          0.0,
+          1.155
+        ],
+        "tail": [
+          0.0,
+          0.0,
+          1.287
+        ],
+        "surface_distance_mm": 58.3,
+        "mid_inside": true
+      },
+      {
+        "name": "Spine2",
+        "length_mm": 112.2,
+        "head": [
+          0.0,
+          0.0,
+          1.287
+        ],
+        "tail": [
+          0.0,
+          0.0,
+          1.3992
+        ],
+        "surface_distance_mm": 34.2,
+        "mid_inside": true
+      },
+      {
+        "name": "Neck",
+        "length_mm": 66.0,
+        "head": [
+          0.0,
+          0.0,
+          1.3992
+        ],
+        "tail": [
+          0.0,
+          0.0,
+          1.4652
+        ],
+        "surface_distance_mm": 31.5,
+        "mid_inside": true
+      },
+      {
+        "name": "Head",
+        "length_mm": 168.3,
+        "head": [
+          0.0,
+          0.0,
+          1.4652
+        ],
+        "tail": [
+          0.0,
+          0.0,
+          1.6335
+        ],
+        "surface_distance_mm": 79.1,
+        "mid_inside": true
+      },
+      {
+        "name": "Ponytail1",
+        "length_mm": 70.19,
+        "head": [
+          0.0,
+          0.1275,
+          1.5861
+        ],
+        "tail": [
+          0.0,
+          0.1051,
+          1.5196
+        ],
+        "surface_distance_mm": 18.4,
+        "mid_inside": true
+      },
+      {
+        "name": "Ponytail2",
+        "length_mm": 70.19,
+        "head": [
+          0.0,
+          0.1051,
+          1.5196
+        ],
+        "tail": [
+          0.0,
+          0.0828,
+          1.4531
+        ],
+        "surface_distance_mm": 7.4,
+        "mid_inside": false
+      },
+      {
+        "name": "Ponytail3",
+        "length_mm": 70.19,
+        "head": [
+          0.0,
+          0.0828,
+          1.4531
+        ],
+        "tail": [
+          0.0,
+          0.0604,
+          1.3865
+        ],
+        "surface_distance_mm": 27.9,
+        "mid_inside": false
+      },
+      {
+        "name": "Ponytail4",
+        "length_mm": 70.19,
+        "head": [
+          0.0,
+          0.0604,
+          1.3865
+        ],
+        "tail": [
+          0.0,
+          0.038,
+          1.32
+        ],
+        "surface_distance_mm": 11.8,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftShoulder",
+        "length_mm": 76.51,
+        "head": [
+          0.033,
+          0.0,
+          1.3068
+        ],
+        "tail": [
+          0.0857,
+          0.0405,
+          1.3448
+        ],
+        "surface_distance_mm": 43.0,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftArm",
+        "length_mm": 269.87,
+        "head": [
+          0.0857,
+          0.0405,
+          1.3448
+        ],
+        "tail": [
+          0.2127,
+          0.0378,
+          1.1067
+        ],
+        "surface_distance_mm": 20.3,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftForeArm",
+        "length_mm": 226.93,
+        "head": [
+          0.2127,
+          0.0378,
+          1.1067
+        ],
+        "tail": [
+          0.3196,
+          0.0356,
+          0.9065
+        ],
+        "surface_distance_mm": 7.3,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftHand",
+        "length_mm": 116.53,
+        "head": [
+          0.3196,
+          0.0356,
+          0.9065
+        ],
+        "tail": [
+          0.3745,
+          0.0344,
+          0.8037
+        ],
+        "surface_distance_mm": 2.8,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandThumb1",
+        "length_mm": 21.36,
+        "head": [
+          0.3267,
+          0.0119,
+          0.8508
+        ],
+        "tail": [
+          0.3302,
+          -0.0081,
+          0.8443
+        ],
+        "surface_distance_mm": 10.3,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandThumb2",
+        "length_mm": 21.36,
+        "head": [
+          0.3302,
+          -0.0081,
+          0.8443
+        ],
+        "tail": [
+          0.3382,
+          -0.0208,
+          0.8291
+        ],
+        "surface_distance_mm": 4.3,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandThumb3",
+        "length_mm": 21.36,
+        "head": [
+          0.3382,
+          -0.0208,
+          0.8291
+        ],
+        "tail": [
+          0.3463,
+          -0.0336,
+          0.814
+        ],
+        "surface_distance_mm": 21.1,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandIndex1",
+        "length_mm": 20.94,
+        "head": [
+          0.3347,
+          0.0185,
+          0.8551
+        ],
+        "tail": [
+          0.3445,
+          0.0183,
+          0.8366
+        ],
+        "surface_distance_mm": 16.6,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandIndex2",
+        "length_mm": 20.94,
+        "head": [
+          0.3445,
+          0.0183,
+          0.8366
+        ],
+        "tail": [
+          0.3544,
+          0.0181,
+          0.8182
+        ],
+        "surface_distance_mm": 13.4,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandIndex3",
+        "length_mm": 20.94,
+        "head": [
+          0.3544,
+          0.0181,
+          0.8182
+        ],
+        "tail": [
+          0.3642,
+          0.0179,
+          0.7997
+        ],
+        "surface_distance_mm": 10.8,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandMiddle1",
+        "length_mm": 21.36,
+        "head": [
+          0.3417,
+          0.0218,
+          0.8589
+        ],
+        "tail": [
+          0.3518,
+          0.0216,
+          0.84
+        ],
+        "surface_distance_mm": 8.1,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandMiddle2",
+        "length_mm": 21.36,
+        "head": [
+          0.3518,
+          0.0216,
+          0.84
+        ],
+        "tail": [
+          0.3618,
+          0.0214,
+          0.8212
+        ],
+        "surface_distance_mm": 4.9,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandMiddle3",
+        "length_mm": 21.36,
+        "head": [
+          0.3618,
+          0.0214,
+          0.8212
+        ],
+        "tail": [
+          0.3719,
+          0.0212,
+          0.8023
+        ],
+        "surface_distance_mm": 3.4,
+        "mid_inside": false
+      },
+      {
+        "name": "LeftHandRing1",
+        "length_mm": 20.08,
+        "head": [
+          0.3488,
+          0.0251,
+          0.8626
+        ],
+        "tail": [
+          0.3582,
+          0.0249,
+          0.8449
+        ],
+        "surface_distance_mm": 0.2,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftHandRing2",
+        "length_mm": 20.08,
+        "head": [
+          0.3582,
+          0.0249,
+          0.8449
+        ],
+        "tail": [
+          0.3677,
+          0.0247,
+          0.8272
+        ],
+        "surface_distance_mm": 2.9,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftHandRing3",
+        "length_mm": 20.08,
+        "head": [
+          0.3677,
+          0.0247,
+          0.8272
+        ],
+        "tail": [
+          0.3771,
+          0.0245,
+          0.8095
+        ],
+        "surface_distance_mm": 2.1,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftHandPinky1",
+        "length_mm": 16.66,
+        "head": [
+          0.3552,
+          0.0284,
+          0.866
+        ],
+        "tail": [
+          0.363,
+          0.0283,
+          0.8513
+        ],
+        "surface_distance_mm": 6.2,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftHandPinky2",
+        "length_mm": 16.66,
+        "head": [
+          0.363,
+          0.0283,
+          0.8513
+        ],
+        "tail": [
+          0.3709,
+          0.0281,
+          0.8366
+        ],
+        "surface_distance_mm": 6.6,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftHandPinky3",
+        "length_mm": 16.66,
+        "head": [
+          0.3709,
+          0.0281,
+          0.8366
+        ],
+        "tail": [
+          0.3787,
+          0.0279,
+          0.8219
+        ],
+        "surface_distance_mm": 1.1,
+        "mid_inside": true
+      },
+      {
+        "name": "RightShoulder",
+        "length_mm": 76.51,
+        "head": [
+          -0.033,
+          0.0,
+          1.3068
+        ],
+        "tail": [
+          -0.0857,
+          0.0405,
+          1.3448
+        ],
+        "surface_distance_mm": 42.8,
+        "mid_inside": true
+      },
+      {
+        "name": "RightArm",
+        "length_mm": 269.87,
+        "head": [
+          -0.0857,
+          0.0405,
+          1.3448
+        ],
+        "tail": [
+          -0.2127,
+          0.0378,
+          1.1067
+        ],
+        "surface_distance_mm": 20.5,
+        "mid_inside": true
+      },
+      {
+        "name": "RightForeArm",
+        "length_mm": 226.93,
+        "head": [
+          -0.2127,
+          0.0378,
+          1.1067
+        ],
+        "tail": [
+          -0.3196,
+          0.0356,
+          0.9065
+        ],
+        "surface_distance_mm": 7.4,
+        "mid_inside": true
+      },
+      {
+        "name": "RightHand",
+        "length_mm": 116.53,
+        "head": [
+          -0.3196,
+          0.0356,
+          0.9065
+        ],
+        "tail": [
+          -0.3745,
+          0.0344,
+          0.8037
+        ],
+        "surface_distance_mm": 2.1,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandThumb1",
+        "length_mm": 21.36,
+        "head": [
+          -0.3267,
+          0.0119,
+          0.8508
+        ],
+        "tail": [
+          -0.3302,
+          -0.0081,
+          0.8443
+        ],
+        "surface_distance_mm": 10.2,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandThumb2",
+        "length_mm": 21.36,
+        "head": [
+          -0.3302,
+          -0.0081,
+          0.8443
+        ],
+        "tail": [
+          -0.3382,
+          -0.0208,
+          0.8291
+        ],
+        "surface_distance_mm": 4.6,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandThumb3",
+        "length_mm": 21.36,
+        "head": [
+          -0.3382,
+          -0.0208,
+          0.8291
+        ],
+        "tail": [
+          -0.3463,
+          -0.0336,
+          0.814
+        ],
+        "surface_distance_mm": 21.6,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandIndex1",
+        "length_mm": 20.94,
+        "head": [
+          -0.3347,
+          0.0185,
+          0.8551
+        ],
+        "tail": [
+          -0.3445,
+          0.0183,
+          0.8366
+        ],
+        "surface_distance_mm": 15.8,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandIndex2",
+        "length_mm": 20.94,
+        "head": [
+          -0.3445,
+          0.0183,
+          0.8366
+        ],
+        "tail": [
+          -0.3544,
+          0.0181,
+          0.8182
+        ],
+        "surface_distance_mm": 13.1,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandIndex3",
+        "length_mm": 20.94,
+        "head": [
+          -0.3544,
+          0.0181,
+          0.8182
+        ],
+        "tail": [
+          -0.3642,
+          0.0179,
+          0.7997
+        ],
+        "surface_distance_mm": 10.8,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandMiddle1",
+        "length_mm": 21.36,
+        "head": [
+          -0.3417,
+          0.0218,
+          0.8589
+        ],
+        "tail": [
+          -0.3518,
+          0.0216,
+          0.84
+        ],
+        "surface_distance_mm": 7.3,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandMiddle2",
+        "length_mm": 21.36,
+        "head": [
+          -0.3518,
+          0.0216,
+          0.84
+        ],
+        "tail": [
+          -0.3618,
+          0.0214,
+          0.8212
+        ],
+        "surface_distance_mm": 4.6,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandMiddle3",
+        "length_mm": 21.36,
+        "head": [
+          -0.3618,
+          0.0214,
+          0.8212
+        ],
+        "tail": [
+          -0.3719,
+          0.0212,
+          0.8023
+        ],
+        "surface_distance_mm": 3.4,
+        "mid_inside": false
+      },
+      {
+        "name": "RightHandRing1",
+        "length_mm": 20.08,
+        "head": [
+          -0.3488,
+          0.0251,
+          0.8626
+        ],
+        "tail": [
+          -0.3582,
+          0.0249,
+          0.8449
+        ],
+        "surface_distance_mm": 1.0,
+        "mid_inside": true
+      },
+      {
+        "name": "RightHandRing2",
+        "length_mm": 20.08,
+        "head": [
+          -0.3582,
+          0.0249,
+          0.8449
+        ],
+        "tail": [
+          -0.3677,
+          0.0247,
+          0.8272
+        ],
+        "surface_distance_mm": 3.3,
+        "mid_inside": true
+      },
+      {
+        "name": "RightHandRing3",
+        "length_mm": 20.08,
+        "head": [
+          -0.3677,
+          0.0247,
+          0.8272
+        ],
+        "tail": [
+          -0.3771,
+          0.0245,
+          0.8095
+        ],
+        "surface_distance_mm": 1.8,
+        "mid_inside": true
+      },
+      {
+        "name": "RightHandPinky1",
+        "length_mm": 16.66,
+        "head": [
+          -0.3552,
+          0.0284,
+          0.866
+        ],
+        "tail": [
+          -0.363,
+          0.0283,
+          0.8513
+        ],
+        "surface_distance_mm": 6.7,
+        "mid_inside": true
+      },
+      {
+        "name": "RightHandPinky2",
+        "length_mm": 16.66,
+        "head": [
+          -0.363,
+          0.0283,
+          0.8513
+        ],
+        "tail": [
+          -0.3709,
+          0.0281,
+          0.8366
+        ],
+        "surface_distance_mm": 6.2,
+        "mid_inside": true
+      },
+      {
+        "name": "RightHandPinky3",
+        "length_mm": 16.66,
+        "head": [
+          -0.3709,
+          0.0281,
+          0.8366
+        ],
+        "tail": [
+          -0.3787,
+          0.0279,
+          0.8219
+        ],
+        "surface_distance_mm": 1.0,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftUpLeg",
+        "length_mm": 405.78,
+        "head": [
+          0.0732,
+          -0.0215,
+          0.8745
+        ],
+        "tail": [
+          0.0724,
+          0.0137,
+          0.4703
+        ],
+        "surface_distance_mm": 43.6,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftLeg",
+        "length_mm": 347.81,
+        "head": [
+          0.0724,
+          0.0137,
+          0.4703
+        ],
+        "tail": [
+          0.0717,
+          0.0439,
+          0.1238
+        ],
+        "surface_distance_mm": 25.6,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftFoot",
+        "length_mm": 175.57,
+        "head": [
+          0.0717,
+          0.0439,
+          0.1238
+        ],
+        "tail": [
+          0.0717,
+          -0.1083,
+          0.0363
+        ],
+        "surface_distance_mm": 21.0,
+        "mid_inside": true
+      },
+      {
+        "name": "LeftToeBase",
+        "length_mm": 49.3,
+        "head": [
+          0.0717,
+          -0.1083,
+          0.0363
+        ],
+        "tail": [
+          0.0717,
+          -0.1576,
+          0.0363
+        ],
+        "surface_distance_mm": 22.7,
+        "mid_inside": true
+      },
+      {
+        "name": "RightUpLeg",
+        "length_mm": 405.78,
+        "head": [
+          -0.0732,
+          -0.0215,
+          0.8745
+        ],
+        "tail": [
+          -0.0724,
+          0.0137,
+          0.4703
+        ],
+        "surface_distance_mm": 43.7,
+        "mid_inside": true
+      },
+      {
+        "name": "RightLeg",
+        "length_mm": 347.81,
+        "head": [
+          -0.0724,
+          0.0137,
+          0.4703
+        ],
+        "tail": [
+          -0.0717,
+          0.0439,
+          0.1238
+        ],
+        "surface_distance_mm": 25.9,
+        "mid_inside": true
+      },
+      {
+        "name": "RightFoot",
+        "length_mm": 175.57,
+        "head": [
+          -0.0717,
+          0.0439,
+          0.1238
+        ],
+        "tail": [
+          -0.0717,
+          -0.1083,
+          0.0363
+        ],
+        "surface_distance_mm": 20.9,
+        "mid_inside": true
+      },
+      {
+        "name": "RightToeBase",
+        "length_mm": 49.3,
+        "head": [
+          -0.0717,
+          -0.1083,
+          0.0363
+        ],
+        "tail": [
+          -0.0717,
+          -0.1576,
+          0.0363
+        ],
+        "surface_distance_mm": 22.6,
+        "mid_inside": true
+      },
+      {
+        "name": "SkirtF1",
+        "length_mm": 84.13,
+        "head": [
+          0.0,
+          -0.066,
+          0.8993
+        ],
+        "tail": [
+          0.0,
+          -0.1485,
+          0.8828
+        ],
+        "surface_distance_mm": 14.1,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtF2",
+        "length_mm": 87.7,
+        "head": [
+          0.0,
+          -0.1485,
+          0.8828
+        ],
+        "tail": [
+          0.0,
+          -0.2063,
+          0.8168
+        ],
+        "surface_distance_mm": 38.3,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtF3",
+        "length_mm": 65.88,
+        "head": [
+          0.0,
+          -0.2063,
+          0.8168
+        ],
+        "tail": [
+          0.0,
+          -0.231,
+          0.7557
+        ],
+        "surface_distance_mm": 92.0,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtB1",
+        "length_mm": 84.13,
+        "head": [
+          0.0,
+          0.066,
+          0.8993
+        ],
+        "tail": [
+          0.0,
+          0.1485,
+          0.8828
+        ],
+        "surface_distance_mm": 2.7,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtB2",
+        "length_mm": 87.7,
+        "head": [
+          0.0,
+          0.1485,
+          0.8828
+        ],
+        "tail": [
+          0.0,
+          0.2063,
+          0.8168
+        ],
+        "surface_distance_mm": 40.0,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtB3",
+        "length_mm": 65.88,
+        "head": [
+          0.0,
+          0.2063,
+          0.8168
+        ],
+        "tail": [
+          0.0,
+          0.231,
+          0.7557
+        ],
+        "surface_distance_mm": 101.4,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtL1",
+        "length_mm": 84.13,
+        "head": [
+          0.066,
+          0.0,
+          0.8993
+        ],
+        "tail": [
+          0.1485,
+          0.0,
+          0.8828
+        ],
+        "surface_distance_mm": 32.1,
+        "mid_inside": true
+      },
+      {
+        "name": "SkirtL2",
+        "length_mm": 87.7,
+        "head": [
+          0.1485,
+          0.0,
+          0.8828
+        ],
+        "tail": [
+          0.2063,
+          0.0,
+          0.8168
+        ],
+        "surface_distance_mm": 0.4,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtL3",
+        "length_mm": 65.88,
+        "head": [
+          0.2063,
+          0.0,
+          0.8168
+        ],
+        "tail": [
+          0.231,
+          0.0,
+          0.7557
+        ],
+        "surface_distance_mm": 74.7,
+        "mid_inside": false
+      },
+      {
+        "name": "SkirtR1",
+        "length_mm": 84.13,
+        "head": [
+          -0.066,
+          0.0,
+          0.8993
+        ],
+        "tail": [
+          -0.1485,
+          0.0,
+          0.8828
+        ],
+        "surface_distance_mm": 32.1,
+        "mid_inside": true
+      },
+      {
+        "name": "SkirtR2",
+        "length_mm": 87.7,
+        "head": [
+          -0.1485,
+          0.0,
+          0.8828
+        ],
+        "tail": [
+          -0.2063,
+          0.0,
+          0.8168
+        ],
+        "surface_distance_mm": 1.1,
+        "mid_inside": true
+      },
+      {
+        "name": "SkirtR3",
+        "length_mm": 65.88,
+        "head": [
+          -0.2063,
+          0.0,
+          0.8168
+        ],
+        "tail": [
+          -0.231,
+          0.0,
+          0.7557
+        ],
+        "surface_distance_mm": 73.4,
+        "mid_inside": false
+      }
+    ],
+    "zero_length": []
+  }
+}

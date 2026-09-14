@@ -1,0 +1,165 @@
+{
+  "file": "Ruth_High_Source.glb",
+  "size_bytes": 28841392,
+  "sha256": "7dcee8bae871de2a11ddec64f83571b76a38b9a47f69477bf14235b3375254f7",
+  "glb_version": 2,
+  "declared_length": 28841392,
+  "generator": "Khronos glTF Blender I/O v4.0.43",
+  "gltf_version": "2.0",
+  "extensions_used": [
+    "KHR_materials_specular"
+  ],
+  "extensions_required": [],
+  "extensions": {},
+  "meshes": [
+    {
+      "name": "node_0",
+      "primitives": [
+        {
+          "mode": 4,
+          "attrs": [
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0"
+          ],
+          "verts": 31959,
+          "tris": 50000,
+          "material": "Material.001"
+        }
+      ],
+      "n_primitives": 1
+    }
+  ],
+  "mesh_count": 1,
+  "total_tris": 50000,
+  "total_verts": 31959,
+  "node_count": 1,
+  "nodes": [
+    {
+      "name": "node_0",
+      "mesh": 0,
+      "skin": null,
+      "children": null,
+      "has_matrix": false,
+      "rotation": [
+        0.7071068286895752,
+        0,
+        0,
+        0.7071068286895752
+      ],
+      "scale": null,
+      "translation": null
+    }
+  ],
+  "scenes": [
+    {
+      "name": "convert",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "accessor_bbox": [
+    [
+      -0.2786549925804138,
+      -0.11845400184392929,
+      -1.1850080490112305
+    ],
+    [
+      0.27717000246047974,
+      0.12028399854898453,
+      0
+    ]
+  ],
+  "accessor_bbox_extent": [
+    0.5558249950408936,
+    0.23873800039291382,
+    1.1850080490112305
+  ],
+  "up_axis_index": 2,
+  "source_height_m_raw": 1.1850080490112305,
+  "materials": [
+    {
+      "name": "Material.001",
+      "baseColorFactor": null,
+      "metallicFactor": null,
+      "roughnessFactor": null,
+      "baseColorTexture": 1,
+      "metallicRoughnessTexture": 2,
+      "normalTexture": 0,
+      "occlusionTexture": null,
+      "emissiveTexture": null,
+      "emissiveFactor": null,
+      "alphaMode": "OPAQUE",
+      "alphaCutoff": null,
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularColorFactor": [
+            2.0,
+            2.0,
+            2.0
+          ]
+        }
+      }
+    }
+  ],
+  "material_count": 1,
+  "images": [
+    {
+      "index": 0,
+      "name": "texture_pbr_20250901_normal",
+      "mimeType": "image/png",
+      "source": "bufferView",
+      "width": 4096,
+      "height": 4096,
+      "format": "PNG",
+      "bytes": 5633549
+    },
+    {
+      "index": 1,
+      "name": "texture_pbr_20250901",
+      "mimeType": "image/png",
+      "source": "bufferView",
+      "width": 4096,
+      "height": 4096,
+      "format": "PNG",
+      "bytes": 14435245
+    },
+    {
+      "index": 2,
+      "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+      "mimeType": "image/png",
+      "source": "bufferView",
+      "width": 4096,
+      "height": 4096,
+      "format": "PNG",
+      "bytes": 7447935
+    }
+  ],
+  "texture_count": 3,
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "skins": [],
+  "skin_count": 0,
+  "animations": [],
+  "animation_count": 0
+}

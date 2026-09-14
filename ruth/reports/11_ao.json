@@ -1,0 +1,11 @@
+{
+  "size": [
+    2048,
+    2048
+  ],
+  "samples": 64,
+  "seconds": 24.6,
+  "file": "AO.png",
+  "bytes": 2686236,
+  "note": "从几何烘焙（源无 occlusionTexture）"
+}

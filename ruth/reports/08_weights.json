@@ -1,0 +1,35 @@
+{
+  "mesh_verts": 31959,
+  "bone_count": 68,
+  "regions": {
+    "HAND_L": 961,
+    "HEAD": 5235,
+    "PONYTAIL": 1889,
+    "HAND_R": 874,
+    "SKIRT": 5831,
+    "LEG_R": 2400,
+    "LEG_L": 2427,
+    "TORSO": 3939,
+    "ARM_R": 1937,
+    "ARM_L": 1959,
+    "FOOT_R": 2209,
+    "FOOT_L": 2298
+  },
+  "influences_histogram": {
+    "4": 25198,
+    "2": 5320,
+    "1": 14,
+    "3": 1427
+  },
+  "max_influences_per_vertex": 4,
+  "max_influences_limit": 4,
+  "unweighted_vertices": 0,
+  "unweighted_sample": [],
+  "weight_sum_errors": 0,
+  "weight_sum_error_sample": [],
+  "vertex_groups_created": 68,
+  "unused_vertex_groups": [
+    "LeftHandIndex2",
+    "RightHandIndex2"
+  ]
+}

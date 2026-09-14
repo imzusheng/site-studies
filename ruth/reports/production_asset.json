@@ -1,0 +1,365 @@
+{
+  "source": {
+    "file": "Ruth_High_Source.glb",
+    "sha256": "7dcee8bae871de2a11ddec64f83571b76a38b9a47f69477bf14235b3375254f7",
+    "size_bytes": 28841392,
+    "tris": 50000,
+    "verts": 31959,
+    "meshes": 1,
+    "materials": 1,
+    "textures": 3,
+    "image_sizes": [
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ]
+    ],
+    "skins": 0,
+    "animations": 0,
+    "extensions": [
+      "KHR_materials_specular"
+    ],
+    "height_m_raw": 1.18501
+  },
+  "production": {
+    "tris": 50000,
+    "verts": 31959,
+    "faces": 50000,
+    "quads": 0,
+    "ngons": 0,
+    "materials": 1,
+    "textures": [
+      {
+        "name": "texture_pbr_20250901.010",
+        "kind": "basecolor",
+        "size": [
+          2048,
+          2048
+        ],
+        "downsampled": true
+      },
+      {
+        "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.010",
+        "kind": "metal_rough",
+        "size": [
+          2048,
+          2048
+        ],
+        "downsampled": true
+      },
+      {
+        "name": "texture_pbr_20250901_normal.010",
+        "kind": "normal",
+        "size": [
+          2048,
+          2048
+        ],
+        "downsampled": true
+      },
+      {
+        "file": "AO.png",
+        "bytes": 2686236
+      },
+      {
+        "file": "BaseColor.png",
+        "bytes": 4453545
+      },
+      {
+        "file": "MetalRough.png",
+        "bytes": 2503685
+      },
+      {
+        "file": "Normal.png",
+        "bytes": 2089640
+      },
+      {
+        "file": "Roughness.png",
+        "bytes": 1593567
+      }
+    ],
+    "bone_count": 68,
+    "vertex_groups": 68,
+    "max_influences_per_vertex": 4,
+    "unweighted_vertices": 0,
+    "weight_sum_errors": 0,
+    "non_manifold_edges": 13066,
+    "boundary_edges": 13066,
+    "components": 574,
+    "scale": "1.0（网格已按 1.65 m 归一，对象变换为单位矩阵）",
+    "height_m": 1.65,
+    "rest_pose": "A-Pose（源姿态，上臂外展实测 29.01°）",
+    "animation": "无（本轮不做动画；骨架就绪供 Tennis-MoCap retarget）",
+    "regions": {
+      "HAND_L": 961,
+      "HEAD": 5235,
+      "PONYTAIL": 1889,
+      "HAND_R": 874,
+      "SKIRT": 5831,
+      "LEG_R": 2400,
+      "LEG_L": 2427,
+      "TORSO": 3939,
+      "ARM_R": 1937,
+      "ARM_L": 1959,
+      "FOOT_R": 2209,
+      "FOOT_L": 2298
+    },
+    "joint_region_density": {
+      "neck": {
+        "radius_m": 0.0908,
+        "faces": 2632,
+        "median_edge_mm": 7.94,
+        "min_angle_p5_deg": 10.1,
+        "faces_per_cm2": 10.2
+      },
+      "shoulder_R": {
+        "radius_m": 0.1155,
+        "faces": 2093,
+        "median_edge_mm": 8.51,
+        "min_angle_p5_deg": 10.3,
+        "faces_per_cm2": 5.0
+      },
+      "armpit_R": {
+        "radius_m": 0.0908,
+        "faces": 1893,
+        "median_edge_mm": 8.45,
+        "min_angle_p5_deg": 8.8,
+        "faces_per_cm2": 7.3
+      },
+      "elbow_R": {
+        "radius_m": 0.0908,
+        "faces": 743,
+        "median_edge_mm": 11.22,
+        "min_angle_p5_deg": 6.7,
+        "faces_per_cm2": 2.9
+      },
+      "wrist_R": {
+        "radius_m": 0.0743,
+        "faces": 1124,
+        "median_edge_mm": 6.94,
+        "min_angle_p5_deg": 9.4,
+        "faces_per_cm2": 6.5
+      },
+      "shoulder_L": {
+        "radius_m": 0.1155,
+        "faces": 2095,
+        "median_edge_mm": 8.52,
+        "min_angle_p5_deg": 10.2,
+        "faces_per_cm2": 5.0
+      },
+      "armpit_L": {
+        "radius_m": 0.0908,
+        "faces": 1846,
+        "median_edge_mm": 8.45,
+        "min_angle_p5_deg": 8.8,
+        "faces_per_cm2": 7.1
+      },
+      "elbow_L": {
+        "radius_m": 0.0908,
+        "faces": 711,
+        "median_edge_mm": 11.99,
+        "min_angle_p5_deg": 6.3,
+        "faces_per_cm2": 2.7
+      },
+      "wrist_L": {
+        "radius_m": 0.0743,
+        "faces": 1207,
+        "median_edge_mm": 6.98,
+        "min_angle_p5_deg": 9.1,
+        "faces_per_cm2": 7.0
+      },
+      "hip_R": {
+        "radius_m": 0.1155,
+        "faces": 3661,
+        "median_edge_mm": 9.98,
+        "min_angle_p5_deg": 8.6,
+        "faces_per_cm2": 8.7
+      },
+      "hip_L": {
+        "radius_m": 0.1155,
+        "faces": 3663,
+        "median_edge_mm": 9.94,
+        "min_angle_p5_deg": 8.6,
+        "faces_per_cm2": 8.7
+      },
+      "crotch": {
+        "radius_m": 0.099,
+        "faces": 1053,
+        "median_edge_mm": 12.16,
+        "min_angle_p5_deg": 7.5,
+        "faces_per_cm2": 3.4
+      },
+      "knee_R": {
+        "radius_m": 0.099,
+        "faces": 1181,
+        "median_edge_mm": 10.92,
+        "min_angle_p5_deg": 9.1,
+        "faces_per_cm2": 3.8
+      },
+      "knee_L": {
+        "radius_m": 0.099,
+        "faces": 1177,
+        "median_edge_mm": 10.84,
+        "min_angle_p5_deg": 9.3,
+        "faces_per_cm2": 3.8
+      },
+      "ankle_R": {
+        "radius_m": 0.0825,
+        "faces": 1260,
+        "median_edge_mm": 7.66,
+        "min_angle_p5_deg": 9.6,
+        "faces_per_cm2": 5.9
+      },
+      "ankle_L": {
+        "radius_m": 0.0825,
+        "faces": 1313,
+        "median_edge_mm": 7.37,
+        "min_angle_p5_deg": 9.3,
+        "faces_per_cm2": 6.1
+      },
+      "waist": {
+        "radius_m": 0.132,
+        "faces": 3167,
+        "median_edge_mm": 9.28,
+        "min_angle_p5_deg": 9.9,
+        "faces_per_cm2": 5.8
+      }
+    },
+    "tri_quality_before": {
+      "n_tris": 50000,
+      "min_angle_p1": 3.05,
+      "min_angle_p5": 5.77,
+      "min_angle_median": 22.32,
+      "below_15deg": 15088,
+      "below_15deg_pct": 30.18,
+      "below_5deg": 1766,
+      "aspect_median": 2.225,
+      "aspect_p99": 9.696,
+      "aspect_gt5": 3836
+    },
+    "arm_axis_deg": 29.01,
+    "readable_after_reload": true,
+    "glb_bytes": 29500180,
+    "glb_sha256": "a2e66a76f631b956bbbed067b834fa090d5a6d6b65005053abb6b19c96b34779"
+  },
+  "reload_check": {
+    "mesh_found": true,
+    "armature_found": true,
+    "verts": 31971,
+    "polys": 50000,
+    "bones": 68,
+    "materials": [
+      "Material.010"
+    ],
+    "has_armature_modifier": true,
+    "vertex_groups": 68,
+    "source_bones": 68,
+    "source_verts": 31959,
+    "bones_match": true,
+    "verts_within_split_tolerance": true
+  },
+  "material_fix": {
+    "material_name": "Material.008",
+    "use_nodes": true,
+    "bsdf_inputs_before": {
+      "Base Color": {
+        "linked": true,
+        "value": null
+      },
+      "Metallic": {
+        "linked": true,
+        "value": null
+      },
+      "Roughness": {
+        "linked": true,
+        "value": null
+      },
+      "IOR": {
+        "linked": false,
+        "value": 1.5
+      },
+      "Alpha": {
+        "linked": false,
+        "value": 1.0
+      },
+      "Specular IOR Level": {
+        "linked": false,
+        "value": 0.5
+      },
+      "Specular Tint": {
+        "linked": false,
+        "value": [
+          2.0,
+          2.0,
+          2.0,
+          1.0
+        ]
+      }
+    },
+    "changes": [
+      "Specular Tint (2.0, 2.0, 2.0, 1.0) → (1,1,1)  ← glTF 的 specularColorFactor=[2,2,2] 超出 [0,1] 合法范围",
+      "blend_method HASHED → OPAQUE"
+    ],
+    "bsdf_inputs_after": {
+      "Specular IOR Level": 0.5,
+      "Specular Tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "Roughness": 0.5,
+      "Metallic": 0.0
+    }
+  },
+  "metallic_fix": {
+    "linked_before": true,
+    "value_before": null,
+    "texture_B_mean_before": 0.1067,
+    "value_after": 0.0,
+    "linked_after": false
+  },
+  "basecolor_self_shadow": {
+    "sampled_vertices": 3332,
+    "left_mean_lum": 0.5701,
+    "right_mean_lum": 0.6841,
+    "left_right_mean_diff": 0.114,
+    "lum_std_within_skin": 0.2642,
+    "lum_p05": 0.1562,
+    "lum_p95": 0.9667,
+    "verdict_hint": "左右亮度差异明显，存在方向性烘焙阴影",
+    "per_height_band_diff": [
+      {
+        "z_frac": 0.185,
+        "diff": 0.0994
+      },
+      {
+        "z_frac": 0.235,
+        "diff": 0.141
+      },
+      {
+        "z_frac": 0.285,
+        "diff": 0.0783
+      },
+      {
+        "z_frac": 0.335,
+        "diff": 0.169
+      },
+      {
+        "z_frac": 0.385,
+        "diff": 0.0976
+      },
+      {
+        "z_frac": 0.435,
+        "diff": 0.0808
+      }
+    ]
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "textures": {
+    "texture_pbr_20250901.010": {
+      "kind": "basecolor",
+      "size_before": [
+        4096,
+        4096
+      ],
+      "colorspace": "sRGB",
+      "is_float": false,
+      "channel_stats": {
+        "R": {
+          "mean": 0.7059,
+          "p05": 0.1843,
+          "median": 0.7804,
+          "p95": 0.9804
+        },
+        "G": {
+          "mean": 0.6471,
+          "p05": 0.1725,
+          "median": 0.7137,
+          "p95": 0.9647
+        },
+        "B": {
+          "mean": 0.6319,
+          "p05": 0.2039,
+          "median": 0.6784,
+          "p95": 0.9765
+        },
+        "A": {
+          "mean": 1.0,
+          "p05": 1.0,
+          "median": 1.0,
+          "p95": 1.0
+        },
+        "luminance": {
+          "mean": 0.6585,
+          "p01": 0.1349,
+          "p05": 0.1767,
+          "median": 0.7248,
+          "p95": 0.9645,
+          "p99": 0.9798,
+          "below_0.15": 0.02047,
+          "below_0.30": 0.13915
+        }
+      },
+      "size_after": [
+        2048,
+        2048
+      ],
+      "downsampled": true
+    },
+    "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.010": {
+      "kind": "metal_rough",
+      "size_before": [
+        4096,
+        4096
+      ],
+      "colorspace": "Non-Color",
+      "is_float": false,
+      "channel_stats": {
+        "R": {
+          "mean": 1.0,
+          "p05": 1.0,
+          "median": 1.0,
+          "p95": 1.0
+        },
+        "G": {
+          "mean": 0.9021,
+          "p05": 0.8667,
+          "median": 0.9098,
+          "p95": 0.949
+        },
+        "B": {
+          "mean": 0.1067,
+          "p05": 0.0706,
+          "median": 0.1098,
+          "p95": 0.1333
+        },
+        "A": {
+          "mean": 1.0,
+          "p05": 1.0,
+          "median": 1.0,
+          "p95": 1.0
+        },
+        "luminance": {
+          "mean": 0.8655,
+          "p01": 0.6244,
+          "p05": 0.8376,
+          "median": 0.8709,
+          "p95": 0.8993,
+          "p99": 0.9082,
+          "below_0.15": 0.0,
+          "below_0.30": 0.00026
+        }
+      },
+      "roughness_G": {
+        "mean": 0.9021,
+        "median": 0.9098,
+        "p05": 0.8667,
+        "p95": 0.949
+      },
+      "metallic_B": {
+        "mean": 0.1067,
+        "median": 0.1098,
+        "p95": 0.1333,
+        "above_0.5_pct": 0.0
+      },
+      "size_after": [
+        2048,
+        2048
+      ],
+      "downsampled": true
+    },
+    "texture_pbr_20250901_normal.010": {
+      "kind": "normal",
+      "size_before": [
+        4096,
+        4096
+      ],
+      "colorspace": "Non-Color",
+      "is_float": false,
+      "note": "法线图，不做亮度统计",
+      "size_after": [
+        2048,
+        2048
+      ],
+      "downsampled": true
+    }
+  },
+  "basecolor_self_shadow": {
+    "sampled_vertices": 3332,
+    "left_mean_lum": 0.5701,
+    "right_mean_lum": 0.6841,
+    "left_right_mean_diff": 0.114,
+    "lum_std_within_skin": 0.2642,
+    "lum_p05": 0.1562,
+    "lum_p95": 0.9667,
+    "verdict_hint": "左右亮度差异明显，存在方向性烘焙阴影",
+    "per_height_band_diff": [
+      {
+        "z_frac": 0.185,
+        "diff": 0.0994
+      },
+      {
+        "z_frac": 0.235,
+        "diff": 0.141
+      },
+      {
+        "z_frac": 0.285,
+        "diff": 0.0783
+      },
+      {
+        "z_frac": 0.335,
+        "diff": 0.169
+      },
+      {
+        "z_frac": 0.385,
+        "diff": 0.0976
+      },
+      {
+        "z_frac": 0.435,
+        "diff": 0.0808
+      }
+    ]
+  },
+  "metallic_fix": {
+    "linked_before": true,
+    "value_before": null,
+    "texture_B_mean_before": 0.1067,
+    "value_after": 0.0,
+    "linked_after": false
+  },
+  "exported_maps": [
+    "BaseColor.png",
+    "Roughness.png",
+    "MetalRough.png",
+    "Normal.png"
+  ]
+}

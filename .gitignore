@@ -18,3 +18,10 @@ baseline-motion/dist/
 coach/build/
 # 冻结的 High Source（30MB，本地保留即可）
 coach/reference/*.glb
+
+# Ruth 角色资产的中间产物（可由 ruth/tools/ 重跑得到）
+# build/ 内含多个 .blend，每个都打包了 2K 贴图，合计 ~1 GB
+ruth/build/
+# 冻结的 High Source（28MB，本地保留即可）
+ruth/reference/*.glb
+__pycache__/
