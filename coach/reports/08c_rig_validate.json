@@ -1,0 +1,386 @@
+{
+  "bones": [
+    {
+      "bone": "Root",
+      "in_body": "0/5",
+      "min_dist": 0.03151,
+      "max_dist": 0.05124,
+      "avg_dist": 0.03803,
+      "head_z": 0.0,
+      "tail_z": 0.0
+    },
+    {
+      "bone": "Hips",
+      "in_body": "5/5",
+      "min_dist": 0.07094,
+      "max_dist": 0.08002,
+      "avg_dist": 0.07582,
+      "head_z": 0.86,
+      "tail_z": 0.95
+    },
+    {
+      "bone": "Spine",
+      "in_body": "5/5",
+      "min_dist": 0.04313,
+      "max_dist": 0.06261,
+      "avg_dist": 0.04934,
+      "head_z": 0.95,
+      "tail_z": 1.04
+    },
+    {
+      "bone": "Spine1",
+      "in_body": "5/5",
+      "min_dist": 0.04659,
+      "max_dist": 0.06627,
+      "avg_dist": 0.05631,
+      "head_z": 1.04,
+      "tail_z": 1.13
+    },
+    {
+      "bone": "Spine2",
+      "in_body": "5/5",
+      "min_dist": 0.06841,
+      "max_dist": 0.08036,
+      "avg_dist": 0.07576,
+      "head_z": 1.13,
+      "tail_z": 1.24
+    },
+    {
+      "bone": "Neck",
+      "in_body": "5/5",
+      "min_dist": 0.02915,
+      "max_dist": 0.07155,
+      "avg_dist": 0.04729,
+      "head_z": 1.24,
+      "tail_z": 1.33
+    },
+    {
+      "bone": "Head",
+      "in_body": "5/5",
+      "min_dist": 0.02989,
+      "max_dist": 0.07439,
+      "avg_dist": 0.04523,
+      "head_z": 1.33,
+      "tail_z": 1.6
+    },
+    {
+      "bone": "Ponytail1",
+      "in_body": "2/5",
+      "min_dist": 0.00066,
+      "max_dist": 0.01922,
+      "avg_dist": 0.00545,
+      "head_z": 1.46,
+      "tail_z": 1.32
+    },
+    {
+      "bone": "Ponytail2",
+      "in_body": "3/5",
+      "min_dist": 0.0015,
+      "max_dist": 0.01906,
+      "avg_dist": 0.00788,
+      "head_z": 1.32,
+      "tail_z": 1.16
+    },
+    {
+      "bone": "Ponytail3",
+      "in_body": "0/5",
+      "min_dist": 0.03036,
+      "max_dist": 0.07528,
+      "avg_dist": 0.05601,
+      "head_z": 1.16,
+      "tail_z": 0.99
+    },
+    {
+      "bone": "Ponytail4",
+      "in_body": "0/5",
+      "min_dist": 0.03283,
+      "max_dist": 0.06462,
+      "avg_dist": 0.04712,
+      "head_z": 0.99,
+      "tail_z": 0.8
+    },
+    {
+      "bone": "LeftShoulder",
+      "in_body": "5/5",
+      "min_dist": 0.03655,
+      "max_dist": 0.07963,
+      "avg_dist": 0.05508,
+      "head_z": 1.21,
+      "tail_z": 1.205
+    },
+    {
+      "bone": "LeftArm",
+      "in_body": "5/5",
+      "min_dist": 0.0126,
+      "max_dist": 0.03705,
+      "avg_dist": 0.01926,
+      "head_z": 1.205,
+      "tail_z": 1.0
+    },
+    {
+      "bone": "LeftForeArm",
+      "in_body": "3/5",
+      "min_dist": 0.00272,
+      "max_dist": 0.00979,
+      "avg_dist": 0.00508,
+      "head_z": 1.0,
+      "tail_z": 0.845
+    },
+    {
+      "bone": "LeftHand",
+      "in_body": "1/5",
+      "min_dist": 0.00016,
+      "max_dist": 0.00832,
+      "avg_dist": 0.00452,
+      "head_z": 0.845,
+      "tail_z": 0.745
+    },
+    {
+      "bone": "RightShoulder",
+      "in_body": "5/5",
+      "min_dist": 0.03715,
+      "max_dist": 0.07927,
+      "avg_dist": 0.05678,
+      "head_z": 1.21,
+      "tail_z": 1.205
+    },
+    {
+      "bone": "RightArm",
+      "in_body": "5/5",
+      "min_dist": 0.00933,
+      "max_dist": 0.03644,
+      "avg_dist": 0.01661,
+      "head_z": 1.205,
+      "tail_z": 1.0
+    },
+    {
+      "bone": "RightForeArm",
+      "in_body": "2/5",
+      "min_dist": 0.0004,
+      "max_dist": 0.00746,
+      "avg_dist": 0.00428,
+      "head_z": 1.0,
+      "tail_z": 0.845
+    },
+    {
+      "bone": "RightHand",
+      "in_body": "3/5",
+      "min_dist": 0.00084,
+      "max_dist": 0.01127,
+      "avg_dist": 0.0044,
+      "head_z": 0.845,
+      "tail_z": 0.745
+    },
+    {
+      "bone": "LeftUpLeg",
+      "in_body": "5/5",
+      "min_dist": 0.02458,
+      "max_dist": 0.05814,
+      "avg_dist": 0.04565,
+      "head_z": 0.8,
+      "tail_z": 0.44
+    },
+    {
+      "bone": "LeftLeg",
+      "in_body": "4/5",
+      "min_dist": 0.00182,
+      "max_dist": 0.02086,
+      "avg_dist": 0.0096,
+      "head_z": 0.44,
+      "tail_z": 0.11
+    },
+    {
+      "bone": "LeftFoot",
+      "in_body": "5/5",
+      "min_dist": 0.00604,
+      "max_dist": 0.03143,
+      "avg_dist": 0.0189,
+      "head_z": 0.11,
+      "tail_z": 0.025
+    },
+    {
+      "bone": "LeftToeBase",
+      "in_body": "4/5",
+      "min_dist": 0.00034,
+      "max_dist": 0.02422,
+      "avg_dist": 0.01502,
+      "head_z": 0.025,
+      "tail_z": 0.02
+    },
+    {
+      "bone": "RightUpLeg",
+      "in_body": "5/5",
+      "min_dist": 0.02671,
+      "max_dist": 0.05474,
+      "avg_dist": 0.04449,
+      "head_z": 0.8,
+      "tail_z": 0.44
+    },
+    {
+      "bone": "RightLeg",
+      "in_body": "4/5",
+      "min_dist": 0.00084,
+      "max_dist": 0.02018,
+      "avg_dist": 0.00907,
+      "head_z": 0.44,
+      "tail_z": 0.11
+    },
+    {
+      "bone": "RightFoot",
+      "in_body": "5/5",
+      "min_dist": 0.0063,
+      "max_dist": 0.03141,
+      "avg_dist": 0.0191,
+      "head_z": 0.11,
+      "tail_z": 0.025
+    },
+    {
+      "bone": "RightToeBase",
+      "in_body": "4/5",
+      "min_dist": 0.00074,
+      "max_dist": 0.02414,
+      "avg_dist": 0.0149,
+      "head_z": 0.025,
+      "tail_z": 0.02
+    },
+    {
+      "bone": "SkirtF1",
+      "in_body": "3/5",
+      "min_dist": 0.006,
+      "max_dist": 0.03529,
+      "avg_dist": 0.01764,
+      "head_z": 0.875,
+      "tail_z": 0.82
+    },
+    {
+      "bone": "SkirtF2",
+      "in_body": "2/5",
+      "min_dist": 5e-05,
+      "max_dist": 0.01357,
+      "avg_dist": 0.00618,
+      "head_z": 0.82,
+      "tail_z": 0.762
+    },
+    {
+      "bone": "SkirtB1",
+      "in_body": "2/5",
+      "min_dist": 0.00284,
+      "max_dist": 0.01859,
+      "avg_dist": 0.01022,
+      "head_z": 0.875,
+      "tail_z": 0.82
+    },
+    {
+      "bone": "SkirtB2",
+      "in_body": "0/5",
+      "min_dist": 0.00034,
+      "max_dist": 0.02045,
+      "avg_dist": 0.00775,
+      "head_z": 0.82,
+      "tail_z": 0.762
+    },
+    {
+      "bone": "SkirtL1",
+      "in_body": "5/5",
+      "min_dist": 0.05781,
+      "max_dist": 0.08032,
+      "avg_dist": 0.0705,
+      "head_z": 0.875,
+      "tail_z": 0.82
+    },
+    {
+      "bone": "SkirtL2",
+      "in_body": "5/5",
+      "min_dist": 0.02164,
+      "max_dist": 0.05058,
+      "avg_dist": 0.03636,
+      "head_z": 0.82,
+      "tail_z": 0.762
+    },
+    {
+      "bone": "SkirtR1",
+      "in_body": "5/5",
+      "min_dist": 0.06054,
+      "max_dist": 0.08272,
+      "avg_dist": 0.07511,
+      "head_z": 0.875,
+      "tail_z": 0.82
+    },
+    {
+      "bone": "SkirtR2",
+      "in_body": "5/5",
+      "min_dist": 0.02458,
+      "max_dist": 0.05399,
+      "avg_dist": 0.03948,
+      "head_z": 0.82,
+      "tail_z": 0.762
+    }
+  ],
+  "suspect": [
+    [
+      "Root",
+      0,
+      0.03151
+    ],
+    [
+      "Ponytail1",
+      2,
+      0.00066
+    ],
+    [
+      "Ponytail2",
+      3,
+      0.0015
+    ],
+    [
+      "Ponytail3",
+      0,
+      0.03036
+    ],
+    [
+      "Ponytail4",
+      0,
+      0.03283
+    ],
+    [
+      "LeftForeArm",
+      3,
+      0.00272
+    ],
+    [
+      "LeftHand",
+      1,
+      0.00016
+    ],
+    [
+      "RightForeArm",
+      2,
+      0.0004
+    ],
+    [
+      "RightHand",
+      3,
+      0.00084
+    ],
+    [
+      "SkirtF1",
+      3,
+      0.006
+    ],
+    [
+      "SkirtF2",
+      2,
+      5e-05
+    ],
+    [
+      "SkirtB1",
+      2,
+      0.00284
+    ],
+    [
+      "SkirtB2",
+      0,
+      0.00034
+    ]
+  ]
+}

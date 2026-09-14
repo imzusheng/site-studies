@@ -1,0 +1,41 @@
+{
+  "L": {
+    "total": 2796,
+    "low_arm_weight": 877,
+    "other_bones": {
+      "Hips": 542,
+      "SkirtF1": 140,
+      "SkirtF2": 137,
+      "SkirtL1": 488,
+      "SkirtL2": 487,
+      "LeftUpLeg": 19,
+      "RightUpLeg": 13,
+      "SkirtB1": 244,
+      "SkirtB2": 241,
+      "Head": 295,
+      "Neck": 33,
+      "Spine1": 27,
+      "Spine": 25,
+      "Spine2": 26
+    }
+  },
+  "R": {
+    "total": 2931,
+    "low_arm_weight": 783,
+    "other_bones": {
+      "Hips": 488,
+      "SkirtB1": 239,
+      "SkirtB2": 234,
+      "SkirtR1": 441,
+      "SkirtR2": 440,
+      "Head": 266,
+      "Spine1": 18,
+      "Spine": 18,
+      "Spine2": 16,
+      "SkirtF1": 93,
+      "SkirtF2": 90,
+      "RightUpLeg": 14,
+      "LeftUpLeg": 11
+    }
+  }
+}

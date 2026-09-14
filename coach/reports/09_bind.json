@@ -1,0 +1,26 @@
+{
+  "apose_deg": 38.0,
+  "overrides": {
+    "grp_VISOR": "315 → Head 100%",
+    "grp_HEAD_RIGID": "1062 → Head 100%",
+    "grp_HAIR": "4963 → Head 100%",
+    "grp_SKIRT": "2407 → Hips + 4 向裙骨渐变",
+    "grp_SHOE_L": "544 → LeftFoot/LeftToeBase",
+    "grp_SHOE_DARK_L": "314 → LeftFoot/LeftToeBase",
+    "grp_SHOE_R": "659 → RightFoot/RightToeBase",
+    "grp_SHOE_DARK_R": "292 → RightFoot/RightToeBase",
+    "grp_SOCK_L": "252 → LeftFoot/LeftLeg",
+    "grp_SOCK_R": "234 → RightFoot/RightLeg"
+  },
+  "true_ponytail_verts": 1846,
+  "modifiers": [
+    [
+      "Armature",
+      "ARMATURE"
+    ],
+    [
+      "CorrectiveSmooth",
+      "CORRECTIVE_SMOOTH"
+    ]
+  ]
+}

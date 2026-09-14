@@ -13,3 +13,8 @@ animejs/dist/
 
 baseline-motion/node_modules/
 baseline-motion/dist/
+
+# 角色资产的中间产物：.blend 内嵌 4K 贴图，单个就 29MB+，且都可由 tools/ 重跑得到
+coach/build/
+# 冻结的 High Source（30MB，本地保留即可）
+coach/reference/*.glb

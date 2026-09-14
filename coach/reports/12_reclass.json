@@ -1,0 +1,36 @@
+{
+  "apose_deg": 38.0,
+  "label_counts": {
+    "HEAD_RIGID": 3951,
+    "PONYTAIL": 5044,
+    "VISOR": 665,
+    "HAIR": 7853,
+    "HEAD": 1957,
+    "NAVY": 2243,
+    "BODY": 13673,
+    "OTHER": 183,
+    "POLO": 1951,
+    "SKIRT": 5139,
+    "SOCK": 1152,
+    "SHOE": 6113
+  },
+  "arm_candidates": 5414,
+  "arm_verts_moved": 0,
+  "max_shift_m": 0.0,
+  "group_sizes": {
+    "BODY": 6878,
+    "HEAD": 947,
+    "HAIR": 3891,
+    "PONYTAIL": 2518,
+    "VISOR": 347,
+    "HEAD_RIGID": 1946,
+    "POLO": 961,
+    "SKIRT": 2607,
+    "NAVY": 1080,
+    "SOCK_L": 289,
+    "SOCK_R": 286,
+    "SHOE_L": 1519,
+    "SHOE_R": 1518,
+    "OTHER": 57
+  }
+}

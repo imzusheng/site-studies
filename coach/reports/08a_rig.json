@@ -1,0 +1,495 @@
+{
+  "bone_count": 35,
+  "bones": [
+    {
+      "name": "Root",
+      "head": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tail": [
+        0.0,
+        -0.15,
+        0.0
+      ],
+      "parent": null
+    },
+    {
+      "name": "Hips",
+      "head": [
+        0.0,
+        0.0,
+        0.86
+      ],
+      "tail": [
+        0.0,
+        0.0,
+        0.95
+      ],
+      "parent": "Root"
+    },
+    {
+      "name": "Spine",
+      "head": [
+        0.0,
+        0.0,
+        0.95
+      ],
+      "tail": [
+        0.0,
+        0.0,
+        1.04
+      ],
+      "parent": "Hips"
+    },
+    {
+      "name": "Spine1",
+      "head": [
+        0.0,
+        0.0,
+        1.04
+      ],
+      "tail": [
+        0.0,
+        0.0,
+        1.13
+      ],
+      "parent": "Spine"
+    },
+    {
+      "name": "Spine2",
+      "head": [
+        0.0,
+        0.0,
+        1.13
+      ],
+      "tail": [
+        0.0,
+        0.0,
+        1.24
+      ],
+      "parent": "Spine1"
+    },
+    {
+      "name": "Neck",
+      "head": [
+        0.0,
+        0.0,
+        1.24
+      ],
+      "tail": [
+        0.0,
+        -0.01,
+        1.33
+      ],
+      "parent": "Spine2"
+    },
+    {
+      "name": "Head",
+      "head": [
+        0.0,
+        -0.01,
+        1.33
+      ],
+      "tail": [
+        0.0,
+        -0.01,
+        1.6
+      ],
+      "parent": "Neck"
+    },
+    {
+      "name": "Ponytail1",
+      "head": [
+        0.0,
+        0.03,
+        1.46
+      ],
+      "tail": [
+        0.0,
+        0.062,
+        1.32
+      ],
+      "parent": "Head"
+    },
+    {
+      "name": "Ponytail2",
+      "head": [
+        0.0,
+        0.062,
+        1.32
+      ],
+      "tail": [
+        0.0,
+        0.1,
+        1.16
+      ],
+      "parent": "Ponytail1"
+    },
+    {
+      "name": "Ponytail3",
+      "head": [
+        0.0,
+        0.1,
+        1.16
+      ],
+      "tail": [
+        0.0,
+        0.14,
+        0.99
+      ],
+      "parent": "Ponytail2"
+    },
+    {
+      "name": "Ponytail4",
+      "head": [
+        0.0,
+        0.14,
+        0.99
+      ],
+      "tail": [
+        0.0,
+        0.162,
+        0.8
+      ],
+      "parent": "Ponytail3"
+    },
+    {
+      "name": "LeftShoulder",
+      "head": [
+        0.035,
+        0.0,
+        1.21
+      ],
+      "tail": [
+        0.115,
+        0.0,
+        1.205
+      ],
+      "parent": "Spine2"
+    },
+    {
+      "name": "LeftArm",
+      "head": [
+        0.115,
+        0.0,
+        1.205
+      ],
+      "tail": [
+        0.14,
+        0.0,
+        1.0
+      ],
+      "parent": "LeftShoulder"
+    },
+    {
+      "name": "LeftForeArm",
+      "head": [
+        0.14,
+        0.0,
+        1.0
+      ],
+      "tail": [
+        0.158,
+        0.0,
+        0.845
+      ],
+      "parent": "LeftArm"
+    },
+    {
+      "name": "LeftHand",
+      "head": [
+        0.158,
+        0.0,
+        0.845
+      ],
+      "tail": [
+        0.168,
+        0.0,
+        0.745
+      ],
+      "parent": "LeftForeArm"
+    },
+    {
+      "name": "RightShoulder",
+      "head": [
+        -0.035,
+        0.0,
+        1.21
+      ],
+      "tail": [
+        -0.115,
+        0.0,
+        1.205
+      ],
+      "parent": "Spine2"
+    },
+    {
+      "name": "RightArm",
+      "head": [
+        -0.115,
+        0.0,
+        1.205
+      ],
+      "tail": [
+        -0.14,
+        0.0,
+        1.0
+      ],
+      "parent": "RightShoulder"
+    },
+    {
+      "name": "RightForeArm",
+      "head": [
+        -0.14,
+        0.0,
+        1.0
+      ],
+      "tail": [
+        -0.158,
+        0.0,
+        0.845
+      ],
+      "parent": "RightArm"
+    },
+    {
+      "name": "RightHand",
+      "head": [
+        -0.158,
+        0.0,
+        0.845
+      ],
+      "tail": [
+        -0.168,
+        0.0,
+        0.745
+      ],
+      "parent": "RightForeArm"
+    },
+    {
+      "name": "LeftUpLeg",
+      "head": [
+        0.068,
+        0.0,
+        0.8
+      ],
+      "tail": [
+        0.075,
+        0.004,
+        0.44
+      ],
+      "parent": "Hips"
+    },
+    {
+      "name": "LeftLeg",
+      "head": [
+        0.075,
+        0.004,
+        0.44
+      ],
+      "tail": [
+        0.082,
+        0.0,
+        0.11
+      ],
+      "parent": "LeftUpLeg"
+    },
+    {
+      "name": "LeftFoot",
+      "head": [
+        0.082,
+        0.0,
+        0.11
+      ],
+      "tail": [
+        0.078,
+        -0.075,
+        0.025
+      ],
+      "parent": "LeftLeg"
+    },
+    {
+      "name": "LeftToeBase",
+      "head": [
+        0.078,
+        -0.075,
+        0.025
+      ],
+      "tail": [
+        0.078,
+        -0.135,
+        0.02
+      ],
+      "parent": "LeftFoot"
+    },
+    {
+      "name": "RightUpLeg",
+      "head": [
+        -0.068,
+        0.0,
+        0.8
+      ],
+      "tail": [
+        -0.075,
+        0.004,
+        0.44
+      ],
+      "parent": "Hips"
+    },
+    {
+      "name": "RightLeg",
+      "head": [
+        -0.075,
+        0.004,
+        0.44
+      ],
+      "tail": [
+        -0.082,
+        0.0,
+        0.11
+      ],
+      "parent": "RightUpLeg"
+    },
+    {
+      "name": "RightFoot",
+      "head": [
+        -0.082,
+        0.0,
+        0.11
+      ],
+      "tail": [
+        -0.078,
+        -0.075,
+        0.025
+      ],
+      "parent": "RightLeg"
+    },
+    {
+      "name": "RightToeBase",
+      "head": [
+        -0.078,
+        -0.075,
+        0.025
+      ],
+      "tail": [
+        -0.078,
+        -0.135,
+        0.02
+      ],
+      "parent": "RightFoot"
+    },
+    {
+      "name": "SkirtF1",
+      "head": [
+        0.0,
+        -0.055,
+        0.875
+      ],
+      "tail": [
+        0.0,
+        -0.105,
+        0.82
+      ],
+      "parent": "Hips"
+    },
+    {
+      "name": "SkirtF2",
+      "head": [
+        0.0,
+        -0.105,
+        0.82
+      ],
+      "tail": [
+        0.0,
+        -0.14,
+        0.762
+      ],
+      "parent": "SkirtF1"
+    },
+    {
+      "name": "SkirtB1",
+      "head": [
+        0.0,
+        0.055,
+        0.875
+      ],
+      "tail": [
+        0.0,
+        0.105,
+        0.82
+      ],
+      "parent": "Hips"
+    },
+    {
+      "name": "SkirtB2",
+      "head": [
+        0.0,
+        0.105,
+        0.82
+      ],
+      "tail": [
+        0.0,
+        0.14,
+        0.762
+      ],
+      "parent": "SkirtB1"
+    },
+    {
+      "name": "SkirtL1",
+      "head": [
+        0.055,
+        0.0,
+        0.875
+      ],
+      "tail": [
+        0.105,
+        0.0,
+        0.82
+      ],
+      "parent": "Hips"
+    },
+    {
+      "name": "SkirtL2",
+      "head": [
+        0.105,
+        0.0,
+        0.82
+      ],
+      "tail": [
+        0.14,
+        0.0,
+        0.762
+      ],
+      "parent": "SkirtL1"
+    },
+    {
+      "name": "SkirtR1",
+      "head": [
+        -0.055,
+        0.0,
+        0.875
+      ],
+      "tail": [
+        -0.105,
+        0.0,
+        0.82
+      ],
+      "parent": "Hips"
+    },
+    {
+      "name": "SkirtR2",
+      "head": [
+        -0.105,
+        0.0,
+        0.82
+      ],
+      "tail": [
+        -0.14,
+        0.0,
+        0.762
+      ],
+      "parent": "SkirtR1"
+    }
+  ]
+}

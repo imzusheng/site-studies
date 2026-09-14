@@ -1,0 +1,42 @@
+{
+  "target_height_m": 1.65,
+  "scale_applied": 1.0,
+  "height_after_m": 1.65,
+  "label_face_counts": {
+    "POLO": 5630,
+    "HAIR": 6383,
+    "OTHER": 827,
+    "VISOR": 586,
+    "HEAD_RIGID": 2181,
+    "PONYTAIL": 4114,
+    "HEAD": 1982,
+    "NAVY": 4407,
+    "DARK": 221,
+    "BODY": 14409,
+    "SKIRT": 4675,
+    "SHOE_DARK": 1290,
+    "SHOE": 2267,
+    "SOCK": 948,
+    "OTHER_WHITE": 4
+  },
+  "vertex_group_sizes": {
+    "BODY": 7231,
+    "HEAD": 992,
+    "HAIR": 3117,
+    "PONYTAIL": 2058,
+    "VISOR": 315,
+    "HEAD_RIGID": 1062,
+    "POLO": 2843,
+    "SKIRT": 2407,
+    "NAVY": 2074,
+    "SOCK_L": 252,
+    "SOCK_R": 234,
+    "SHOE_L": 544,
+    "SHOE_R": 659,
+    "SHOE_DARK_L": 314,
+    "SHOE_DARK_R": 292,
+    "OTHER": 370,
+    "OTHER_WHITE": 0,
+    "DARK": 80
+  }
+}

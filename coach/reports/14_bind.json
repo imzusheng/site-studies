@@ -1,0 +1,33 @@
+{
+  "label_counts": {
+    "POLO": 3883,
+    "PONYTAIL": 5044,
+    "VISOR": 665,
+    "HEAD_RIGID": 1898,
+    "HAIR": 7539,
+    "HEAD": 1804,
+    "NAVY": 1407,
+    "BODY": 13780,
+    "OTHER": 234,
+    "SKIRT": 6405,
+    "SOCK": 1152,
+    "SHOE": 6113
+  },
+  "weights": {
+    "dist:POLO": 1944,
+    "HAIR": 3732,
+    "PONYTAIL": 2518,
+    "VISOR": 347,
+    "HEAD_RIGID": 916,
+    "HEAD": 871,
+    "SKIRT": 3207,
+    "SHOE_R": 1518,
+    "dist:BODY": 6944,
+    "SHOE_L": 1519,
+    "dist:NAVY": 677,
+    "dist:OTHER": 76,
+    "SOCK_L": 289,
+    "SOCK_R": 286
+  },
+  "skirt_leak": 0
+}

@@ -1,0 +1,20 @@
+{
+  "apose_deg": 38.0,
+  "label_counts": {
+    "HEAD_RIGID": 3889,
+    "PONYTAIL": 5044,
+    "VISOR": 665,
+    "HAIR": 7613,
+    "HEAD": 1865,
+    "POLO": 2012,
+    "NAVY": 1250,
+    "BODY": 13715,
+    "OTHER": 201,
+    "SKIRT": 6405,
+    "SOCK": 1152,
+    "SHOE": 6113
+  },
+  "arm_candidates": 4072,
+  "arm_verts_moved": 4072,
+  "max_shift_m": 0.1726
+}
