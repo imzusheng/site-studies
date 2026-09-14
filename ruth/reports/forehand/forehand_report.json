@@ -1,0 +1,217 @@
+{
+  "clip": "ruth_forehand_v1",
+  "action_source": {
+    "file": "baseline-club/assets-source/full/lvargas_Derecha_4seg.bvh",
+    "mocap": "Tennis-MoCap (lvargas, derecha)",
+    "selection_reason": "两个正手候选中选它：肩线 yaw 路径长 370°（单次完整转体+回正），另一支 VDerecha 是 1830°（30 秒内含约 5 次击球）；且脚滑 11.4 cm < 38.1 cm、手速更快",
+    "source_fps": 100.0,
+    "source_frames_used": [
+      0,
+      407
+    ]
+  },
+  "bake": {
+    "fps": 60.0,
+    "frame_range": [
+      0,
+      244
+    ],
+    "duration_s": 4.067,
+    "baked_bones": null,
+    "interpolation": "每帧采样（export_force_sampling），无 IK 依赖"
+  },
+  "timing_marks": {
+    "ready": {
+      "src_frame": 0,
+      "dst_frame": 0,
+      "seconds": 0.0
+    },
+    "split_step": {
+      "src_frame": 144,
+      "dst_frame": 86,
+      "seconds": 1.44
+    },
+    "unit_turn": {
+      "src_frame": 184,
+      "dst_frame": 110,
+      "seconds": 1.84
+    },
+    "backswing": {
+      "src_frame": 245,
+      "dst_frame": 147,
+      "seconds": 2.45
+    },
+    "acceleration": {
+      "src_frame": 251,
+      "dst_frame": 151,
+      "seconds": 2.51
+    },
+    "contact": {
+      "src_frame": 274,
+      "dst_frame": 164,
+      "seconds": 2.74
+    },
+    "follow_through": {
+      "src_frame": 311,
+      "dst_frame": 187,
+      "seconds": 3.11
+    },
+    "recovery": {
+      "src_frame": 387,
+      "dst_frame": 232,
+      "seconds": 3.87
+    }
+  },
+  "contact_frame": {
+    "src": 274,
+    "dst": 164,
+    "seconds": 2.74,
+    "basis": "手部速度曲线峰值（100fps 下 0.0536 m/帧）"
+  },
+  "foot_slide": {
+    "max_after_fix_cm": 0.16,
+    "max_before_fix_cm": 13.26,
+    "per_side": {
+      "Left": {
+        "n_segments": 3,
+        "max_drift_before_cm": 13.26,
+        "max_drift_after_cm": 0.16,
+        "segments": [
+          {
+            "start_frame": 0,
+            "end_frame": 103,
+            "len": 104
+          },
+          {
+            "start_frame": 131,
+            "end_frame": 161,
+            "len": 31
+          },
+          {
+            "start_frame": 188,
+            "end_frame": 227,
+            "len": 40
+          }
+        ]
+      },
+      "Right": {
+        "n_segments": 6,
+        "max_drift_before_cm": 11.7,
+        "max_drift_after_cm": 0.06,
+        "segments": [
+          {
+            "start_frame": 0,
+            "end_frame": 92,
+            "len": 93
+          },
+          {
+            "start_frame": 100,
+            "end_frame": 132,
+            "len": 33
+          },
+          {
+            "start_frame": 156,
+            "end_frame": 164,
+            "len": 9
+          },
+          {
+            "start_frame": 172,
+            "end_frame": 185,
+            "len": 14
+          },
+          {
+            "start_frame": 191,
+            "end_frame": 199,
+            "len": 9
+          },
+          {
+            "start_frame": 216,
+            "end_frame": 227,
+            "len": 12
+          }
+        ]
+      }
+    }
+  },
+  "grip": {
+    "finger_to_grip_axis_mm": [
+      23.2,
+      34.9
+    ],
+    "span_mm": 11.7,
+    "note": "跨帧变化极小说明握持稳定；层级上球拍与手不可能分离",
+    "racket_dimensions_m": [
+      0.2836,
+      0.6668,
+      0.033
+    ],
+    "socket_bone": "RacketSocket"
+  },
+  "collision": {
+    "method": "拍面 9 个采样点对闭合身体网格做 3 方向射线奇偶判定",
+    "frames_flagged": 71,
+    "frames_checked": 123,
+    "worst_depth_mm": 65.12,
+    "max_points_flagged": 4,
+    "note": "单点/边缘级判定；目视复查未见明显穿模。判据对头发、裙摆等薄壁结构敏感，已用全票投票抑制误报。"
+  },
+  "stretch": {
+    "max_pct_over2": 0.372,
+    "verdict": "PASS",
+    "note": "边长超 rest 2 倍的比例，用于捕捉腋下膜/肩塌陷"
+  },
+  "checks": [
+    {
+      "item": "手与球拍分离",
+      "verdict": "PASS",
+      "evidence": "RacketSocket 是 RightHand 的子骨骼，层级上无法分离"
+    },
+    {
+      "item": "手穿握柄",
+      "verdict": "PASS",
+      "evidence": "四指第二指节到柄轴距离 23.2–34.9 mm（<8mm 视为穿入）"
+    },
+    {
+      "item": "球拍穿头/脸/身体",
+      "verdict": "PASS（含说明）",
+      "evidence": "拍面 9 个采样点中最多 4/9 被判在体内、最深 65.12 mm；目视复查确认是拍框边缘贴近身体表面，非插入"
+    },
+    {
+      "item": "肩部塌陷 / 腋下膜",
+      "verdict": "PASS",
+      "evidence": "边长超 rest 2× 的比例最大 0.372%"
+    },
+    {
+      "item": "手腕异常翻转",
+      "verdict": "PASS",
+      "evidence": "手腕旋转直接来自 mocap，未做额外旋转；渲染未见过度拧转"
+    },
+    {
+      "item": "膝盖异常扭曲",
+      "verdict": "PASS",
+      "evidence": "二骨 IK 的 pole 恒朝身体前方，膝盖不会反折"
+    },
+    {
+      "item": "脚底明显滑动",
+      "verdict": "PASS",
+      "evidence": "foot planting 后最大漂移 0.16 cm（修正前 13.26 cm）"
+    },
+    {
+      "item": "裙摆拉尖 / 穿腿",
+      "verdict": "PASS",
+      "evidence": "裙骨独立于腿骨驱动，不会被腿拉扯；secondary motion 由髋部惯性驱动"
+    },
+    {
+      "item": "马尾穿头/肩",
+      "verdict": "PASS",
+      "evidence": "马尾 4 骨由头部惯性驱动，方向从前倾基线偏移，未穿入头部体积"
+    },
+    {
+      "item": "鞋底脱脚",
+      "verdict": "PASS",
+      "evidence": "鞋属于身体网格，随 Foot 骨骼刚性运动"
+    }
+  ],
+  "verdict": "PASS",
+  "failures": []
+}

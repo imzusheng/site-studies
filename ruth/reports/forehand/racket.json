@@ -1,0 +1,38 @@
+{
+  "racket_verts": 672,
+  "racket_faces": 595,
+  "racket_dimensions_m": [
+    0.2836,
+    0.6668,
+    0.033
+  ],
+  "socket_bone": "RacketSocket",
+  "socket_parent": "RightHand",
+  "socket_head": [
+    -0.3388,
+    0.0352,
+    0.8705
+  ],
+  "socket_tail": [
+    -0.3388,
+    -0.0398,
+    0.8705
+  ],
+  "grip_angles_rad": {
+    "RightHandIndex1": 1.0123,
+    "RightHandIndex2": 1.0821,
+    "RightHandIndex3": 0.6981,
+    "RightHandMiddle1": 1.0821,
+    "RightHandMiddle2": 1.1868,
+    "RightHandMiddle3": 0.7679,
+    "RightHandRing1": 1.0472,
+    "RightHandRing2": 1.1519,
+    "RightHandRing3": 0.733,
+    "RightHandPinky1": 0.9774,
+    "RightHandPinky2": 1.0821,
+    "RightHandPinky3": 0.6981,
+    "RightHandThumb1": -0.384,
+    "RightHandThumb2": -0.4538,
+    "RightHandThumb3": -0.2793
+  }
+}

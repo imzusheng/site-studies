@@ -1,0 +1,94 @@
+{
+  "foot_planting": {
+    "Left": {
+      "n_segments": 3,
+      "max_drift_before_cm": 13.26,
+      "max_drift_after_cm": 0.16,
+      "segments": [
+        {
+          "start_frame": 0,
+          "end_frame": 103,
+          "len": 104
+        },
+        {
+          "start_frame": 131,
+          "end_frame": 161,
+          "len": 31
+        },
+        {
+          "start_frame": 188,
+          "end_frame": 227,
+          "len": 40
+        }
+      ]
+    },
+    "Right": {
+      "n_segments": 6,
+      "max_drift_before_cm": 11.7,
+      "max_drift_after_cm": 0.06,
+      "segments": [
+        {
+          "start_frame": 0,
+          "end_frame": 92,
+          "len": 93
+        },
+        {
+          "start_frame": 100,
+          "end_frame": 132,
+          "len": 33
+        },
+        {
+          "start_frame": 156,
+          "end_frame": 164,
+          "len": 9
+        },
+        {
+          "start_frame": 172,
+          "end_frame": 185,
+          "len": 14
+        },
+        {
+          "start_frame": 191,
+          "end_frame": 199,
+          "len": 9
+        },
+        {
+          "start_frame": 216,
+          "end_frame": 227,
+          "len": 12
+        }
+      ]
+    }
+  },
+  "secondary": {
+    "skirt": {
+      "bones": [
+        "SkirtF1",
+        "SkirtF2",
+        "SkirtF3",
+        "SkirtB1",
+        "SkirtB2",
+        "SkirtB3",
+        "SkirtL1",
+        "SkirtL2",
+        "SkirtL3",
+        "SkirtR1",
+        "SkirtR2",
+        "SkirtR3"
+      ],
+      "strength": 1.6,
+      "damping": 0.72
+    },
+    "ponytail": {
+      "bones": [
+        "Ponytail1",
+        "Ponytail2",
+        "Ponytail3",
+        "Ponytail4"
+      ],
+      "strength": 2.2,
+      "damping": 0.7
+    }
+  },
+  "min_seg_frames": 8
+}

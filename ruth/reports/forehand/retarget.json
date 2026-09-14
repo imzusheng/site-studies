@@ -1,0 +1,226 @@
+{
+  "source_bvh": "lvargas_Derecha_4seg.bvh",
+  "source_fps": 100.0,
+  "target_fps": 60.0,
+  "clip_src_frames": [
+    0,
+    407
+  ],
+  "clip_dst_frames": [
+    0,
+    244
+  ],
+  "clip_duration_s": 4.067,
+  "leg_len_bvh_m": 0.70979,
+  "leg_len_ruth_m": 0.7536,
+  "position_scale": 1.06172,
+  "shoulder_yaw_fix_deg": 30.31,
+  "bone_map": {
+    "Hips": [
+      [
+        "Hips",
+        1.0
+      ]
+    ],
+    "Chest": [
+      [
+        "Spine",
+        0.3
+      ],
+      [
+        "Spine1",
+        0.35
+      ],
+      [
+        "Spine2",
+        0.35
+      ]
+    ],
+    "Neck": [
+      [
+        "Neck",
+        1.0
+      ]
+    ],
+    "Head": [
+      [
+        "Head",
+        1.0
+      ]
+    ],
+    "LeftCollar": [
+      [
+        "LeftShoulder",
+        1.0
+      ]
+    ],
+    "LeftShoulder": [
+      [
+        "LeftArm",
+        1.0
+      ]
+    ],
+    "LeftElbow": [
+      [
+        "LeftForeArm",
+        1.0
+      ]
+    ],
+    "LeftWrist": [
+      [
+        "LeftHand",
+        1.0
+      ]
+    ],
+    "RightCollar": [
+      [
+        "RightShoulder",
+        1.0
+      ]
+    ],
+    "RightShoulder": [
+      [
+        "RightArm",
+        1.0
+      ]
+    ],
+    "RightElbow": [
+      [
+        "RightForeArm",
+        1.0
+      ]
+    ],
+    "RightWrist": [
+      [
+        "RightHand",
+        1.0
+      ]
+    ],
+    "LeftHip": [
+      [
+        "LeftUpLeg",
+        1.0
+      ]
+    ],
+    "LeftKnee": [
+      [
+        "LeftLeg",
+        1.0
+      ]
+    ],
+    "LeftAnkle": [
+      [
+        "LeftFoot",
+        1.0
+      ]
+    ],
+    "RightHip": [
+      [
+        "RightUpLeg",
+        1.0
+      ]
+    ],
+    "RightKnee": [
+      [
+        "RightLeg",
+        1.0
+      ]
+    ],
+    "RightAnkle": [
+      [
+        "RightFoot",
+        1.0
+      ]
+    ]
+  },
+  "animated_bones": [
+    "Head",
+    "Hips",
+    "LeftArm",
+    "LeftFoot",
+    "LeftForeArm",
+    "LeftHand",
+    "LeftLeg",
+    "LeftShoulder",
+    "LeftUpLeg",
+    "Neck",
+    "RightArm",
+    "RightFoot",
+    "RightForeArm",
+    "RightHand",
+    "RightLeg",
+    "RightShoulder",
+    "RightUpLeg",
+    "Spine",
+    "Spine1",
+    "Spine2"
+  ],
+  "foot_slide": {
+    "Left": {
+      "n_segments": 3,
+      "max_drift_cm": 13.26,
+      "segments": [
+        {
+          "start_frame": 0,
+          "end_frame": 103,
+          "len": 104,
+          "drift_cm": 6.22
+        },
+        {
+          "start_frame": 130,
+          "end_frame": 161,
+          "len": 32,
+          "drift_cm": 13.26
+        },
+        {
+          "start_frame": 188,
+          "end_frame": 227,
+          "len": 40,
+          "drift_cm": 9.4
+        }
+      ]
+    },
+    "Right": {
+      "n_segments": 6,
+      "max_drift_cm": 11.7,
+      "segments": [
+        {
+          "start_frame": 0,
+          "end_frame": 92,
+          "len": 93,
+          "drift_cm": 7.77
+        },
+        {
+          "start_frame": 100,
+          "end_frame": 132,
+          "len": 33,
+          "drift_cm": 11.7
+        },
+        {
+          "start_frame": 156,
+          "end_frame": 164,
+          "len": 9,
+          "drift_cm": 3.08
+        },
+        {
+          "start_frame": 172,
+          "end_frame": 185,
+          "len": 14,
+          "drift_cm": 1.78
+        },
+        {
+          "start_frame": 191,
+          "end_frame": 199,
+          "len": 9,
+          "drift_cm": 3.37
+        },
+        {
+          "start_frame": 216,
+          "end_frame": 227,
+          "len": 12,
+          "drift_cm": 5.3
+        }
+      ]
+    }
+  }
+}

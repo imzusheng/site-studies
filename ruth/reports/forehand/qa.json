@@ -1,0 +1,1399 @@
+{
+  "frames_checked": 123,
+  "sample_step": 2,
+  "racket_penetration": {
+    "frames_with_penetration": 71,
+    "frame_list": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      34,
+      36,
+      38
+    ],
+    "worst_depth_mm": 65.12,
+    "worst_frame": 220,
+    "verdict": "FAIL",
+    "note": "球拍顶点落入身体内部的最大深度"
+  },
+  "stretch": {
+    "max_pct_over2": 0.372,
+    "verdict": "PASS",
+    "note": "边长超 rest 2 倍的比例，用于捕捉腋下膜/肩塌陷"
+  },
+  "grip": {
+    "min_dist_mm": 23.2,
+    "max_dist_mm": 34.9,
+    "verdict": "PASS",
+    "note": "手指第二指节到握柄轴线的垂直距离；过小=穿进柄里"
+  },
+  "details": [
+    {
+      "frame": 0,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 33.16,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 2,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 57.68,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 4,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 53.3,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 6,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 50.27,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 8,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 42.64,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 10,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 24.53,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 12,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 15.18,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 14,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 11.21,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 16,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 11.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 18,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 8.67,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 20,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 6.98,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 22,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 5.8,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 24,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 5.82,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 26,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 4.61,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 28,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 5.69,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 30,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 9.39,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 32,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 10.46,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 34,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 8.09,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 36,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 6.65,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 38,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 4.44,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 40,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 42,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 44,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 46,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 48,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 50,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 52,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 54,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 56,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 58,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 60,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 62,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 64,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 66,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 68,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 70,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 72,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 74,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 76,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 78,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 80,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 82,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 84,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 86,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 7.57,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 88,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 20.63,
+      "stretch_over2": 0,
+      "stretch_pct": 0.0,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 90,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 34.81,
+      "stretch_over2": 2,
+      "stretch_pct": 0.002,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 92,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 37.09,
+      "stretch_over2": 2,
+      "stretch_pct": 0.002,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 94,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 40.49,
+      "stretch_over2": 3,
+      "stretch_pct": 0.004,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 96,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 46.16,
+      "stretch_over2": 4,
+      "stretch_pct": 0.005,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 98,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 46.52,
+      "stretch_over2": 4,
+      "stretch_pct": 0.005,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 100,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 45.36,
+      "stretch_over2": 4,
+      "stretch_pct": 0.005,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 102,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 50.46,
+      "stretch_over2": 4,
+      "stretch_pct": 0.005,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 104,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 43.72,
+      "stretch_over2": 4,
+      "stretch_pct": 0.005,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 106,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 22.77,
+      "stretch_over2": 8,
+      "stretch_pct": 0.01,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 108,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 19.09,
+      "stretch_over2": 11,
+      "stretch_pct": 0.013,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 110,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 21.88,
+      "stretch_over2": 19,
+      "stretch_pct": 0.023,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 112,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 26.71,
+      "stretch_over2": 35,
+      "stretch_pct": 0.043,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 114,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 13.72,
+      "stretch_over2": 48,
+      "stretch_pct": 0.059,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 116,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 65,
+      "stretch_pct": 0.08,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 118,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 4.72,
+      "stretch_over2": 91,
+      "stretch_pct": 0.112,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 120,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 9.79,
+      "stretch_over2": 107,
+      "stretch_pct": 0.131,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 122,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 15.93,
+      "stretch_over2": 128,
+      "stretch_pct": 0.157,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 124,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 149,
+      "stretch_pct": 0.183,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 126,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 29.36,
+      "stretch_over2": 163,
+      "stretch_pct": 0.2,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 128,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 39.19,
+      "stretch_over2": 172,
+      "stretch_pct": 0.211,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 130,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 22.39,
+      "stretch_over2": 212,
+      "stretch_pct": 0.26,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 132,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 9.97,
+      "stretch_over2": 216,
+      "stretch_pct": 0.265,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 134,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 218,
+      "stretch_pct": 0.267,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 136,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 233,
+      "stretch_pct": 0.286,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 138,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 6.37,
+      "stretch_over2": 236,
+      "stretch_pct": 0.289,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 140,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 30.33,
+      "stretch_over2": 234,
+      "stretch_pct": 0.287,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 142,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 7.86,
+      "stretch_over2": 247,
+      "stretch_pct": 0.303,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 144,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 246,
+      "stretch_pct": 0.302,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 146,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 252,
+      "stretch_pct": 0.309,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 148,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 284,
+      "stretch_pct": 0.348,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 150,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 292,
+      "stretch_pct": 0.358,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 152,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 299,
+      "stretch_pct": 0.367,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 154,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 303,
+      "stretch_pct": 0.372,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 156,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 295,
+      "stretch_pct": 0.362,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 158,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 260,
+      "stretch_pct": 0.319,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 160,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 201,
+      "stretch_pct": 0.247,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 162,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 155,
+      "stretch_pct": 0.19,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 164,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 126,
+      "stretch_pct": 0.155,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 166,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 116,
+      "stretch_pct": 0.142,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 168,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 101,
+      "stretch_pct": 0.124,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 170,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 85,
+      "stretch_pct": 0.104,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 172,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 77,
+      "stretch_pct": 0.094,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 174,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 79,
+      "stretch_pct": 0.097,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 176,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 83,
+      "stretch_pct": 0.102,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 178,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 96,
+      "stretch_pct": 0.118,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 180,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 101,
+      "stretch_pct": 0.124,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 182,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 102,
+      "stretch_pct": 0.125,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 184,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 3.99,
+      "stretch_over2": 95,
+      "stretch_pct": 0.117,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 186,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 9.78,
+      "stretch_over2": 95,
+      "stretch_pct": 0.117,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 188,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 12.0,
+      "stretch_over2": 88,
+      "stretch_pct": 0.108,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 190,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 21.39,
+      "stretch_over2": 89,
+      "stretch_pct": 0.109,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 192,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 10.9,
+      "stretch_over2": 86,
+      "stretch_pct": 0.105,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 194,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 2.13,
+      "stretch_over2": 77,
+      "stretch_pct": 0.094,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 196,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 20.8,
+      "stretch_over2": 64,
+      "stretch_pct": 0.078,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 198,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 36.77,
+      "stretch_over2": 59,
+      "stretch_pct": 0.072,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 200,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 38.78,
+      "stretch_over2": 53,
+      "stretch_pct": 0.065,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 202,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 63.44,
+      "stretch_over2": 34,
+      "stretch_pct": 0.042,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 204,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 45.46,
+      "stretch_over2": 22,
+      "stretch_pct": 0.027,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 206,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 12.35,
+      "stretch_over2": 13,
+      "stretch_pct": 0.016,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 208,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 5,
+      "stretch_pct": 0.006,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 210,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 2,
+      "stretch_pct": 0.002,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 212,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 1,
+      "stretch_pct": 0.001,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 214,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 2,
+      "stretch_pct": 0.002,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 216,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 14.22,
+      "stretch_over2": 2,
+      "stretch_pct": 0.002,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 218,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 30.94,
+      "stretch_over2": 4,
+      "stretch_pct": 0.005,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 220,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 65.12,
+      "stretch_over2": 10,
+      "stretch_pct": 0.012,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 222,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 31.87,
+      "stretch_over2": 16,
+      "stretch_pct": 0.02,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 224,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 35.23,
+      "stretch_over2": 22,
+      "stretch_pct": 0.027,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 226,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 31.15,
+      "stretch_over2": 36,
+      "stretch_pct": 0.044,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 228,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 40.14,
+      "stretch_over2": 43,
+      "stretch_pct": 0.053,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 230,
+      "racket_penetrating_verts": 4,
+      "racket_pen_max_mm": 52.13,
+      "stretch_over2": 47,
+      "stretch_pct": 0.058,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 232,
+      "racket_penetrating_verts": 3,
+      "racket_pen_max_mm": 45.0,
+      "stretch_over2": 64,
+      "stretch_pct": 0.078,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 234,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 42.71,
+      "stretch_over2": 88,
+      "stretch_pct": 0.108,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 236,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 2.06,
+      "stretch_over2": 115,
+      "stretch_pct": 0.141,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 238,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 44.05,
+      "stretch_over2": 153,
+      "stretch_pct": 0.188,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 240,
+      "racket_penetrating_verts": 2,
+      "racket_pen_max_mm": 42.42,
+      "stretch_over2": 181,
+      "stretch_pct": 0.222,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 242,
+      "racket_penetrating_verts": 0,
+      "racket_pen_max_mm": 0.0,
+      "stretch_over2": 213,
+      "stretch_pct": 0.261,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    },
+    {
+      "frame": 244,
+      "racket_penetrating_verts": 1,
+      "racket_pen_max_mm": 36.93,
+      "stretch_over2": 255,
+      "stretch_pct": 0.313,
+      "grip_dist_mm": [
+        23.2,
+        34.9
+      ]
+    }
+  ]
+}
