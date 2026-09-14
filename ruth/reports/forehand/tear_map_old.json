@@ -1,0 +1,2332 @@
+{
+  "tag": "old",
+  "blend": "/Users/lizusheng/.zcode/workspace/default/site-studies/ruth/build/ruth_forehand_v1.blend",
+  "gap_warn_mm": 15.0,
+  "gap_bad_mm": 30.0,
+  "marks": {
+    "ready": {
+      "frame": 0,
+      "gap_gt_warn": 2552,
+      "gap_gt_bad": 1818,
+      "max_gap_mm": 311.83,
+      "max_ratio": 156.78,
+      "edges_gt_2x": 3242,
+      "edges_gt_3x": 2112,
+      "edges_gt_10x": 516,
+      "clusters": [
+        {
+          "x_m": -0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 219,
+          "max_gap_mm": 119.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 102
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 32
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtR1 | SkirtB1",
+              "edges": 15
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 203,
+          "max_gap_mm": 143.6,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 96
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 30
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtF1 | SkirtL1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9,
+          "edges": 155,
+          "max_gap_mm": 91.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 66
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 22
+            },
+            {
+              "pair": "SkirtB1 | SkirtR1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 131,
+          "max_gap_mm": 85.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 84,
+          "max_gap_mm": 126.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtR1 | SkirtF1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 101.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 74,
+          "max_gap_mm": 121.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 10
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 71,
+          "max_gap_mm": 126.1,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 18
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 16
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 98.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 64,
+          "max_gap_mm": 118.9,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 24
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 11
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 10
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 10
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 60,
+          "max_gap_mm": 236.8,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | SkirtR2",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR2 | SkirtR3",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.8500000000000001,
+          "edges": 59,
+          "max_gap_mm": 91.3,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 27
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 54,
+          "max_gap_mm": 253.5,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | SkirtL2",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 0.75,
+          "edges": 44,
+          "max_gap_mm": 311.8,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "Hips | Hips",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 6
+            },
+            {
+              "pair": "RightUpLeg | SkirtF2",
+              "edges": 6
+            }
+          ]
+        }
+      ]
+    },
+    "unit_turn": {
+      "frame": 110,
+      "gap_gt_warn": 2523,
+      "gap_gt_bad": 1829,
+      "max_gap_mm": 324.55,
+      "max_ratio": 158.04,
+      "edges_gt_2x": 3215,
+      "edges_gt_3x": 2122,
+      "edges_gt_10x": 531,
+      "clusters": [
+        {
+          "x_m": -0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 216,
+          "max_gap_mm": 117.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 102
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 32
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtR1 | SkirtB1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 195,
+          "max_gap_mm": 138.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 91
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 29
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 23
+            },
+            {
+              "pair": "SkirtF1 | SkirtL1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9,
+          "edges": 150,
+          "max_gap_mm": 91.6,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 62
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 21
+            },
+            {
+              "pair": "SkirtB1 | SkirtR1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 121,
+          "max_gap_mm": 76.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 50
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 15
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 82,
+          "max_gap_mm": 127.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 10
+            },
+            {
+              "pair": "SkirtR1 | SkirtF1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 106.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 74,
+          "max_gap_mm": 127.6,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 19
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 18
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 111.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 8
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 102.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 60,
+          "max_gap_mm": 253.8,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | SkirtR2",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR2 | SkirtR3",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.8500000000000001,
+          "edges": 57,
+          "max_gap_mm": 92.6,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 26
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 54,
+          "max_gap_mm": 279.4,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | SkirtL2",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 53,
+          "max_gap_mm": 106.9,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 24
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 10
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | SkirtL1",
+              "edges": 6
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 49,
+          "max_gap_mm": 59.2,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 14
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 13
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 6
+            }
+          ]
+        }
+      ]
+    },
+    "backswing": {
+      "frame": 147,
+      "gap_gt_warn": 2678,
+      "gap_gt_bad": 1856,
+      "max_gap_mm": 297.02,
+      "max_ratio": 155.76,
+      "edges_gt_2x": 3331,
+      "edges_gt_3x": 2145,
+      "edges_gt_10x": 484,
+      "clusters": [
+        {
+          "x_m": -0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 216,
+          "max_gap_mm": 113.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 101
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 33
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtR1 | SkirtB1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 190,
+          "max_gap_mm": 128.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 86
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 29
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 23
+            },
+            {
+              "pair": "SkirtF1 | SkirtL1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9,
+          "edges": 143,
+          "max_gap_mm": 94.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 57
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 19
+            },
+            {
+              "pair": "SkirtB1 | SkirtR1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 117,
+          "max_gap_mm": 90.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 47
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 12
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 78,
+          "max_gap_mm": 125.0,
+          "bone_pairs": [
+            {
+              "pair": "Spine | Hips",
+              "edges": 22
+            },
+            {
+              "pair": "Hips | Hips",
+              "edges": 19
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 110.8,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 74,
+          "max_gap_mm": 125.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 7
+            },
+            {
+              "pair": "SkirtR1 | SkirtF1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 74,
+          "max_gap_mm": 108.9,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 24
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 16
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 15
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 10
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 72,
+          "max_gap_mm": 109.1,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 105.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 60,
+          "max_gap_mm": 63.4,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 22
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 12
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 6
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 60,
+          "max_gap_mm": 243.3,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | SkirtR2",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR2 | SkirtR3",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.8500000000000001,
+          "edges": 57,
+          "max_gap_mm": 87.2,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 54,
+          "max_gap_mm": 252.9,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | SkirtL2",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            }
+          ]
+        }
+      ]
+    },
+    "acceleration": {
+      "frame": 151,
+      "gap_gt_warn": 2701,
+      "gap_gt_bad": 1882,
+      "max_gap_mm": 299.83,
+      "max_ratio": 155.66,
+      "edges_gt_2x": 3349,
+      "edges_gt_3x": 2161,
+      "edges_gt_10x": 497,
+      "clusters": [
+        {
+          "x_m": -0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 216,
+          "max_gap_mm": 113.9,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 101
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 33
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtR1 | SkirtB1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 190,
+          "max_gap_mm": 128.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 86
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 29
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 23
+            },
+            {
+              "pair": "SkirtF1 | SkirtL1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9,
+          "edges": 142,
+          "max_gap_mm": 93.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 57
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 19
+            },
+            {
+              "pair": "SkirtB1 | SkirtR1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 117,
+          "max_gap_mm": 91.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 47
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 12
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 82,
+          "max_gap_mm": 111.3,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 24
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 21
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 10
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 79,
+          "max_gap_mm": 123.7,
+          "bone_pairs": [
+            {
+              "pair": "Spine | Hips",
+              "edges": 22
+            },
+            {
+              "pair": "Hips | Hips",
+              "edges": 19
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 17
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 111.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 76,
+          "max_gap_mm": 125.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 8
+            },
+            {
+              "pair": "SkirtR1 | SkirtF1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 72,
+          "max_gap_mm": 111.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 106.8,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 60,
+          "max_gap_mm": 252.6,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | SkirtR2",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR2 | SkirtR3",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.8500000000000001,
+          "edges": 56,
+          "max_gap_mm": 88.0,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 24
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 54,
+          "max_gap_mm": 260.0,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | SkirtL2",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 46,
+          "max_gap_mm": 55.7,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 20
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 8
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 5
+            },
+            {
+              "pair": "Neck | LeftShoulder",
+              "edges": 5
+            }
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "frame": 164,
+      "gap_gt_warn": 2662,
+      "gap_gt_bad": 1880,
+      "max_gap_mm": 315.43,
+      "max_ratio": 153.78,
+      "edges_gt_2x": 3367,
+      "edges_gt_3x": 2152,
+      "edges_gt_10x": 515,
+      "clusters": [
+        {
+          "x_m": -0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 216,
+          "max_gap_mm": 118.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 100
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 32
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtR1 | SkirtB1",
+              "edges": 15
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 202,
+          "max_gap_mm": 143.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 95
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 30
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtF1 | SkirtL1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9,
+          "edges": 152,
+          "max_gap_mm": 91.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 65
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 22
+            },
+            {
+              "pair": "SkirtB1 | SkirtR1",
+              "edges": 17
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 130,
+          "max_gap_mm": 83.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 50
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 83,
+          "max_gap_mm": 123.8,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 10
+            },
+            {
+              "pair": "SkirtR1 | SkirtF1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 79,
+          "max_gap_mm": 118.9,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 24
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 19
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 104.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 77,
+          "max_gap_mm": 123.1,
+          "bone_pairs": [
+            {
+              "pair": "Spine | Hips",
+              "edges": 22
+            },
+            {
+              "pair": "Hips | Hips",
+              "edges": 18
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 74,
+          "max_gap_mm": 121.6,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 10
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 97.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.8500000000000001,
+          "edges": 60,
+          "max_gap_mm": 95.0,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 28
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 60,
+          "max_gap_mm": 256.7,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | SkirtR2",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR2 | SkirtR3",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 56,
+          "max_gap_mm": 70.1,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Neck",
+              "edges": 15
+            },
+            {
+              "pair": "Neck | Spine2",
+              "edges": 10
+            },
+            {
+              "pair": "Spine2 | RightShoulder",
+              "edges": 10
+            },
+            {
+              "pair": "RightShoulder | Spine2",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 54,
+          "max_gap_mm": 255.8,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | SkirtL2",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            }
+          ]
+        }
+      ]
+    },
+    "follow_through": {
+      "frame": 187,
+      "gap_gt_warn": 2636,
+      "gap_gt_bad": 1891,
+      "max_gap_mm": 314.92,
+      "max_ratio": 147.88,
+      "edges_gt_2x": 3348,
+      "edges_gt_3x": 2164,
+      "edges_gt_10x": 549,
+      "clusters": [
+        {
+          "x_m": 0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 211,
+          "max_gap_mm": 153.1,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 104
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 30
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtF1 | SkirtL1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 211,
+          "max_gap_mm": 116.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 95
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 31
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtR1 | SkirtB1",
+              "edges": 15
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9,
+          "edges": 152,
+          "max_gap_mm": 78.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 69
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtB1 | SkirtR1",
+              "edges": 17
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 133,
+          "max_gap_mm": 93.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 15
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 80,
+          "max_gap_mm": 119.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtR1 | SkirtF1",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 78,
+          "max_gap_mm": 122.9,
+          "bone_pairs": [
+            {
+              "pair": "Spine | Hips",
+              "edges": 22
+            },
+            {
+              "pair": "Hips | Hips",
+              "edges": 18
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 17
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 104.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 76,
+          "max_gap_mm": 127.8,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 8
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 100.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 60,
+          "max_gap_mm": 262.4,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | SkirtR2",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR2 | SkirtR3",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.8500000000000001,
+          "edges": 59,
+          "max_gap_mm": 96.4,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 28
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 58,
+          "max_gap_mm": 124.1,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 8
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 54,
+          "max_gap_mm": 257.1,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | SkirtL2",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 45,
+          "max_gap_mm": 74.1,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Neck",
+              "edges": 13
+            },
+            {
+              "pair": "Spine2 | RightShoulder",
+              "edges": 9
+            },
+            {
+              "pair": "RightShoulder | Spine2",
+              "edges": 7
+            },
+            {
+              "pair": "Neck | Spine2",
+              "edges": 6
+            }
+          ]
+        }
+      ]
+    },
+    "recovery": {
+      "frame": 232,
+      "gap_gt_warn": 2518,
+      "gap_gt_bad": 1824,
+      "max_gap_mm": 312.33,
+      "max_ratio": 156.31,
+      "edges_gt_2x": 3158,
+      "edges_gt_3x": 2083,
+      "edges_gt_10x": 530,
+      "clusters": [
+        {
+          "x_m": -0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 217,
+          "max_gap_mm": 115.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 102
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 33
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 25
+            },
+            {
+              "pair": "SkirtR1 | SkirtB1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.8500000000000001,
+          "edges": 192,
+          "max_gap_mm": 130.9,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 88
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 29
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 23
+            },
+            {
+              "pair": "SkirtF1 | SkirtL1",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9,
+          "edges": 147,
+          "max_gap_mm": 93.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 59
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 21
+            },
+            {
+              "pair": "SkirtB1 | SkirtR1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 14
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 118,
+          "max_gap_mm": 80.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 48
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 12
+            },
+            {
+              "pair": "SkirtB1 | SkirtB1",
+              "edges": 12
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 78,
+          "max_gap_mm": 125.8,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtR1 | SkirtR1",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR1 | SkirtF1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 109.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 77,
+          "max_gap_mm": 129.3,
+          "bone_pairs": [
+            {
+              "pair": "Spine | Hips",
+              "edges": 21
+            },
+            {
+              "pair": "Hips | Hips",
+              "edges": 19
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 111.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL1 | SkirtL1",
+              "edges": 8
+            },
+            {
+              "pair": "SkirtL1 | SkirtB1",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 102.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 60,
+          "max_gap_mm": 239.9,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | SkirtR2",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR2 | SkirtR3",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.8500000000000001,
+          "edges": 58,
+          "max_gap_mm": 89.0,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 26
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 54,
+          "max_gap_mm": 280.4,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | SkirtL2",
+              "edges": 11
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 53,
+          "max_gap_mm": 109.2,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 24
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 9
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | SkirtL1",
+              "edges": 6
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 47,
+          "max_gap_mm": 57.3,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 14
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 13
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "Neck | LeftShoulder",
+              "edges": 5
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

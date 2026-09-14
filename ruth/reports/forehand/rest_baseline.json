@@ -1,0 +1,23 @@
+{
+  "why": "上一轮 false PASS 的根因：QA 用第 0 帧（已变形）当 rest 基准。这里用两种互相独立的方法取真 rest 并互相证明。",
+  "method_A": "rig.animation_data.action = None; 所有 pose bone matrix_basis = Identity; 求值 depsgraph 网格",
+  "method_B": "rig.data.pose_position = 'REST'; 求值 depsgraph 网格",
+  "method_C": "网格绑定数据本身 ob.data.vertices",
+  "cross_check_mm": {
+    "A_vs_B": 0.0,
+    "A_vs_C": 0.000119
+  },
+  "agreement": true,
+  "verts": 31959,
+  "edges": 81533,
+  "rest_bbox": [
+    -0.38696,
+    -0.16748,
+    -0.0,
+    0.38696,
+    0.16493,
+    1.65
+  ],
+  "median_edge_len_mm": 8.9831,
+  "source_blend": "/Users/lizusheng/.zcode/workspace/default/site-studies/ruth/build/step7_rollfix.blend"
+}

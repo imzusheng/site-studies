@@ -1,0 +1,527 @@
+{
+  "issue_fixed_this_round": "aim_matrix 的 roll/twist 缺陷 —— 已修复并验证：受控骨 twist 从 156.3–172.5° 降到 0.000°，裙摆放射状碎片 / 马尾硬刺 / 髋部长三角 在渲染中消失。",
+  "remaining_defect": "残余拉伸来自一个**与本轮根因无关、且早于本轮就存在**的问题：角色资产的权重场在每一处关节边界都是硬切（相邻顶点骨骼集合完全不重叠），于是任何跨边界的相对旋转都会把网格撕开。证据：round 1 的 09_deformation.json 里 12 个形变姿态就有 507–1007 条 >2× 边、最大 111×，当时判定 PASS；本轮权重逐元素未变（最大差 0.0）。",
+  "rest_baseline": {
+    "file": "reports/forehand/rest_baseline.json",
+    "method_A_vs_B_mm": 0.0,
+    "method_A_vs_C_mm": 0.000119,
+    "agreement": true
+  },
+  "gates": [
+    {
+      "gate": "任何 edge > 10×",
+      "limit": "不得超过 10×",
+      "measured": 78.16,
+      "verdict": "FAIL"
+    },
+    {
+      "gate": "可见区域连续大片 >3×",
+      "limit": "连续块 < 5 条边",
+      "measured": "最大连续块 32 条边（frame 155）",
+      "verdict": "FAIL"
+    },
+    {
+      "gate": "腿部 unexpected twist < 10°",
+      "measured": 7.3e-05,
+      "verdict": "PASS"
+    },
+    {
+      "gate": "Skirt/Ponytail unintended twist < 5°",
+      "measured": 2.2e-05,
+      "verdict": "PASS"
+    }
+  ],
+  "gates_pass": false,
+  "worst_frame_of_clip": {
+    "frame": 155,
+    "gt_1_5x": 3090,
+    "gt_2x": 1794,
+    "gt_3x": 969,
+    "max_ratio": 78.1575,
+    "p99_ratio": 3.4057
+  },
+  "before_after": [
+    {
+      "mark": "ready",
+      "frame": 0,
+      "gap_gt_15mm": {
+        "before": 2552,
+        "after": 611,
+        "reduction_pct": 76.1
+      },
+      "max_gap_mm": {
+        "before": 311.83,
+        "after": 111.62
+      },
+      "edges_gt_10x": {
+        "before": 516,
+        "after": 32
+      },
+      "max_ratio": {
+        "before": 156.78,
+        "after": 27.78
+      }
+    },
+    {
+      "mark": "unit_turn",
+      "frame": 110,
+      "gap_gt_15mm": {
+        "before": 2523,
+        "after": 1182,
+        "reduction_pct": 53.2
+      },
+      "max_gap_mm": {
+        "before": 324.55,
+        "after": 111.87
+      },
+      "edges_gt_10x": {
+        "before": 531,
+        "after": 61
+      },
+      "max_ratio": {
+        "before": 158.04,
+        "after": 46.74
+      }
+    },
+    {
+      "mark": "backswing",
+      "frame": 147,
+      "gap_gt_15mm": {
+        "before": 2678,
+        "after": 1482,
+        "reduction_pct": 44.7
+      },
+      "max_gap_mm": {
+        "before": 297.02,
+        "after": 186.12
+      },
+      "edges_gt_10x": {
+        "before": 484,
+        "after": 150
+      },
+      "max_ratio": {
+        "before": 155.76,
+        "after": 74.47
+      }
+    },
+    {
+      "mark": "acceleration",
+      "frame": 151,
+      "gap_gt_15mm": {
+        "before": 2701,
+        "after": 1485,
+        "reduction_pct": 45.0
+      },
+      "max_gap_mm": {
+        "before": 299.83,
+        "after": 166.07
+      },
+      "edges_gt_10x": {
+        "before": 497,
+        "after": 143
+      },
+      "max_ratio": {
+        "before": 155.66,
+        "after": 77.04
+      }
+    },
+    {
+      "mark": "contact",
+      "frame": 164,
+      "gap_gt_15mm": {
+        "before": 2662,
+        "after": 1291,
+        "reduction_pct": 51.5
+      },
+      "max_gap_mm": {
+        "before": 315.43,
+        "after": 119.09
+      },
+      "edges_gt_10x": {
+        "before": 515,
+        "after": 62
+      },
+      "max_ratio": {
+        "before": 153.78,
+        "after": 55.76
+      }
+    },
+    {
+      "mark": "follow_through",
+      "frame": 187,
+      "gap_gt_15mm": {
+        "before": 2636,
+        "after": 1024,
+        "reduction_pct": 61.2
+      },
+      "max_gap_mm": {
+        "before": 314.92,
+        "after": 100.06
+      },
+      "edges_gt_10x": {
+        "before": 549,
+        "after": 36
+      },
+      "max_ratio": {
+        "before": 147.88,
+        "after": 18.71
+      }
+    },
+    {
+      "mark": "recovery",
+      "frame": 232,
+      "gap_gt_15mm": {
+        "before": 2518,
+        "after": 1266,
+        "reduction_pct": 49.7
+      },
+      "max_gap_mm": {
+        "before": 312.33,
+        "after": 171.98
+      },
+      "edges_gt_10x": {
+        "before": 530,
+        "after": 65
+      },
+      "max_ratio": {
+        "before": 156.31,
+        "after": 62.81
+      }
+    }
+  ],
+  "clip_stats": {
+    "frames": 245,
+    "max_ratio_over_clip": 78.157,
+    "max_gap_mm_over_clip": 186.12,
+    "median_max_ratio": 34.268,
+    "median_edges_gt_3x": 619
+  },
+  "residual_defect_map": {
+    "how": "把绝对拉开 >15 mm 的边按 rest 位置（x/z，5 cm 网格）聚类，再统计每簇的骨骼对",
+    "clusters": [
+      {
+        "x_m": 0.15000000000000002,
+        "z_m": 0.9500000000000001,
+        "edges": 77,
+        "max_gap_mm": 36.8,
+        "bone_pairs": [
+          {
+            "pair": "SkirtL1 | LeftUpLeg",
+            "edges": 51
+          },
+          {
+            "pair": "LeftUpLeg | SkirtL1",
+            "edges": 26
+          }
+        ]
+      },
+      {
+        "x_m": -0.15000000000000002,
+        "z_m": 0.9500000000000001,
+        "edges": 71,
+        "max_gap_mm": 61.3,
+        "bone_pairs": [
+          {
+            "pair": "SkirtR1 | RightUpLeg",
+            "edges": 42
+          },
+          {
+            "pair": "RightUpLeg | SkirtR1",
+            "edges": 29
+          }
+        ]
+      },
+      {
+        "x_m": -0.1,
+        "z_m": 1.0,
+        "edges": 63,
+        "max_gap_mm": 59.6,
+        "bone_pairs": [
+          {
+            "pair": "Hips | Hips",
+            "edges": 18
+          },
+          {
+            "pair": "Spine | Hips",
+            "edges": 16
+          },
+          {
+            "pair": "Hips | Spine",
+            "edges": 11
+          },
+          {
+            "pair": "Hips | SkirtR1",
+            "edges": 9
+          }
+        ]
+      },
+      {
+        "x_m": 0.1,
+        "z_m": 1.0,
+        "edges": 47,
+        "max_gap_mm": 39.4,
+        "bone_pairs": [
+          {
+            "pair": "Hips | Hips",
+            "edges": 14
+          },
+          {
+            "pair": "Spine | Hips",
+            "edges": 10
+          },
+          {
+            "pair": "Hips | Spine",
+            "edges": 9
+          },
+          {
+            "pair": "SkirtL1 | Hips",
+            "edges": 7
+          }
+        ]
+      },
+      {
+        "x_m": 0.05,
+        "z_m": 1.4000000000000001,
+        "edges": 46,
+        "max_gap_mm": 55.7,
+        "bone_pairs": [
+          {
+            "pair": "Neck | Spine2",
+            "edges": 20
+          },
+          {
+            "pair": "LeftShoulder | Spine2",
+            "edges": 8
+          },
+          {
+            "pair": "LeftShoulder | LeftShoulder",
+            "edges": 5
+          },
+          {
+            "pair": "Neck | LeftShoulder",
+            "edges": 5
+          }
+        ]
+      },
+      {
+        "x_m": -0.1,
+        "z_m": 0.9500000000000001,
+        "edges": 45,
+        "max_gap_mm": 62.2,
+        "bone_pairs": [
+          {
+            "pair": "SkirtR1 | RightUpLeg",
+            "edges": 21
+          },
+          {
+            "pair": "RightUpLeg | SkirtR1",
+            "edges": 20
+          },
+          {
+            "pair": "Hips | SkirtF1",
+            "edges": 2
+          },
+          {
+            "pair": "SkirtF1 | Hips",
+            "edges": 1
+          }
+        ]
+      },
+      {
+        "x_m": -0.1,
+        "z_m": 1.2000000000000002,
+        "edges": 40,
+        "max_gap_mm": 45.2,
+        "bone_pairs": [
+          {
+            "pair": "RightArm | RightArm",
+            "edges": 28
+          },
+          {
+            "pair": "Spine1 | Spine1",
+            "edges": 9
+          },
+          {
+            "pair": "RightArm | Spine1",
+            "edges": 2
+          },
+          {
+            "pair": "Spine1 | RightArm",
+            "edges": 1
+          }
+        ]
+      },
+      {
+        "x_m": 0.1,
+        "z_m": 0.9500000000000001,
+        "edges": 40,
+        "max_gap_mm": 36.3,
+        "bone_pairs": [
+          {
+            "pair": "SkirtL1 | LeftUpLeg",
+            "edges": 21
+          },
+          {
+            "pair": "LeftUpLeg | SkirtL1",
+            "edges": 13
+          },
+          {
+            "pair": "SkirtF1 | LeftUpLeg",
+            "edges": 3
+          },
+          {
+            "pair": "SkirtF1 | Hips",
+            "edges": 1
+          }
+        ]
+      },
+      {
+        "x_m": 0.1,
+        "z_m": 1.2000000000000002,
+        "edges": 37,
+        "max_gap_mm": 99.2,
+        "bone_pairs": [
+          {
+            "pair": "LeftArm | LeftArm",
+            "edges": 28
+          },
+          {
+            "pair": "LeftArm | Spine1",
+            "edges": 5
+          },
+          {
+            "pair": "Spine1 | Spine1",
+            "edges": 2
+          },
+          {
+            "pair": "Spine1 | LeftArm",
+            "edges": 2
+          }
+        ]
+      },
+      {
+        "x_m": -0.1,
+        "z_m": 0.75,
+        "edges": 34,
+        "max_gap_mm": 87.1,
+        "bone_pairs": [
+          {
+            "pair": "RightUpLeg | SkirtR3",
+            "edges": 14
+          },
+          {
+            "pair": "SkirtR3 | RightUpLeg",
+            "edges": 14
+          },
+          {
+            "pair": "SkirtR2 | RightUpLeg",
+            "edges": 3
+          },
+          {
+            "pair": "RightUpLeg | SkirtR2",
+            "edges": 2
+          }
+        ]
+      },
+      {
+        "x_m": 0.05,
+        "z_m": 1.2000000000000002,
+        "edges": 31,
+        "max_gap_mm": 90.2,
+        "bone_pairs": [
+          {
+            "pair": "Spine1 | Spine1",
+            "edges": 22
+          },
+          {
+            "pair": "LeftArm | LeftArm",
+            "edges": 6
+          },
+          {
+            "pair": "Spine1 | LeftArm",
+            "edges": 3
+          }
+        ]
+      },
+      {
+        "x_m": 0.1,
+        "z_m": 0.9,
+        "edges": 31,
+        "max_gap_mm": 28.1,
+        "bone_pairs": [
+          {
+            "pair": "LeftUpLeg | SkirtL1",
+            "edges": 18
+          },
+          {
+            "pair": "SkirtL1 | LeftUpLeg",
+            "edges": 13
+          }
+        ]
+      },
+      {
+        "x_m": 0.0,
+        "z_m": 0.75,
+        "edges": 30,
+        "max_gap_mm": 57.6,
+        "bone_pairs": [
+          {
+            "pair": "Hips | LeftUpLeg",
+            "edges": 8
+          },
+          {
+            "pair": "Hips | RightUpLeg",
+            "edges": 8
+          },
+          {
+            "pair": "LeftUpLeg | Hips",
+            "edges": 7
+          },
+          {
+            "pair": "RightUpLeg | Hips",
+            "edges": 7
+          }
+        ]
+      },
+      {
+        "x_m": -0.15000000000000002,
+        "z_m": 0.75,
+        "edges": 30,
+        "max_gap_mm": 71.6,
+        "bone_pairs": [
+          {
+            "pair": "SkirtR3 | RightUpLeg",
+            "edges": 15
+          },
+          {
+            "pair": "RightUpLeg | SkirtR3",
+            "edges": 14
+          },
+          {
+            "pair": "SkirtR2 | RightUpLeg",
+            "edges": 1
+          }
+        ]
+      }
+    ],
+    "reading": "每一簇都是一处硬权重边界：颈/肩、肩/臂、头/马尾、手/指、髋/裙、裙/腿。与 round 1 已修好的腋下是同一类问题，只是其余关节当时没有一起做边界重叠。"
+  },
+  "foot_planting": {
+    "Left": {
+      "drift_before_cm": 13.26,
+      "n_segments": 3,
+      "max_drift_after_cm": 0.16
+    },
+    "Right": {
+      "drift_before_cm": 11.7,
+      "n_segments": 6,
+      "max_drift_after_cm": 0.06
+    }
+  },
+  "weights_untouched": {
+    "verification": "step5_retarget.blend 与 step7_rollfix.blend 的权重矩阵逐元素比对，最大绝对差 0.0；顶点组名完全一致",
+    "why_it_matters": "证明残余拉伸不是本轮改动引入的"
+  },
+  "verdict": "FAIL",
+  "verdict_reason": "根因（roll/twist）已修复且经硬门验证；但 brief 的 PASS 条件还要求『true rest deformation QA clean』，实测仍有 32–150 条边 >10×、最大拉开 186 mm、且在裙摆下沿/大腿处有肉眼可见的角状缺口。这些来自权重边界，本轮被明令禁止修改（『禁止：改权重』），因此在允许范围内无法达成 PASS。"
+}

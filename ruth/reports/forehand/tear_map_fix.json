@@ -1,0 +1,2216 @@
+{
+  "tag": "fix",
+  "blend": "/Users/lizusheng/.zcode/workspace/default/site-studies/ruth/build/step7_rollfix.blend",
+  "gap_warn_mm": 15.0,
+  "gap_bad_mm": 30.0,
+  "marks": {
+    "ready": {
+      "frame": 0,
+      "gap_gt_warn": 611,
+      "gap_gt_bad": 145,
+      "max_gap_mm": 111.62,
+      "max_ratio": 27.78,
+      "edges_gt_2x": 1036,
+      "edges_gt_3x": 470,
+      "edges_gt_10x": 32,
+      "clusters": [
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 38,
+          "max_gap_mm": 49.1,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 13
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 11
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 5
+            },
+            {
+              "pair": "Neck | LeftShoulder",
+              "edges": 5
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 29,
+          "max_gap_mm": 21.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 11
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 2
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 1.35,
+          "edges": 27,
+          "max_gap_mm": 49.2,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Spine2",
+              "edges": 15
+            },
+            {
+              "pair": "Spine2 | Ponytail4",
+              "edges": 5
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 2
+            },
+            {
+              "pair": "LeftShoulder | Ponytail4",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.55,
+          "edges": 23,
+          "max_gap_mm": 34.0,
+          "bone_pairs": [
+            {
+              "pair": "Head | Ponytail1",
+              "edges": 10
+            },
+            {
+              "pair": "Head | Ponytail2",
+              "edges": 8
+            },
+            {
+              "pair": "Ponytail2 | Head",
+              "edges": 5
+            }
+          ]
+        },
+        {
+          "x_m": 0.30000000000000004,
+          "z_m": 0.9,
+          "edges": 23,
+          "max_gap_mm": 23.5,
+          "bone_pairs": [
+            {
+              "pair": "LeftHandThumb1 | LeftHand",
+              "edges": 9
+            },
+            {
+              "pair": "LeftHand | LeftHandThumb1",
+              "edges": 8
+            },
+            {
+              "pair": "LeftHandThumb1 | LeftHandThumb1",
+              "edges": 3
+            },
+            {
+              "pair": "LeftForeArm | LeftHandThumb1",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.5,
+          "edges": 23,
+          "max_gap_mm": 34.5,
+          "bone_pairs": [
+            {
+              "pair": "Ponytail2 | Head",
+              "edges": 17
+            },
+            {
+              "pair": "Head | Ponytail2",
+              "edges": 6
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.35,
+          "edges": 21,
+          "max_gap_mm": 82.0,
+          "bone_pairs": [
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "LeftShoulder | Ponytail4",
+              "edges": 6
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 4
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 20,
+          "max_gap_mm": 43.7,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 5
+            },
+            {
+              "pair": "Spine2 | RightShoulder",
+              "edges": 4
+            },
+            {
+              "pair": "Spine2 | Neck",
+              "edges": 4
+            },
+            {
+              "pair": "Neck | RightShoulder",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.55,
+          "edges": 19,
+          "max_gap_mm": 21.9,
+          "bone_pairs": [
+            {
+              "pair": "Ponytail1 | Head",
+              "edges": 10
+            },
+            {
+              "pair": "Ponytail2 | Head",
+              "edges": 6
+            },
+            {
+              "pair": "Head | Ponytail1",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": -0.4,
+          "z_m": 0.8,
+          "edges": 19,
+          "max_gap_mm": 65.3,
+          "bone_pairs": [
+            {
+              "pair": "RightHand | RightHand",
+              "edges": 7
+            },
+            {
+              "pair": "RightHandRing3 | RightHand",
+              "edges": 5
+            },
+            {
+              "pair": "RightHand | RightHandRing3",
+              "edges": 5
+            },
+            {
+              "pair": "RightHandRing3 | RightHandRing3",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.35000000000000003,
+          "z_m": 0.9,
+          "edges": 19,
+          "max_gap_mm": 18.6,
+          "bone_pairs": [
+            {
+              "pair": "LeftHand | LeftHandThumb1",
+              "edges": 4
+            },
+            {
+              "pair": "LeftHandThumb1 | LeftHand",
+              "edges": 4
+            },
+            {
+              "pair": "LeftHand | LeftHandPinky1",
+              "edges": 4
+            },
+            {
+              "pair": "LeftHand | LeftHandMiddle1",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.25,
+          "edges": 19,
+          "max_gap_mm": 24.2,
+          "bone_pairs": [
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 10
+            },
+            {
+              "pair": "Spine1 | RightShoulder",
+              "edges": 3
+            },
+            {
+              "pair": "RightArm | RightArm",
+              "edges": 3
+            },
+            {
+              "pair": "RightShoulder | RightShoulder",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 0.7000000000000001,
+          "edges": 19,
+          "max_gap_mm": 42.7,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 11
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 5
+            },
+            {
+              "pair": "RightUpLeg | SkirtR2",
+              "edges": 1
+            },
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.75,
+          "edges": 18,
+          "max_gap_mm": 35.1,
+          "bone_pairs": [
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 2
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 1
+            }
+          ]
+        }
+      ]
+    },
+    "unit_turn": {
+      "frame": 110,
+      "gap_gt_warn": 1182,
+      "gap_gt_bad": 547,
+      "max_gap_mm": 111.87,
+      "max_ratio": 46.74,
+      "edges_gt_2x": 1480,
+      "edges_gt_3x": 759,
+      "edges_gt_10x": 61,
+      "clusters": [
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 62,
+          "max_gap_mm": 33.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 37
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 25
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 62,
+          "max_gap_mm": 34.6,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 38
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 24
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 49,
+          "max_gap_mm": 59.2,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 14
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 13
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 6
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 45,
+          "max_gap_mm": 37.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 2
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 35,
+          "max_gap_mm": 88.7,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL2",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 35,
+          "max_gap_mm": 34.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.75,
+          "edges": 31,
+          "max_gap_mm": 61.1,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 15
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 2
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL2",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 31,
+          "max_gap_mm": 31.0,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 1.35,
+          "edges": 30,
+          "max_gap_mm": 53.0,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Spine2",
+              "edges": 17
+            },
+            {
+              "pair": "Spine2 | Ponytail4",
+              "edges": 6
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 2
+            },
+            {
+              "pair": "LeftShoulder | Ponytail4",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.75,
+          "edges": 29,
+          "max_gap_mm": 100.2,
+          "bone_pairs": [
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 7
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 0.7000000000000001,
+          "edges": 27,
+          "max_gap_mm": 95.8,
+          "bone_pairs": [
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 11
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 2
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL2",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 27,
+          "max_gap_mm": 44.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 12
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 27,
+          "max_gap_mm": 34.3,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 10
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 8
+            },
+            {
+              "pair": "SkirtR1 | Hips",
+              "edges": 6
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.55,
+          "edges": 26,
+          "max_gap_mm": 33.6,
+          "bone_pairs": [
+            {
+              "pair": "Ponytail2 | Head",
+              "edges": 10
+            },
+            {
+              "pair": "Ponytail1 | Head",
+              "edges": 10
+            },
+            {
+              "pair": "Head | Ponytail1",
+              "edges": 4
+            },
+            {
+              "pair": "Head | Ponytail2",
+              "edges": 2
+            }
+          ]
+        }
+      ]
+    },
+    "backswing": {
+      "frame": 147,
+      "gap_gt_warn": 1482,
+      "gap_gt_bad": 836,
+      "max_gap_mm": 186.12,
+      "max_ratio": 74.47,
+      "edges_gt_2x": 1812,
+      "edges_gt_3x": 1015,
+      "edges_gt_10x": 150,
+      "clusters": [
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 42.9,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 59.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 62,
+          "max_gap_mm": 56.5,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 18
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 11
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 60,
+          "max_gap_mm": 63.4,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 22
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 12
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 6
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 45,
+          "max_gap_mm": 59.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 2
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.2000000000000002,
+          "edges": 44,
+          "max_gap_mm": 75.8,
+          "bone_pairs": [
+            {
+              "pair": "LeftArm | LeftArm",
+              "edges": 26
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 11
+            },
+            {
+              "pair": "LeftArm | Spine1",
+              "edges": 5
+            },
+            {
+              "pair": "Spine1 | LeftArm",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.2000000000000002,
+          "edges": 41,
+          "max_gap_mm": 48.7,
+          "bone_pairs": [
+            {
+              "pair": "RightArm | RightArm",
+              "edges": 29
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 9
+            },
+            {
+              "pair": "RightArm | Spine1",
+              "edges": 2
+            },
+            {
+              "pair": "Spine1 | RightArm",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 41,
+          "max_gap_mm": 41.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtF1 | LeftUpLeg",
+              "edges": 3
+            },
+            {
+              "pair": "SkirtF1 | SkirtF1",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 37,
+          "max_gap_mm": 44.3,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 20
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "Hips | SkirtL1",
+              "edges": 6
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 36,
+          "max_gap_mm": 77.3,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 3
+            },
+            {
+              "pair": "SkirtF2 | SkirtR2",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 1.6500000000000001,
+          "edges": 33,
+          "max_gap_mm": 27.5,
+          "bone_pairs": [
+            {
+              "pair": "Head | Head",
+              "edges": 33
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 31,
+          "max_gap_mm": 26.2,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 55.0,
+          "bone_pairs": [
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 61.1,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 15
+            },
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 1
+            }
+          ]
+        }
+      ]
+    },
+    "acceleration": {
+      "frame": 151,
+      "gap_gt_warn": 1485,
+      "gap_gt_bad": 791,
+      "max_gap_mm": 166.07,
+      "max_ratio": 77.04,
+      "edges_gt_2x": 1815,
+      "edges_gt_3x": 1009,
+      "edges_gt_10x": 143,
+      "clusters": [
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 77,
+          "max_gap_mm": 36.8,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 51
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 71,
+          "max_gap_mm": 61.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 42
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 63,
+          "max_gap_mm": 59.6,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 18
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 11
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.0,
+          "edges": 47,
+          "max_gap_mm": 39.4,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 14
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 10
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtL1 | Hips",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 46,
+          "max_gap_mm": 55.7,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 20
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 8
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 5
+            },
+            {
+              "pair": "Neck | LeftShoulder",
+              "edges": 5
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 45,
+          "max_gap_mm": 62.2,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 2
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.2000000000000002,
+          "edges": 40,
+          "max_gap_mm": 45.2,
+          "bone_pairs": [
+            {
+              "pair": "RightArm | RightArm",
+              "edges": 28
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 9
+            },
+            {
+              "pair": "RightArm | Spine1",
+              "edges": 2
+            },
+            {
+              "pair": "Spine1 | RightArm",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 40,
+          "max_gap_mm": 36.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtF1 | LeftUpLeg",
+              "edges": 3
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.2000000000000002,
+          "edges": 37,
+          "max_gap_mm": 99.2,
+          "bone_pairs": [
+            {
+              "pair": "LeftArm | LeftArm",
+              "edges": 28
+            },
+            {
+              "pair": "LeftArm | Spine1",
+              "edges": 5
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 2
+            },
+            {
+              "pair": "Spine1 | LeftArm",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 34,
+          "max_gap_mm": 87.1,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 3
+            },
+            {
+              "pair": "RightUpLeg | SkirtR2",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.2000000000000002,
+          "edges": 31,
+          "max_gap_mm": 90.2,
+          "bone_pairs": [
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 22
+            },
+            {
+              "pair": "LeftArm | LeftArm",
+              "edges": 6
+            },
+            {
+              "pair": "Spine1 | LeftArm",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 31,
+          "max_gap_mm": 28.1,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 57.6,
+          "bone_pairs": [
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 71.6,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 15
+            },
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 1
+            }
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "frame": 164,
+      "gap_gt_warn": 1291,
+      "gap_gt_bad": 555,
+      "max_gap_mm": 119.09,
+      "max_ratio": 55.76,
+      "edges_gt_2x": 1488,
+      "edges_gt_3x": 778,
+      "edges_gt_10x": 62,
+      "clusters": [
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 66,
+          "max_gap_mm": 26.9,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 40
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 63,
+          "max_gap_mm": 38.7,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 39
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 24
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 56,
+          "max_gap_mm": 70.1,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Neck",
+              "edges": 15
+            },
+            {
+              "pair": "Neck | Spine2",
+              "edges": 10
+            },
+            {
+              "pair": "Spine2 | RightShoulder",
+              "edges": 10
+            },
+            {
+              "pair": "RightShoulder | Spine2",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 52,
+          "max_gap_mm": 40.1,
+          "bone_pairs": [
+            {
+              "pair": "Spine | Hips",
+              "edges": 16
+            },
+            {
+              "pair": "Hips | Spine",
+              "edges": 11
+            },
+            {
+              "pair": "Hips | Hips",
+              "edges": 10
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 45,
+          "max_gap_mm": 44.4,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 2
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 33,
+          "max_gap_mm": 26.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 12
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 33,
+          "max_gap_mm": 82.3,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 3
+            },
+            {
+              "pair": "RightUpLeg | SkirtR2",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.25,
+          "edges": 32,
+          "max_gap_mm": 49.5,
+          "bone_pairs": [
+            {
+              "pair": "LeftArm | LeftArm",
+              "edges": 15
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 11
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 4
+            },
+            {
+              "pair": "Spine1 | LeftShoulder",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 31,
+          "max_gap_mm": 21.6,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 1.2000000000000002,
+          "edges": 30,
+          "max_gap_mm": 61.2,
+          "bone_pairs": [
+            {
+              "pair": "LeftArm | LeftArm",
+              "edges": 22
+            },
+            {
+              "pair": "LeftArm | Spine1",
+              "edges": 5
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 2
+            },
+            {
+              "pair": "Spine1 | LeftArm",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 74.6,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 15
+            },
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 1.35,
+          "edges": 30,
+          "max_gap_mm": 54.0,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Spine2",
+              "edges": 17
+            },
+            {
+              "pair": "Spine2 | Ponytail4",
+              "edges": 6
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 2
+            },
+            {
+              "pair": "LeftShoulder | Ponytail4",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 1.6500000000000001,
+          "edges": 29,
+          "max_gap_mm": 25.0,
+          "bone_pairs": [
+            {
+              "pair": "Head | Head",
+              "edges": 29
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.75,
+          "edges": 29,
+          "max_gap_mm": 46.8,
+          "bone_pairs": [
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 7
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 7
+            }
+          ]
+        }
+      ]
+    },
+    "follow_through": {
+      "frame": 187,
+      "gap_gt_warn": 1024,
+      "gap_gt_bad": 284,
+      "max_gap_mm": 100.06,
+      "max_ratio": 18.71,
+      "edges_gt_2x": 1255,
+      "edges_gt_3x": 607,
+      "edges_gt_10x": 36,
+      "clusters": [
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 45,
+          "max_gap_mm": 26.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 28
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 17
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 45,
+          "max_gap_mm": 74.1,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Neck",
+              "edges": 13
+            },
+            {
+              "pair": "Spine2 | RightShoulder",
+              "edges": 9
+            },
+            {
+              "pair": "RightShoulder | Spine2",
+              "edges": 7
+            },
+            {
+              "pair": "Neck | Spine2",
+              "edges": 6
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 41,
+          "max_gap_mm": 23.6,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 30
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 11
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 38,
+          "max_gap_mm": 27.1,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 12
+            },
+            {
+              "pair": "SkirtF1 | LeftUpLeg",
+              "edges": 3
+            },
+            {
+              "pair": "LeftUpLeg | SkirtF1",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 34,
+          "max_gap_mm": 23.4,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 19
+            },
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 15
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 1.35,
+          "edges": 32,
+          "max_gap_mm": 67.7,
+          "bone_pairs": [
+            {
+              "pair": "Spine2 | Spine2",
+              "edges": 19
+            },
+            {
+              "pair": "Spine2 | Ponytail4",
+              "edges": 6
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 2
+            },
+            {
+              "pair": "LeftShoulder | Ponytail4",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.2000000000000002,
+          "edges": 29,
+          "max_gap_mm": 56.5,
+          "bone_pairs": [
+            {
+              "pair": "RightArm | RightArm",
+              "edges": 20
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 6
+            },
+            {
+              "pair": "RightArm | Spine1",
+              "edges": 2
+            },
+            {
+              "pair": "Spine1 | RightArm",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 28,
+          "max_gap_mm": 35.8,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 10
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 2
+            },
+            {
+              "pair": "RightUpLeg | SkirtR2",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 0.7000000000000001,
+          "edges": 27,
+          "max_gap_mm": 33.4,
+          "bone_pairs": [
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 11
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 2
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL2",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.55,
+          "edges": 26,
+          "max_gap_mm": 31.8,
+          "bone_pairs": [
+            {
+              "pair": "Ponytail2 | Head",
+              "edges": 10
+            },
+            {
+              "pair": "Ponytail1 | Head",
+              "edges": 10
+            },
+            {
+              "pair": "Head | Ponytail1",
+              "edges": 4
+            },
+            {
+              "pair": "Head | Ponytail2",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 26,
+          "max_gap_mm": 43.7,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 13
+            },
+            {
+              "pair": "Neck | LeftShoulder",
+              "edges": 5
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 4
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.35,
+          "edges": 26,
+          "max_gap_mm": 100.1,
+          "bone_pairs": [
+            {
+              "pair": "RightShoulder | RightShoulder",
+              "edges": 11
+            },
+            {
+              "pair": "RightShoulder | Ponytail4",
+              "edges": 5
+            },
+            {
+              "pair": "Spine2 | RightShoulder",
+              "edges": 4
+            },
+            {
+              "pair": "Ponytail4 | RightShoulder",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": 0.30000000000000004,
+          "z_m": 0.9,
+          "edges": 23,
+          "max_gap_mm": 22.6,
+          "bone_pairs": [
+            {
+              "pair": "LeftHandThumb1 | LeftHand",
+              "edges": 9
+            },
+            {
+              "pair": "LeftHand | LeftHandThumb1",
+              "edges": 8
+            },
+            {
+              "pair": "LeftHandThumb1 | LeftHandThumb1",
+              "edges": 3
+            },
+            {
+              "pair": "LeftForeArm | LeftHandThumb1",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.05,
+          "z_m": 1.25,
+          "edges": 23,
+          "max_gap_mm": 50.9,
+          "bone_pairs": [
+            {
+              "pair": "RightArm | RightArm",
+              "edges": 13
+            },
+            {
+              "pair": "Spine1 | Spine1",
+              "edges": 4
+            },
+            {
+              "pair": "RightShoulder | RightShoulder",
+              "edges": 3
+            },
+            {
+              "pair": "RightArm | Spine1",
+              "edges": 2
+            }
+          ]
+        }
+      ]
+    },
+    "recovery": {
+      "frame": 232,
+      "gap_gt_warn": 1266,
+      "gap_gt_bad": 639,
+      "max_gap_mm": 171.98,
+      "max_ratio": 62.81,
+      "edges_gt_2x": 1587,
+      "edges_gt_3x": 811,
+      "edges_gt_10x": 65,
+      "clusters": [
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 68,
+          "max_gap_mm": 43.5,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 41
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 27
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.9500000000000001,
+          "edges": 64,
+          "max_gap_mm": 31.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 38
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 26
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.4000000000000001,
+          "edges": 47,
+          "max_gap_mm": 57.3,
+          "bone_pairs": [
+            {
+              "pair": "Neck | Spine2",
+              "edges": 14
+            },
+            {
+              "pair": "LeftShoulder | Spine2",
+              "edges": 13
+            },
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "Neck | LeftShoulder",
+              "edges": 5
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 45,
+          "max_gap_mm": 50.1,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR1 | RightUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "RightUpLeg | SkirtR1",
+              "edges": 20
+            },
+            {
+              "pair": "Hips | SkirtF1",
+              "edges": 2
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.75,
+          "edges": 36,
+          "max_gap_mm": 81.6,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 16
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 4
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL2",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 1.0,
+          "edges": 36,
+          "max_gap_mm": 43.8,
+          "bone_pairs": [
+            {
+              "pair": "Hips | Hips",
+              "edges": 10
+            },
+            {
+              "pair": "Hips | SkirtR1",
+              "edges": 9
+            },
+            {
+              "pair": "SkirtR1 | Hips",
+              "edges": 8
+            },
+            {
+              "pair": "Spine | Hips",
+              "edges": 5
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9500000000000001,
+          "edges": 35,
+          "max_gap_mm": 33.0,
+          "bone_pairs": [
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 21
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtF1 | Hips",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.1,
+          "z_m": 0.9,
+          "edges": 31,
+          "max_gap_mm": 33.0,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL1",
+              "edges": 18
+            },
+            {
+              "pair": "SkirtL1 | LeftUpLeg",
+              "edges": 13
+            }
+          ]
+        },
+        {
+          "x_m": 0.0,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 91.1,
+          "bone_pairs": [
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "Hips | RightUpLeg",
+              "edges": 8
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 7
+            },
+            {
+              "pair": "RightUpLeg | Hips",
+              "edges": 7
+            }
+          ]
+        },
+        {
+          "x_m": 0.15000000000000002,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 44.8,
+          "bone_pairs": [
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtL3 | LeftUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtL2 | LeftUpLeg",
+              "edges": 2
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL2",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": -0.1,
+          "z_m": 0.75,
+          "edges": 30,
+          "max_gap_mm": 58.1,
+          "bone_pairs": [
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 2
+            }
+          ]
+        },
+        {
+          "x_m": -0.15000000000000002,
+          "z_m": 0.75,
+          "edges": 28,
+          "max_gap_mm": 48.3,
+          "bone_pairs": [
+            {
+              "pair": "SkirtR3 | RightUpLeg",
+              "edges": 14
+            },
+            {
+              "pair": "RightUpLeg | SkirtR3",
+              "edges": 13
+            },
+            {
+              "pair": "SkirtR2 | RightUpLeg",
+              "edges": 1
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 1.35,
+          "edges": 28,
+          "max_gap_mm": 111.1,
+          "bone_pairs": [
+            {
+              "pair": "LeftShoulder | LeftShoulder",
+              "edges": 8
+            },
+            {
+              "pair": "LeftShoulder | Ponytail4",
+              "edges": 7
+            },
+            {
+              "pair": "Spine2 | LeftShoulder",
+              "edges": 4
+            },
+            {
+              "pair": "Spine2 | Ponytail4",
+              "edges": 3
+            }
+          ]
+        },
+        {
+          "x_m": 0.05,
+          "z_m": 0.7000000000000001,
+          "edges": 27,
+          "max_gap_mm": 80.0,
+          "bone_pairs": [
+            {
+              "pair": "Hips | LeftUpLeg",
+              "edges": 13
+            },
+            {
+              "pair": "LeftUpLeg | Hips",
+              "edges": 11
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL3",
+              "edges": 2
+            },
+            {
+              "pair": "LeftUpLeg | SkirtL2",
+              "edges": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

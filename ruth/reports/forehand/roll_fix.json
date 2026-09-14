@@ -1,0 +1,75 @@
+{
+  "goal": "修复 aim_matrix 的 roll/twist 缺陷，重建 orientation",
+  "what_changed": [
+    "swing_only_from_rest()：从 rest 世界姿态出发，只施加把 rest Y 轴转到目标方向的最小弧旋转 → 绕骨自身轴的 twist 严格为 0",
+    "foot_planting：pole 只传给 solve_knee 决定膝盖位置，不再参与 basis",
+    "secondary_motion：rest 方向 + 偏移/骨长 → 纯 swing + 角度 clamp",
+    "Foot：世界姿态显式还原为 retarget 原值"
+  ],
+  "what_preserved": [
+    "retarget 主体（step5_retarget.blend 原样读入，未重算）",
+    "位置解算：着地段划分 / 锚定到段中位 / 余弦定理定膝盖",
+    "次级骨驱动信号：父级速度一阶低通，strength/damp 与上一轮相同",
+    "只写 rotation_quaternion，location 不碰（保住 retarget 关节偏移）",
+    "club / 时间标记 / bake 帧率 / racket 层级 / grip 均未触碰"
+  ],
+  "clamps_deg": {
+    "skirt_max_swing": 22.0,
+    "ponytail_max_swing": 25.0
+  },
+  "unit_fix": "旧实现把米量级的偏移直接加到单位方向向量上；新实现除以骨长",
+  "stats": {
+    "leg": {
+      "max_swing_deg": 38.530428994930084,
+      "degenerate": 0,
+      "foot_inherit_err_deg_max": 88.16794086340565
+    },
+    "secondary": {
+      "skirt": {
+        "max_swing_deg": 22.0,
+        "n_clamped": 40
+      },
+      "ponytail": {
+        "max_swing_deg": 25.0,
+        "n_clamped": 8
+      }
+    },
+    "per_bone_max_swing_deg": {
+      "LeftUpLeg": 34.39,
+      "LeftLeg": 27.684,
+      "RightUpLeg": 38.53,
+      "RightLeg": 29.69,
+      "SkirtF1": 22.0,
+      "SkirtF2": 22.0,
+      "SkirtF3": 22.0,
+      "SkirtB1": 22.0,
+      "SkirtB2": 22.0,
+      "SkirtB3": 22.0,
+      "SkirtL1": 15.152,
+      "SkirtL2": 22.0,
+      "SkirtL3": 22.0,
+      "SkirtR1": 14.841,
+      "SkirtR2": 17.582,
+      "SkirtR3": 21.866,
+      "Ponytail1": 25.0,
+      "Ponytail2": 25.0,
+      "Ponytail3": 25.0,
+      "Ponytail4": 25.0
+    }
+  },
+  "foot_planting": {
+    "Left": {
+      "drift_before_cm": 13.26,
+      "n_segments": 3,
+      "max_drift_after_cm": 0.16
+    },
+    "Right": {
+      "drift_before_cm": 11.7,
+      "n_segments": 6,
+      "max_drift_after_cm": 0.06
+    }
+  },
+  "secondary_location_max_mm": 0.0,
+  "frames": 245,
+  "action": "Ruth_Forehand"
+}
